@@ -1,0 +1,138 @@
+{
+  "graduation": {
+    "criteria": {
+      "blocking_questions": 0,
+      "critical_slots_filled_pct": 0.8
+    },
+    "soft_target_sessions": 50
+  },
+  "graduation_proposed": false,
+  "kit_version": "1.1.0",
+  "last_compaction_session": 0,
+  "mode": "active",
+  "mode_history": [
+    {
+      "date": "2026-07-09",
+      "mode": "active",
+      "session": 0
+    }
+  ],
+  "open_questions": [],
+  "planted_doc_hashes": {
+    ".session-journal.md": "65f1f63f8e51c57dde1e4d0913fcfd6677a3c7b61e0a71107e57821c2a68be56",
+    "CONSTITUTION.md": "5fb51f14ae623afb5378d9daf194f7e97ff0066523ea5e3bfbffd68e50a57fcf",
+    "docs/AGENT_ORIENTATION.md": "f4ca40c758b37410acfffed17376e9fde872d1bf2fd18870e2ccb5a3cadc8c19",
+    "docs/ai-project-workflow.md": "6e79b6edaa79aac6e4a395c9edd0f09187690707f7c9cbfe951304cdcff14147",
+    "docs/architecture.md": "4c4f0e9ea0fe5b400e915bd1d1956f554b3b99202d808af78d01d7dd36a9d7e7",
+    "docs/collaboration-model.md": "caa1310dcef61c0ae7a3fba8459d99a7472a1d556e7b9447f5a4753029e07ed7",
+    "docs/current-state.md": "a3a950faa388eb48cf92b020eaa8937a7845668fd7747620cd83b47cedd8828c",
+    "docs/decisions.md": "ce111c65024fad0fde808dc1b47d552a0b49e784d1e96c3f744cb91640cbebb4",
+    "docs/helper-policy.md": "a3648b8d2ea38f8a6369e2340dd426220cbfd1bc171f2c43fc485364e051f221",
+    "docs/ideas/README.md": "31136c84a9df7ff1b172375872cf6623fa87058f42387c9334790d62fd70ecbd",
+    "docs/owner-profile.md": "4bea5381f7c720814148cf9bf53191c720595a126526dad0b06e15d8f463baab",
+    "docs/ownership.md": "e82a54ed71a6420a527d56a0b8b4a8e738b7fdab9646bcbf9fe3204e9d4de537",
+    "docs/question-router.md": "afe383f838ed8df0d67bc0e3d006c24da7b4e5311cb398b09bb00bd1327fc34c",
+    "docs/repo-navigation-map.md": "f2bfd9036e242f3cbf44c7df45c5123c5c77423e2a2ee811172b5b6623672cce",
+    "docs/runtime_contracts.md": "50e68f3b218ba1682bd62876a4118a04623e785bb06de8400bf5635a318e0cb5"
+  },
+  "project_id": "9439fc224002",
+  "promotion_rights": "propose",
+  "quiet_sessions": 0,
+  "reflection_buffer": {
+    "active_count": 0,
+    "last_mined": null
+  },
+  "review_log": [],
+  "session_anchor": {
+    "branch": "claude/order-001-p0",
+    "epoch": 1783604202.811722,
+    "head": "6de600dfd1eab15f6b30b96464ad9e59d1638d6f",
+    "ts": "2026-07-09T13:36:42+00:00"
+  },
+  "session_count": 0,
+  "slot_values": {
+    "architecture_layers": {
+      "question_id": "Q-004",
+      "source": "user",
+      "value": "Layered research pipeline: data/ (raw + cached market data, daily and hourly bars for tech stocks and gold/silver) -> src/ (strategy, backtest engine, validation) -> tests/. Import rule: src/ never imports from tests/; strategies depend on the backtest engine, never the reverse; nothing imports broker or order-execution libraries \u2014 this is a research-only lab, no live trading code anywhere."
+    },
+    "doc_roots": {
+      "question_id": "Q-007",
+      "source": "user",
+      "value": "docs"
+    },
+    "drift_resolution": {
+      "question_id": "Q-011",
+      "source": "user",
+      "value": "Adopt-time state: planted docs were unrendered and CI unwired. Fix: answer the interview slots, run bootstrap.py render --live, install .substrate/ci/substrate-gate.yml into .github/workflows/, and engage the session loop (session-start/session-close). Ongoing: whenever check --strict flags drift, fix docs in the same session before closing."
+    },
+    "integration_mode": {
+      "question_id": "Q-001",
+      "source": "user",
+      "value": "active"
+    },
+    "mutation_seam": {
+      "question_id": "Q-009",
+      "source": "user",
+      "value": "Writes are gated by git + CI: all changes land via commits on feature branches checked by the substrate gate (bootstrap.py check --strict) and pytest in GitHub Actions. Data caches are written only by the data-loading module. The lab never mutates external systems \u2014 research only, no broker or money APIs, no live orders ever."
+    },
+    "new_area_ownership": {
+      "question_id": "Q-013",
+      "source": "user",
+      "value": "New areas default to owner menno420 with src/ as the owning component; planned P0 areas are src/ (strategy + backtest code), tests/ (pytest suite), data/ (cached market data owned by the data-loading module). Any new area must get an ownership entry in docs/ownership.md in the PR that creates it."
+    },
+    "owner_profile": {
+      "question_id": "Q-008",
+      "source": "user",
+      "value": "Owner: menno420 (mennovanhattum@gmail.com). Prefers an autonomous lab: agents decide-and-flag rather than block on questions, keep reports concise and evidence-based, follow the binding methodology in docs/founding-plan.md (walk-forward validation, locked 18-month holdout, realistic costs, no lookahead, multiple-testing discipline, buy-and-hold benchmark). Hard rule: research only \u2014 never connect to brokers or real money."
+    },
+    "ownership_model": {
+      "question_id": "Q-006",
+      "source": "user",
+      "value": "Single-owner project: menno420 owns all components. src/ owns all computation; data/ is owned by the data-loading module in src/ (only it writes cached datasets); docs/ is owned by whoever changes behavior (docs update in the same PR); control/ follows the fleet protocol in control/README.md \u2014 control/inbox.md is manager-owned (never edited by this project), control/status.md is project-owned."
+    },
+    "primary_language": {
+      "question_id": "Q-003",
+      "source": "user",
+      "value": "Python 3.11+ (pandas, pytest)"
+    },
+    "project_name": {
+      "question_id": "Q-002",
+      "source": "user",
+      "value": "trading-lab"
+    },
+    "review_ritual": {
+      "question_id": "Q-010",
+      "source": "user",
+      "value": "Fleet protocol: orders arrive in control/inbox.md (manager-owned), the project reports in control/status.md. Work lands on claude/* feature branches; forward-only git (no force push, no amending pushed commits); PRs gated by GitHub Actions (substrate gate check --strict plus pytest). Releases are informal \u2014 main is the source of truth for research results."
+    },
+    "staleness_review": {
+      "question_id": "Q-012",
+      "source": "user",
+      "value": "Fresh adoption (session 1): substrate-kit v1.1.0 was just adopted on top of the initial scaffold (README, docs/founding-plan.md, control/ fleet files). Nothing is stale yet; reconciliation cadence starts from this session."
+    },
+    "verify_command": {
+      "question_id": "Q-005",
+      "source": "user",
+      "value": "python3 -m pytest -q"
+    }
+  },
+  "slots": {
+    "architecture_layers": "filled",
+    "doc_roots": "filled",
+    "drift_resolution": "filled",
+    "integration_mode": "filled",
+    "mutation_seam": "filled",
+    "new_area_ownership": "filled",
+    "owner_profile": "filled",
+    "ownership_model": "filled",
+    "primary_language": "filled",
+    "project_name": "filled",
+    "review_ritual": "filled",
+    "staleness_review": "filled",
+    "verify_command": "filled"
+  },
+  "stage": "integration",
+  "stance": "analysis",
+  "version": 1
+}
