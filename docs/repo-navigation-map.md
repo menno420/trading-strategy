@@ -19,6 +19,8 @@
 | `control/` | fleet bus: inbox (manager-owned), status (project-owned) | never — protocol files only |
 | `data/` | cached OHLCV (csv.gz), raw incl. holdout bars | via `scripts/fetch_data.py` only |
 | `docs/` | plans, guides, results, retro | any doc (badge + link it) |
+| `docs/succession/` | gen-1 → gen-2 handoff docs (next-boot, queue, instructions, env spec, feedback) | succession/handoff material at a generation boundary |
+| `environments/` | tested environment setup scripts (paste-ready for the platform env config) | changes to how sessions are provisioned |
 
 ## Documentation roots
 
