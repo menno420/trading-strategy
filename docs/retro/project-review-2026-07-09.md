@@ -1,6 +1,6 @@
 # trading-lab · project review + wake-up pass — 2026-07-09
 
-> **Status:** owner-facing review per the wake-up ORDER (full self-review pass). Written by the project coordinator session; facts verified against the repo and the platform event log at 2026-07-09T17:04:36Z, not from memory. Companion: [self-review-2026-07-09.md](self-review-2026-07-09.md) (retro answers by ID).
+> **Status:** `audit` — owner-facing review per the wake-up ORDER (full self-review pass). Written by the project coordinator session; facts verified against the repo and the platform event log at 2026-07-09T17:04:36Z, not from memory. Companion: [self-review-2026-07-09.md](self-review-2026-07-09.md) (retro answers by ID).
 
 ## (a) What this Project is, and its TRUE current state
 

@@ -1,6 +1,6 @@
 # trading-lab · gen-1 self-review — 2026-07-09
 
-> **Status:** answers to [QUESTIONS.md](QUESTIONS.md) per ORDER 003. Written by the project coordinator session on behalf of gen-1 (builder session, DOA successor, coordinator + subagents). Evidence: PRs #1–#3, commits on `main`, and the platform event log (session transcripts audited 2026-07-09). Honest > flattering; "I don't know" where true.
+> **Status:** `audit` — answers to [QUESTIONS.md](QUESTIONS.md) per ORDER 003. Written by the project coordinator session on behalf of gen-1 (builder session, DOA successor, coordinator + subagents). Evidence: PRs #1–#3, commits on `main`, and the platform event log (session transcripts audited 2026-07-09). Honest > flattering; "I don't know" where true.
 
 ## A. Work & correctness
 
