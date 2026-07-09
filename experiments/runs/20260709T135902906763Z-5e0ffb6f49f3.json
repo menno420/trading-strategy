@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2503750759881207,
+    "max_drawdown": -0.7639908308825444,
+    "n_bars": 3180,
+    "n_trades": 1,
+    "sharpe": 0.7565094998122481,
+    "sortino": 0.773033570694168,
+    "total_return": 15.770896171028816,
+    "turnover_per_year": 0.07924528301886792,
+    "win_rate": 1.0
+  },
+  "config_hash": "5e0ffb6f49f3",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-09T13:59:02+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2012-05-18 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "f7fe1f3e23bcd81bb8ef9a46ce5de30d6b69bdc4",
+  "instrument": "META",
+  "metrics": {
+    "cagr": 0.2547907355653718,
+    "max_drawdown": -0.361888857568085,
+    "n_bars": 3180,
+    "n_trades": 61,
+    "sharpe": 0.8928104201826264,
+    "sortino": 0.8209144647731547,
+    "total_return": 16.533796959872355,
+    "turnover_per_year": 4.833962264150943,
+    "win_rate": 0.6129032258064516
+  },
+  "n_bars": 3180,
+  "notes": "P0 baseline run, default params, dev period (pre-holdout)",
+  "params": {
+    "fast": 20,
+    "slow": 50
+  },
+  "run_id": "20260709T135902906763Z-5e0ffb6f49f3",
+  "schema_version": 1,
+  "strategy": "sma_crossover",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

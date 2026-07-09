@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.18277329617606042,
+    "max_drawdown": -0.435371916777587,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.7546852072703625,
+    "sortino": 0.7683881733429755,
+    "total_return": 11.394624375794688,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "815384d0266a",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-09T13:59:02+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "f7fe1f3e23bcd81bb8ef9a46ce5de30d6b69bdc4",
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.07457860129445826,
+    "max_drawdown": -0.4353719167775868,
+    "n_bars": 3779,
+    "n_trades": 26,
+    "sharpe": 0.49577397433986103,
+    "sortino": 0.30254508703355626,
+    "total_return": 1.9406873839457415,
+    "turnover_per_year": 1.7337920084678486,
+    "win_rate": 0.9230769230769231
+  },
+  "n_bars": 3779,
+  "notes": "P0 baseline run, default params, dev period (pre-holdout)",
+  "params": {
+    "overbought": 70,
+    "oversold": 30,
+    "period": 14
+  },
+  "run_id": "20260709T135902831109Z-815384d0266a",
+  "schema_version": 1,
+  "strategy": "rsi_mean_reversion",
+  "timeframe": "daily",
+  "variants_tried": 1
+}
