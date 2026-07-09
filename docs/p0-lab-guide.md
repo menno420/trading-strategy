@@ -40,7 +40,8 @@ from trading_lab.strategies import STRATEGIES
 from trading_lab import metrics, ledger
 
 ohlcv = load_ohlcv("AAPL", "daily")            # holdout excluded
-pos = STRATEGIES["sma_crossover"](ohlcv, fast=20, slow=50)
+strategy = STRATEGIES["sma_crossover"]
+pos = strategy(ohlcv, fast=20, slow=50)
 result = run_backtest(ohlcv, pos, timeframe="daily")
 print(metrics.compute_all(result))
 
