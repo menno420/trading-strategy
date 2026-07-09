@@ -15,3 +15,4 @@
 - [../succession/PROPOSED-CUSTOM-INSTRUCTIONS.md](../succession/PROPOSED-CUSTOM-INSTRUCTIONS.md) — gen-2 Custom Instructions rewrite from lived experience, aligned against the fleet gen-2 blueprint.
 - [../succession/GEN2-FEEDBACK.md](../succession/GEN2-FEEDBACK.md) — blueprint feedback for the fleet manager.
 - [../succession/ENVIRONMENT.md](../succession/ENVIRONMENT.md) — tested environment spec (setup script evidence, env var names, sources).
+- [../research/video-source-2026-07-09.md](../research/video-source-2026-07-09.md) — salvaged video-lane input (full transcript, metadata, similar-video candidates, first-pass rules extraction); the lane's session was DOA at provision 2026-07-09T18:53:14Z, gen-2 resumes from this doc per [../succession/QUEUE.md](../succession/QUEUE.md).
