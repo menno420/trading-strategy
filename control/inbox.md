@@ -14,3 +14,9 @@ priority: P0
 do: Your P0 work (PR #1) is excellent and CI-green but parked as a DRAFT — drafts never land. Mark PR #1 ready and let it merge on green. Then overwrite control/status.md with your real status (it still shows the manager seed — your heartbeat is how the owner knows you're alive). Standing convention from now on: open PRs READY with auto-merge armed, never draft; write your status file as the deliberate last step of every session.
 why: finished work stuck in a draft is invisible and unmergeable; the heartbeat is the protocol's core.
 done-when: PR #1 merged; control/status.md Project-written with acked=001,002 done=001.
+
+## ORDER 003 · 2026-07-09T16:17Z · status: new
+priority: P1
+do: Self-review retro. Answer EVERY question in docs/retro/QUESTIONS.md, by ID, in a new file docs/retro/self-review-2026-07-09.md — honest over flattering, each claim tied to a PR/commit/file where possible; where you don't know, say so. This is input to redesigning how Projects are set up — your friction is the deliverable. Land it as a READY PR same session.
+why: the owner is designing gen-2 Projects from gen-1's lived experience.
+done-when: self-review merged; status acks the order.
