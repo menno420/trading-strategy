@@ -48,9 +48,10 @@ new strategies.
 
 ## Close-out
 
-**Done:** trend-following lane swept end-to-end and shipped as a READY PR on
-branch `claude/p1-trend-following-daily`; claim file deleted + status
-heartbeat overwritten in the follow-up PR after merge (lane complete).
+**Done:** trend-following lane swept end-to-end and shipped as READY PR #6
+(squash-merged green, main 51af45d); claim file deleted + status heartbeat
+overwritten in this follow-up PR on `claude/p1-lane-complete-status`
+(lane complete — deliberate last step per control/README.md).
 
 **Verify:** `python3 -m pytest -q` → 86 passed; `python3 bootstrap.py check
 --strict --require-session-log --session-log
