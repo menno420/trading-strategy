@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.26328655934387113,
+    "max_drawdown": -0.557692284578402,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8638800519755336,
+    "sortino": 0.8727857658651618,
+    "total_return": 32.275558046263065,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "5dbc77048892",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-09T17:21:51+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "beb3254493de0ddd3ec7cacc6224b9aa2e643697",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.22579521725581086,
+    "max_drawdown": -0.30912433163871933,
+    "n_bars": 3779,
+    "n_trades": 23,
+    "sharpe": 0.9204702512023283,
+    "sortino": 0.8061294015264489,
+    "total_return": 20.179610689086477,
+    "turnover_per_year": 1.533739084413866,
+    "win_rate": 0.5833333333333334
+  },
+  "n_bars": 3779,
+  "notes": "P1 trend-following sweep: top full-dev-period variant of 44 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-following-daily/sma_crossover__AMZN.json)",
+  "params": {
+    "fast": 15,
+    "slow": 200
+  },
+  "run_id": "20260709T172151812133Z-5dbc77048892",
+  "schema_version": 1,
+  "strategy": "sma_crossover",
+  "timeframe": "daily",
+  "variants_tried": 44
+}

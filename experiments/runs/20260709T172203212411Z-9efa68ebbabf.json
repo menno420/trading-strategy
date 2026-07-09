@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2503750759881207,
+    "max_drawdown": -0.7639908308825444,
+    "n_bars": 3180,
+    "n_trades": 1,
+    "sharpe": 0.7565094998122481,
+    "sortino": 0.773033570694168,
+    "total_return": 15.770896171028816,
+    "turnover_per_year": 0.07924528301886792,
+    "win_rate": 1.0
+  },
+  "config_hash": "9efa68ebbabf",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-09T17:22:03+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2012-05-18 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "beb3254493de0ddd3ec7cacc6224b9aa2e643697",
+  "instrument": "META",
+  "metrics": {
+    "cagr": 0.10208585844058371,
+    "max_drawdown": -0.6792347805851058,
+    "n_bars": 3180,
+    "n_trades": 190,
+    "sharpe": 0.49041690379748804,
+    "sortino": 0.38716368369082116,
+    "total_return": 2.4097184368640523,
+    "turnover_per_year": 15.056603773584905,
+    "win_rate": 0.4
+  },
+  "n_bars": 3180,
+  "notes": "P1 trend-following sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-following-daily/macd__META.json)",
+  "params": {
+    "fast": 12,
+    "signal": 13,
+    "slow": 50
+  },
+  "run_id": "20260709T172203212411Z-9efa68ebbabf",
+  "schema_version": 1,
+  "strategy": "macd",
+  "timeframe": "daily",
+  "variants_tried": 48
+}

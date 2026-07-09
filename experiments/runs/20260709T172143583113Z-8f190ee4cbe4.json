@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.18277329617606042,
+    "max_drawdown": -0.435371916777587,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.7546852072703625,
+    "sortino": 0.7683881733429755,
+    "total_return": 11.394624375794688,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "8f190ee4cbe4",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-09T17:21:43+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "beb3254493de0ddd3ec7cacc6224b9aa2e643697",
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.13937029467581064,
+    "max_drawdown": -0.32261597180984514,
+    "n_bars": 3779,
+    "n_trades": 25,
+    "sharpe": 0.7141570066470982,
+    "sortino": 0.603909845882105,
+    "total_return": 6.075359745463461,
+    "turnover_per_year": 1.6671077004498545,
+    "win_rate": 0.6153846153846154
+  },
+  "n_bars": 3779,
+  "notes": "P1 trend-following sweep: top full-dev-period variant of 44 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-following-daily/sma_crossover__GOOGL.json)",
+  "params": {
+    "fast": 20,
+    "slow": 150
+  },
+  "run_id": "20260709T172143583113Z-8f190ee4cbe4",
+  "schema_version": 1,
+  "strategy": "sma_crossover",
+  "timeframe": "daily",
+  "variants_tried": 44
+}

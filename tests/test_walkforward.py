@@ -63,6 +63,17 @@ class TestWalkForward:
         assert out["oos_equity"].iloc[-1] == pytest.approx(
             (1 + out["oos_returns"]).prod())
 
+    def test_explicit_variant_list_grid(self, random_walk):
+        # Constraint-filtered grids are passed as an explicit list of param
+        # dicts (e.g. fast < slow only); walk_forward must use them verbatim.
+        variants = [{"fast": 5, "slow": 20}, {"fast": 10, "slow": 40}]
+        out = walk_forward(random_walk, sma_crossover.generate, variants,
+                           train_size=120, test_size=40)
+        n_splits = len(out["splits"])
+        assert out["variants_tried"] == len(variants) * n_splits
+        for s in out["splits"]:
+            assert s["params"] in variants
+
     def test_empty_grid_rejected(self, random_walk):
         with pytest.raises(ValueError, match="grid"):
             walk_forward(random_walk, sma_crossover.generate, {},

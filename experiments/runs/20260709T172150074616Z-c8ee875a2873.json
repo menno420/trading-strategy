@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.18277329617606042,
+    "max_drawdown": -0.435371916777587,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.7546852072703625,
+    "sortino": 0.7683881733429755,
+    "total_return": 11.394624375794688,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "c8ee875a2873",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-09T17:21:50+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "beb3254493de0ddd3ec7cacc6224b9aa2e643697",
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.09158575970369243,
+    "max_drawdown": -0.44666253961845037,
+    "n_bars": 3779,
+    "n_trades": 59,
+    "sharpe": 0.5407307481181112,
+    "sortino": 0.44324718471677527,
+    "total_return": 2.721490359975031,
+    "turnover_per_year": 3.9343741730616566,
+    "win_rate": 0.5666666666666667
+  },
+  "n_bars": 3779,
+  "notes": "P1 trend-following sweep: top full-dev-period variant of 41 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-following-daily/donchian__GOOGL.json)",
+  "params": {
+    "entry": 30,
+    "exit": 30
+  },
+  "run_id": "20260709T172150074616Z-c8ee875a2873",
+  "schema_version": 1,
+  "strategy": "donchian",
+  "timeframe": "daily",
+  "variants_tried": 41
+}
