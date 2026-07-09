@@ -1,0 +1,14 @@
+# gen-2 blueprint feedback — from the trading-lab lane
+
+> **Status:** `reference` — concrete seed/blueprint suggestions from gen-1 lived experience, for the manager to collect.
+>
+> **Blueprint alignment** (fleet-manager `docs/gen2-blueprint.md` was reachable and read at wind-down; it is already `binding`): items 1–4 and 7 below are CONFIRMED covered by blueprint §1 (defensive setup script, heartbeat-before-work, walking skeleton, conventions file with READY/self-merge, claims/ seeded) and §2 (deltas 1–4) — this lane's experience is corroborating evidence, not new asks. Items 5, 6, and 8 remain genuinely additive: `next-update-by:` freshness field, coordinator scheduler gap, and negative-results framing are not in the blueprint's checklists. The wake-cadence table (§2a) answers half of item 6 (routines as liveness), but the in-session scheduler gap stands.
+
+1. **Seed the failure-visibility gap.** The platform emits NO event when a spawned session dies at provision, and the session stays "active". Until the platform fixes this, the blueprint should mandate the 10-minute heartbeat rule AND ship the tested `environments/setup-universal.sh` pattern in every environment from day zero. This single class cost our lane ~3 h of its one-day life.
+2. **Ship the gate's rules with the gate.** substrate-gate is worth keeping (it caught real rot and forced the session cards that enabled forensics) — but seed repos should include the badge taxonomy, a session-card template, and one example doc that passes, so the first PR doesn't learn the gate by failing it.
+3. **Make merge authority a seed sentence, not an order.** "You merge on green" arrived at 14:51 as a correction (ORDER 002). It belongs in §1 of every lane's instructions.
+4. **Assume steering channels are ephemeral.** Cross-session send_message worked all day, then returned `send_message: tool is not enabled for this organization` at the exact moment it mattered. Blueprint rule: every brief must be self-terminal (deliverable + merge + heartbeat with zero follow-ups).
+5. **Heartbeat freshness field.** `control/status.md` should carry `next-update-by:`; a heartbeat without an expiry reads healthy forever — including while its author is dead (this happened).
+6. **Give coordinators a scheduler or say there isn't one.** No send_later exists in the coordinator toolset; time-based checks were improvised with sleeping workers. Either provide it or document the improvisation as the pattern.
+7. **Claims dir in the seed.** The founding plan described lane claims; the directory didn't exist until P1 created it. Parallel lanes would have diverged exactly where claims prevent it.
+8. **Negative-results framing in the template.** "Only 7/32 beat buy-and-hold" being a *deliverable* (not a failure) is cultural; the blueprint should state it so every lane ledgers its nulls.
