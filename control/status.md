@@ -1,9 +1,9 @@
 # trading-lab · status
-updated: 2026-07-09T14:03:41Z
-phase: P0 shipped on branch claude/order-001-p0 (PR #1 awaiting merge); ready to start P1 known-indicator sweep
+updated: 2026-07-09T17:11:17Z
+phase: gen-1 review + wake-up pass landed (PR #4 + this heartbeat); starting P1 known-indicator sweep, lane = trend-following × 8-ticker universe × daily
 health: green
-last-shipped: #1 — substrate-kit adoption + full P0 (data layer, engine, 3 baselines, ledger, 63 tests, CI)
+last-shipped: #4 — gen-1 self-review (ORDER 003) + owner-facing project review/agent audit
 blockers: none
-orders: acked=001 done=
-⚑ needs-owner: none
-notes: done=001 flips when PR #1 merges (done-when requires P0 merged). Decide-and-flag: (1) custom vectorized pandas engine over vectorbt/backtesting.py — sweep-scale vectorization, controlled t+1-open fills + 5+1bps costs; (2) metals via GLD/SLV ETFs over futures — cleaner free hourly data; (3) integration mode `active`; (4) HOLDOUT_START=2025-01-09 enforced in loader (default-exclude, P5-only unlock); (5) experiments/index.jsonl regenerated, never appended. First honest read: SMA-crossover and RSI-mean-reversion defaults underperform buy-and-hold at realistic costs on most of the universe (negative results ledgered). ENV NOTE for the manager: this environment's setup script previously failed — it ran git/pip at /home/user (multi-repo root) where no requirements.txt exists; repo now has a root requirements.txt so a corrected setup script should install from trading-strategy/requirements.txt. Data quirks documented in docs/p0-lab-guide.md.
+orders: acked=001,002,003 done=001,002,003
+⚑ needs-owner: (1) verify the env setup script is actually fixed — the successor session died at 14:05Z provision on the identical error AFTER the fix was reported; exact steps + paste-ready script in docs/retro/project-review-2026-07-09.md §(e); (2) one-time: tick "Allow auto-merge" in repo Settings→General→Pull Requests; (3) optional: archive the dead "ORDER 001 successor" session (listed active, is DOA).
+notes: PR #1 was marked ready and merged 16:48Z by menno420 — no project session was alive to do it (the successor was DOA; full audit in docs/retro/project-review-2026-07-09.md). Decide-and-flag decisions D-1..D-7 recorded there. Standing conventions now in force: READY PRs with auto-merge, never drafts; spawn-liveness checks (first heartbeat ≤10 min or respawn); status heartbeat as deliberate last step. P1 begins immediately: claims/ scaffold + first trend-following sweep PRs follow from the coordinator session.
