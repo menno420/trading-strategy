@@ -8,12 +8,19 @@
 
 ## Stability baseline
 
-(Describe the accepted-stable baseline once established — what is known-good and
-should not be re-audited without a reported regression.)
+P0 scaffold (2026-07-09): `src/trading_lab/` (config, data, engine, metrics,
+strategies, ledger, walkforward) with the full offline pytest suite green and
+the substrate gate green. Engine execution model and holdout policy are
+documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
+(`HOLDOUT_START = 2025-01-09`) is enforced in `trading_lab.data.load_ohlcv`.
 
 ## In flight
 
 (Verify against live source control — this section is a dated snapshot.)
+
+- Branch `claude/order-001-p0`: P0 build (ORDER 001) — data cache committed
+  (8 tickers × daily since 2010 + hourly ~2.9y), 3 baseline strategies,
+  first 24 baseline ledger runs on daily dev data.
 
 ## Recently shipped (newest first)
 

@@ -18,7 +18,10 @@ Single-owner project: menno420 owns all components. src/ owns all computation; d
 
 | Area | Owner (module / service) | Writes it owns | Notes |
 |---|---|---|---|
-| (one row per owned area) | | | |
+| src/ | menno420 / `trading_lab` package | all strategy, engine, validation and ledger code | research only — no broker or execution libs, ever |
+| tests/ | menno420 / pytest suite | tests + committed fixtures under tests/fixtures/ | offline: no network in tests |
+| data/ | `trading_lab.data` (only writer) | cached OHLCV under data/{timeframe}/{ticker}.csv.gz | written only via scripts/fetch_data.py → data.save_cache; raw cache may hold holdout bars, read only through data.load_ohlcv |
+| experiments/ | `trading_lab.ledger` (only writer) | one JSON per run under experiments/runs/; regenerated index.jsonl | one-file-per-run = conflict-free for parallel sessions |
 
 ## New areas
 
