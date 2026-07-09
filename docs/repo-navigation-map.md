@@ -9,7 +9,16 @@
 
 | Path | What lives there | New code goes here when… |
 |---|---|---|
-| (one row per top-level area) | | |
+| `src/trading_lab/` | the lab package: data, engine, metrics, strategies, sweeps, ledger, walkforward | any reusable research code |
+| `src/trading_lab/strategies/` | one module per strategy, registered in `STRATEGIES` | adding a strategy |
+| `scripts/` | runnable entry points (fetch, baselines, sweeps) | a new runnable workflow |
+| `tests/` | offline pytest suite | always, alongside the code it tests |
+| `experiments/runs/` | one ledger JSON per recorded run (index regenerated) | via `trading_lab.ledger` |
+| `experiments/sweeps/` | aggregate per-lane sweep files (per-variant rows) | a sweep too big for one-file-per-run |
+| `claims/` | lane claims for parallel sessions (protocol: `claims/README.md`) | claiming/finishing a lane |
+| `control/` | fleet bus: inbox (manager-owned), status (project-owned) | never — protocol files only |
+| `data/` | cached OHLCV (csv.gz), raw incl. holdout bars | via `scripts/fetch_data.py` only |
+| `docs/` | plans, guides, results, retro | any doc (badge + link it) |
 
 ## Documentation roots
 

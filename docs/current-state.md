@@ -18,13 +18,19 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Verify against live source control — this section is a dated snapshot.)
 
-- Branch `claude/order-001-p0`: P0 build (ORDER 001) — data cache committed
-  (8 tickers × daily since 2010 + hourly ~2.9y), 3 baseline strategies,
-  first 24 baseline ledger runs on daily dev data.
+- Branch `claude/p1-trend-following-daily`: P1 sweep, lane
+  `trend-following__all8__daily` (claim in `claims/`).
 
 ## Recently shipped (newest first)
 
 (Merged work only, newest first.)
+
+- P1 trend-following sweep (2026-07-09): 4 strategies (SMA/EMA/MACD/Donchian),
+  177 variants × 8 tickers, walk-forward OOS vs buy-and-hold — results and
+  honest read in [p1-trend-following-results.md](p1-trend-following-results.md);
+  lane-claim protocol scaffolded in `claims/`.
+- P0 scaffold + baselines, gen-1 retro (PR #1, #4) — see
+  [p0-lab-guide.md](p0-lab-guide.md) and [retro/](retro/README.md).
 
 ## Review rhythm
 

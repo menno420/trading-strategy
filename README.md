@@ -15,3 +15,7 @@ touches real money or credentials. Anything money-adjacent goes to ⚑ needs-own
   (anti-overfitting is the core discipline), data policy, experiment ledger, roadmap.
 - **[control/README.md](control/README.md)** — fleet coordination protocol: how orders
   arrive (`control/inbox.md`) and how this Project reports back (`control/status.md`).
+- **[claims/README.md](claims/README.md)** — lane-claim protocol for parallel sessions:
+  one claim file per lane (strategy-family × instrument-set × timeframe).
+- **[docs/p1-trend-following-results.md](docs/p1-trend-following-results.md)** — first
+  P1 sweep results (trend-following × 8 tickers × daily).
