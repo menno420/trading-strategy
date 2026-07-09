@@ -51,6 +51,84 @@ class TestSmaCrossover:
             STRATEGIES["sma_crossover"](random_walk, fast=50, slow=20)
 
 
+class TestEmaCrossover:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["ema_crossover"](random_walk, fast=10, slow=30)
+        assert (pos.iloc[:30] == 0.0).all()
+
+    def test_long_in_uptrend_flat_in_downtrend(self):
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        down = make_ohlcv(np.linspace(200, 100, 120))
+        pos_up = STRATEGIES["ema_crossover"](up, fast=10, slow=30)
+        pos_down = STRATEGIES["ema_crossover"](down, fast=10, slow=30)
+        assert (pos_up.iloc[40:] == 1.0).all()
+        assert (pos_down.iloc[40:] == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="fast"):
+            STRATEGIES["ema_crossover"](random_walk, fast=50, slow=20)
+
+
+class TestMacd:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["macd"](random_walk, fast=12, slow=26, signal=9)
+        assert (pos.iloc[:35] == 0.0).all()  # slow + signal bars
+
+    def test_long_after_turn_up_flat_after_turn_down(self):
+        # V shape: MACD line crosses above its signal after the trend turns
+        # up, and below after it turns down (inverted V).
+        v = make_ohlcv(np.concatenate([np.linspace(200, 100, 80),
+                                       np.linspace(100, 220, 80)]))
+        iv = make_ohlcv(np.concatenate([np.linspace(100, 220, 80),
+                                        np.linspace(220, 100, 80)]))
+        pos_v = STRATEGIES["macd"](v, fast=12, slow=26, signal=9)
+        pos_iv = STRATEGIES["macd"](iv, fast=12, slow=26, signal=9)
+        assert (pos_v.iloc[100:] == 1.0).all()   # long once uptrend confirmed
+        assert (pos_iv.iloc[100:] == 0.0).all()  # flat once downtrend confirmed
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="fast"):
+            STRATEGIES["macd"](random_walk, fast=26, slow=12)
+        with pytest.raises(ValueError, match="signal"):
+            STRATEGIES["macd"](random_walk, fast=12, slow=26, signal=0)
+
+
+class TestDonchian:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["donchian"](random_walk, entry=20, exit=10)
+        assert (pos.iloc[:20] == 0.0).all()
+
+    def test_enters_on_breakout_exits_on_breakdown(self):
+        prices = np.concatenate([
+            np.full(30, 100.0),          # flat base
+            np.linspace(100, 130, 20),   # breakout above 30-bar channel high
+            np.full(10, 130.0),
+            np.linspace(130, 90, 20),    # breakdown below exit-channel low
+            np.full(10, 90.0),
+        ])
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["donchian"](ohlcv, entry=20, exit=10)
+        assert pos.loc[ohlcv.index[45]] == 1.0  # long during the breakout leg
+        assert pos.loc[ohlcv.index[75]] == 0.0  # exited during the breakdown
+
+    def test_own_bar_never_triggers_breakout(self):
+        # A single spike bar: its own high must not create the channel it
+        # breaks (channel is shifted one bar).
+        prices = np.full(60, 100.0)
+        prices[40] = 150.0
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["donchian"](ohlcv, entry=20, exit=10)
+        assert pos.loc[ohlcv.index[40]] == 1.0   # close 150 > prior 20-bar high
+        prior = STRATEGIES["donchian"](ohlcv.iloc[:40], entry=20, exit=10)
+        assert (prior == 0.0).all()              # nothing before the spike
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="exit"):
+            STRATEGIES["donchian"](random_walk, entry=20, exit=30)
+        with pytest.raises(ValueError, match="entry"):
+            STRATEGIES["donchian"](random_walk, entry=1, exit=1)
+
+
 class TestRsiMeanReversion:
     def test_enters_after_selloff_exits_after_rally(self):
         prices = np.concatenate([

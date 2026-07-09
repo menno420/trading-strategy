@@ -53,14 +53,20 @@ def generate_splits(n_bars: int, train_size: int, test_size: int,
     return splits
 
 
-def _param_grid(grid: dict[str, Iterable]) -> list[dict]:
+def _param_grid(grid: dict[str, Iterable] | list[dict]) -> list[dict]:
+    """Expand a ``{param: values}`` grid to its cartesian product, or pass an
+    explicit list of param dicts through unchanged (for grids with constraints
+    such as fast < slow, where the full product contains invalid combos)."""
     if not grid:
         raise ValueError("empty parameter grid")
+    if isinstance(grid, list):
+        return list(grid)
     keys = list(grid)
     return [dict(zip(keys, combo)) for combo in product(*(grid[k] for k in keys))]
 
 
-def walk_forward(ohlcv: pd.DataFrame, strategy_fn: Callable, grid: dict[str, Iterable],
+def walk_forward(ohlcv: pd.DataFrame, strategy_fn: Callable,
+                 grid: dict[str, Iterable] | list[dict],
                  train_size: int, test_size: int, step: int | None = None, *,
                  timeframe: str = "daily",
                  slippage_bps: float = config.DEFAULT_SLIPPAGE_BPS,
