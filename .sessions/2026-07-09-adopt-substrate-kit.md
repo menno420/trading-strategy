@@ -1,8 +1,8 @@
 # 2026-07-09 — Adopt substrate-kit v1.1.0 (ORDER 001, Phase A)
 
-> **Status:** `in-progress`
+> **Status:** `complete`
 
-📊 Model: claude-agent · high · integration
+📊 Model: claude-agent · high · feature build
 
 💡 **Session idea:** Adopt substrate-kit v1.1.0 into trading-lab so the engagement gate (`python3 bootstrap.py check --strict`) goes green: plant + render the workflow docs, wire the CI gate, and engage the session loop.
 
@@ -22,4 +22,8 @@ First substrate session — no previous session card exists. Prior repo state wa
 
 ## Close-out
 
-(Pending — filled at session-close.)
+**Done:** substrate-kit v1.1.0 adopted end-to-end. All 13 interview slots answered and rendered (no banners, no ${...} slots), mode set to active, founding-plan linked into the read-path, CI gate installed at .github/workflows/substrate-gate.yml, session loop engaged with this card. `python3 bootstrap.py check --strict` exits 0.
+
+**Verify:** `python3 bootstrap.py check --strict` -> exit 0. (`python3 -m pytest -q` becomes meaningful once P0 adds src/ and tests/.)
+
+**Next (guard recipe for the P0 build session):** create src/, tests/, data/, requirements.txt and a pytest CI workflow; add ownership entries for the new areas in docs/ownership.md and keep new docs reachable from docs/AGENT_ORIENTATION.md, or check --strict will flag orphans. Each future session needs a card here with the Status badge, session idea, previous-session review, and Model line markers.
