@@ -1,0 +1,33 @@
+# substrate-kit enforcement gate (LIVE — installed by `bootstrap.py adopt --wire-enforcement`).
+# Holds the merge red until the session journal is written and every
+# hygiene check passes. Edit `paths-ignore` / add a label carve-out if
+# some PRs legitimately need no session card.
+name: substrate-gate
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  substrate-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: substrate gate (docs + session-log required)
+        # Gate on the session card THIS PR/push touches (CI flattens
+        # mtimes, so the engine's newest-by-mtime guess is unreliable
+        # here). No card in the diff -> no --session-log argument ->
+        # the engine's mtime fallback (fail-open).
+        run: |
+          if [ -n "${{ github.base_ref }}" ]; then
+            range="origin/${{ github.base_ref }}...HEAD"
+          else
+            range="${{ github.event.before }}..${{ github.sha }}"
+          fi
+          card="$(git diff --name-only --diff-filter=d "$range" -- '.sessions/*.md' ':!.sessions/README.md' 2>/dev/null | tail -1)"
+          echo "session gate card: ${card:-<none - mtime fallback>}"
+          python3 bootstrap.py check --strict --require-session-log ${card:+--session-log "$card"}

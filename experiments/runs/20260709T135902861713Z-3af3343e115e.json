@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.26328655934387113,
+    "max_drawdown": -0.557692284578402,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8638800519755336,
+    "sortino": 0.8727857658651618,
+    "total_return": 32.275558046263065,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "3af3343e115e",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-09T13:59:02+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "f7fe1f3e23bcd81bb8ef9a46ce5de30d6b69bdc4",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.10679442202057388,
+    "max_drawdown": -0.5503472430292262,
+    "n_bars": 3779,
+    "n_trades": 77,
+    "sharpe": 0.5265926147443903,
+    "sortino": 0.4446061682119193,
+    "total_return": 3.5796211997227143,
+    "turnover_per_year": 5.134691717385552,
+    "win_rate": 0.48717948717948717
+  },
+  "n_bars": 3779,
+  "notes": "P0 baseline run, default params, dev period (pre-holdout)",
+  "params": {
+    "fast": 20,
+    "slow": 50
+  },
+  "run_id": "20260709T135902861713Z-3af3343e115e",
+  "schema_version": 1,
+  "strategy": "sma_crossover",
+  "timeframe": "daily",
+  "variants_tried": 1
+}
