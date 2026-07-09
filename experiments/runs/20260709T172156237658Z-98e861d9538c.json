@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.26328655934387113,
+    "max_drawdown": -0.557692284578402,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8638800519755336,
+    "sortino": 0.8727857658651618,
+    "total_return": 32.275558046263065,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "98e861d9538c",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-09T17:21:56+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "beb3254493de0ddd3ec7cacc6224b9aa2e643697",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.13741464554309046,
+    "max_drawdown": -0.38769145120585,
+    "n_bars": 3779,
+    "n_trades": 340,
+    "sharpe": 0.6666741724591642,
+    "sortino": 0.5377670610431607,
+    "total_return": 5.895413899358818,
+    "turnover_per_year": 22.672664726118022,
+    "win_rate": 0.4764705882352941
+  },
+  "n_bars": 3779,
+  "notes": "P1 trend-following sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-following-daily/macd__AMZN.json)",
+  "params": {
+    "fast": 8,
+    "signal": 9,
+    "slow": 21
+  },
+  "run_id": "20260709T172156237658Z-98e861d9538c",
+  "schema_version": 1,
+  "strategy": "macd",
+  "timeframe": "daily",
+  "variants_tried": 48
+}

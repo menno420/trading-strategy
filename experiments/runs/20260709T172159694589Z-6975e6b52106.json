@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2503750759881207,
+    "max_drawdown": -0.7639908308825444,
+    "n_bars": 3180,
+    "n_trades": 1,
+    "sharpe": 0.7565094998122481,
+    "sortino": 0.773033570694168,
+    "total_return": 15.770896171028816,
+    "turnover_per_year": 0.07924528301886792,
+    "win_rate": 1.0
+  },
+  "config_hash": "6975e6b52106",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-09T17:21:59+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2012-05-18 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "beb3254493de0ddd3ec7cacc6224b9aa2e643697",
+  "instrument": "META",
+  "metrics": {
+    "cagr": 0.3092127784205856,
+    "max_drawdown": -0.23824841695768095,
+    "n_bars": 3180,
+    "n_trades": 45,
+    "sharpe": 1.0634171994180084,
+    "sortino": 0.9651316618392253,
+    "total_return": 28.961098623207942,
+    "turnover_per_year": 3.566037735849057,
+    "win_rate": 0.7391304347826086
+  },
+  "n_bars": 3180,
+  "notes": "P1 trend-following sweep: top full-dev-period variant of 44 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-following-daily/sma_crossover__META.json)",
+  "params": {
+    "fast": 15,
+    "slow": 75
+  },
+  "run_id": "20260709T172159694589Z-6975e6b52106",
+  "schema_version": 1,
+  "strategy": "sma_crossover",
+  "timeframe": "daily",
+  "variants_tried": 44
+}
