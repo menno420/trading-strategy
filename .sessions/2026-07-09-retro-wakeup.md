@@ -16,7 +16,7 @@ Previous session (2026-07-09-p0-build, ORDER 001 Phase B) delivered all of P0 as
 - `docs/retro/project-review-2026-07-09.md` — mission + verified true state, full agent audit (every session/subagent incl. the DOA successor `cse_01PSBjfqwoLvFMtv9Hij5cwi`), efficiency verdict, ⚑ owner actions, continuation plan; decide-and-flag decisions D-1..D-7 recorded there.
 - Both linked from docs/retro/README.md (reachability), badged `audit`.
 - First gate run failed (missing badge tokens + orphan project-review); fixed in this card's commit — badge + README links + this session card.
-- Follow-up in the same session: overwrite control/status.md (heartbeat closing ORDERs 002/003) as its own READY PR — the deliberate last step.
+- Follow-up in the same session: overwrite control/status.md (heartbeat closing ORDERs 002/003) as its own READY PR — the deliberate last step. Landed: retro PR #4 merged (squash, e435ad1); heartbeat rewritten with acked=001,002,003 done=001,002,003 + the three ⚑ owner actions.
 
 ## Close-out
 
