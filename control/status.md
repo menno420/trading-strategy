@@ -1,9 +1,9 @@
 # trading-lab · status
-updated: 2026-07-09T17:27:00Z
-phase: P1 trend-following lane complete (trend-following × all8 × daily, PR #6 merged) — 7 of 32 family×ticker lanes beat buy-and-hold on walk-forward OOS Sharpe after costs; negative result is the headline, candidates (AAPL donchian, META sma/ema/donchian) carried to P2
+updated: 2026-07-09T20:02:00Z
+phase: wind-down complete — ready for archive + fresh session
 health: green
-last-shipped: #6 — P1 trend-following sweep: SMA/EMA/MACD/Donchian × 8 tickers × daily (177 variants, walk-forward, realistic costs) + claims/ lane protocol + docs/p1-trend-following-results.md
+last-shipped: #9 — gen-1 succession deliverables (wind-down review, next-boot, proposed instructions, tested env spec, gen-2 feedback, queue state)
 blockers: none
 orders: acked=001,002,003 done=001,002,003
-⚑ needs-owner: (1) verify the env setup script is actually fixed — the successor session died at 14:05Z provision on the identical error AFTER the fix was reported; exact steps + paste-ready script in docs/retro/project-review-2026-07-09.md §(e); (2) one-time: tick "Allow auto-merge" in repo Settings→General→Pull Requests; (3) optional: archive the dead "ORDER 001 successor" session (listed active, is DOA).
-notes: variants-tried this lane = 177 configurations (44 SMA + 44 EMA + 48 MACD + 41 donchian) × 8 tickers = 1,416 recorded full-period backtests plus walk-forward re-selection (per-variant rows in experiments/sweeps/p1-trend-following-daily/ for P2 deflated-Sharpe). Lane claim deleted (lane complete). Suggested next lanes (unclaimed, check claims/ first): mean-reversion × all8 × daily (RSI grid + Bollinger/z-score), then trend-following × all8 × hourly — mind turnover: MACD churn lost to costs on 5/8 tickers at 6 bps/side.
+⚑ needs-owner: (1) env setup script — paste environments/setup-universal.sh into the environment config (tested; evidence in docs/succession/ENVIRONMENT.md); (2) one-time: tick "Allow auto-merge" in repo Settings→General→Pull Requests; (3) archive the dead "ORDER 001 successor" session (still listed active); (4) video-strategy lane: session started 18:53Z; still no PR, no branch, and no claim file visible as of 2026-07-09T20:02:00Z — presumed still extracting/building; it is briefed self-terminal (land READY PRs, merge on green) — if an open READY green PR exists at archive time, merging it is one click; otherwise gen-2 resumes per docs/succession/QUEUE.md.
+notes: gen-2 boots from docs/succession/NEXT-BOOT.md (read order, walking skeleton, known walls with exact error texts). Whole-life retro: docs/retro/wind-down-review-2026-07-09.md. Steering-channel wall hit at wind-down: `send_message: tool is not enabled for this organization` — all future briefs must be self-terminal. Forward-only git preserved throughout; no dangling branches (verify: only main + possibly the video lane's branch at archive).
