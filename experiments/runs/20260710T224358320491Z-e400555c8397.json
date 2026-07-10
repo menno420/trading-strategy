@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.03133748206697451,
+    "max_drawdown": -0.761864757704005,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.25283259990457096,
+    "sortino": 0.24404674159100437,
+    "total_return": 0.5883962288444033,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "e400555c8397",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T22:43:58+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4b890babbe69cfdf00cf825aa7f8207a3cfac58d",
+  "instrument": "SLV",
+  "metrics": {
+    "cagr": 0.036648619071991906,
+    "max_drawdown": -0.3597398420373933,
+    "n_bars": 3779,
+    "n_trades": 106,
+    "sharpe": 0.314161370499267,
+    "sortino": 0.16803001827384678,
+    "total_return": 0.715582361330126,
+    "turnover_per_year": 7.068536649907383,
+    "win_rate": 0.33962264150943394
+  },
+  "n_bars": 3779,
+  "notes": "Round 2 slice R2 (post-holdout DEV-ONLY, promotion closed \u2014 docs/research-round-2.md): top full-dev-period variant of 6 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r2-keltner_breakout/keltner_breakout__SLV.json)",
+  "params": {
+    "m": 2.0,
+    "n": 20
+  },
+  "run_id": "20260710T224358320491Z-e400555c8397",
+  "schema_version": 1,
+  "strategy": "keltner_breakout",
+  "timeframe": "daily",
+  "variants_tried": 6
+}

@@ -234,3 +234,52 @@ def r2_vol_trend_total_configs() -> int:
     pre-registration's 48)."""
     return (sum(r2_vol_trend_variants_per_family().values())
             * len(R2_VOL_TREND_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 2 slice R2: keltner_breakout (lane: r2-keltner_breakout × 4 × daily)
+# ---------------------------------------------------------------------------
+# Grid frozen by the pre-registration (docs/research-round-2.md §3b) — any
+# change requires a committed amendment to that doc BEFORE running:
+# n ∈ {20, 50}, m ∈ {1.5, 2.0, 2.5} → 6 variants/instrument × 4 instruments
+# = 24 registered configs.
+
+_R2_KELTNER_AXES: dict[str, dict[str, list]] = {
+    "keltner_breakout": {"n": [20, 50], "m": [1.5, 2.0, 2.5]},
+}
+
+_R2_KELTNER_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "keltner_breakout": lambda p: True,
+}
+
+R2_KELTNER_FAMILIES = tuple(_R2_KELTNER_AXES)
+
+# Instruments frozen by the pre-registration (§3b).
+R2_KELTNER_INSTRUMENTS = ("BTC-USD", "META", "AMZN", "SLV")
+
+
+def r2_keltner_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-2 R2 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R2_KELTNER_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R2 family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R2_KELTNER_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r2_keltner_variants_per_family() -> dict[str, int]:
+    """R2 variant counts by family (multiple-testing bookkeeping)."""
+    return {fam: len(r2_keltner_variants(fam))
+            for fam in R2_KELTNER_FAMILIES}
+
+
+def r2_keltner_total_configs() -> int:
+    """Total registered R2 configs: variants × instruments (Round-2
+    accounting counts each instrument × grid point as one config — the
+    pre-registration's 24)."""
+    return (sum(r2_keltner_variants_per_family().values())
+            * len(R2_KELTNER_INSTRUMENTS))

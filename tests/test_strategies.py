@@ -379,3 +379,57 @@ class TestVolFilteredTrend:
             STRATEGIES["vol_filtered_trend"](random_walk, vol_window=1)
         with pytest.raises(ValueError, match="med_window"):
             STRATEGIES["vol_filtered_trend"](random_walk, med_window=1)
+
+
+class TestKeltnerBreakout:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["keltner_breakout"](random_walk, n=20, m=1.5)
+        assert (pos.iloc[:20] == 0.0).all()
+
+    def test_enters_on_breakout_exits_below_ema(self):
+        # Flat base (ATR ~ 0), a hard jump far above EMA + m*ATR (entry),
+        # a plateau, then a crash far below the EMA (exit).
+        prices = np.concatenate([
+            np.full(40, 100.0),   # base: channel is tight around 100
+            np.full(30, 140.0),   # breakout bar at iloc[40], then plateau
+            np.full(20, 80.0),    # crash below EMA at iloc[70]
+        ])
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["keltner_breakout"](ohlcv, n=5, m=1.5)
+        assert pos.iloc[40] == 1.0           # breakout bar goes long
+        assert (pos.iloc[40:70] == 1.0).all()  # held through the plateau
+        assert (pos.iloc[70:] == 0.0).all()    # exit once close < EMA
+
+    def test_holds_between_ema_and_upper_band(self):
+        # After entry the plateau sits between the two triggers (close is
+        # neither > EMA + m*ATR once the channel catches up, nor < EMA):
+        # the state machine must HOLD the long, not flip-flop.
+        prices = np.concatenate([np.full(40, 100.0), np.full(60, 140.0)])
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["keltner_breakout"](ohlcv, n=5, m=1.5)
+        close = ohlcv["close"]
+        ema = close.ewm(span=5, adjust=False).mean()
+        # late plateau: EMA has converged to the close, so no fresh breakout
+        # fires there (close is not strictly above EMA + m*ATR) ...
+        assert np.allclose(close.iloc[80:], ema.iloc[80:], rtol=1e-3)
+        # ... yet the position is held long the whole way
+        assert (pos.iloc[80:] == 1.0).all()
+
+    def test_flat_series_never_enters(self):
+        # Constant price: ATR = 0, close == EMA == upper band. Entry needs a
+        # strict '>', so equality is NOT a breakout (tie resolves against
+        # the strategy) — flat forever.
+        flat = make_ohlcv(np.full(120, 100.0))
+        pos = STRATEGIES["keltner_breakout"](flat, n=5, m=2.0)
+        assert (pos == 0.0).all()
+
+    def test_flat_in_downtrend(self):
+        down = make_ohlcv(np.linspace(200, 100, 160))
+        pos = STRATEGIES["keltner_breakout"](down, n=5, m=1.5)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="n"):
+            STRATEGIES["keltner_breakout"](random_walk, n=1)
+        with pytest.raises(ValueError, match="m"):
+            STRATEGIES["keltner_breakout"](random_walk, m=0.0)
