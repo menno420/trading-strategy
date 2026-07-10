@@ -53,6 +53,19 @@ agents; use the data loader for Yahoo (proxy workaround in
   slicing, no data.py change needed); contract doc
   `docs/holdout-enforcement.md` (binding) linked from founding-plan;
   QUEUE item 5 marked DONE.
+- 2026-07-10T04:12:08Z — QUEUE item 6 (collaboration-model port), branch
+  `collab-model-pr-lifecycle`: `docs/collaboration-model.md` gains "PR
+  lifecycle (as practiced)" + "Session lifecycle around PRs (as practiced)"
+  — READY-never-draft, forward-only git, arm-at-creation with the two-way
+  arm wall ("unstable status" / "already in clean status") and
+  REST-squash-on-green fallback (the path that fired for every merge to
+  date), written self-merge grant (ORDER 002/005), post-merge review via
+  review-queue/Codex, terminal refusal branch, heartbeat-before-work,
+  one-writer + claims lifecycle, status ender contract, substrate-gate
+  interplay — all verified against merged PRs #14–#24. QUEUE item 6 marked
+  DONE; new NEXT-BOOT wall appended (raw curl to api.github.com check-runs
+  hangs to Bash timeout, exit 143 — poll checks via the GitHub MCP
+  instead).
 
 ## Close-out (heartbeat phase)
 

@@ -26,6 +26,7 @@ Branch → append one line to your new session card → commit → push → open
 - Cross-session steering can be unavailable: `send_message: tool is not enabled for this organization` (appeared mid-day after working earlier). Brief every session self-terminal: land READY PRs and merge on green without needing a follow-up message.
 - Sibling-lane experience (team memory): tag pushes, GitHub release creation, and branch deletion return 403 for agent sessions — plan those as owner actions.
 - PR platform default is DRAFT; this fleet's convention is READY-never-draft, merge on green. State it in every brief.
+- Raw check-run polling hangs: `curl https://api.github.com/repos/<owner>/<repo>/commits/<sha>/check-runs` (any raw curl to api.github.com) hangs behind the egress proxy until the Bash timeout kills it — exit 143, NO error text. Poll PR checks via the GitHub MCP `pull_request_read` method `get_check_runs` instead.
 - Yahoo live 1h history currently reaches ~35 months (earliest bar 2023-08-10, observed 2026-07-10 via the loader) — deeper than the ~730d limit documented earlier; the committed hourly cache starts at the same boundary.
 
 ## Where the science stands

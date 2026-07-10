@@ -51,7 +51,7 @@
    `experiments/index.jsonl` row and every `experiments/runs/*.json` for
    boundary violations; contract + residual-bypass rule ("all research
    code loads via `load_ohlcv`") documented — see
-   [docs/holdout-enforcement.md](../holdout-enforcement.md). 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over, still undone).
+   [docs/holdout-enforcement.md](../holdout-enforcement.md). 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over). **DONE 2026-07-10** (gen-2, lane `holdout-collab`): the conventions the repo demonstrably practices (READY-never-draft, arm-then-REST-squash-on-green with the two-way arm wall, self-merge grant, post-merge review, terminal refusal branch, heartbeat-before-work, claims lifecycle, status ender, substrate-gate interplay) ported as verified against PRs #14–#24 — see [docs/collaboration-model.md](../collaboration-model.md).
 
 ## ⚑ Owner clicks outstanding
 See control/status.md — env setup script verification (paste-ready script now at environments/setup-universal.sh), auto-merge tick, archive the DOA successor session.
