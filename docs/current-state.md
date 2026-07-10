@@ -23,6 +23,11 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
   committed before any trade outcome is observable; the lane idles
   until its §3 loader rail merges. No real money, ever.
+- Paper-lane design docs (PR #40, branch `paper-lane/design-docs`):
+  paper-only designs for a capped pre-registered
+  [sniper bucket](sniper-bucket.md) and a 70/20/10
+  [hybrid allocator](hybrid-allocator.md) — docs only, no code, no real
+  money, holdout untouched (it is SPENT).
 
 ## Recently shipped (newest first)
 
