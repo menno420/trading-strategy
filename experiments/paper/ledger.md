@@ -24,6 +24,16 @@ honest signal state when no action is possible or taken.
 Statuses: `WATCH` (no position, no actionable signal), `ENTRY`, `EXIT`,
 plus weekly-review verdicts `BEAT` / `MISS` / `FLAT` per protocol §6–§7.
 
+Machine-readable keys (parsed by `trading_lab.paper.grade_ledger`, the
+§6 grading job): trade rows carry `action:` (ENTRY|EXIT), `signal_date:`,
+`intended_fill_bar:` and `committed_at_utc:` bullets, and trade rows must
+strictly alternate ENTRY, EXIT, ... (max one open position). Grading
+appends the `verdict:` fields to the closed window's EXIT record and
+flips only that record's `status:` line to `GRADED` (prior value kept in
+`pre_grade_status:`). Signal-side fields are never edited; WATCH and
+ENTRY records are never mutated; a record already carrying `verdict:` is
+never touched again (§5–§6).
+
 ---
 
 ## Records (append-only, newest last)

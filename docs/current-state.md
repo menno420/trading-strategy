@@ -22,15 +22,14 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
   forward paper-trading protocol for the surviving RULE-PASS candidate
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
   committed before any trade outcome is observable. No real money, ever.
-- Paper-lane rail + ledger (branch `paper-lane/ledger`): the protocol's
-  §3/§9-A2 loader rail — `trading_lab.data.load_paper_ohlcv`, which
-  serves ONLY bars ≥ `PAPER_LANE_START = 2026-07-11`, has no unlock
-  parameter, and leaves the holdout rail untouched (pinned by tests) —
-  plus the append-only paper ledger at
+- Paper-lane grading job (branch `paper-lane/grading`): the protocol
+  §6–§7 weekly grader — `trading_lab.paper.grade_ledger` plus the thin
+  `scripts/grade_paper.py` entry — parses
   [../experiments/paper/ledger.md](../experiments/paper/ledger.md),
-  opened with an honest WATCH record: flat, warm-up pending, first
-  evaluable entry signal only after 15 paper-lane trading bars
-  (~early August 2026).
+  grades closed windows net of costs vs cycle-window B&H
+  (BEAT/MISS/FLAT; ties and late commits are MISS, against the
+  strategy), appends verdicts idempotently, leaves WATCH/ENTRY rows
+  untouched, and reads market data ONLY via the paper-lane rail.
 - Paper-lane design docs (PR #40, branch `paper-lane/design-docs`):
   paper-only designs for a capped pre-registered
   [sniper bucket](sniper-bucket.md) and a 70/20/10
@@ -41,6 +40,13 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Merged work only, newest first.)
 
+- Paper-lane loader rail + ledger (PR #42, 2026-07-10): the protocol's
+  §3/§9-A2 rail `trading_lab.data.load_paper_ohlcv` — serves ONLY bars
+  ≥ `PAPER_LANE_START = 2026-07-11`, no unlock parameter, holdout rail
+  untouched, boundary pinned by tests — plus the append-only paper
+  ledger at [../experiments/paper/ledger.md](../experiments/paper/ledger.md),
+  opened with an honest WATCH record (flat, warm-up pending, first
+  evaluable entry signal ~early August 2026). 147 → 154 tests.
 - ORDER 007 promotion-significance bar (2026-07-10): promotion to FINDING
   now requires beating B&H net of costs AND clearing a minimum t-stat on
   the Sharpe delta (Lo 2002 SE, Bonferroni-adjusted for variants tried —
