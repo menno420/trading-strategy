@@ -26,3 +26,37 @@ priority: P0
 do: LATENCY PING — the moment you read this order, acknowledge BEFORE any other work: add one line to your control status file (or, if faster, a new file docs/retro/ping-ack.md): "PING-ACK ORDER 004 · discovered <UTC timestamp, seconds precision> · via <how you came to read this inbox: session-start ritual / routine wake / owner prompt / mid-session inbox check>". Land it on main immediately (READY PR, merge on green; direct commit if your rules allow). Then resume whatever you were doing.
 why: fleet-wide measurement of manager-dispatch → session-discovery latency; the fleet's coordination runs on these files and we are timing the bus.
 done-when: the ack line is on main; the manager computes the latency.
+
+## ORDER 005 · 2026-07-10T02:06:54Z · status: new
+priority: P0
+(the founding text calls this ORDER 001)
+gen-2 adoption + video-strategy lane
+blocked-by: pinned-research environment created and attached (owner-queue
+  item 1) — this order is invalid to execute from any other environment.
+do:
+ 1. Walking skeleton: session card as first commit, branch → READY PR →
+    tests + substrate-gate → landed BY YOU per the landing path, inside 20
+    minutes. If any step fails, fix THAT first — it is the day's real
+    problem found cheap.
+ 2. Cold-boot verification: python3 -m pytest -q (86 green at handoff),
+    python3 bootstrap.py check --strict (exit 0), one data-loader fetch
+    through src/trading_lab/data.py. Flip the Verified line in
+    docs/succession/ENVIRONMENT.md. Fix or ⚑ anything NEXT-BOOT missed.
+ 3. Video-strategy lane (queue item 1, third attempt — gen-1 never got a
+    session to survive provision for it): resume from the salvage in
+    docs/research/video-source-2026-07-09.md (full DaviddTech transcript +
+    first-pass rules extraction + ambiguities). Build MULTIPLE faithful
+    interpretations of the stated rules as competing systems vs each other
+    and vs buy-and-hold, under founding-plan discipline (walk-forward,
+    costs on, variants counted, holdout untouched). Ledger the result —
+    "the video's strategy does not beat B&H under honest testing" is a
+    complete, publishable deliverable.
+ 4. Holdout-hardening rider (queue item 5, same session if budget allows):
+    segregate data/holdout/, add a gate check on holdout reads, enforce
+    data_end ≤ HOLDOUT_START in every ledger row.
+done-when: skeleton PR merged self-landed; video-strategy family ledgered
+per the family done-when (walk-forward OOS vs B&H at realistic costs,
+variants-tried counted — negative counts as done); control/status.md
+overwritten with orders: acked=001 (= this ORDER 005), a next-update-by
+line, and ⚑ items if any. Standing default thereafter: QUEUE.md § Next,
+top to bottom.
