@@ -21,8 +21,16 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 - Paper lane (post-holdout standing mission): the pre-registered
   forward paper-trading protocol for the surviving RULE-PASS candidate
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
-  committed before any trade outcome is observable; the lane idles
-  until its §3 loader rail merges. No real money, ever.
+  committed before any trade outcome is observable. No real money, ever.
+- Paper-lane rail + ledger (branch `paper-lane/ledger`): the protocol's
+  §3/§9-A2 loader rail — `trading_lab.data.load_paper_ohlcv`, which
+  serves ONLY bars ≥ `PAPER_LANE_START = 2026-07-11`, has no unlock
+  parameter, and leaves the holdout rail untouched (pinned by tests) —
+  plus the append-only paper ledger at
+  [../experiments/paper/ledger.md](../experiments/paper/ledger.md),
+  opened with an honest WATCH record: flat, warm-up pending, first
+  evaluable entry signal only after 15 paper-lane trading bars
+  (~early August 2026).
 - Paper-lane design docs (PR #40, branch `paper-lane/design-docs`):
   paper-only designs for a capped pre-registered
   [sniper bucket](sniper-bucket.md) and a 70/20/10

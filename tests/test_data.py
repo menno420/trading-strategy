@@ -4,6 +4,8 @@ Offline: reads only committed fixtures under tests/fixtures/.
 """
 
 import gzip
+import inspect
+import warnings
 
 import pandas as pd
 import pytest
@@ -11,7 +13,7 @@ import pytest
 from trading_lab import config
 from trading_lab.data import (DataIntegrityError, HoldoutViolationWarning,
                               cache_path, check_integrity, load_ohlcv,
-                              save_cache)
+                              load_paper_ohlcv, save_cache)
 
 from conftest import make_ohlcv
 
@@ -71,6 +73,100 @@ class TestHoldoutLock:
         df = load_ohlcv("TEST", "daily", data_dir=fixtures_dir,
                         start=config.HOLDOUT_START)
         assert df.empty
+
+
+class TestPaperLaneRail:
+    """The dedicated paper-lane loader (docs/paper-lane-protocol.md §3, §9 A2).
+
+    Offline: a temp cache spanning dev bars (< HOLDOUT_START), spent-holdout
+    bars ([HOLDOUT_START, PAPER_LANE_START)) and paper-lane bars
+    (>= PAPER_LANE_START) is written with save_cache; the rail must return
+    only the last group, under every parameter combination.
+    """
+
+    @pytest.fixture
+    def spanning_cache(self, tmp_path):
+        """Temp cache spanning all three windows; returns (dir, raw frame)."""
+        df = make_ohlcv([100.0 + i for i in range(420)], start="2024-12-15")
+        lane = pd.Timestamp(config.PAPER_LANE_START)
+        holdout = pd.Timestamp(config.HOLDOUT_START)
+        assert df.index.min() < holdout, "cache must contain dev bars"
+        assert ((df.index >= holdout) & (df.index < lane)).any(), \
+            "cache must contain spent-holdout bars"
+        assert df.index.max() >= lane, "cache must contain paper-lane bars"
+        df.index.name = "timestamp"
+        save_cache(df, "PAPER", "daily", data_dir=tmp_path)
+        return tmp_path, df
+
+    def test_paper_lane_constant_unchanged(self):
+        """The lane boundary is a fixed constant (protocol §3 pins it)."""
+        assert config.PAPER_LANE_START == "2026-07-11"
+        # and it lies strictly after the spent holdout boundary
+        assert pd.Timestamp(config.PAPER_LANE_START) > \
+            pd.Timestamp(config.HOLDOUT_START)
+
+    def test_excludes_all_bars_before_lane_start(self, spanning_cache):
+        """Dev AND spent-holdout bars in the source are never returned."""
+        data_dir, raw = spanning_cache
+        lane = pd.Timestamp(config.PAPER_LANE_START)
+        df = load_paper_ohlcv("PAPER", "daily", data_dir=data_dir)
+        assert len(df) > 0
+        assert df.index.min() >= lane
+        # exactly the >= PAPER_LANE_START subset, nothing else
+        assert len(df) == int((raw.index >= lane).sum())
+
+    def test_start_cannot_widen_before_lane_start(self, spanning_cache):
+        """start= before the boundary must not reintroduce earlier bars."""
+        data_dir, raw = spanning_cache
+        lane = pd.Timestamp(config.PAPER_LANE_START)
+        for early_start in ("2010-01-01", config.HOLDOUT_START,
+                            str(raw.index.min())):
+            df = load_paper_ohlcv("PAPER", "daily", data_dir=data_dir,
+                                  start=early_start)
+            assert len(df) > 0
+            assert df.index.min() >= lane
+
+    def test_end_filter_narrows_only(self, spanning_cache):
+        """end= slices within the lane; end <= lane start yields empty."""
+        data_dir, raw = spanning_cache
+        lane = pd.Timestamp(config.PAPER_LANE_START)
+        first_lane_bar = raw.index[raw.index >= lane].min()
+        after_first = str(first_lane_bar + pd.Timedelta(days=1))
+        df = load_paper_ohlcv("PAPER", "daily", data_dir=data_dir,
+                              end=after_first)
+        assert len(df) >= 1
+        assert df.index.min() >= lane
+        assert df.index.max() < pd.Timestamp(after_first)
+        # an end at/before the boundary returns nothing — never earlier bars
+        assert load_paper_ohlcv("PAPER", "daily", data_dir=data_dir,
+                                end=config.PAPER_LANE_START).empty
+
+    def test_rail_has_no_unlock_parameter(self):
+        """The rail accepts no unlock of any kind (protocol §3: the kwarg
+        is forbidden in this lane, permanently) and cannot forward one."""
+        params = inspect.signature(load_paper_ohlcv).parameters
+        assert "unlock_holdout" not in params
+        assert not any("unlock" in name for name in params)
+        assert not any(
+            p.kind in (inspect.Parameter.VAR_KEYWORD,
+                       inspect.Parameter.VAR_POSITIONAL)
+            for p in params.values()
+        ), "no **kwargs passthrough that could smuggle an unlock"
+        with pytest.raises(TypeError):
+            load_paper_ohlcv("PAPER", "daily", unlock_holdout=True)
+
+    def test_rail_never_emits_holdout_warning(self, spanning_cache):
+        """The rail never touches the holdout unlock path: loading must not
+        emit HoldoutViolationWarning (escalated to an error here)."""
+        data_dir, _ = spanning_cache
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", HoldoutViolationWarning)
+            df = load_paper_ohlcv("PAPER", "daily", data_dir=data_dir)
+        assert len(df) > 0
+
+    def test_missing_cache_raises(self, tmp_path):
+        with pytest.raises(FileNotFoundError, match="fetch_ohlcv"):
+            load_paper_ohlcv("NOPE", "daily", data_dir=tmp_path)
 
 
 class TestIntegrity:
