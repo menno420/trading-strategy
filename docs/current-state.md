@@ -18,11 +18,6 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Verify against live source control — this section is a dated snapshot.)
 
-- Research Round 2 (post-holdout, dev-only): pre-registration in
-  [research-round-2.md](research-round-2.md) — 3 new families
-  (vol_filtered_trend, keltner_breakout, xsec_momentum), 78 registered
-  configs under a 100-config hard cap, KEEP/KILL rule frozen before any
-  outcome is computed. Promotion closed; dev rail only.
 - Paper lane (post-holdout standing mission): the pre-registered
   forward paper-trading protocol for the surviving RULE-PASS candidate
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
@@ -45,6 +40,18 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Merged work only, newest first.)
 
+- Research Round 2 CLOSED (PRs #46–#49 + close-out, 2026-07-10): the
+  post-holdout, dev-only round pre-registered in
+  [research-round-2.md](research-round-2.md) (PR #46, merged before any
+  outcome existed) ran all 78 registered configs (78/100 cap, contingency
+  untouched) across 3 new families and closed. Verdicts (dev data only,
+  no OOS claims): vol_filtered_trend 0 KEEP / 4 KILL (PR #47 — the vol
+  filter subtracted value), keltner_breakout 2 KEEP / 2 KILL (PR #48),
+  xsec_momentum 3 KEEP / 3 KILL (PR #49, first portfolio lane). 5
+  dev-candidates total — promotion CLOSED; any next step is an
+  owner-gated proposal on post-2026 data. Full tables:
+  [research-round-2-results.md](research-round-2-results.md); summary
+  appended to [final-report.md](final-report.md). 165 → 223 tests.
 - Paper-lane loader rail + ledger (PR #42, 2026-07-10): the protocol's
   §3/§9-A2 rail `trading_lab.data.load_paper_ohlcv` — serves ONLY bars
   ≥ `PAPER_LANE_START = 2026-07-11`, no unlock parameter, holdout rail

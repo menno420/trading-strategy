@@ -342,3 +342,114 @@ pre-registered protocol (an owner decision). This report is final.
   `scripts/run_p2_validation.py`, `scripts/run_p4_transfer.py`,
   `scripts/run_p5_holdout.py` (evidence only — the holdout is one-shot
   and spent; its `--evaluate` phase refuses to re-run).
+
+---
+
+## Research Round 2 summary — POST-HOLDOUT DEV-ONLY ROUND (2026-07-10)
+
+> **BANNER — READ FIRST.** The holdout (bars ≥ 2025-01-09) is **SPENT**
+> (the 13 one-shot reads above are the first, only, and last). This
+> round makes **NO out-of-sample claims**: every number below is
+> computed on **dev data only** (bars strictly before 2025-01-09, via
+> the `load_ohlcv` default rail — never `unlock_holdout`, never the
+> paper rail). **Promotion is CLOSED.** A "KEEP" below means
+> *dev-candidate only* — never a finding, never a validated edge. This
+> section does not amend, weaken, or reopen anything above it; the P5
+> report remains final.
+
+Round 2 was **pre-registered before any outcome existed**: grids,
+instruments, walk-forward scheme (1008/252, stitched OOS only), costs
+(5 + 1 bps per side, t+1-open fills), benchmarks, and the KEEP/KILL
+rule were frozen in [research-round-2.md](research-round-2.md) and
+merged as PR #46 before any Round 2 backtest, sweep, or metric was
+computed. Three new families were then swept exactly within the frozen
+grids — `vol_filtered_trend` (PR #47), `keltner_breakout` (PR #48),
+and `xsec_momentum`, the program's first portfolio-level lane (PR #49)
+— using **78 of the 100-config hard-cap budget** (all 78 registered
+configs run; the 22 contingency configs untouched, as registered). Full
+narrative, honest reads, and ambiguity resolutions:
+[research-round-2-results.md](research-round-2-results.md) (the source
+of truth for every number below).
+
+### Verdict table — all 14 claim surfaces, KILLs with equal prominence
+
+Rule (pre-registered §6): KEEP as dev-candidate iff stitched OOS Sharpe
+> benchmark OOS Sharpe AND > 0; ties/ambiguity resolve KILL. Benchmark
+= same-window, same-cost B&H of the instrument (for `xsec_momentum`,
+the equal-weight 9-instrument basket B&H).
+
+| Family | Instrument / config | Stitched OOS Sharpe | Benchmark OOS Sharpe | Verdict |
+|---|---|---:|---:|---|
+| vol_filtered_trend | AAPL | 0.635 | 0.963 | **KILL** |
+| vol_filtered_trend | MSFT | 1.015 | 1.101 | **KILL** |
+| vol_filtered_trend | NVDA | 1.252 | 1.295 | **KILL** |
+| vol_filtered_trend | GLD | 0.214 | 0.400 | **KILL** |
+| keltner_breakout | BTC-USD | 1.348 | 0.821 | **KEEP (dev-candidate only)** |
+| keltner_breakout | META | 0.747 | 0.653 | **KEEP (dev-candidate only)** |
+| keltner_breakout | AMZN | 0.500 | 0.763 | **KILL** |
+| keltner_breakout | SLV | −0.042 | 0.170 | **KILL** |
+| xsec_momentum | L=63, k=2 | 1.627 | 1.147 | **KEEP (dev-candidate only)** |
+| xsec_momentum | L=63, k=3 | 1.631 | 1.147 | **KEEP (dev-candidate only)** |
+| xsec_momentum | L=126, k=2 | 0.953 | 1.147 | **KILL** |
+| xsec_momentum | L=126, k=3 | 1.136 | 1.147 | **KILL** |
+| xsec_momentum | L=252, k=2 | 1.050 | 1.147 | **KILL** |
+| xsec_momentum | L=252, k=3 | 1.277 | 1.147 | **KEEP (dev-candidate only)** |
+
+**Headline: 5 KEEP / 9 KILL.** Stated plainly, the KILLs:
+vol_filtered_trend died on all four instruments (AAPL, MSFT, NVDA,
+GLD); keltner_breakout lost on AMZN and went outright negative on SLV;
+xsec_momentum's 126-bar lookback failed with both k values and
+L=252/k=2 failed too (L=126/k=3 at 1.136 vs 1.147 is a near-tie the
+pre-registered rule resolves against the strategy).
+
+### Denominators (multiple-testing burden)
+
+- This round: **78 configs** (48 vol_filtered_trend + 24
+  keltner_breakout + 6 xsec_momentum; 78/100 budget, contingency
+  unused).
+- Program cumulative: **668** (590 prior P1 configs + 78 Round 2).
+- Holdout reads: **still 13** — unchanged, spent, untouched by this
+  round.
+
+### Dev-candidates (the complete list — and what they are not)
+
+1. keltner_breakout × BTC-USD × daily (OOS Sharpe 1.348 vs 0.821)
+2. keltner_breakout × META × daily (0.747 vs 0.653 — CAGR *trails* B&H
+   16.0% vs 19.4%; the edge is purely risk-adjusted)
+3. xsec_momentum L=63/k=2 (1.627 vs 1.147)
+4. xsec_momentum L=63/k=3 (1.631 vs 1.147)
+5. xsec_momentum L=252/k=3 (1.277 vs 1.147)
+
+These are **dev-candidates only**: dev-data results after 668
+program-wide tries, with no significance claim of any kind. Five
+same-direction survivors out of 668 is selection pressure, not
+evidence of an edge. Any step beyond dev-candidate requires a **NEW,
+owner-gated, pre-registered protocol on genuinely new post-2026 data**
+— recorded here as an **owner-gated PROPOSAL** only, which agents must
+never schedule, initiate, or run.
+
+### Honest reading
+
+- **The registered mechanism of R1 subtracted value.** The
+  calm-regime volatility filter was the family's entire hypothesis,
+  and on 3 of 4 instruments the best full-period variant was the
+  filter-**off** arm (the plain crossover); the one instrument that
+  preferred the filter in-sample (GLD) lost OOS by the widest relative
+  margin. 0 KEEP / 4 KILL is the finding of that slice.
+- **keltner_breakout is 2-for-4, not a general win.** The drawdown
+  reduction was uniform across all four instruments, but drawdown is
+  not the decision metric and bought no KEEP where Sharpe lost (AMZN,
+  SLV — SLV's OOS stitch was outright negative).
+- **xsec_momentum beat a very hard benchmark on 3 of 6 configs** —
+  the equal-weight basket did 32.3% CAGR at Sharpe 1.147 over the OOS
+  window — but every config lost money in the 2021-09 → 2022-09 test
+  window (a long-only momentum basket rode the 2022 bear down), and
+  the KEEPs' edge is concentration in already-running assets, not
+  protection: L=63/k=2's max drawdown (−52.9%) is *worse* than the
+  basket's (−50.4%).
+- **Selection burden context:** the round's 5 KEEPs emerged from 78
+  configs this round and 668 program-wide, on dev data the program has
+  been mining since P1. Under this program's own standards (ORDER
+  007), nothing here approaches a significance bar, none was tested
+  against one, and no such claim is made. The only honest label
+  available is the one used: dev-candidate.
