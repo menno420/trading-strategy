@@ -18,13 +18,16 @@ Families:
   (the P0 baseline, reused with a sweep grid), bollinger_reversion
   (z-score/band reversion), pullback (short-horizon dip-buying with an
   optional long-term trend filter).
+* Round 2 (post-holdout dev-only, docs/research-round-2.md):
+  vol_filtered_trend (slice R1 — SMA crossover gated by a realized-vol
+  calm-regime filter; the filter-off arm is the within-family baseline).
 """
 
 from __future__ import annotations
 
 from . import (bollinger_reversion, buy_and_hold, donchian, ema_crossover,
                macd, macd_supertrend, pullback, rsi_mean_reversion,
-               sma_crossover, supertrend_flip)
+               sma_crossover, supertrend_flip, vol_filtered_trend)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -37,6 +40,7 @@ STRATEGIES = {
     "macd_supertrend": macd_supertrend.generate,
     "bollinger_reversion": bollinger_reversion.generate,
     "pullback": pullback.generate,
+    "vol_filtered_trend": vol_filtered_trend.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -52,6 +56,7 @@ DEFAULT_PARAMS = {
                         "st_period": 10, "st_mult": 3.0, "ema_len": 200},
     "bollinger_reversion": {"lookback": 20, "z_entry": 2.0, "z_exit": 0.0},
     "pullback": {"entry_lookback": 5, "exit_len": 5, "trend_len": 200},
+    "vol_filtered_trend": {"fast": 20, "slow": 50, "vol_filter": True},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -67,8 +72,14 @@ VIDEO_STRATEGY_FAMILY = ["supertrend_flip", "macd_supertrend", "ema_crossover"]
 MEAN_REVERSION_FAMILY = ["rsi_mean_reversion", "bollinger_reversion",
                          "pullback"]
 
+# Round 2 slice R1 (docs/research-round-2.md §3a): the single family swept
+# in the r2-vol_filtered_trend × {AAPL, MSFT, NVDA, GLD} × daily lane.
+R2_VOL_TREND_FAMILY = ["vol_filtered_trend"]
+
 __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "TREND_FOLLOWING_FAMILY",
            "VIDEO_STRATEGY_FAMILY", "MEAN_REVERSION_FAMILY",
+           "R2_VOL_TREND_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
-           "macd_supertrend", "bollinger_reversion", "pullback"]
+           "macd_supertrend", "bollinger_reversion", "pullback",
+           "vol_filtered_trend"]

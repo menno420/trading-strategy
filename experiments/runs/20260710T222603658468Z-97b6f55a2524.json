@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.05513217979353291,
+    "max_drawdown": -0.45324522209074203,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.4288612934839662,
+    "sortino": 0.41325051095354487,
+    "total_return": 1.2361994689445917,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "97b6f55a2524",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T22:26:03+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "8d0270f616570677e5e00c51407e88b2f8747435",
+  "instrument": "GLD",
+  "metrics": {
+    "cagr": 0.030391663556702087,
+    "max_drawdown": -0.16758183473618327,
+    "n_bars": 3779,
+    "n_trades": 126,
+    "sharpe": 0.5020046981400536,
+    "sortino": 0.2502597989210767,
+    "total_return": 0.5666913608118582,
+    "turnover_per_year": 8.402222810267267,
+    "win_rate": 0.5079365079365079
+  },
+  "n_bars": 3779,
+  "notes": "Round 2 slice R1 (post-holdout DEV-ONLY, promotion closed \u2014 docs/research-round-2.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r2-vol_filtered_trend/vol_filtered_trend__GLD.json)",
+  "params": {
+    "fast": 20,
+    "slow": 50,
+    "vol_filter": true
+  },
+  "run_id": "20260710T222603658468Z-97b6f55a2524",
+  "schema_version": 1,
+  "strategy": "vol_filtered_trend",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

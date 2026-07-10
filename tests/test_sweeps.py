@@ -127,3 +127,49 @@ class TestMeanReversionGrids:
     def test_deterministic_order(self):
         assert (sweeps.mean_reversion_variants("pullback")
                 == sweeps.mean_reversion_variants("pullback"))
+
+
+class TestR2VolFilteredTrendGrid:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R2_VOL_TREND_FAMILY
+        assert set(sweeps.R2_VOL_TREND_FAMILIES) == set(R2_VOL_TREND_FAMILY)
+        for fam in sweeps.R2_VOL_TREND_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_match_preregistration(self):
+        # docs/research-round-2.md §3a is BINDING: 12 variants/instrument
+        # (fast ∈ {10,20} × slow ∈ {50,100,200} × filter ∈ {on,off}) over
+        # exactly 4 instruments = 48 registered configs.
+        counts = sweeps.r2_vol_trend_variants_per_family()
+        assert counts == {"vol_filtered_trend": 12}
+        assert sweeps.R2_VOL_TREND_INSTRUMENTS == ("AAPL", "MSFT", "NVDA",
+                                                   "GLD")
+        assert sweeps.r2_vol_trend_total_configs() == 48
+
+    def test_constraints_filtered_and_both_arms_present(self):
+        variants = sweeps.r2_vol_trend_variants("vol_filtered_trend")
+        for params in variants:
+            assert params["fast"] < params["slow"]
+        arms = {p["vol_filter"] for p in variants}
+        assert arms == {True, False}  # filter-on + filter-off baseline
+
+    def test_windows_not_swept(self):
+        # The 20/252 vol-filter windows are frozen by the pre-registration:
+        # no variant may override the strategy defaults.
+        for params in sweeps.r2_vol_trend_variants("vol_filtered_trend"):
+            assert "vol_window" not in params
+            assert "med_window" not in params
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R2_VOL_TREND_FAMILIES:
+            for params in sweeps.r2_vol_trend_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r2_vol_trend_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r2_vol_trend_variants("vol_filtered_trend")
+                == sweeps.r2_vol_trend_variants("vol_filtered_trend"))
