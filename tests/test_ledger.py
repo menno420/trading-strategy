@@ -1,10 +1,12 @@
-"""Ledger tests: run files, schema, config hash, index regeneration."""
+"""Ledger tests: run files, schema, config hash, index regeneration,
+holdout guard + committed-ledger audit."""
 
 import json
 
+import pandas as pd
 import pytest
 
-from trading_lab import ledger
+from trading_lab import config, ledger
 
 from conftest import make_ohlcv
 
@@ -12,6 +14,14 @@ from conftest import make_ohlcv
 @pytest.fixture
 def toy_ohlcv():
     return make_ohlcv([100 + i for i in range(120)])
+
+
+@pytest.fixture
+def holdout_spanning_ohlcv():
+    """Toy series whose last bars land inside the locked holdout."""
+    df = make_ohlcv([100 + i for i in range(60)], start="2024-11-01")
+    assert df.index[-1] >= pd.Timestamp(config.HOLDOUT_START)
+    return df
 
 
 class TestWriteRun:
@@ -56,6 +66,80 @@ class TestWriteRun:
                                    timeframe="daily", ohlcv=toy_ohlcv,
                                    runs_dir=tmp_path)
         assert p1 != p2  # identical config, distinct run files
+
+
+class TestHoldoutGuard:
+    def test_record_with_holdout_data_rejected(self, holdout_spanning_ohlcv,
+                                               tmp_path):
+        with pytest.raises(ValueError, match="locked +holdout"):
+            ledger.run_and_record(strategy="buy_and_hold", instrument="X",
+                                  timeframe="daily",
+                                  ohlcv=holdout_spanning_ohlcv,
+                                  runs_dir=tmp_path)
+        assert list(tmp_path.glob("*.json")) == []  # nothing written
+
+    def test_write_run_is_a_choke_point(self, toy_ohlcv, tmp_path):
+        """Hand-built records (bypassing build_record) are refused too."""
+        path = ledger.run_and_record(strategy="buy_and_hold", instrument="X",
+                                     timeframe="daily", ohlcv=toy_ohlcv,
+                                     runs_dir=tmp_path)
+        record = json.loads(path.read_text())
+        record["data_end"] = str(pd.Timestamp(config.HOLDOUT_START))
+        with pytest.raises(ValueError, match="locked +holdout"):
+            ledger.write_run(record, runs_dir=tmp_path)
+
+    def test_boundary_is_exclusive(self, tmp_path):
+        """data_end strictly before HOLDOUT_START is fine."""
+        last_ok = pd.Timestamp(config.HOLDOUT_START) - pd.Timedelta(days=1)
+        df = make_ohlcv([100.0] * 30,
+                        start=str(last_ok - pd.Timedelta(days=29)), freq="D")
+        assert df.index[-1] == last_ok
+        path = ledger.run_and_record(strategy="buy_and_hold", instrument="X",
+                                     timeframe="daily", ohlcv=df,
+                                     runs_dir=tmp_path)
+        assert "holdout_unlocked" not in json.loads(path.read_text())
+
+    def test_explicit_unlock_stamps_visible_marker(self, holdout_spanning_ohlcv,
+                                                   tmp_path):
+        runs_dir = tmp_path / "runs"
+        path = ledger.run_and_record(strategy="buy_and_hold", instrument="X",
+                                     timeframe="daily",
+                                     ohlcv=holdout_spanning_ohlcv,
+                                     runs_dir=runs_dir, holdout_unlocked=True)
+        rec = json.loads(path.read_text())
+        assert rec["holdout_unlocked"] is True
+        # the marker survives index regeneration (rows self-declare)
+        index = ledger.rebuild_index(experiments_dir=tmp_path)
+        rows = [json.loads(l) for l in index.read_text().splitlines()]
+        assert rows[0]["holdout_unlocked"] is True
+
+
+class TestCommittedLedgerAudit:
+    def test_every_committed_row_respects_holdout(self):
+        """Audit the REAL ledger: no data_end >= HOLDOUT_START without the
+        explicit 'holdout_unlocked' marker (compared as timestamps)."""
+        holdout = pd.Timestamp(config.HOLDOUT_START)
+        offenders = []
+
+        index = config.EXPERIMENTS_DIR / "index.jsonl"
+        assert index.exists(), "experiments/index.jsonl missing"
+        for lineno, line in enumerate(index.read_text().splitlines(), 1):
+            rec = json.loads(line)
+            if pd.Timestamp(rec["data_end"]) >= holdout \
+                    and not rec.get("holdout_unlocked"):
+                offenders.append(f"index.jsonl:{lineno} run_id={rec['run_id']}")
+
+        run_files = sorted(config.RUNS_DIR.glob("*.json"))
+        assert run_files, "experiments/runs/ is empty"
+        for path in run_files:
+            rec = json.loads(path.read_text())
+            if pd.Timestamp(rec["data_end"]) >= holdout \
+                    and not rec.get("holdout_unlocked"):
+                offenders.append(f"runs/{path.name}")
+
+        assert not offenders, (
+            "ledger rows reach into the locked holdout without the "
+            f"'holdout_unlocked' marker: {offenders}")
 
 
 class TestIndex:

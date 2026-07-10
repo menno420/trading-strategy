@@ -39,6 +39,20 @@ agents; use the data loader for Yahoo (proxy workaround in
 - 2026-07-10T03:50:19Z — heartbeat/skeleton: claimed the lane
   (`claims/holdout-collab.md`, QUEUE items 5+6), session card (this file),
   branch `session/20260710-0350-holdout-collab`, READY PR, merge on green.
+- 2026-07-10T04:01:50Z — QUEUE item 5 (holdout enforcement hardening),
+  branch `holdout-hardening`: ledger guard — `build_record` and the
+  `write_run` choke point now raise `ValueError` on any
+  `data_end >= HOLDOUT_START` unless `holdout_unlocked=True` stamps a
+  visible `"holdout_unlocked": true` marker (P5-only; `rebuild_index`
+  propagates it into index rows); new CI audit test parses every
+  `experiments/index.jsonl` row + every `experiments/runs/*.json` for
+  unmarked boundary violations; loader edge cases pinned in
+  `tests/test_data.py` (`data_dir=` override incl. the p2ext pattern,
+  `end=` past the boundary stays clipped, `start=` inside the holdout
+  returns an empty frame — filter verified to run before start/end
+  slicing, no data.py change needed); contract doc
+  `docs/holdout-enforcement.md` (binding) linked from founding-plan;
+  QUEUE item 5 marked DONE.
 
 ## Close-out (heartbeat phase)
 

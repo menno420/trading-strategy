@@ -41,7 +41,17 @@
    UNVALIDATABLE-PRE-HOLDOUT (P1 consumed every pre-holdout bar in their
    timeframes; exact math in the doc) — see
    [docs/p2-validation-results.md](../p2-validation-results.md).
-5. Holdout enforcement hardening. 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over, still undone).
+5. Holdout enforcement hardening. **DONE 2026-07-10** (gen-2, lane
+   `holdout-collab`): loader rail re-verified (filter runs before
+   start/end slicing, applies under `data_dir=` overrides incl.
+   `data/p2ext/`) and edge cases pinned in tests; ledger now refuses any
+   record with `data_end >= HOLDOUT_START` at both `build_record` and the
+   `write_run` choke point unless `holdout_unlocked=True` stamps a visible
+   self-declaring marker (P5-only); a CI audit test parses every
+   `experiments/index.jsonl` row and every `experiments/runs/*.json` for
+   boundary violations; contract + residual-bypass rule ("all research
+   code loads via `load_ohlcv`") documented — see
+   [docs/holdout-enforcement.md](../holdout-enforcement.md). 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over, still undone).
 
 ## ⚑ Owner clicks outstanding
 See control/status.md — env setup script verification (paste-ready script now at environments/setup-universal.sh), auto-merge tick, archive the DOA successor session.

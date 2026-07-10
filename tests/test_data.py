@@ -43,6 +43,35 @@ class TestHoldoutLock:
         assert df.index.min() >= pd.Timestamp("2024-08-01")
         assert df.index.max() < pd.Timestamp("2024-09-01")
 
+    def test_data_dir_override_still_enforced(self, tmp_path):
+        """Alternate caches (e.g. data/p2ext/) get the same rail: write a
+        temp cache spanning the boundary and load it via data_dir=."""
+        holdout = pd.Timestamp(config.HOLDOUT_START)
+        df = make_ohlcv([100.0 + i for i in range(60)], start="2024-11-01")
+        assert df.index.max() >= holdout, "temp cache must span the boundary"
+        df.index.name = "timestamp"
+        save_cache(df, "EXT", "daily", data_dir=tmp_path)
+        loaded = load_ohlcv("EXT", "daily", data_dir=tmp_path)
+        assert len(loaded) > 0
+        assert loaded.index.max() < holdout
+        assert len(loaded) == int((df.index < holdout).sum())
+
+    def test_end_beyond_boundary_still_clipped(self, fixtures_dir,
+                                               daily_fixture):
+        """end= past HOLDOUT_START must not reintroduce holdout bars."""
+        holdout = pd.Timestamp(config.HOLDOUT_START)
+        end = str(daily_fixture.index.max() + pd.Timedelta(days=1))
+        df = load_ohlcv("TEST", "daily", data_dir=fixtures_dir, end=end)
+        assert len(df) > 0
+        assert df.index.max() < holdout
+
+    def test_start_after_boundary_returns_empty(self, fixtures_dir):
+        """start= inside the holdout yields an empty frame (the holdout
+        filter runs BEFORE start/end slicing), never holdout bars."""
+        df = load_ohlcv("TEST", "daily", data_dir=fixtures_dir,
+                        start=config.HOLDOUT_START)
+        assert df.empty
+
 
 class TestIntegrity:
     def test_valid_frame_passes(self, daily_fixture):
