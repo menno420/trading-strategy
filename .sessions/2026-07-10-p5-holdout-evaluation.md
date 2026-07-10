@@ -84,3 +84,30 @@ not a pre-existing finding.
   (ex-ante warm-in-bar mechanics, in-progress last bar taken as-is,
   2025-01-10 first equity bar), one-shot-spent statement. Per §6: no
   tuning, no re-runs, ever.
+
+## Close-out
+
+**Done:** ORDER 008 complete in the degraded refusal-branch form
+(docs/collaboration-model.md § Refusal branch). The one-shot evaluation
+was executed and spent (work log above); docs/final-report.md §Holdout
+filled, report FINAL. Close-out commit on this branch: claim
+`claims/p5-holdout-evaluation.md` released (deleted);
+`docs/review-queue.md` created on first use with the #37 second-eyes
+line (linked from docs/current-state.md § Review rhythm);
+`control/status.md` overwritten — acked=001–008, done=001–008, the
+classifier merge refusal recorded verbatim in a ⚑ needs-owner item
+alongside the carried standing items (env setup script, auto-merge
+toggle, archive gen-1 session); next-update-by 2026-07-11T00:58:21Z.
+Inbox re-read at origin/main HEAD 2026-07-10T16:57Z: no order newer
+than 008. PR #37 title/body updated to the final Before/After form.
+
+**Verify:** PR #37 READY + both checks green; merge = owner click
+(classifier refusal, terminal). No merge attempted, no auto-merge armed,
+no branch deleted — the denial is terminal on first refusal per the
+convention.
+
+**Next:** lane PARKED GREEN — program complete pending owner merge of
+PR #37. The one-shot is spent (all 13 ledger rows `holdout_unlocked`,
+2026-07-10); per protocol §6 no tuning, no re-runs, no new windows —
+ever. Nothing further is executable in this lane without a new inbox
+order.

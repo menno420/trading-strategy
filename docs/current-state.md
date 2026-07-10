@@ -64,4 +64,4 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 ## Review rhythm
 
-Fleet protocol: orders arrive in control/inbox.md (manager-owned), the project reports in control/status.md. Work lands on claude/* feature branches; forward-only git (no force push, no amending pushed commits); PRs gated by GitHub Actions (substrate gate check --strict plus pytest). Releases are informal — main is the source of truth for research results.
+Fleet protocol: orders arrive in control/inbox.md (manager-owned), the project reports in control/status.md. Post-merge second-eyes items queue in [review-queue.md](review-queue.md). Work lands on claude/* feature branches; forward-only git (no force push, no amending pushed commits); PRs gated by GitHub Actions (substrate gate check --strict plus pytest). Releases are informal — main is the source of truth for research results.
