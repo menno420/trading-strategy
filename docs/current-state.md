@@ -18,9 +18,11 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Verify against live source control — this section is a dated snapshot.)
 
-- Nothing at the moment — the trend × hourly lane below merged with its
-  claim deleted; next per QUEUE § Next: P2 validation of the accumulated
-  candidates.
+- Paper lane (post-holdout standing mission): the pre-registered
+  forward paper-trading protocol for the surviving RULE-PASS candidate
+  is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
+  committed before any trade outcome is observable; the lane idles
+  until its §3 loader rail merges. No real money, ever.
 
 ## Recently shipped (newest first)
 
