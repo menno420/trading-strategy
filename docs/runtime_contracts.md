@@ -1,4 +1,4 @@
-# trading-strategy — runtime contracts
+# trading-lab — runtime contracts
 
 > **Status:** `binding`
 >

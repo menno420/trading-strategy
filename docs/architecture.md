@@ -1,4 +1,4 @@
-# trading-strategy — architecture
+# trading-lab — architecture
 
 > **Status:** `binding`
 >

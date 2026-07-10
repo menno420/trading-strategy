@@ -5,7 +5,7 @@ description: "Read-only deep-dive: investigate and report findings without chang
 
 # analysis
 
-Investigate a trading-strategy system and report findings, changing nothing.
+Investigate a trading-lab system and report findings, changing nothing.
 
 1. Read the binding contracts and trace the behavior across files.
 2. Produce evidence (file:line) + a conclusion; name the uncertainty.

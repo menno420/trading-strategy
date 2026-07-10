@@ -1,4 +1,4 @@
-# trading-strategy — idea backlog & lifecycle
+# trading-lab — idea backlog & lifecycle
 
 > **Status:** `ideas`
 >

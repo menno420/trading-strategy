@@ -1,4 +1,4 @@
-# trading-strategy — owner working profile
+# trading-lab — owner working profile
 
 > **Status:** `owner-guidance`
 >
@@ -19,4 +19,4 @@ Fleet protocol: orders arrive in control/inbox.md (manager-owned), the project r
 This doc records working style only: communication preferences, review
 cadence, decision boundaries, autonomy expectations. No contact details, no
 personal history, nothing that identifies the person beyond their role on
-trading-strategy. When in doubt, leave it out.
+trading-lab. When in doubt, leave it out.

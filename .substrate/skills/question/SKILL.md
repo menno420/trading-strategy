@@ -5,7 +5,7 @@ description: "Answer a direct question concisely from memory and source; make no
 
 # question
 
-Answer a direct question about trading-strategy concisely.
+Answer a direct question about trading-lab concisely.
 
 1. Read current-state + the one relevant doc or source file.
 2. Answer in a few sentences, grounded in what you read; cite the source.

@@ -5,7 +5,7 @@ description: "Audit doc + session-log hygiene (bootstrap check) and summarize dr
 
 # repo-health
 
-Audit trading-strategy's documentation + session-log hygiene.
+Audit trading-lab's documentation + session-log hygiene.
 
 1. Run `bootstrap check` — badges, link resolution, doc reachability, and the
    required session-log markers.

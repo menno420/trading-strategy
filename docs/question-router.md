@@ -1,4 +1,4 @@
-# trading-strategy — maintainer question router
+# trading-lab — maintainer question router
 
 > **Status:** `owner-guidance`
 >
