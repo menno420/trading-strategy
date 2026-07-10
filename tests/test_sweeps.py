@@ -81,3 +81,49 @@ class TestVideoStrategyGrids:
     def test_deterministic_order(self):
         assert (sweeps.video_variants("supertrend_flip")
                 == sweeps.video_variants("supertrend_flip"))
+
+
+class TestMeanReversionGrids:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import MEAN_REVERSION_FAMILY
+        assert set(sweeps.MEAN_REVERSION_FAMILIES) == set(MEAN_REVERSION_FAMILY)
+        for fam in sweeps.MEAN_REVERSION_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and docs/p1-mean-reversion-results.md must match these.
+        counts = sweeps.mean_reversion_variants_per_family()
+        assert counts == {"rsi_mean_reversion": 48,
+                          "bollinger_reversion": 48,
+                          "pullback": 48}
+        assert sweeps.mean_reversion_total_variants() == 144
+        for fam, n in counts.items():
+            assert 40 <= n <= 80, f"{fam} grid out of the bounded range"
+
+    def test_constraints_filtered(self):
+        for params in sweeps.mean_reversion_variants("rsi_mean_reversion"):
+            assert params["oversold"] < params["overbought"]
+        for params in sweeps.mean_reversion_variants("bollinger_reversion"):
+            assert params["z_exit"] > -params["z_entry"]
+
+    def test_pullback_grid_includes_unfiltered_and_filtered(self):
+        # The pullback sub-family must probe both with and without the
+        # long-term trend filter (trend_len=0 disables it).
+        trend_lens = {p["trend_len"]
+                      for p in sweeps.mean_reversion_variants("pullback")}
+        assert 0 in trend_lens and 200 in trend_lens
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.MEAN_REVERSION_FAMILIES:
+            for params in sweeps.mean_reversion_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.mean_reversion_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.mean_reversion_variants("pullback")
+                == sweeps.mean_reversion_variants("pullback"))

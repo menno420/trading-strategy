@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.21377063927729822,
+    "max_drawdown": -0.3646004454130759,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9142669643667102,
+    "sortino": 0.9094050636198474,
+    "total_return": 17.269032233311567,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "e093f5d661b2",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T02:54:04+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "880a31592ee85600d386cc960a99254f9da3af97",
+  "instrument": "MSFT",
+  "metrics": {
+    "cagr": 0.18304352558309067,
+    "max_drawdown": -0.2511163936407721,
+    "n_bars": 3779,
+    "n_trades": 333,
+    "sharpe": 1.057512163246713,
+    "sortino": 0.7482397494792271,
+    "total_return": 11.437158286949384,
+    "turnover_per_year": 22.205874569992062,
+    "win_rate": 0.7425149700598802
+  },
+  "n_bars": 3779,
+  "notes": "P1 mean-reversion sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-mean-reversion-daily/bollinger_reversion__MSFT.json)",
+  "params": {
+    "lookback": 10,
+    "z_entry": 1.0,
+    "z_exit": 1.0
+  },
+  "run_id": "20260710T025404343288Z-e093f5d661b2",
+  "schema_version": 1,
+  "strategy": "bollinger_reversion",
+  "timeframe": "daily",
+  "variants_tried": 48
+}

@@ -250,3 +250,70 @@ class TestRsiMeanReversion:
         with pytest.raises(ValueError, match="oversold"):
             STRATEGIES["rsi_mean_reversion"](random_walk, oversold=80,
                                              overbought=70)
+
+
+class TestBollingerReversion:
+    def test_enters_below_band_exits_on_reversion(self):
+        prices = np.concatenate([
+            100.0 + np.tile([0.5, -0.5], 20),   # 40 bars of tight chop
+            np.linspace(100, 80, 10),           # sharp drop -> z << -z_entry
+            np.full(5, 80.0),
+            np.linspace(80, 105, 25),           # recovery -> z back above 0
+            np.full(10, 105.0),
+        ])
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["bollinger_reversion"](ohlcv, lookback=20,
+                                                z_entry=2.0, z_exit=0.0)
+        assert pos.loc[ohlcv.index[49]] == 1.0   # long by the end of the drop
+        assert pos.iloc[-1] == 0.0               # exited after the recovery
+        assert (pos.iloc[:19] == 0.0).all()      # warm-up flat
+
+    def test_flat_prices_stay_flat(self):
+        ohlcv = make_ohlcv(np.full(80, 100.0))
+        pos = STRATEGIES["bollinger_reversion"](ohlcv, lookback=20,
+                                                z_entry=2.0, z_exit=0.0)
+        assert (pos == 0.0).all()  # zero std -> undefined z -> no signal
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="lookback"):
+            STRATEGIES["bollinger_reversion"](random_walk, lookback=1)
+        with pytest.raises(ValueError, match="z_entry"):
+            STRATEGIES["bollinger_reversion"](random_walk, z_entry=0.0)
+        with pytest.raises(ValueError, match="z_exit"):
+            STRATEGIES["bollinger_reversion"](random_walk, z_entry=1.0,
+                                              z_exit=-1.5)
+
+
+class TestPullback:
+    def test_buys_dip_in_uptrend_sells_recovery(self):
+        prices = np.concatenate([
+            np.linspace(100, 160, 60),   # steady uptrend (covers warm-up)
+            np.linspace(160, 148, 6),    # pullback -> fresh 5-bar low
+            np.linspace(148, 180, 20),   # recovery -> close > exit SMA
+        ])
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["pullback"](ohlcv, entry_lookback=5, exit_len=5,
+                                     trend_len=50)
+        assert pos.loc[ohlcv.index[65]] == 1.0   # long during the dip
+        assert (pos.iloc[75:] == 0.0).all()      # exited on the recovery
+        assert (pos.iloc[:50] == 0.0).all()      # trend-SMA warm-up flat
+
+    def test_trend_filter_blocks_downtrend_entries(self):
+        down = make_ohlcv(np.linspace(200, 100, 120))
+        pos = STRATEGIES["pullback"](down, entry_lookback=5, exit_len=5,
+                                     trend_len=50)
+        assert (pos == 0.0).all()  # every dip is below the trend SMA
+
+    def test_no_filter_allows_downtrend_entries(self):
+        down = make_ohlcv(np.linspace(200, 100, 120))
+        pos = STRATEGIES["pullback"](down, entry_lookback=5, exit_len=5,
+                                     trend_len=0)
+        assert (pos.iloc[10:] == 1.0).any()  # unfiltered dips do enter
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="entry_lookback"):
+            STRATEGIES["pullback"](random_walk, entry_lookback=1)
+        with pytest.raises(ValueError, match="exit_len"):
+            STRATEGIES["pullback"](random_walk, exit_len=1)
+        with pytest.raises(ValueError, match="trend_len"):
+            STRATEGIES["pullback"](random_walk, trend_len=-1)

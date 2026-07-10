@@ -1,4 +1,5 @@
-"""Strategy library (P0 baselines + P1 trend-following family + video lane).
+"""Strategy library (P0 baselines + P1 trend-following family + video lane
++ P1 mean-reversion family).
 
 Common interface: ``generate(ohlcv, **params) -> pd.Series`` of target
 positions indexed like ``ohlcv``. ``positions[t]`` uses data only through
@@ -13,12 +14,17 @@ Families:
   macd_supertrend (+ ema_crossover reused as the dual-EMA control) —
   competing interpretations of the DaviddTech video's under-specified rules
   (docs/research/video-source-2026-07-09.md).
+* mean-reversion (P1, lane mean-reversion__all8__daily): rsi_mean_reversion
+  (the P0 baseline, reused with a sweep grid), bollinger_reversion
+  (z-score/band reversion), pullback (short-horizon dip-buying with an
+  optional long-term trend filter).
 """
 
 from __future__ import annotations
 
-from . import (buy_and_hold, donchian, ema_crossover, macd, macd_supertrend,
-               rsi_mean_reversion, sma_crossover, supertrend_flip)
+from . import (bollinger_reversion, buy_and_hold, donchian, ema_crossover,
+               macd, macd_supertrend, pullback, rsi_mean_reversion,
+               sma_crossover, supertrend_flip)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -29,6 +35,8 @@ STRATEGIES = {
     "donchian": donchian.generate,
     "supertrend_flip": supertrend_flip.generate,
     "macd_supertrend": macd_supertrend.generate,
+    "bollinger_reversion": bollinger_reversion.generate,
+    "pullback": pullback.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -42,6 +50,8 @@ DEFAULT_PARAMS = {
                         "macd_fast": 12, "macd_slow": 26, "macd_signal": 9},
     "macd_supertrend": {"macd_fast": 12, "macd_slow": 26, "macd_signal": 9,
                         "st_period": 10, "st_mult": 3.0, "ema_len": 200},
+    "bollinger_reversion": {"lookback": 20, "z_entry": 2.0, "z_exit": 0.0},
+    "pullback": {"entry_lookback": 5, "exit_len": 5, "trend_len": 200},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -52,8 +62,13 @@ TREND_FOLLOWING_FAMILY = ["sma_crossover", "ema_crossover", "macd", "donchian"]
 # ema_crossover doubles as the dual-EMA control (video Strategy A region).
 VIDEO_STRATEGY_FAMILY = ["supertrend_flip", "macd_supertrend", "ema_crossover"]
 
+# P1 mean-reversion family: the three strategies swept in the
+# mean-reversion × all-8-tickers × daily lane (QUEUE item 2).
+MEAN_REVERSION_FAMILY = ["rsi_mean_reversion", "bollinger_reversion",
+                         "pullback"]
+
 __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "TREND_FOLLOWING_FAMILY",
-           "VIDEO_STRATEGY_FAMILY",
+           "VIDEO_STRATEGY_FAMILY", "MEAN_REVERSION_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
-           "macd_supertrend"]
+           "macd_supertrend", "bollinger_reversion", "pullback"]

@@ -58,3 +58,49 @@ variant, results doc badged + linked from a reachable doc. Keep MACD's
 cost-churn lesson in mind: mean-reversion trades often — turnover kills at
 6 bps/side. Delete `claims/mean-reversion__all8__daily.md` when the lane's
 ledgered results merge.
+
+## Amendment — sweep phase (2026-07-10T02:57:28Z)
+
+Lane work landed per the heartbeat close-out's guard recipe (Status stays
+`complete`; this phase lands as an amendment, wind-down-card precedent).
+
+**Done (sweep phase):**
+
+- Family built: `MEAN_REVERSION_FAMILY` = rsi_mean_reversion (P0 baseline
+  reused), bollinger_reversion (new, z-score band reversion), pullback (new,
+  short-horizon dip-buying, `trend_len=0/100/200` probes with/without a
+  long-term trend filter). Both new strategies causality-unit-tested
+  (prefix invariance) plus behavior tests.
+- Grids in `trading_lab.sweeps` (`mean_reversion_variants*`, unit-tested
+  counts): 48 + 48 + 48 = **144 variants**.
+- Sweep run: `scripts/run_p1_meanrev_sweep.py` (mirrors the trend-lane
+  script) — all 8 tickers × 3 families, daily pre-holdout dev data via
+  `load_ohlcv` only (data_end 2025-01-08 ≤ HOLDOUT_START, loader-enforced;
+  no network), walk-forward train 1008 / test 252 contiguous (10 splits,
+  META 8), costs 5+1 bps per side, t+1-open fills, B&H benchmark over the
+  exact stitched OOS window.
+- Evidence: 24 aggregate sweep files under
+  `experiments/sweeps/p1-mean-reversion-daily/` (per-variant full-period
+  rows + walk-forward OOS + per-split picks), 24 ledger runs (top
+  full-period variant per family × ticker, variants_tried=48),
+  `experiments/index.jsonl` regenerated (87 rows).
+- Results doc: `docs/p1-mean-reversion-results.md` (badged `reference`,
+  linked from docs/current-state.md and README.md). **Verdict: 3 of 24
+  family × ticker lanes beat B&H OOS (144 variants tried) — the negative
+  result is the headline.** Bollinger 0/8; pullback negative outright on
+  both metals. Survivors GOOGL-pullback (0.85 vs 0.72), META-rsi (0.79 vs
+  0.65), META-pullback (0.67 vs 0.65) are candidates, NOT findings —
+  pending P2 validation outside their selection window.
+- Lane wrap-up: claim `claims/mean-reversion__all8__daily.md` deleted
+  (lifecycle), QUEUE.md item 2 marked DONE, control/status.md overwritten
+  as the deliberate last commit.
+
+**Verify:** `python3 -m pytest -q` → 125 green;
+`python3 bootstrap.py check --strict --require-session-log --session-log
+.sessions/2026-07-10-mean-reversion-daily.md` → exit 0.
+
+**Next (guard recipe):** QUEUE § Next item 3 (trend × hourly — mind the
+cost-churn lesson at 1638 bars/year) and item 4 (P2 validation now covers
+the trend candidates + GOOGL-pullback / META-rsi / META-pullback). No new
+walls hit this phase — the known auto-merge "unstable status" wall and the
+REST-squash fallback path are already in NEXT-BOOT.

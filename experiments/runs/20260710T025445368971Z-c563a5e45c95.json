@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.26328655934387113,
+    "max_drawdown": -0.557692284578402,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8638800519755336,
+    "sortino": 0.8727857658651618,
+    "total_return": 32.275558046263065,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "c563a5e45c95",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T02:54:45+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "880a31592ee85600d386cc960a99254f9da3af97",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.1409607108376223,
+    "max_drawdown": -0.49148718868162244,
+    "n_bars": 3779,
+    "n_trades": 324,
+    "sharpe": 0.6915247585640875,
+    "sortino": 0.4891876091821258,
+    "total_return": 6.224920630541676,
+    "turnover_per_year": 21.605715797830115,
+    "win_rate": 0.7530864197530864
+  },
+  "n_bars": 3779,
+  "notes": "P1 mean-reversion sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-mean-reversion-daily/bollinger_reversion__AMZN.json)",
+  "params": {
+    "lookback": 10,
+    "z_entry": 1.0,
+    "z_exit": 1.0
+  },
+  "run_id": "20260710T025445368971Z-c563a5e45c95",
+  "schema_version": 1,
+  "strategy": "bollinger_reversion",
+  "timeframe": "daily",
+  "variants_tried": 48
+}

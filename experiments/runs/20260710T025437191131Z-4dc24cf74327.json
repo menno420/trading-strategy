@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.18277329617606042,
+    "max_drawdown": -0.435371916777587,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.7546852072703625,
+    "sortino": 0.7683881733429755,
+    "total_return": 11.394624375794688,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "4dc24cf74327",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T02:54:37+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "880a31592ee85600d386cc960a99254f9da3af97",
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.14303952861753255,
+    "max_drawdown": -0.2794651044794759,
+    "n_bars": 3779,
+    "n_trades": 594,
+    "sharpe": 0.8575816331115645,
+    "sortino": 0.6199812118126489,
+    "total_return": 6.424861206374432,
+    "turnover_per_year": 39.610478962688546,
+    "win_rate": 0.7306397306397306
+  },
+  "n_bars": 3779,
+  "notes": "P1 mean-reversion sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-mean-reversion-daily/pullback__GOOGL.json)",
+  "params": {
+    "entry_lookback": 5,
+    "exit_len": 7,
+    "trend_len": 0
+  },
+  "run_id": "20260710T025437191131Z-4dc24cf74327",
+  "schema_version": 1,
+  "strategy": "pullback",
+  "timeframe": "daily",
+  "variants_tried": 48
+}
