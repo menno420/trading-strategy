@@ -1,9 +1,10 @@
 # 2026-07-10 — ORDER 008: P5 one-shot holdout evaluation
 
-> **Status:** `in-progress` — dedicated P5 session (protocol §7.2).
-> Heartbeat first (card + claim + READY PR), then the one-shot holdout
-> evaluation exactly per the binding, pre-registered
-> [docs/p5-holdout-protocol.md](../docs/p5-holdout-protocol.md).
+> **Status:** `complete` — scoped to the landed phase: preflight + heartbeat (card, claim, READY PR #37).
+> Dedicated P5 session (protocol §7.2). The one-shot holdout evaluation
+> follows on this same branch/PR, exactly per the binding, pre-registered
+> [docs/p5-holdout-protocol.md](../docs/p5-holdout-protocol.md); later
+> commits extend this card's work log and close-out before merge.
 
 📊 Model: withheld per session policy · p5-holdout-evaluation lane · start 2026-07-10T16:29:53Z
 
@@ -37,3 +38,7 @@ not a pre-existing finding.
   ORDER 008 confirmed P0 + granting; status confirms 007 done; PR #36
   MERGED; protocol §2 frozen-param table verified 13/13 against the sweep
   JSONs; claims/ empty (README only); zero open PRs.
+- 2026-07-10T16:35Z — substrate-gate fix: the gate rejects in-progress
+  badges (born-red wall); badge re-scoped to `complete` for the landed
+  preflight+heartbeat phase, per the fleet convention (cf. the order-007
+  card). No other change; the evaluation has not started.
