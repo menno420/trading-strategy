@@ -86,3 +86,15 @@
 
 ## ⚑ Owner clicks outstanding
 See control/status.md — env setup script verification (paste-ready script now at environments/setup-universal.sh), auto-merge tick, archive the DOA successor session.
+
+## Next-session brief (2026-07-10 close-out)
+
+Lab parked green. Sole roadmap step = **P5 one-shot holdout evaluation**,
+which waits on an explicit owner ORDER in `control/inbox.md` naming
+`docs/p5-holdout-protocol.md` as binding (§7). When that order lands,
+dispatch a **FRESH dedicated session** (not the protocol author) to execute
+it and finalize `docs/final-report.md` §Holdout. No other undone roadmap
+items. **Amendment at close-out:** ORDER 007 (2026-07-10T12:47:35Z,
+promotion-significance bar + AAPL-donchian re-grade) arrived after this
+brief was commissioned and is OPEN / not started — it gates any holdout use
+and must be executed before P5 (it gates, it does not spend, the holdout).

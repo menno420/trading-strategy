@@ -31,3 +31,8 @@ Branch → append one line to your new session card → commit → push → open
 
 ## Where the science stands
 P0 lab verified; P1 trend-following × 8 tickers × daily complete (177 variants; 7/32 lanes beat B&H OOS — weak under multiple testing). P2 candidates: AAPL donchian, META sma/ema/donchian. Open lanes in priority order: (1) finish/absorb the video-strategy lane (see queue), (2) mean-reversion family × daily, (3) trend × hourly, (4) P2 walk-forward validation of the candidates, (5) holdout hardening (segregate data/holdout/, gate-check reads, `data_end ≤ HOLDOUT_START` in every ledger row).
+
+## Coordinator-surface walls & recipes (2026-07-10)
+- WALL: coordinator Agent tool rejects default agent type; exact error: "Agent type 'general-purpose' not found. Available agents: worker" — always pass subagent_type:'worker'.
+- RECIPE: coordinator surface has NO direct file/shell/scheduler/GitHub tools; all scheduling ran via a worker agent calling claude-code-remote MCP tools. ToolSearch reports send_later/create_trigger as already-loaded (not deferred). Recurring wake = mcp__claude-code-remote__create_trigger with cron_expression "0 */4 * * *" (min interval hourly), bound to the coordinator persistent session — trigger trig_01Mvn5xRmqGmZJNRHgjqyLpN, fires confirmed 04:08:10Z/08:00Z/12:00Z 2026-07-10. One-shot child liveness checks = send_later, 10-min delay, armed per spawn.
+- OBSERVATION: gen-2 spawn-liveness was 5/5 — every child heartbeated (PR opened) within ~5 min of spawn; zero respawns; GitHub merge webhooks arriving as project-activity served as claim-independent verification of child "merged" reports.
