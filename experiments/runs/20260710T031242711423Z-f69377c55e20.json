@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.29438417184440935,
+    "max_drawdown": -0.22752014737711135,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.0537931964448592,
+    "sortino": 1.0644793070114111,
+    "total_return": 0.47704820339228293,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "f69377c55e20",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T03:12:42+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "64d1d061afe4e5093c2529db14b9defa5552e5f4",
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.24654621308879943,
+    "max_drawdown": -0.11337882851970593,
+    "n_bars": 2476,
+    "n_trades": 29,
+    "sharpe": 1.1284707295834344,
+    "sortino": 1.0244888805446757,
+    "total_return": 0.39531655184949144,
+    "turnover_per_year": 19.184975767366723,
+    "win_rate": 0.6
+  },
+  "n_bars": 2476,
+  "notes": "P1 trend-hourly sweep: top full-dev-period variant of 41 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-hourly/donchian__GOOGL.json)",
+  "params": {
+    "entry": 40,
+    "exit": 40
+  },
+  "run_id": "20260710T031242711423Z-f69377c55e20",
+  "schema_version": 1,
+  "strategy": "donchian",
+  "timeframe": "hourly",
+  "variants_tried": 41
+}

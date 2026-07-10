@@ -26,6 +26,7 @@ Branch → append one line to your new session card → commit → push → open
 - Cross-session steering can be unavailable: `send_message: tool is not enabled for this organization` (appeared mid-day after working earlier). Brief every session self-terminal: land READY PRs and merge on green without needing a follow-up message.
 - Sibling-lane experience (team memory): tag pushes, GitHub release creation, and branch deletion return 403 for agent sessions — plan those as owner actions.
 - PR platform default is DRAFT; this fleet's convention is READY-never-draft, merge on green. State it in every brief.
+- Yahoo live 1h history currently reaches ~35 months (earliest bar 2023-08-10, observed 2026-07-10 via the loader) — deeper than the ~730d limit documented earlier; the committed hourly cache starts at the same boundary.
 
 ## Where the science stands
 P0 lab verified; P1 trend-following × 8 tickers × daily complete (177 variants; 7/32 lanes beat B&H OOS — weak under multiple testing). P2 candidates: AAPL donchian, META sma/ema/donchian. Open lanes in priority order: (1) finish/absorb the video-strategy lane (see queue), (2) mean-reversion family × daily, (3) trend × hourly, (4) P2 walk-forward validation of the candidates, (5) holdout hardening (segregate data/holdout/, gate-check reads, `data_end ≤ HOLDOUT_START` in every ledger row).

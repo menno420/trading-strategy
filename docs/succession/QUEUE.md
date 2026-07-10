@@ -24,7 +24,15 @@
    `docs/p1-mean-reversion-results.md`; 3/24 lanes beat B&H (the negative
    result is the headline), GOOGL-pullback / META-rsi / META-pullback
    carried to P2 as candidates only.
-   3. Trend × hourly. 4. P2 validation of AAPL-donchian + META-trend candidates (plus the mean-reversion candidates from item 2). 5. Holdout enforcement hardening. 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over, still undone).
+3. Trend × hourly. **DONE 2026-07-10** (gen-2, lane
+   `trend-following__all8__hourly`): the daily trend grids (4 families ×
+   177 variants) re-run on hourly bars × 8 tickers (committed cache
+   2023-08 → 2025-01, ~2476 bars), walk-forward OOS vs B&H — see
+   `docs/p1-trend-hourly-results.md`; 5/32 lanes beat B&H over a single
+   ~8.5-month OOS regime (the negative result is the headline; MACD churn
+   is cost-eaten at 1,638 bars/yr), GOOGL-sma/ema/donchian, AMZN-donchian,
+   META-macd carried to P2 as candidates only.
+   4. P2 validation of AAPL-donchian + META-trend candidates (plus the mean-reversion candidates from item 2 and the trend-hourly candidates from item 3). 5. Holdout enforcement hardening. 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over, still undone).
 
 ## ⚑ Owner clicks outstanding
 See control/status.md — env setup script verification (paste-ready script now at environments/setup-universal.sh), auto-merge tick, archive the DOA successor session.

@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 1.1848430526782217,
+    "max_drawdown": -0.34215233426589897,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.9493204747433084,
+    "sortino": 1.928590389640925,
+    "total_return": 2.2588733042509337,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "61f01c4cad6a",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T03:12:35+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "64d1d061afe4e5093c2529db14b9defa5552e5f4",
+  "instrument": "NVDA",
+  "metrics": {
+    "cagr": 1.0247484131805504,
+    "max_drawdown": -0.1953787850223433,
+    "n_bars": 2476,
+    "n_trades": 50,
+    "sharpe": 2.3320930282584276,
+    "sortino": 1.861061414098818,
+    "total_return": 1.904760669981271,
+    "turnover_per_year": 33.07754442649435,
+    "win_rate": 0.52
+  },
+  "n_bars": 2476,
+  "notes": "P1 trend-hourly sweep: top full-dev-period variant of 44 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-hourly/ema_crossover__NVDA.json)",
+  "params": {
+    "fast": 20,
+    "slow": 30
+  },
+  "run_id": "20260710T031235631704Z-61f01c4cad6a",
+  "schema_version": 1,
+  "strategy": "ema_crossover",
+  "timeframe": "hourly",
+  "variants_tried": 44
+}
