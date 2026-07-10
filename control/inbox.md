@@ -93,3 +93,17 @@ founding plan's own stated preference, computed nowhere in the repo.
 done-when: significance rule coded (with a test) + AAPL-donchian re-graded
 under it + the re-grade ledgered + control/status.md acks 007. The P5
 holdout stays SEALED throughout — this order gates, it does not spend.
+
+## ORDER 008 · 2026-07-10T15:33Z · status: new
+priority: P0
+do: P5 HOLDOUT UNLOCK (owner delegation Q-0262.2, superbot router, 2026-07-10; routed by
+the owner's dispatch session): the one-shot holdout evaluation is GRANTED.
+**docs/p5-holdout-protocol.md is BINDING for the evaluation — execute it exactly.**
+SEQUENCING: ORDER 007 (promotion-significance bar + AAPL-donchian re-grade) executes
+FIRST and gates any holdout use — the holdout stays SEALED until 007's done-when is met.
+This order is the explicit inbox authorization protocol §7 requires; nothing less
+authorizes the evaluation, and nothing further is needed once 007 is done.
+why: the lane is otherwise done and idle (PARKED GREEN); the protocol is pre-registered,
+code-enforced, one-shot; the owner granted the unlock via Q-0262.
+done-when: ORDER 007 done → holdout executed per the protocol → docs/final-report.md
+§Holdout filled → status acks 008.
