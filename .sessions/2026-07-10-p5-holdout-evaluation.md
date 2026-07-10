@@ -52,3 +52,11 @@ not a pre-existing finding.
   (`--smoke`: unlock=False, pseudo-window 2024-01-09, throwaway runs dir,
   deleted) passed 13/13 with zero exceptions; full pytest 147 passed. The
   sealed data remains untouched at this commit.
+- 2026-07-10T17:39:23Z — fresh bars fetched via `trading_lab.data.fetch_ohlcv`
+  (standard path; yfinance source) into `data/p5holdout/` (p2ext precedent —
+  committed pre-2025 caches stay byte-identical): AAPL/META/BTC-USD daily
+  (4154/3555/4315 bars, through 2026-07-10), GOOGL/AMZN/META hourly
+  (5070 bars each, 2023-08-11 → 2026-07-10T16:30Z). Hourly history reaches
+  back past 2025-01-09, so the §4 window-shortening contingency is NOT
+  triggered. Raw cache may contain post-boundary bars by design (rail is at
+  load time); nothing has been loaded or scored yet.
