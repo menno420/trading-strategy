@@ -1,10 +1,4 @@
-> ⚠️ **UNRENDERED SLOTS BELOW — run `python3 bootstrap.py ask`.**
-> Every `${...}` token in this file is an unfilled interview slot, not
-> project truth. Fill: `bootstrap answer <slot> <value...>`, then
-> `bootstrap render --live` (fills in place and removes this banner).
-> Prose without `${...}` tokens is live guidance already.
-
-# trading-strategy — agent working agreement
+# trading-lab — agent working agreement
 
 > **Status:** `binding`
 >
@@ -14,30 +8,34 @@
 
 ## What this project is
 
-trading-strategy is built in ${primary_language}.
+trading-lab is built in Python 3.11+ (pandas, pytest).
 
 ## Orientation — read first, in order
 
 1. This file — the working agreement.
 2. `docs/current-state.md` — what is true right now.
-3. `docs/AGENT_ORIENTATION.md` — the task-specific reading router.
+3. `docs/CAPABILITIES.md` — what sessions here CAN and CANNOT do (verified).
+   Never declare a wall or a missing credential without its discovery rule:
+   check the file → check the env → attempt once + capture the exact error →
+   append the finding same session.
+4. `docs/AGENT_ORIENTATION.md` — the task-specific reading router.
 
 ## Architecture — layers & import rules
 
-${architecture_layers}
+Layered research pipeline: data/ (raw + cached market data, daily and hourly bars for tech stocks and gold/silver) -> src/ (strategy, backtest engine, validation) -> tests/. Import rule: src/ never imports from tests/; strategies depend on the backtest engine, never the reverse; nothing imports broker or order-execution libraries — this is a research-only lab, no live trading code anywhere.
 
 ## Verifying a change
 
 Run before every push:
 
 ```
-${verify_command}
+python3 -m pytest -q
 ```
 
 ## How the maintainer works
 
-${owner_profile}
+Owner: menno420 (mennovanhattum@gmail.com). Prefers an autonomous lab: agents decide-and-flag rather than block on questions, keep reports concise and evidence-based, follow the binding methodology in docs/founding-plan.md (walk-forward validation, locked 18-month holdout, realistic costs, no lookahead, multiple-testing discipline, buy-and-hold benchmark). Hard rule: research only — never connect to brokers or real money.
 
 ## Workflow adoption
 
-Current adoption pace for the substrate workflow: **guided**.
+Current adoption pace for the substrate workflow: **active**.

@@ -1,4 +1,4 @@
-# trading-strategy — AI project workflow
+# trading-lab — AI project workflow
 
 > **Status:** `reference`
 >
@@ -36,4 +36,4 @@ verified · what is still open · the first next step.)
 
 ## Adoption pace
 
-Current substrate-workflow adoption: **guided**.
+Current substrate-workflow adoption: **active**.

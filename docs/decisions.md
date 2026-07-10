@@ -1,4 +1,4 @@
-# trading-strategy — decisions
+# trading-lab — decisions
 
 > **Status:** `living-ledger`
 >
@@ -11,9 +11,9 @@
 ## [D-0001] Adopt the substrate-kit workflow
 
 - status: decided
-- date: 2026-07-09
-- verdict: trading-strategy runs on the substrate-kit agent workflow.
+- date: 2026-07-10
+- verdict: trading-lab runs on the substrate-kit agent workflow.
 - why: A repo-resident working agreement, decision ledger, and session
   discipline let agents work correctly with little steering; adopting the
-  kit starts trading-strategy governed instead of accreting rules ad hoc.
+  kit starts trading-lab governed instead of accreting rules ad hoc.
 - provenance: substrate-kit adoption interview

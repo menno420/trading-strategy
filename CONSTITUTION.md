@@ -1,4 +1,4 @@
-# trading-strategy — constitution
+# trading-lab — constitution
 
 > **Status:** `binding`
 >
@@ -23,6 +23,12 @@
   a separate blocking question. Two payoffs, not one: it catches a misread
   before work happens, and the filled-in picture is itself new material the
   owner reasons against and redirects.
+- **Capabilities are discovered, never assumed.** `docs/CAPABILITIES.md` is
+  the verified ledger of what sessions here can and cannot do — read it at
+  session start. Before declaring a wall or a missing credential: check that
+  file → check the environment (`printenv`, tool lists) → attempt once and
+  capture the exact error → append the finding same session. An imagined
+  wall stalls the session; an unrecorded real one taxes every later session.
 - When a doc and a source file disagree: Adopt-time state: planted docs were unrendered and CI unwired. Fix: answer the interview slots, run bootstrap.py render --live, install .substrate/ci/substrate-gate.yml into .github/workflows/, and engage the session loop (session-start/session-close). Ongoing: whenever check --strict flags drift, fix docs in the same session before closing.
 
 ## Autonomy rails — act vs. ask
@@ -33,6 +39,13 @@
   large / cross-cutting (architectural), or when the goal itself is
   genuinely ambiguous. No live owner to ask? Record the question in
   `docs/question-router.md` instead of skipping it or guessing.
+- **Owner attention is the scarcest resource.** Before routing anything to
+  the owner: attempt it yourself, or cite the exact wall (the
+  `docs/CAPABILITIES.md` discipline) — assumption-based asks are banned.
+  Every ask carries the OWNER-ACTION fields — WHAT / WHERE / HOW /
+  WHY-IT-MATTERS / UNBLOCKS / VERIFIED-NEEDED (format:
+  `control/README.md`) — phrased so a non-technical owner can act on it
+  directly. Expire stale asks; fewer, clearer asks beat complete lists.
 
 ## Changing the rules — propose, don't apply
 
@@ -57,7 +70,7 @@ the one home; a local copy is drift by construction. Repo-local rulings stay
 in `docs/decisions.md` / `docs/question-router.md`; a local ruling promoted
 program-wide becomes a PL-block there and a pointer here.
 
-## Rails specific to trading-strategy
+## Rails specific to trading-lab
 
 (Hand-filled: the project's own hard rules, one bullet each, each citing its
 [D-NNNN]. Keep the whole hand-filled file under 150 lines.)

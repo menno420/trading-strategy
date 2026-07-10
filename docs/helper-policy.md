@@ -1,4 +1,4 @@
-# trading-strategy — helper policy
+# trading-lab — helper policy
 
 > **Status:** `binding`
 >
@@ -21,7 +21,7 @@
 4. **Promote on second use.** The moment a private helper is wanted by a
    second module, promote it to the shared layer — don't copy it.
 
-## Where helpers go in trading-strategy
+## Where helpers go in trading-lab
 
 (Hand-filled: the concrete shared-layer path(s) for this repo, lowest layer
 first, with one line on what belongs in each.)
