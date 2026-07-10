@@ -42,3 +42,13 @@ not a pre-existing finding.
   badges (born-red wall); badge re-scoped to `complete` for the landed
   preflight+heartbeat phase, per the fleet convention (cf. the order-007
   card). No other change; the evaluation has not started.
+- 2026-07-10T17:37:33Z — protocol re-read IN FULL at HEAD 92f096f; §2
+  frozen-param table re-verified at run time: 13/13 exact dict matches
+  against the sweep JSONs. Executor `scripts/run_p5_holdout.py` written
+  and committed BEFORE any unlock: mechanical §4/§5 interpretation
+  decisions fixed ex-ante in its docstring (warm-in-bar fill at first
+  window open; undefined Sharpe counts against the strategy; NOT-EVALUABLE
+  rule; fresh bars to data/p5holdout/). Mechanics dry-run on DEV data only
+  (`--smoke`: unlock=False, pseudo-window 2024-01-09, throwaway runs dir,
+  deleted) passed 13/13 with zero exceptions; full pytest 147 passed. The
+  sealed data remains untouched at this commit.
