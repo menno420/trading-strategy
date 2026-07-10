@@ -24,6 +24,113 @@
   large and cross-cutting (architectural), or the goal itself is genuinely
   ambiguous.
 
+## PR lifecycle (as practiced)
+
+Everything in this section is verified against this repo's merged PR history
+(#14–#24, all landed 2026-07-10), not aspiration. The written grants live in
+`control/inbox.md` (ORDER 002: "open PRs READY with auto-merge armed, never
+draft"; ORDER 005's done-when: "skeleton PR merged self-landed").
+
+### Open READY, land it yourself
+
+- **READY, never draft.** The platform default is draft — override it. The
+  one draft in this repo's history (gen-1's PR #1) sat finished-but-invisible
+  for ~2.8 h until ORDER 002 made READY-never-draft the standing convention;
+  every PR since (#4–#24) opened READY.
+- **Forward-only git.** No force-push, no history rewrites; a fix is a new
+  commit. Tag pushes and branch deletion return 403 for agent sessions —
+  plan those as owner actions.
+- **Self-merge on green.** The agent lands its own PRs once CI is green;
+  nothing waits for human review. Practiced in every merge to date —
+  creation→merge latency in #14–#24 ran from ~40 seconds (#20) to ~6 minutes
+  (checks run on the pushed branch, so a PR can be green at creation).
+- **Never merge on red.** Fix and re-push (forward-only), then merge.
+
+### Arm auto-merge at creation; REST squash is the path that fires
+
+- Attempt to arm auto-merge (**squash**) at PR creation. PRs created via the
+  MCP tools never trigger any auto-merge enabler on their own — arm it
+  yourself or merge on green yourself.
+- The **two-way arm-failure wall** (both outcomes are non-fatal; don't probe
+  twice):
+  - checks still pending → the arm errors with **"unstable status"**. This
+    is NOT a failing-checks signal — in this repo it means the repo-level
+    "Allow auto-merge" toggle is off (standing ⚑ owner item in
+    `control/status.md`).
+  - checks already green → the arm errors with **"already in clean
+    status"**.
+- **Fallback:** poll the PR's check runs, and on green squash-merge via the
+  REST merge endpoint. Record which path fired (arm vs REST) in the PR or
+  session card. History: **every merge to date landed via
+  REST-squash-on-green; the GraphQL arm has never once succeeded here**
+  (fleet experience adds that GraphQL merge quota exhausts roughly hourly —
+  REST is the reliable path).
+
+### Review is post-merge
+
+- Needs-second-eyes does not block landing: **merge anyway**, then queue the
+  review — a line in `docs/review-queue.md` (PR number · what to re-check ·
+  why) and/or an @-mention of Codex on the PR. (`docs/review-queue.md` is
+  created on first use; no merge to date has needed an entry.)
+- The owner's veto is a **revert**, not a held merge.
+
+### Refusal branch (terminal on first denial)
+
+- If a permission/classifier layer denies a merge, an auto-merge arm, or a
+  ready-flip: that denial is **TERMINAL the first time**. Never retry it,
+  never reword it.
+- Degrade the done-when to "PR open, READY, green": leave the PR exactly
+  there, record the refusal **verbatim** in `control/status.md`, ⚑ the owner
+  click, and add the review-queue line.
+
+## Session lifecycle around PRs (as practiced)
+
+### Heartbeat before work
+
+- A session's **first commit is its session card** in `.sessions/`, and the
+  PR carrying it opens READY immediately — **the card is the heartbeat**
+  (practiced: #14, #16, #18, #20, #23 each landed card + lane claim within
+  minutes of session start).
+- Card conventions: Status badge up top (born-red wall: a card badged
+  in-progress cannot pass substrate-gate — badge `complete`, scoped to the
+  landed phase); Model line reads "withheld per session policy"; timestamps
+  come from `date -u` only.
+- After the first heartbeat, **batch status/card writes into substantive
+  PRs** (#15, #17, #19 folded the whole lane wrap-up into the deliverable
+  PR); at most **one status-only PR per session** (#22, a standalone
+  wrap-up, is the only one to date).
+
+### One writer; claim before build
+
+- **One writer per file, one writing session per repo at a time.** The
+  manager is the sole writer of `control/inbox.md` (appends only — never
+  edit it); this project is the sole writer of its `control/status.md`.
+  Protocol: `control/README.md`.
+- **Claim-before-build** (`claims/README.md` lifecycle): before starting a
+  lane, check `claims/` AND the open-PR list for overlap; write
+  `claims/<lane>.md` in the first commit; delete it in the closing PR — a
+  deleted claim = lane complete. Practiced across #14→#15, #16→#17,
+  #18→#19, #20→#22.
+
+### The status ender
+
+- Every session's **last write overwrites `control/status.md`**: UTC
+  `updated:` timestamp, phase, health, last-shipped PR, blockers, orders
+  acked/done, ⚑ needs-owner items, and a `next-update-by:` line.
+- Immediately before that final write, **re-read `control/inbox.md` at
+  origin/main HEAD** (a stale clone reads stale orders; practiced in #19,
+  #22).
+- **Wrap-up is the first claim on the session budget** — reserve it before
+  lane work can spend it.
+
+### Substrate-gate interplay
+
+- **Every PR must touch a session card** — the gate picks the card out of
+  the PR diff (`bootstrap.py check --strict --require-session-log`).
+- Every **new doc** needs a `> **Status:** \`<token>\`` badge within its
+  first 12 lines AND a link from an already-reachable doc, or the gate fails
+  (`[badge] … missing` / `[reachable] … orphan`).
+
 ## Friction → guard
 
 Anything that interrupts a session's workflow — a stale file, a checker that
