@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.26328655934387113,
+    "max_drawdown": -0.557692284578402,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8638800519755336,
+    "sortino": 0.8727857658651618,
+    "total_return": 32.275558046263065,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "2c9f327b5f30",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T22:43:57+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4b890babbe69cfdf00cf825aa7f8207a3cfac58d",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.11242525929312341,
+    "max_drawdown": -0.43457901494888085,
+    "n_bars": 3779,
+    "n_trades": 119,
+    "sharpe": 0.5991999106082017,
+    "sortino": 0.4726208812649568,
+    "total_return": 3.941729960136148,
+    "turnover_per_year": 7.935432654141308,
+    "win_rate": 0.36666666666666664
+  },
+  "n_bars": 3779,
+  "notes": "Round 2 slice R2 (post-holdout DEV-ONLY, promotion closed \u2014 docs/research-round-2.md): top full-dev-period variant of 6 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r2-keltner_breakout/keltner_breakout__AMZN.json)",
+  "params": {
+    "m": 1.5,
+    "n": 50
+  },
+  "run_id": "20260710T224357886495Z-2c9f327b5f30",
+  "schema_version": 1,
+  "strategy": "keltner_breakout",
+  "timeframe": "daily",
+  "variants_tried": 6
+}

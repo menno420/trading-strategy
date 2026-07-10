@@ -20,14 +20,17 @@ Families:
   optional long-term trend filter).
 * Round 2 (post-holdout dev-only, docs/research-round-2.md):
   vol_filtered_trend (slice R1 — SMA crossover gated by a realized-vol
-  calm-regime filter; the filter-off arm is the within-family baseline).
+  calm-regime filter; the filter-off arm is the within-family baseline);
+  keltner_breakout (slice R2 — long on close > EMA(n) + m*ATR(n), exit on
+  close < EMA(n)).
 """
 
 from __future__ import annotations
 
 from . import (bollinger_reversion, buy_and_hold, donchian, ema_crossover,
-               macd, macd_supertrend, pullback, rsi_mean_reversion,
-               sma_crossover, supertrend_flip, vol_filtered_trend)
+               keltner_breakout, macd, macd_supertrend, pullback,
+               rsi_mean_reversion, sma_crossover, supertrend_flip,
+               vol_filtered_trend)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -41,6 +44,7 @@ STRATEGIES = {
     "bollinger_reversion": bollinger_reversion.generate,
     "pullback": pullback.generate,
     "vol_filtered_trend": vol_filtered_trend.generate,
+    "keltner_breakout": keltner_breakout.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -57,6 +61,7 @@ DEFAULT_PARAMS = {
     "bollinger_reversion": {"lookback": 20, "z_entry": 2.0, "z_exit": 0.0},
     "pullback": {"entry_lookback": 5, "exit_len": 5, "trend_len": 200},
     "vol_filtered_trend": {"fast": 20, "slow": 50, "vol_filter": True},
+    "keltner_breakout": {"n": 20, "m": 2.0},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -76,10 +81,14 @@ MEAN_REVERSION_FAMILY = ["rsi_mean_reversion", "bollinger_reversion",
 # in the r2-vol_filtered_trend × {AAPL, MSFT, NVDA, GLD} × daily lane.
 R2_VOL_TREND_FAMILY = ["vol_filtered_trend"]
 
+# Round 2 slice R2 (docs/research-round-2.md §3b): the single family swept
+# in the r2-keltner_breakout × {BTC-USD, META, AMZN, SLV} × daily lane.
+R2_KELTNER_FAMILY = ["keltner_breakout"]
+
 __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "TREND_FOLLOWING_FAMILY",
            "VIDEO_STRATEGY_FAMILY", "MEAN_REVERSION_FAMILY",
-           "R2_VOL_TREND_FAMILY",
+           "R2_VOL_TREND_FAMILY", "R2_KELTNER_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
-           "vol_filtered_trend"]
+           "vol_filtered_trend", "keltner_breakout"]

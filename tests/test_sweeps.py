@@ -173,3 +173,42 @@ class TestR2VolFilteredTrendGrid:
     def test_deterministic_order(self):
         assert (sweeps.r2_vol_trend_variants("vol_filtered_trend")
                 == sweeps.r2_vol_trend_variants("vol_filtered_trend"))
+
+
+class TestR2KeltnerBreakoutGrid:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R2_KELTNER_FAMILY
+        assert set(sweeps.R2_KELTNER_FAMILIES) == set(R2_KELTNER_FAMILY)
+        for fam in sweeps.R2_KELTNER_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_match_preregistration(self):
+        # docs/research-round-2.md §3b is BINDING: 6 variants/instrument
+        # (n ∈ {20, 50} × m ∈ {1.5, 2.0, 2.5}) over exactly 4 instruments
+        # = 24 registered configs.
+        counts = sweeps.r2_keltner_variants_per_family()
+        assert counts == {"keltner_breakout": 6}
+        assert sweeps.R2_KELTNER_INSTRUMENTS == ("BTC-USD", "META", "AMZN",
+                                                 "SLV")
+        assert sweeps.r2_keltner_total_configs() == 24
+
+    def test_grid_is_exactly_the_registered_product(self):
+        variants = sweeps.r2_keltner_variants("keltner_breakout")
+        assert ({(p["n"], p["m"]) for p in variants}
+                == {(n, m) for n in (20, 50) for m in (1.5, 2.0, 2.5)})
+        for params in variants:
+            assert set(params) == {"n", "m"}  # nothing else is swept
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R2_KELTNER_FAMILIES:
+            for params in sweeps.r2_keltner_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r2_keltner_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r2_keltner_variants("keltner_breakout")
+                == sweeps.r2_keltner_variants("keltner_breakout"))

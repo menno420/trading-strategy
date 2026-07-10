@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.42908207843060886,
+    "max_drawdown": -0.833830983670915,
+    "n_bars": 3767,
+    "n_trades": 1,
+    "sharpe": 0.9120554396024015,
+    "sortino": 0.923949627079613,
+    "total_return": 206.90197400349632,
+    "turnover_per_year": 0.06689673480222989,
+    "win_rate": 1.0
+  },
+  "config_hash": "fbd258b256bb",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T22:43:57+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4b890babbe69cfdf00cf825aa7f8207a3cfac58d",
+  "instrument": "BTC-USD",
+  "metrics": {
+    "cagr": 0.5224608082591451,
+    "max_drawdown": -0.5474559872743188,
+    "n_bars": 3767,
+    "n_trades": 77,
+    "sharpe": 1.2727447831485847,
+    "sortino": 0.9506972679764724,
+    "total_return": 534.5188512434545,
+    "turnover_per_year": 5.151048579771702,
+    "win_rate": 0.5641025641025641
+  },
+  "n_bars": 3767,
+  "notes": "Round 2 slice R2 (post-holdout DEV-ONLY, promotion closed \u2014 docs/research-round-2.md): top full-dev-period variant of 6 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r2-keltner_breakout/keltner_breakout__BTC-USD.json)",
+  "params": {
+    "m": 1.5,
+    "n": 50
+  },
+  "run_id": "20260710T224357141770Z-fbd258b256bb",
+  "schema_version": 1,
+  "strategy": "keltner_breakout",
+  "timeframe": "daily",
+  "variants_tried": 6
+}
