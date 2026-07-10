@@ -66,3 +66,62 @@ def variants_per_family() -> dict[str, int]:
 def total_variants() -> int:
     """Total distinct configurations in the trend-following sweep."""
     return sum(variants_per_family().values())
+
+
+# ---------------------------------------------------------------------------
+# P1 video-strategy lane (lane: video-strategy × BTC-USD × daily)
+# ---------------------------------------------------------------------------
+# Competing interpretations of the DaviddTech video's under-specified rules
+# (docs/research/video-source-2026-07-09.md). The video never states the
+# SuperTrend/EMA/MACD parameters, so the SuperTrend/MACD axes bracket common
+# published defaults (period 7/10/14, multiplier 2/3/4; MACD 12-26-9 and the
+# faster 8-21-5; EMA trend filter 100/200). The dual-EMA control's axes are
+# the video's OWN stated sweep bounds coarsened (slow 110→400, fast 10→100)
+# and include the video's stated winner slow=400 / fast=45. Kept bounded on
+# purpose: every extra variant raises the multiple-testing burden.
+
+_VIDEO_MACD_TRIPLES = [
+    {"macd_fast": 12, "macd_slow": 26, "macd_signal": 9},
+    {"macd_fast": 8, "macd_slow": 21, "macd_signal": 5},
+]
+_VIDEO_ST_PERIODS = [7, 10, 14]
+_VIDEO_ST_MULTS = [2.0, 3.0, 4.0]
+_VIDEO_EMA_LENS = [100, 200]
+_VIDEO_CONTROL_SLOW = [110, 200, 300, 400]
+_VIDEO_CONTROL_FAST = [10, 25, 45, 70, 100]
+
+VIDEO_STRATEGY_FAMILIES = ("supertrend_flip", "macd_supertrend",
+                           "ema_crossover")
+
+
+def _video_supertrend_grid() -> list[dict]:
+    """Shared grid for both SuperTrend/EMA/MACD interpretations: the MACD
+    triple varies as a paired unit (not a full product) to stay bounded."""
+    return [
+        {"st_period": p, "st_mult": m, "ema_len": e, **triple}
+        for p in _VIDEO_ST_PERIODS
+        for m in _VIDEO_ST_MULTS
+        for e in _VIDEO_EMA_LENS
+        for triple in _VIDEO_MACD_TRIPLES
+    ]
+
+
+def video_variants(family: str) -> list[dict]:
+    """All parameter dicts for a video-lane ``family``, deterministic order."""
+    if family in ("supertrend_flip", "macd_supertrend"):
+        return _video_supertrend_grid()
+    if family == "ema_crossover":
+        return [{"fast": f, "slow": s}
+                for s in _VIDEO_CONTROL_SLOW for f in _VIDEO_CONTROL_FAST
+                if f < s]
+    raise ValueError(f"unknown video-lane family {family!r}")
+
+
+def video_variants_per_family() -> dict[str, int]:
+    """Video-lane variant counts by family (multiple-testing bookkeeping)."""
+    return {fam: len(video_variants(fam)) for fam in VIDEO_STRATEGY_FAMILIES}
+
+
+def video_total_variants() -> int:
+    """Total distinct configurations in the video-strategy sweep."""
+    return sum(video_variants_per_family().values())

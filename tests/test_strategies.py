@@ -129,6 +129,107 @@ class TestDonchian:
             STRATEGIES["donchian"](random_walk, entry=1, exit=1)
 
 
+class TestSupertrendIndicator:
+    def test_direction_tracks_trend(self):
+        from trading_lab.strategies._supertrend import supertrend_direction
+        up = make_ohlcv(np.linspace(100, 300, 200))
+        down = make_ohlcv(np.linspace(300, 100, 200))
+        assert (supertrend_direction(up, 5, 2.0).iloc[10:] == 1.0).all()
+        assert (supertrend_direction(down, 5, 2.0).iloc[10:] == -1.0).all()
+
+    def test_flips_bearish_after_reversal(self):
+        from trading_lab.strategies._supertrend import supertrend_direction
+        rise_fall = make_ohlcv(np.concatenate([np.linspace(100, 200, 80),
+                                               np.linspace(200, 100, 80)]))
+        d = supertrend_direction(rise_fall, 5, 2.0)
+        assert (d.iloc[40:78] == 1.0).all()   # bullish during the rise
+        assert (d.iloc[100:] == -1.0).all()   # bearish once the fall is in force
+
+    def test_rejects_bad_params(self, random_walk):
+        from trading_lab.strategies._supertrend import supertrend_direction
+        with pytest.raises(ValueError, match="st_period"):
+            supertrend_direction(random_walk, 0, 3.0)
+        with pytest.raises(ValueError, match="st_mult"):
+            supertrend_direction(random_walk, 10, 0.0)
+
+
+_ST_FLIP_PARAMS = dict(st_period=5, st_mult=2.0, ema_len=30,
+                       macd_fast=5, macd_slow=15, macd_signal=3)
+
+
+class TestSupertrendFlip:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["supertrend_flip"](random_walk,
+                                            **DEFAULT_PARAMS["supertrend_flip"])
+        assert (pos.iloc[:200] == 0.0).all()  # ema_len dominates the warm-up
+
+    def test_long_in_uptrend_flat_in_downtrend(self):
+        up = make_ohlcv(np.linspace(100, 300, 200))
+        down = make_ohlcv(np.linspace(300, 100, 200))
+        pos_up = STRATEGIES["supertrend_flip"](up, **_ST_FLIP_PARAMS)
+        pos_down = STRATEGIES["supertrend_flip"](down, **_ST_FLIP_PARAMS)
+        assert (pos_up.iloc[40:] == 1.0).all()
+        assert (pos_down == 0.0).all()
+
+    def test_exits_on_supertrend_flip(self):
+        rise_fall = make_ohlcv(np.concatenate([np.linspace(100, 200, 80),
+                                               np.linspace(200, 100, 80)]))
+        pos = STRATEGIES["supertrend_flip"](rise_fall, **_ST_FLIP_PARAMS)
+        assert (pos.iloc[45:78] == 1.0).all()  # long during the rise
+        assert (pos.iloc[100:] == 0.0).all()   # flat after the flip, no re-entry
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="macd_fast"):
+            STRATEGIES["supertrend_flip"](random_walk, macd_fast=26, macd_slow=12)
+        with pytest.raises(ValueError, match="macd_signal"):
+            STRATEGIES["supertrend_flip"](random_walk, macd_signal=0)
+        with pytest.raises(ValueError, match="ema_len"):
+            STRATEGIES["supertrend_flip"](random_walk, ema_len=0)
+
+
+class TestMacdSupertrend:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["macd_supertrend"](random_walk,
+                                            **DEFAULT_PARAMS["macd_supertrend"])
+        assert (pos.iloc[:200] == 0.0).all()  # ema_len dominates the warm-up
+
+    def test_enters_on_confirmed_cross_exits_on_cross_down(self):
+        # Uptrend with a shallow pullback: the pullback produces a MACD
+        # cross-down then cross-up WHILE supertrend stays bullish and price
+        # stays above the EMA — that recovery cross is the confirmed entry.
+        prices = np.concatenate([
+            np.linspace(100, 200, 60),   # rise (covers the warm-up)
+            np.linspace(200, 188, 12),   # shallow pullback -> macd cross down
+            np.linspace(188, 300, 60),   # resume -> confirmed macd cross up
+            np.linspace(300, 150, 60),   # decline -> macd cross down = exit
+        ])
+        pos = STRATEGIES["macd_supertrend"](
+            make_ohlcv(prices), st_period=5, st_mult=2.0, ema_len=20,
+            macd_fast=5, macd_slow=15, macd_signal=3)
+        assert (pos.iloc[:70] == 0.0).all()      # no entry before the cross
+        assert (pos.iloc[80:130] == 1.0).all()   # long after confirmation
+        assert (pos.iloc[140:] == 0.0).all()     # exited on the cross down
+
+    def test_blocked_cross_is_skipped(self):
+        # V shape: the MACD crosses up right at the bottom, but supertrend is
+        # still bearish and price is below the EMA — no entry, ever (the
+        # filters block the event; there is no later cross to re-arm it).
+        v = make_ohlcv(np.concatenate([np.linspace(200, 100, 80),
+                                       np.linspace(100, 250, 80)]))
+        pos = STRATEGIES["macd_supertrend"](v, st_period=5, st_mult=2.0,
+                                            ema_len=10, macd_fast=5,
+                                            macd_slow=15, macd_signal=3)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="macd_fast"):
+            STRATEGIES["macd_supertrend"](random_walk, macd_fast=26, macd_slow=12)
+        with pytest.raises(ValueError, match="macd_signal"):
+            STRATEGIES["macd_supertrend"](random_walk, macd_signal=0)
+        with pytest.raises(ValueError, match="ema_len"):
+            STRATEGIES["macd_supertrend"](random_walk, ema_len=0)
+
+
 class TestRsiMeanReversion:
     def test_enters_after_selloff_exits_after_rally(self):
         prices = np.concatenate([

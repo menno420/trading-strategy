@@ -60,3 +60,38 @@ landed phase) in the same PR, and append amendments for later phases. Lane
 work resumes from `docs/research/video-source-2026-07-09.md` §Rules
 extraction; delete `claims/video-strategy__btcusd__multi.md` when the lane's
 ledgered results merge.
+
+## Amendment — lane research phase (2026-07-10)
+
+**Phase:** video-strategy lane research (ORDER 005 items 2+3), same session
+family as the skeleton above; landed via PR #15 (skeleton was PR #14).
+
+**Done:**
+- Cold-boot verification (ORDER 005 item 2): pytest 107 green (86 at
+  handoff + 21 new), `bootstrap.py check --strict` exit 0, live data-loader
+  fetch (BTC-USD daily, 4,314 bars via yfinance through the proxy
+  workaround). Verified section added to `docs/succession/ENVIRONMENT.md`
+  (the "Verified line" ORDER 005 references did not previously exist —
+  succession-doc miss, now fixed).
+- Video-strategy lane (ORDER 005 item 3 / QUEUE item 1): three faithful
+  interpretations of the video's under-specified rules as competing systems
+  — `supertrend_flip` (i), `macd_supertrend` (ii), dual-EMA control (iii) —
+  92 variants total, BTC-USD daily (BTCUSDT→BTC-USD and 1h/4h→daily
+  flagged), walk-forward train 1008 / test 252 (10 splits), costs on,
+  holdout untouched. Sweep JSONs in
+  `experiments/sweeps/p1-video-strategy-daily/`, 7 ledger runs, index
+  rebuilt, results doc `docs/p1-video-strategy-results.md`.
+
+**Outcome:** stitched OOS 2017-06-21→2024-05-14 vs B&H Sharpe 0.82 / MDD
+−83%: (i) 1.11 / −53%, (ii) 1.20 / −29%, (iii) 0.88 / −72%. Honest read:
+control (the video's only fully stated setting region) is
+**negative-complete**; (i)/(ii) are P2 **candidates only** —
+drawdown-reduction profile, Sortino below B&H for (ii), 0/4 untuned
+off-BTC spot checks beat B&H. The video's +500%/PF 2.295 headline is not
+reproducible as stated (parameters unstated, in-sample).
+
+**Wrap-up:** lane claim `claims/video-strategy__btcusd__multi.md` deleted
+(lifecycle complete); QUEUE item 1 marked done/absorbed;
+`control/status.md` overwritten as the last commit of PR #15.
+
+**End:** 2026-07-10T02:33:44Z

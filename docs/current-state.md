@@ -25,6 +25,13 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Merged work only, newest first.)
 
+- P1 video-strategy sweep (2026-07-10): three competing interpretations of
+  the DaviddTech video's under-specified rules (SuperTrend-flip,
+  MACD-cross + SuperTrend/EMA, dual-EMA control), 92 variants × BTC-USD ×
+  daily, walk-forward OOS vs buy-and-hold — results and honest read in
+  [p1-video-strategy-results.md](p1-video-strategy-results.md); the dual-EMA
+  control (the video's stated winner region) is negative-complete, the two
+  SuperTrend readings are P2 candidates only.
 - P1 trend-following sweep (2026-07-09): 4 strategies (SMA/EMA/MACD/Donchian),
   177 variants × 8 tickers, walk-forward OOS vs buy-and-hold — results and
   honest read in [p1-trend-following-results.md](p1-trend-following-results.md);
