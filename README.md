@@ -23,3 +23,7 @@ touches real money or credentials. Anything money-adjacent goes to ⚑ needs-own
   P1 sweep results (mean-reversion × 8 tickers × daily).
 - **[docs/p1-trend-hourly-results.md](docs/p1-trend-hourly-results.md)** — third
   P1 sweep results (trend-following × 8 tickers × hourly).
+- **[docs/sniper-bucket.md](docs/sniper-bucket.md)** — paper-only design: capped,
+  pre-registered opportunistic rule-based entries (no real money, ever).
+- **[docs/hybrid-allocator.md](docs/hybrid-allocator.md)** — paper-only design:
+  70/20/10 B&H-core / rule-sleeve / cash allocation with mechanical grading.

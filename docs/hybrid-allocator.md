@@ -1,6 +1,6 @@
 # Hybrid allocator — B&H core / rule sleeve / cash buffer (paper)
 
-> **Status:** `design` — good-enough-now design doc (lane
+> **Status:** `plan` — good-enough-now design doc (lane
 > `paper-lane/design-docs`, written 2026-07-10). Volume-first per owner
 > guidance Q-0266: correct over best — §8 lists exactly which
 > refinements were deliberately skipped. This document designs a
