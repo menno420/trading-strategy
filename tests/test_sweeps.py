@@ -1,5 +1,7 @@
 """Sweep-grid tests: bounded counts, constraint filtering, runnable variants."""
 
+import numpy as np
+import pandas as pd
 import pytest
 
 from trading_lab import sweeps
@@ -212,3 +214,61 @@ class TestR2KeltnerBreakoutGrid:
     def test_deterministic_order(self):
         assert (sweeps.r2_keltner_variants("keltner_breakout")
                 == sweeps.r2_keltner_variants("keltner_breakout"))
+
+
+class TestR2XsecMomentumGrid:
+    def test_family_in_portfolio_registry_not_single_instrument(self):
+        from trading_lab.strategies import PORTFOLIO_STRATEGIES, R2_XSEC_FAMILY
+        assert set(sweeps.R2_XSEC_FAMILIES) == set(R2_XSEC_FAMILY)
+        for fam in sweeps.R2_XSEC_FAMILIES:
+            assert fam in PORTFOLIO_STRATEGIES
+            assert fam not in STRATEGIES  # panel interface, not per-ticker
+
+    def test_counts_match_preregistration(self):
+        # docs/research-round-2.md §3c is BINDING: L ∈ {63, 126, 252} ×
+        # k ∈ {2, 3} = 6 configs over ONE portfolio of all 9 cached daily
+        # instruments — portfolio lane, so configs are NOT multiplied by
+        # instruments.
+        counts = sweeps.r2_xsec_variants_per_family()
+        assert counts == {"xsec_momentum": 6}
+        assert sweeps.R2_XSEC_INSTRUMENTS == ("AAPL", "AMZN", "BTC-USD",
+                                              "GLD", "GOOGL", "META",
+                                              "MSFT", "NVDA", "SLV")
+        assert len(sweeps.R2_XSEC_INSTRUMENTS) == 9
+        assert sweeps.r2_xsec_total_configs() == 6
+
+    def test_grid_is_exactly_the_registered_product(self):
+        variants = sweeps.r2_xsec_variants("xsec_momentum")
+        assert ({(p["L"], p["k"]) for p in variants}
+                == {(L, k) for L in (63, 126, 252) for k in (2, 3)})
+        for params in variants:
+            assert set(params) == {"L", "k"}  # nothing else is swept
+
+    def test_rebalance_interval_frozen_not_swept(self):
+        assert sweeps.R2_XSEC_REBALANCE_EVERY == 21
+        for params in sweeps.r2_xsec_variants("xsec_momentum"):
+            assert "rebalance_every" not in params
+
+    def test_every_variant_runs(self):
+        from trading_lab.strategies import PORTFOLIO_STRATEGIES
+        rng = np.random.default_rng(17)
+        idx = pd.bdate_range("2020-01-01", periods=300)
+        closes = pd.DataFrame(
+            {t: 100.0 * np.exp(np.cumsum(rng.normal(0.0, 0.02, 300)))
+             for t in sweeps.R2_XSEC_INSTRUMENTS}, index=idx)
+        for fam in sweeps.R2_XSEC_FAMILIES:
+            for params in sweeps.r2_xsec_variants(fam):
+                w = PORTFOLIO_STRATEGIES[fam](
+                    closes, rebalance_every=sweeps.R2_XSEC_REBALANCE_EVERY,
+                    **params)
+                rows = w.dropna(how="all")
+                assert len(rows) > 0
+                assert np.allclose(rows.sum(axis=1), 1.0)
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r2_xsec_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r2_xsec_variants("xsec_momentum")
+                == sweeps.r2_xsec_variants("xsec_momentum"))

@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.4948460790540328,
+    "max_drawdown": -0.6457336028351202,
+    "n_bars": 2595,
+    "n_trades": 9,
+    "sharpe": 1.2882344385750863,
+    "sortino": 1.2654507471419154,
+    "total_return": 61.79542490520842,
+    "turnover_per_year": 0.09710982658959538,
+    "win_rate": null
+  },
+  "config_hash": "3764588137d9",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T23:01:24+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "f842680d2d8608bd5ce20511b12fff1cdf7008b2",
+  "instrument": "XSEC-9",
+  "metrics": {
+    "cagr": 0.800186207280376,
+    "max_drawdown": -0.5280379296892841,
+    "n_bars": 2595,
+    "n_trades": 324,
+    "sharpe": 1.7773768857936707,
+    "sortino": 1.8096963259181522,
+    "total_return": 424.75683543913436,
+    "turnover_per_year": 8.39832182785176,
+    "win_rate": null
+  },
+  "n_bars": 2595,
+  "notes": "Round 2 slice R3 (post-holdout DEV-ONLY, promotion closed \u2014 docs/research-round-2.md): top full-dev-period config of 6 tried (post-hoc selection \u2014 in-sample; the per-config walk-forward OOS numbers live in experiments/sweeps/r2-xsec_momentum/xsec_momentum__XSEC-9.json). Portfolio lane: instrument XSEC-9 = equal-weight top-k basket over 9 instruments; benchmark = equal-weight basket B&H, same costs; win_rate is null (single-book episode metric undefined for a cross-sectional portfolio).",
+  "params": {
+    "L": 63,
+    "k": 2
+  },
+  "run_id": "20260710T230124799604Z-3764588137d9",
+  "schema_version": 1,
+  "strategy": "xsec_momentum",
+  "timeframe": "daily",
+  "variants_tried": 6
+}
