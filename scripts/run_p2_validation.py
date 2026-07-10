@@ -14,10 +14,16 @@ docs/p2-validation-results.md):
   ``top_full_period_variant`` in
   ``experiments/sweeps/<sweep>/<family>__<ticker>.json``. Zero re-tuning,
   zero new variants; ``variants_tried = 1`` per P2 run.
-* Verdict: strategy Sharpe > buy-and-hold Sharpe on the P2 window (net of
-  engine default costs, 5+1 bps/side, t+1-open fills) → PROMOTED-TO-FINDING,
-  else KILLED. Candidates with zero unconsumed pre-holdout bars are
-  UNVALIDATABLE-PRE-HOLDOUT (the data math lives in the results doc).
+* Verdict (amended by ORDER 007, 2026-07-10 — the original rule promoted on
+  any positive Sharpe delta with no statistics at all): promotion now goes
+  through ``trading_lab.promotion.grade_promotion`` — PROMOTED-TO-FINDING
+  requires strategy Sharpe > buy-and-hold Sharpe on the P2 window (net of
+  engine default costs, 5+1 bps/side, t+1-open fills) AND a Sharpe-delta
+  t-stat clearing the significance bar (Lo 2002 SE, Bonferroni-adjusted for
+  variants tried); a positive-but-insignificant delta is RULE-PASS
+  (candidate, never a finding); no beat is KILLED. Candidates with zero
+  unconsumed pre-holdout bars are UNVALIDATABLE-PRE-HOLDOUT (the data math
+  lives in the results doc).
 
 Only 2 of the 14 open candidates have an unconsumed pre-holdout window:
 AAPL-donchian and GOOGL-pullback (P1 consumed from 2010-01-04 only because
@@ -38,7 +44,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from trading_lab import config, data, ledger, metrics  # noqa: E402
+from trading_lab import config, data, ledger, metrics, promotion  # noqa: E402
 from trading_lab.data import load_ohlcv  # noqa: E402
 from trading_lab.engine import buy_and_hold_result, run_backtest  # noqa: E402
 from trading_lab.strategies import STRATEGIES  # noqa: E402
@@ -124,11 +130,19 @@ def run_candidate(spec: dict) -> dict:
                                  notes=notes)
     run_path = ledger.write_run(record)
     m, b = metrics.compute_all(result), metrics.compute_all(benchmark)
-    verdict = "PROMOTED-TO-FINDING" if m["sharpe"] > b["sharpe"] else "KILLED"
+    # ORDER 007 promotion rule: beat B&H net of costs AND clear the
+    # significance bar. variants_tried=1 here matches the ledger row (the P2
+    # run itself froze one vector, zero re-tuning); the P1 lane burden behind
+    # each candidate (92-177 configs) would only RAISE the bar, so a K=1
+    # verdict of RULE-PASS/KILLED is already final.
+    grade = promotion.grade_promotion(
+        strategy_sharpe=m["sharpe"], benchmark_sharpe=b["sharpe"],
+        n_periods=int(len(ohlcv)), timeframe="daily", variants_tried=1)
     return {"family": family, "ticker": ticker, "params": params,
             "window": [str(ohlcv.index[0]), str(ohlcv.index[-1])],
             "n_bars": int(len(ohlcv)), "strategy_metrics": m,
-            "benchmark_metrics": b, "verdict": verdict,
+            "benchmark_metrics": b, "verdict": grade["verdict"],
+            "significance": grade,
             "run_file": str(run_path.relative_to(config.REPO_ROOT))}
 
 

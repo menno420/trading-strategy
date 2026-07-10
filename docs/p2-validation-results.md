@@ -6,6 +6,12 @@
 > [founding-plan.md](founding-plan.md). Raw evidence:
 > `experiments/runs/` (2 new rows), `experiments/index.jsonl`,
 > `scripts/run_p2_validation.py`, `data/p2ext/daily/`.
+> **Re-graded 2026-07-10 (ORDER 007):** the sole PROMOTED-TO-FINDING verdict
+> below (AAPL-donchian) was issued under the original statistics-free rule
+> and has been **DEMOTED to candidate (RULE-PASS)** under the promotion
+> significance bar — full computation in
+> [p2-regrade-aapl-donchian.md](p2-regrade-aapl-donchian.md). Historical
+> numbers below are unchanged; verdict labels carry the re-grade note.
 
 ## Purpose
 
@@ -27,10 +33,15 @@ Rules applied here:
   `experiments/sweeps/<sweep>/<family>__<ticker>.json`. That vector is
   frozen here, verbatim from the sweep JSON. Zero re-tuning, zero new
   variants: `variants_tried = 1` per P2 run.
-- **Verdicts:** `PROMOTED-TO-FINDING` (frozen params beat buy-and-hold on
-  the P2 window, net of costs, by Sharpe), `KILLED` (they don't), or
-  `UNVALIDATABLE-PRE-HOLDOUT` (zero unconsumed pre-holdout bars exist —
-  exact data math shown below; no rules were bent to manufacture a window).
+- **Verdicts (as originally issued):** `PROMOTED-TO-FINDING` (frozen params
+  beat buy-and-hold on the P2 window, net of costs, by Sharpe), `KILLED`
+  (they don't), or `UNVALIDATABLE-PRE-HOLDOUT` (zero unconsumed pre-holdout
+  bars exist — exact data math shown below; no rules were bent to
+  manufacture a window). **Amended by ORDER 007:** promotion additionally
+  requires clearing a significance bar (minimum t-stat on the Sharpe delta,
+  Lo 2002 SE, Bonferroni-adjusted for variants tried —
+  `trading_lab.promotion`); a positive-but-insignificant delta is
+  `RULE-PASS` (candidate), never a finding.
 
 ## Headline: structural data exhaustion
 
@@ -101,12 +112,14 @@ candidate can only happen at P5 on the locked holdout.
 | B&H total return | 66.4× | 513% |
 | Strategy n_trades | 327 | 180 |
 | B&H n_trades | 1 | 1 |
-| **Verdict** | **PROMOTED-TO-FINDING** | **KILLED** |
+| **Verdict** | **PROMOTED-TO-FINDING** — *re-graded 2026-07-10 to* **RULE-PASS / candidate** *(t = 0.42 < 1.64; [re-grade entry](p2-regrade-aapl-donchian.md))* | **KILLED** |
 
 - **AAPL-donchian:** lower CAGR than B&H but a much shallower drawdown
   (−64% vs −82%) → higher risk-adjusted return across 29 years of data it
   was never tuned on. Even so, a −64% drawdown and a Sharpe edge of +0.08
-  over three decades is a modest finding, not a system.
+  over three decades is a modest result, not a system — and under the
+  ORDER 007 significance bar that edge is only 0.42 standard errors
+  ([re-grade](p2-regrade-aapl-donchian.md)): a candidate, not a finding.
 - **GOOGL-pullback:** decisively killed — the frozen params captured 19.6%
   total return against a 513% B&H run-up in GOOGL's early high-growth
   regime. The P1 edge does not generalize backward.
@@ -115,7 +128,7 @@ candidate can only happen at P5 on the locked holdout.
 
 | # | Candidate | P1 sweep | Frozen params | Verdict |
 |---|---|---|---|---|
-| 1 | donchian × AAPL × daily | p1-trend-following-daily | entry=15, exit=5 | **PROMOTED-TO-FINDING** |
+| 1 | donchian × AAPL × daily | p1-trend-following-daily | entry=15, exit=5 | **RULE-PASS / candidate** (was PROMOTED-TO-FINDING; [demoted 2026-07-10](p2-regrade-aapl-donchian.md)) |
 | 2 | sma_crossover × META × daily | p1-trend-following-daily | fast=15, slow=75 | UNVALIDATABLE-PRE-HOLDOUT |
 | 3 | ema_crossover × META × daily | p1-trend-following-daily | fast=25, slow=50 | UNVALIDATABLE-PRE-HOLDOUT |
 | 4 | donchian × META × daily | p1-trend-following-daily | entry=55, exit=55 | UNVALIDATABLE-PRE-HOLDOUT |
@@ -130,7 +143,9 @@ candidate can only happen at P5 on the locked holdout.
 | 13 | donchian × AMZN × hourly | p1-trend-hourly | entry=40, exit=40 | UNVALIDATABLE-PRE-HOLDOUT |
 | 14 | macd × META × hourly | p1-trend-hourly | fast=5, slow=26, signal=5 (P1-flagged least trustworthy) | UNVALIDATABLE-PRE-HOLDOUT |
 
-**Score: 1 promoted, 1 killed, 12 unvalidatable pre-holdout.**
+**Score: 1 promoted, 1 killed, 12 unvalidatable pre-holdout** — *since the
+2026-07-10 re-grade: 0 promoted, 1 rule-pass candidate, 1 killed, 12
+unvalidatable pre-holdout.*
 
 Unvalidatable ≠ validated. Those 12 candidates remain candidates-only; the
 only remaining data that could test them is the locked holdout, which stays

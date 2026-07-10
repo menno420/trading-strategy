@@ -18,8 +18,13 @@ candidates on out-of-selection data with frozen parameters; P4 ran the
 13 non-killed subjects on every other instrument in their timeframe (99
 transfer backtests). **The headline of this program is negative:** after
 honest testing, exactly one candidate earned a "finding" label
-pre-holdout — and it then failed cross-instrument transfer 1/8. The
-holdout read (§Holdout) is the last word and has not happened yet.
+pre-holdout — it then failed cross-instrument transfer 1/8, and on
+2026-07-10 it was **re-graded to candidate** under the ORDER 007
+promotion-significance bar (its +0.079 Sharpe edge is 0.42 standard
+errors — inside noise; [re-grade
+entry](p2-regrade-aapl-donchian.md)). **No candidate currently holds a
+finding label.** The holdout read (§Holdout) is the last word and has
+not happened yet.
 
 ## Methodology summary
 
@@ -39,7 +44,11 @@ in every ledgered run:
 - **Multiple-testing discipline** — every result carries its
   variants-tried denominator (the "Burden" column below); survivors were
   required to validate out-of-selection (P2) and transfer to instruments
-  they were not tuned on (P4).
+  they were not tuned on (P4). Since ORDER 007 (2026-07-10), promotion to
+  FINDING additionally requires clearing an explicit significance bar
+  (minimum t-stat on the Sharpe delta vs B&H, Lo 2002 SE,
+  Bonferroni-adjusted for variants tried — `trading_lab.promotion`,
+  the founding plan's deflated-Sharpe preference made explicit).
 - **Holdout discipline** — every bar dated ≥ 2025-01-09
   (`HOLDOUT_START`, loader- and ledger-enforced:
   [holdout-enforcement.md](holdout-enforcement.md)) has remained sealed
@@ -56,8 +65,11 @@ Source result docs: [p1-trend-following-results.md](p1-trend-following-results.m
 
 ## Ranked table — all candidates, by pre-holdout OOS evidence
 
-Ranking rule (descriptive, not a promotion): Tier 1 = P2
-PROMOTED-TO-FINDING; Tier 2 = P2 UNVALIDATABLE-PRE-HOLDOUT candidates,
+Ranking rule (descriptive, not a promotion): Tier 1 = P2 RULE-PASS
+(out-of-selection beat of B&H, below the significance bar — the sole P2
+promotion was demoted to this label 2026-07-10, [re-grade
+entry](p2-regrade-aapl-donchian.md)); Tier 2 = P2
+UNVALIDATABLE-PRE-HOLDOUT candidates,
 ordered by P1 walk-forward OOS Sharpe margin over B&H (a noisy,
 selection-biased statistic — the caveat column is part of the row);
 Tier 3 = killed / negative-complete. "Burden" = configurations tried in
@@ -66,7 +78,7 @@ documented in each P1 doc). "P4" = transfer instruments beaten / tried.
 
 | Rank | Candidate (family × ticker × tf) | P1 OOS Sharpe vs B&H | Burden | P2 verdict | P4 | Caveats |
 |---|---|---|---|---|---|---|
-| **1** | **donchian × AAPL × daily** (entry=15, exit=5) | **1.18 vs 0.96** | 177 | **PROMOTED-TO-FINDING** (0.619 vs 0.540, 1980→2009) | 1/8 FAILED | sole finding; edge is drawdown-shaped (MDD −21% vs −37% OOS; −64% vs −82% at P2); transfer failure sharpens the prior against it |
+| **1** | **donchian × AAPL × daily** (entry=15, exit=5) | **1.18 vs 0.96** | 177 | **RULE-PASS / candidate** (0.619 vs 0.540, 1980→2009; was PROMOTED-TO-FINDING, [demoted 2026-07-10](p2-regrade-aapl-donchian.md): t = 0.42 < 1.64) | 1/8 FAILED | sole out-of-selection B&H beat, but the edge is 0.42 SE — inside noise; drawdown-shaped (MDD −21% vs −37% OOS; −64% vs −82% at P2); transfer failure sharpens the prior against it |
 | 2 | macd × META × hourly (5/26/5) | 1.40 vs 0.49 | 177 | UNVALIDATABLE-PRE-HOLDOUT | 0/7 FAILED | P1-flagged least trustworthy: fastest grid corner, ~210 changes/yr, per-split Sharpe swings +3.8 → −1.1, single-regime OOS |
 | 3 | macd_supertrend × BTC-USD × daily | 1.20 vs 0.82 | 92 | UNVALIDATABLE-PRE-HOLDOUT | 0/8 FAILED | Sortino *below* B&H (0.70 vs 0.85); two OOS test years never traded; bubble-instrument trend filter |
 | 4 | donchian × AMZN × hourly (40/40) | 0.91 vs 0.61 | 177 | UNVALIDATABLE-PRE-HOLDOUT | 2/7 FAILED | single-regime ~8.5-month OOS; shares frozen vector with rank 6 — not independent evidence |
@@ -85,10 +97,16 @@ documented in each P1 doc). "P4" = transfer instruments beaten / tried.
 Frozen parameters for ranks 1–13 are pre-registered verbatim (with
 source JSONs) in [p5-holdout-protocol.md](p5-holdout-protocol.md) §2.
 
-## The sole validated finding — AAPL donchian 15/5, daily
+## The lead candidate (no longer a finding) — AAPL donchian 15/5, daily
 
 The only candidate to survive out-of-selection validation
-([p2-validation-results.md](p2-validation-results.md)):
+([p2-validation-results.md](p2-validation-results.md)). Its P2
+PROMOTED-TO-FINDING verdict was **demoted to RULE-PASS / candidate on
+2026-07-10** under the ORDER 007 promotion-significance bar: the +0.079
+Sharpe edge over 7,331 bars has a Lo (2002) SE of 0.185, t = 0.42 —
+far below the 1.64 minimum even at the most lenient variants-tried
+denominator (full computation:
+[p2-regrade-aapl-donchian.md](p2-regrade-aapl-donchian.md)):
 
 | | Strategy | Buy-and-hold |
 |---|---|---|
@@ -99,13 +117,14 @@ The only candidate to survive out-of-selection validation
 | P2 total return / n_trades | 46.7× / 327 | 66.4× / 1 |
 
 Honest characterization, as ledgered: a **modest, drawdown-shaped,
-instrument-specific** result. In both windows it earns its Sharpe edge
-by losing less in crashes, not by out-returning holding (its CAGR trails
-B&H in both). At P4 it transferred to 1 of 8 other instruments — the
-P2 verdict stands (P2 tested the home instrument), but the transfer
-failure sharpens the prior against generalization. A −64% drawdown and a
-+0.08 Sharpe edge over three decades is a finding, not a system. Its
-one-shot holdout read (the pre-registered PRIMARY) is the final word.
+instrument-specific, statistically insignificant** result. In both
+windows it earns its Sharpe edge by losing less in crashes, not by
+out-returning holding (its CAGR trails B&H in both). At P4 it
+transferred to 1 of 8 other instruments; under the significance bar its
+P2 edge is 0.42 standard errors. A −64% drawdown and a +0.08 Sharpe
+edge over three decades is a candidate, not a finding and not a system.
+Its one-shot holdout read (the pre-registered PRIMARY) is the final
+word.
 
 ## P4 cross-instrument transfer — 13/13 FAILED (first-class result)
 

@@ -37,7 +37,10 @@
    from item 3). **DONE 2026-07-10** (lane `p2-validation`): all 14 open
    candidates given verdicts with params frozen from the P1 sweep JSONs —
    1 PROMOTED-TO-FINDING (AAPL-donchian, Sharpe 0.62 vs B&H 0.54 on
-   1980→2009 pre-consumption data), 1 KILLED (GOOGL-pullback), 12
+   1980→2009 pre-consumption data — **re-graded 2026-07-10 under the
+   ORDER 007 significance bar to RULE-PASS / candidate**, t = 0.42 < 1.64;
+   see [../p2-regrade-aapl-donchian.md](../p2-regrade-aapl-donchian.md)),
+   1 KILLED (GOOGL-pullback), 12
    UNVALIDATABLE-PRE-HOLDOUT (P1 consumed every pre-holdout bar in their
    timeframes; exact math in the doc) — see
    [docs/p2-validation-results.md](../p2-validation-results.md).
@@ -54,12 +57,14 @@
    [docs/holdout-enforcement.md](../holdout-enforcement.md). 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over). **DONE 2026-07-10** (gen-2, lane `holdout-collab`): the conventions the repo demonstrably practices (READY-never-draft, arm-then-REST-squash-on-green with the two-way arm wall, self-merge grant, post-merge review, terminal refusal branch, heartbeat-before-work, claims lifecycle, status ender, substrate-gate interplay) ported as verified against PRs #14–#24 — see [docs/collaboration-model.md](../collaboration-model.md).
 7. P4 cross-instrument transfer validation. **DONE 2026-07-10** (gen-2,
    lane `p4-transfer__multi__daily-hourly`): the 13 P2 subjects (12
-   UNVALIDATABLE-PRE-HOLDOUT + the promoted AAPL-donchian) run with
+   UNVALIDATABLE-PRE-HOLDOUT + the then-promoted, since-demoted
+   AAPL-donchian) run with
    params frozen verbatim from the P1 sweep JSONs on every other
    committed instrument in their timeframe (daily × 8, hourly × 7; 99
    backtests, 0 new variants), full pre-holdout windows vs B&H,
    pre-registered ≥2/3 / ≥1/3 verdict rule — **13/13 TRANSFER-FAILED**
-   (13/99 pairs beat B&H; even the P2-promoted AAPL-donchian failed 1/8;
+   (13/99 pairs beat B&H; even AAPL-donchian, then P2-promoted and since
+   demoted to candidate, failed 1/8;
    the negative result is the headline) — see
    [docs/p4-transfer-results.md](../p4-transfer-results.md). No transfer
    verdict promotes anything; holdout untouched.
@@ -75,7 +80,8 @@
    per docs/holdout-enforcement.md) — and the ranked final-report
    skeleton with every pre-holdout section fully written —
    [docs/final-report.md](../final-report.md) (ranked table of all
-   candidates with variants-tried denominators, the sole P2 finding, the
+   candidates with variants-tried denominators, the lead candidate (P2
+   promotion since demoted under the ORDER 007 significance bar), the
    13/13 P4 transfer failures and all negative results as first-class
    content, §Holdout deliberately empty). **REMAINING (owner-gated,
    ⚑):** the explicit owner unlock + the one-shot holdout evaluation
@@ -98,3 +104,10 @@ items. **Amendment at close-out:** ORDER 007 (2026-07-10T12:47:35Z,
 promotion-significance bar + AAPL-donchian re-grade) arrived after this
 brief was commissioned and is OPEN / not started — it gates any holdout use
 and must be executed before P5 (it gates, it does not spend, the holdout).
+**Amendment 2026-07-10 (order-007 lane): ORDER 007 is DONE** — significance
+bar coded (`trading_lab.promotion` + tests), AAPL-donchian demoted to
+RULE-PASS / candidate
+([../p2-regrade-aapl-donchian.md](../p2-regrade-aapl-donchian.md)), labels
+updated across the living docs, holdout untouched. ORDER 008 (P5 holdout
+unlock, Q-0262.2) is the granted owner gate the brief above anticipated —
+the dedicated P5 session may now proceed per the binding protocol.
