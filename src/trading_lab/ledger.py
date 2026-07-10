@@ -52,10 +52,31 @@ def git_sha() -> str:
         return "unknown"
 
 
+def _enforce_holdout(data_end: str, holdout_unlocked: bool) -> None:
+    """Refuse ledger records whose data reaches into the locked holdout.
+
+    The loader rail (``trading_lab.data.load_ohlcv``) is the first line of
+    defense; this is the second: no record with
+    ``data_end >= config.HOLDOUT_START`` can be written unless the caller
+    passed ``holdout_unlocked=True`` explicitly, in which case the record
+    must carry a visible ``"holdout_unlocked": true`` marker so ledger rows
+    self-declare. Reserved for the P5 final review (docs/founding-plan.md,
+    docs/holdout-enforcement.md).
+    """
+    if pd.Timestamp(data_end) >= pd.Timestamp(config.HOLDOUT_START) \
+            and not holdout_unlocked:
+        raise ValueError(
+            f"ledger record has data_end={data_end!r} inside the locked "
+            f"holdout (>= {config.HOLDOUT_START}). This is forbidden before "
+            "the P5 final review; if this IS the P5 final review, pass "
+            "holdout_unlocked=True so the record carries the visible "
+            "'holdout_unlocked' marker (docs/holdout-enforcement.md).")
+
+
 def build_record(*, strategy: str, params: dict, instrument: str,
                  timeframe: str, ohlcv: pd.DataFrame, result: BacktestResult,
                  benchmark: BacktestResult, variants_tried: int,
-                 notes: str = "") -> dict:
+                 notes: str = "", holdout_unlocked: bool = False) -> dict:
     cfg = {
         "strategy": strategy, "params": params, "instrument": instrument,
         "timeframe": timeframe,
@@ -63,7 +84,8 @@ def build_record(*, strategy: str, params: dict, instrument: str,
         "commission_bps": result.meta.get("commission_bps"),
         "data_start": str(ohlcv.index[0]), "data_end": str(ohlcv.index[-1]),
     }
-    return {
+    _enforce_holdout(str(ohlcv.index[-1]), holdout_unlocked)
+    record = {
         "schema_version": SCHEMA_VERSION,
         "run_id": None,  # filled by write_run
         "created_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -84,6 +106,10 @@ def build_record(*, strategy: str, params: dict, instrument: str,
         "variants_tried": int(variants_tried),
         "notes": notes,
     }
+    if holdout_unlocked:
+        # Visible marker: unlocked rows must self-declare (P5 only).
+        record["holdout_unlocked"] = True
+    return record
 
 
 def write_run(record: dict, runs_dir: Path | None = None) -> Path:
@@ -91,6 +117,9 @@ def write_run(record: dict, runs_dir: Path | None = None) -> Path:
     missing = [f for f in REQUIRED_FIELDS if f not in record]
     if missing:
         raise ValueError(f"ledger record missing fields: {missing}")
+    # Choke point: every record on disk passes the holdout rail, even ones
+    # not built via build_record.
+    _enforce_holdout(record["data_end"], bool(record.get("holdout_unlocked")))
     runs = Path(runs_dir) if runs_dir is not None else config.RUNS_DIR
     runs.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
@@ -106,7 +135,8 @@ def run_and_record(*, strategy: str, instrument: str, timeframe: str,
                    variants_tried: int = 1,
                    slippage_bps: float = config.DEFAULT_SLIPPAGE_BPS,
                    commission_bps: float = config.DEFAULT_COMMISSION_BPS,
-                   runs_dir: Path | None = None, notes: str = "") -> Path:
+                   runs_dir: Path | None = None, notes: str = "",
+                   holdout_unlocked: bool = False) -> Path:
     """Convenience wrapper: backtest + benchmark + ledger write."""
     params = params or {}
     positions = STRATEGIES[strategy](ohlcv, **params)
@@ -118,7 +148,8 @@ def run_and_record(*, strategy: str, instrument: str, timeframe: str,
     record = build_record(strategy=strategy, params=params,
                           instrument=instrument, timeframe=timeframe,
                           ohlcv=ohlcv, result=result, benchmark=benchmark,
-                          variants_tried=variants_tried, notes=notes)
+                          variants_tried=variants_tried, notes=notes,
+                          holdout_unlocked=holdout_unlocked)
     return write_run(record, runs_dir=runs_dir)
 
 
@@ -143,6 +174,8 @@ def rebuild_index(experiments_dir: Path | None = None) -> Path:
             "benchmark_sharpe": rec["benchmark_metrics"].get("sharpe"),
             "variants_tried": rec["variants_tried"],
             "file": f"runs/{path.name}",
+            # propagate the unlock marker so index rows self-declare too
+            **({"holdout_unlocked": True} if rec.get("holdout_unlocked") else {}),
         }, sort_keys=True))
     out = exp / "index.jsonl"
     out.write_text("\n".join(lines) + ("\n" if lines else ""))

@@ -22,6 +22,7 @@ every rule here exists to keep results honest.
   holdout period, untouched until final review (roadmap P5). Sessions must never peek:
   no fitting, no scoring, no "just checking" against it. First evaluation against the
   holdout happens once, at final review.
+  (Enforcement contract: [docs/holdout-enforcement.md](holdout-enforcement.md).)
 - **Realistic costs** — every backtest includes realistic transaction costs and slippage.
   A strategy that only survives at zero cost is not a strategy.
 - **Multiple-testing discipline** — report the number of variants tried alongside any
