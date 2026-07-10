@@ -26,6 +26,14 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Merged work only, newest first.)
 
+- ORDER 007 promotion-significance bar (2026-07-10): promotion to FINDING
+  now requires beating B&H net of costs AND clearing a minimum t-stat on
+  the Sharpe delta (Lo 2002 SE, Bonferroni-adjusted for variants tried —
+  `trading_lab.promotion`, tested). Under the new bar the sole P2
+  promotion, AAPL-donchian 15/5 daily, was **re-graded to RULE-PASS /
+  candidate** (edge +0.079 Sharpe = 0.42 SE, inside noise) — computation
+  in [p2-regrade-aapl-donchian.md](p2-regrade-aapl-donchian.md). No
+  candidate currently holds a finding label; the holdout stayed sealed.
 - P1 trend × hourly sweep (2026-07-10): the daily trend grids re-run on
   hourly bars (4 families, 177 variants × 8 tickers, committed hourly cache
   2023-08 → 2025-01), walk-forward OOS vs buy-and-hold — results and honest

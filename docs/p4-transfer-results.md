@@ -18,8 +18,10 @@ executed. Motivation: 12 of the 13 subjects are UNVALIDATABLE-PRE-HOLDOUT
 see [p2-validation-results.md](p2-validation-results.md)), so
 cross-instrument transfer is the last falsification lever that does not
 touch the sealed holdout. The 13th subject, AAPL-donchian
-(PROMOTED-TO-FINDING at P2), is included because the plan requires
-survivors to transfer too.
+(PROMOTED-TO-FINDING at P2; re-graded 2026-07-10 to RULE-PASS / candidate
+under the ORDER 007 significance bar —
+[p2-regrade-aapl-donchian.md](p2-regrade-aapl-donchian.md)), is included
+because the plan requires survivors to transfer too.
 
 **No verdict in this document is a finding, and no verdict here promotes
 a candidate to finding.** A transfer verdict only sharpens the prior for
@@ -28,8 +30,8 @@ the P5 test; the holdout (bars ≥ 2025-01-09) stays sealed until P5.
 ## Methodology
 
 - **Subjects:** the 13 P2 subjects (12 UNVALIDATABLE-PRE-HOLDOUT + the
-  promoted AAPL-donchian; GOOGL-pullback was KILLED at P2 and is
-  excluded).
+  then-promoted, since-demoted AAPL-donchian; GOOGL-pullback was KILLED
+  at P2 and is excluded).
 - **Frozen parameters:** pulled verbatim from each subject's
   `top_full_period_variant` in
   `experiments/sweeps/<sweep>/<family>__<ticker>.json` at run time and
@@ -111,10 +113,13 @@ artifacts riding instrument-specific regimes. In particular, the one P2
 survivor, **AAPL-donchian (entry=15, exit=5), failed transfer 1/8** — its
 P2 promotion (Sharpe 0.62 vs 0.54 on 29 years of pre-consumption AAPL
 data) now looks instrument-specific, which sharpens the prior against it
-generalizing. Its P2 verdict stands (P2 tested the home instrument;
-transfer failure does not retroactively falsify that result), but the P5
-holdout read on it should weight this heavily. The negative result is the
-deliverable.
+generalizing. Its P2 B&H beat stands as a data point (P2 tested the home
+instrument; transfer failure does not retroactively falsify that result),
+but the promotion label did not survive: on 2026-07-10 it was re-graded to
+RULE-PASS / candidate under the ORDER 007 significance bar
+([p2-regrade-aapl-donchian.md](p2-regrade-aapl-donchian.md)), and the P5
+holdout read on it should weight both facts heavily. The negative result
+is the deliverable.
 
 **No verdict here is a finding.** The holdout (bars ≥ 2025-01-09) remains
 sealed until P5; every one of the 99 ledger rows has

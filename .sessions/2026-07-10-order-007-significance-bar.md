@@ -37,7 +37,28 @@ via the GitHub MCP; forward-only git.
 
 - 2026-07-10T16:14:21Z — heartbeat: claimed the lane
   (`claims/order-007-significance-bar.md`), session card (this file), branch
-  `order-007-significance-bar`, READY PR. Overlap check at claim time:
-  `claims/` held only its README; zero open PRs on the repo.
+  `order-007-significance-bar`, READY PR #36. Overlap check at claim time:
+  `claims/` held only its README; zero open PRs on the repo. Auto-merge arm
+  failed with the known pending-side wall ("unstable status", repo toggle
+  off) — REST squash on green is the fallback, not retried.
+- 2026-07-10T16:2xZ — significance rule: new `src/trading_lab/promotion.py`
+  (Lo 2002 SE of the annualized Sharpe; t-stat on the Sharpe delta vs B&H;
+  Bonferroni-adjusted one-sided minimum t, alpha=0.05 — the founding plan's
+  deflated-Sharpe preference as an explicit equivalent test, equivalence
+  argued in the module docstring); `scripts/run_p2_validation.py` verdict
+  path now routes through `promotion.grade_promotion` (PROMOTED-TO-FINDING /
+  RULE-PASS / KILLED); `tests/test_promotion.py` (14 tests, incl. the exact
+  AAPL re-grade arithmetic pinned). Local: 147 passed; `bootstrap.py check
+  --strict --require-session-log` exit 0.
+- AAPL-donchian 15/5 re-grade, from the ledgered P2 row only (no backtests
+  re-run, zero bars loaded, holdout sealed): edge +0.078779 Sharpe,
+  SE 0.185474 (N=7,331 daily bars), t = 0.4247 < 1.6449 (K=1; K=41/177 only
+  raise the bar to 3.03/3.45) → **DEMOTED to RULE-PASS / candidate**.
+  First-class ledger entry: `docs/p2-regrade-aapl-donchian.md` (old rule,
+  new rule + formulas, computation, denominators, P5-protocol implications
+  noted without editing the binding doc). Labels updated:
+  docs/p2-validation-results.md, docs/final-report.md (headline, ranked
+  table, lead-candidate section, methodology), docs/succession/QUEUE.md,
+  docs/current-state.md, docs/p4-transfer-results.md.
 
 Session end: TBD at close-out.
