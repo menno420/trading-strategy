@@ -18,6 +18,11 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Verify against live source control — this section is a dated snapshot.)
 
+- Research Round 2 (post-holdout, dev-only): pre-registration in
+  [research-round-2.md](research-round-2.md) — 3 new families
+  (vol_filtered_trend, keltner_breakout, xsec_momentum), 78 registered
+  configs under a 100-config hard cap, KEEP/KILL rule frozen before any
+  outcome is computed. Promotion closed; dev rail only.
 - Paper lane (post-holdout standing mission): the pre-registered
   forward paper-trading protocol for the surviving RULE-PASS candidate
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
