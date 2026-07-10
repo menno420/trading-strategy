@@ -18,14 +18,16 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Verify against live source control — this section is a dated snapshot.)
 
+- Paper lane (post-holdout standing mission): the pre-registered
+  forward paper-trading protocol for the surviving RULE-PASS candidate
+  is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
+  committed before any trade outcome is observable; the lane idles
+  until its §3 loader rail merges. No real money, ever.
 - Paper-lane design docs (PR #40, branch `paper-lane/design-docs`):
   paper-only designs for a capped pre-registered
   [sniper bucket](sniper-bucket.md) and a 70/20/10
   [hybrid allocator](hybrid-allocator.md) — docs only, no code, no real
   money, holdout untouched (it is SPENT).
-- Nothing else — the trend × hourly lane below merged with its
-  claim deleted; next per QUEUE § Next: P2 validation of the accumulated
-  candidates.
 
 ## Recently shipped (newest first)
 
