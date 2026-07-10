@@ -1,0 +1,51 @@
+{
+  "benchmark_metrics": {
+    "cagr": -0.1668055561024988,
+    "max_drawdown": -0.5305696157307931,
+    "n_bars": 549,
+    "n_trades": 1,
+    "sharpe": -0.3141738093139617,
+    "sortino": -0.31347836198570006,
+    "total_return": -0.32804483630271186,
+    "turnover_per_year": 0.459016393442623,
+    "win_rate": 0.0
+  },
+  "config_hash": "25c02263cbaf",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T16:47:05+00:00",
+  "data_end": "2026-07-10 00:00:00",
+  "data_start": "2025-01-08 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4070a9b85e7b65fe9292fe434db64f8209959422",
+  "holdout_unlocked": true,
+  "instrument": "BTC-USD",
+  "metrics": {
+    "cagr": -0.08350561166323611,
+    "max_drawdown": -0.24328494722676575,
+    "n_bars": 549,
+    "n_trades": 20,
+    "sharpe": -0.46544627380912484,
+    "sortino": -0.2635234893488715,
+    "total_return": -0.17301603959043088,
+    "turnover_per_year": 9.18032786885246,
+    "win_rate": 0.2
+  },
+  "n_bars": 549,
+  "notes": "P5 one-shot holdout evaluation (ORDER 008; binding protocol docs/p5-holdout-protocol.md, subject S4 SECONDARY). Params frozen verbatim from experiments/sweeps/p1-video-strategy-daily/supertrend_flip__BTC-USD.json (top_full_period_variant), verified at run time. Scored window 2025-01-09 00:00:00 -> 2026-07-10 00:00:00; data_start is one pre-window warm-in bar (zero return/zero cost by engine construction) so the position decided on the last dev bar fills at the first window open (protocol \u00a74). Benchmark B&H on the identical slice. Data: data/p5holdout/ (fresh fetch, standard path).",
+  "params": {
+    "ema_len": 200,
+    "macd_fast": 12,
+    "macd_signal": 9,
+    "macd_slow": 26,
+    "st_mult": 2.0,
+    "st_period": 14
+  },
+  "run_id": "20260710T164705793743Z-25c02263cbaf",
+  "schema_version": 1,
+  "strategy": "supertrend_flip",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

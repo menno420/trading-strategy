@@ -1,0 +1,48 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.0654220120715483,
+    "max_drawdown": -0.3403103861055259,
+    "n_bars": 376,
+    "n_trades": 1,
+    "sharpe": 0.35774761429822316,
+    "sortino": 0.400539897143637,
+    "total_return": 0.09916798897865253,
+    "turnover_per_year": 0.6702127659574468,
+    "win_rate": 1.0
+  },
+  "config_hash": "e75c6a265469",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T16:47:05+00:00",
+  "data_end": "2026-07-10 00:00:00",
+  "data_start": "2025-01-08 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4070a9b85e7b65fe9292fe434db64f8209959422",
+  "holdout_unlocked": true,
+  "instrument": "META",
+  "metrics": {
+    "cagr": -0.006125819893569973,
+    "max_drawdown": -0.16449861684232947,
+    "n_bars": 376,
+    "n_trades": 20,
+    "sharpe": 0.028554739293832863,
+    "sortino": 0.014816461396488123,
+    "total_return": -0.009126322416378008,
+    "turnover_per_year": 13.404255319148936,
+    "win_rate": 0.8
+  },
+  "n_bars": 376,
+  "notes": "P5 one-shot holdout evaluation (ORDER 008; binding protocol docs/p5-holdout-protocol.md, subject S7 SECONDARY). Params frozen verbatim from experiments/sweeps/p1-mean-reversion-daily/pullback__META.json (top_full_period_variant), verified at run time. Scored window 2025-01-10 00:00:00 -> 2026-07-10 00:00:00; data_start is one pre-window warm-in bar (zero return/zero cost by engine construction) so the position decided on the last dev bar fills at the first window open (protocol \u00a74). Benchmark B&H on the identical slice. Data: data/p5holdout/ (fresh fetch, standard path).",
+  "params": {
+    "entry_lookback": 7,
+    "exit_len": 7,
+    "trend_len": 100
+  },
+  "run_id": "20260710T164705883591Z-e75c6a265469",
+  "schema_version": 1,
+  "strategy": "pullback",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

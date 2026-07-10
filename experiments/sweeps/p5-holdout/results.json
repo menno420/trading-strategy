@@ -1,0 +1,804 @@
+{
+  "holdout_unlocked": true,
+  "n_secondaries": 12,
+  "order": "ORDER 008",
+  "preregistered_null_base_rates": {
+    "p1_lanes_beating_bh": [
+      "7/32",
+      "3/24",
+      "5/32"
+    ],
+    "p4_transfer": "13/99"
+  },
+  "primary_verdict": "CONFIRMED",
+  "protocol": "docs/p5-holdout-protocol.md",
+  "secondary_beats": 2,
+  "secondary_not_evaluable": 0,
+  "selection_burden": {
+    "p1-mean-reversion-daily": 144,
+    "p1-trend-following-daily": 177,
+    "p1-trend-hourly": 177,
+    "p1-video-strategy-daily": 92
+  },
+  "subjects": [
+    {
+      "beats_bh_sharpe": true,
+      "benchmark_metrics": {
+        "cagr": 0.20323777480757288,
+        "max_drawdown": -0.3066533045542761,
+        "n_bars": 376,
+        "n_trades": 1,
+        "sharpe": 0.7403492494393099,
+        "sortino": 0.762116712544901,
+        "total_return": 0.31792129920406564,
+        "turnover_per_year": 0.6702127659574468,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "donchian",
+      "frozen_params": {
+        "entry": 15,
+        "exit": 5
+      },
+      "id": "P",
+      "instrument": "AAPL",
+      "n_bars_incl_warmin": 376,
+      "n_window_bars": 375,
+      "p1_sweep": "p1-trend-following-daily",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 376,
+        "sharpe_delta": 0.01913507849302698,
+        "sharpe_se": 0.8191335721978207,
+        "timeframe": "daily",
+        "tstat": 0.023360144355560438,
+        "variants_tried": 1,
+        "verdict": "RULE-PASS"
+      },
+      "role": "PRIMARY",
+      "run_file": "experiments/runs/20260710T164705692772Z-45c47f3e9649.json",
+      "strategy_metrics": {
+        "cagr": 0.0893096145779988,
+        "max_drawdown": -0.1176254260216062,
+        "n_bars": 376,
+        "n_trades": 17,
+        "sharpe": 0.7594843279323369,
+        "sortino": 0.5128385470919156,
+        "total_return": 0.13614079301305781,
+        "turnover_per_year": 11.393617021276595,
+        "win_rate": 0.6666666666666666
+      },
+      "subject": "donchian__AAPL__daily",
+      "timeframe": "daily",
+      "verdict": "CONFIRMED",
+      "warmin_bar": "2025-01-08 00:00:00",
+      "window": [
+        "2025-01-10 00:00:00",
+        "2026-07-10 00:00:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.0654220120715483,
+        "max_drawdown": -0.3403103861055259,
+        "n_bars": 376,
+        "n_trades": 1,
+        "sharpe": 0.35774761429822316,
+        "sortino": 0.400539897143637,
+        "total_return": 0.09916798897865253,
+        "turnover_per_year": 0.6702127659574468,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "sma_crossover",
+      "frozen_params": {
+        "fast": 15,
+        "slow": 75
+      },
+      "id": "S1",
+      "instrument": "META",
+      "n_bars_incl_warmin": 376,
+      "n_window_bars": 375,
+      "p1_sweep": "p1-trend-following-daily",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 376,
+        "sharpe_delta": -0.3707748909587194,
+        "sharpe_se": 0.8186653721976733,
+        "timeframe": "daily",
+        "tstat": -0.4529016415625221,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705717762Z-5458e540ac86.json",
+      "strategy_metrics": {
+        "cagr": -0.024725044634978155,
+        "max_drawdown": -0.21780221052677684,
+        "n_bars": 376,
+        "n_trades": 8,
+        "sharpe": -0.01302727666049626,
+        "sortino": -0.009275953295567843,
+        "total_return": -0.03666597273145156,
+        "turnover_per_year": 5.361702127659575,
+        "win_rate": 0.25
+      },
+      "subject": "sma_crossover__META__daily",
+      "timeframe": "daily",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 00:00:00",
+      "window": [
+        "2025-01-10 00:00:00",
+        "2026-07-10 00:00:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.0654220120715483,
+        "max_drawdown": -0.3403103861055259,
+        "n_bars": 376,
+        "n_trades": 1,
+        "sharpe": 0.35774761429822316,
+        "sortino": 0.400539897143637,
+        "total_return": 0.09916798897865253,
+        "turnover_per_year": 0.6702127659574468,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "ema_crossover",
+      "frozen_params": {
+        "fast": 25,
+        "slow": 50
+      },
+      "id": "S2",
+      "instrument": "META",
+      "n_bars_incl_warmin": 376,
+      "n_window_bars": 375,
+      "p1_sweep": "p1-trend-following-daily",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 376,
+        "sharpe_delta": -0.563896502468102,
+        "sharpe_se": 0.8186997486317552,
+        "timeframe": "daily",
+        "tstat": -0.6887708264360763,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705740033Z-e877eb3af4ba.json",
+      "strategy_metrics": {
+        "cagr": -0.06289242311324861,
+        "max_drawdown": -0.27193951776506053,
+        "n_bars": 376,
+        "n_trades": 8,
+        "sharpe": -0.20614888816987886,
+        "sortino": -0.14590779543819266,
+        "total_return": -0.09237161960902673,
+        "turnover_per_year": 5.361702127659575,
+        "win_rate": 0.25
+      },
+      "subject": "ema_crossover__META__daily",
+      "timeframe": "daily",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 00:00:00",
+      "window": [
+        "2025-01-10 00:00:00",
+        "2026-07-10 00:00:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.0654220120715483,
+        "max_drawdown": -0.3403103861055259,
+        "n_bars": 376,
+        "n_trades": 1,
+        "sharpe": 0.35774761429822316,
+        "sortino": 0.400539897143637,
+        "total_return": 0.09916798897865253,
+        "turnover_per_year": 0.6702127659574468,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "donchian",
+      "frozen_params": {
+        "entry": 55,
+        "exit": 55
+      },
+      "id": "S3",
+      "instrument": "META",
+      "n_bars_incl_warmin": 376,
+      "n_window_bars": 375,
+      "p1_sweep": "p1-trend-following-daily",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 376,
+        "sharpe_delta": -0.8978767881766969,
+        "sharpe_se": 0.8189021415607356,
+        "timeframe": "daily",
+        "tstat": -1.096439663065778,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705763292Z-577ed236b6d1.json",
+      "strategy_metrics": {
+        "cagr": -0.13829901128198763,
+        "max_drawdown": -0.3379044247587959,
+        "n_bars": 376,
+        "n_trades": 6,
+        "sharpe": -0.5401291738784737,
+        "sortino": -0.3661660327780162,
+        "total_return": -0.19915599324834354,
+        "turnover_per_year": 4.0212765957446805,
+        "win_rate": 0.3333333333333333
+      },
+      "subject": "donchian__META__daily",
+      "timeframe": "daily",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 00:00:00",
+      "window": [
+        "2025-01-10 00:00:00",
+        "2026-07-10 00:00:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": -0.1668055561024988,
+        "max_drawdown": -0.5305696157307931,
+        "n_bars": 549,
+        "n_trades": 1,
+        "sharpe": -0.3141738093139617,
+        "sortino": -0.31347836198570006,
+        "total_return": -0.32804483630271186,
+        "turnover_per_year": 0.459016393442623,
+        "win_rate": 0.0
+      },
+      "contingency": null,
+      "family": "supertrend_flip",
+      "frozen_params": {
+        "ema_len": 200,
+        "macd_fast": 12,
+        "macd_signal": 9,
+        "macd_slow": 26,
+        "st_mult": 2.0,
+        "st_period": 14
+      },
+      "id": "S4",
+      "instrument": "BTC-USD",
+      "n_bars_incl_warmin": 549,
+      "n_window_bars": 548,
+      "p1_sweep": "p1-video-strategy-daily",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 549,
+        "sharpe_delta": -0.15127246449516313,
+        "sharpe_se": 0.677653080746331,
+        "timeframe": "daily",
+        "tstat": -0.22322995171594245,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705793743Z-25c02263cbaf.json",
+      "strategy_metrics": {
+        "cagr": -0.08350561166323611,
+        "max_drawdown": -0.24328494722676575,
+        "n_bars": 549,
+        "n_trades": 20,
+        "sharpe": -0.46544627380912484,
+        "sortino": -0.2635234893488715,
+        "total_return": -0.17301603959043088,
+        "turnover_per_year": 9.18032786885246,
+        "win_rate": 0.2
+      },
+      "subject": "supertrend_flip__BTC-USD__daily",
+      "timeframe": "daily",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 00:00:00",
+      "window": [
+        "2025-01-09 00:00:00",
+        "2026-07-10 00:00:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": true,
+      "benchmark_metrics": {
+        "cagr": -0.1668055561024988,
+        "max_drawdown": -0.5305696157307931,
+        "n_bars": 549,
+        "n_trades": 1,
+        "sharpe": -0.3141738093139617,
+        "sortino": -0.31347836198570006,
+        "total_return": -0.32804483630271186,
+        "turnover_per_year": 0.459016393442623,
+        "win_rate": 0.0
+      },
+      "contingency": null,
+      "family": "macd_supertrend",
+      "frozen_params": {
+        "ema_len": 100,
+        "macd_fast": 12,
+        "macd_signal": 9,
+        "macd_slow": 26,
+        "st_mult": 2.0,
+        "st_period": 14
+      },
+      "id": "S5",
+      "instrument": "BTC-USD",
+      "n_bars_incl_warmin": 549,
+      "n_window_bars": 548,
+      "p1_sweep": "p1-video-strategy-daily",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 549,
+        "sharpe_delta": 0.19551877145604163,
+        "sharpe_se": 0.6775169487646758,
+        "timeframe": "daily",
+        "tstat": 0.28858137322251964,
+        "variants_tried": 1,
+        "verdict": "RULE-PASS"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705824767Z-545467f92829.json",
+      "strategy_metrics": {
+        "cagr": -0.017725323579604102,
+        "max_drawdown": -0.12029085719987065,
+        "n_bars": 549,
+        "n_trades": 18,
+        "sharpe": -0.1186550378579201,
+        "sortino": -0.04214518080781413,
+        "total_return": -0.03821295692738036,
+        "turnover_per_year": 8.262295081967213,
+        "win_rate": 0.3333333333333333
+      },
+      "subject": "macd_supertrend__BTC-USD__daily",
+      "timeframe": "daily",
+      "verdict": "HOLDOUT-BEAT",
+      "warmin_bar": "2025-01-08 00:00:00",
+      "window": [
+        "2025-01-09 00:00:00",
+        "2026-07-10 00:00:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": true,
+      "benchmark_metrics": {
+        "cagr": 0.0654220120715483,
+        "max_drawdown": -0.3403103861055259,
+        "n_bars": 376,
+        "n_trades": 1,
+        "sharpe": 0.35774761429822316,
+        "sortino": 0.400539897143637,
+        "total_return": 0.09916798897865253,
+        "turnover_per_year": 0.6702127659574468,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "rsi_mean_reversion",
+      "frozen_params": {
+        "overbought": 50,
+        "oversold": 10,
+        "period": 2
+      },
+      "id": "S6",
+      "instrument": "META",
+      "n_bars_incl_warmin": 376,
+      "n_window_bars": 375,
+      "p1_sweep": "p1-mean-reversion-daily",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 376,
+        "sharpe_delta": 0.6681389782697855,
+        "sharpe_se": 0.8195195492625046,
+        "timeframe": "daily",
+        "tstat": 0.8152813180247521,
+        "variants_tried": 1,
+        "verdict": "RULE-PASS"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705853847Z-210b940e99ec.json",
+      "strategy_metrics": {
+        "cagr": 0.2218757564220739,
+        "max_drawdown": -0.13888123762305493,
+        "n_bars": 376,
+        "n_trades": 42,
+        "sharpe": 1.0258865925680087,
+        "sortino": 0.828103214490461,
+        "total_return": 0.3484966784047032,
+        "turnover_per_year": 28.148936170212764,
+        "win_rate": 0.7142857142857143
+      },
+      "subject": "rsi_mean_reversion__META__daily",
+      "timeframe": "daily",
+      "verdict": "HOLDOUT-BEAT",
+      "warmin_bar": "2025-01-08 00:00:00",
+      "window": [
+        "2025-01-10 00:00:00",
+        "2026-07-10 00:00:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.0654220120715483,
+        "max_drawdown": -0.3403103861055259,
+        "n_bars": 376,
+        "n_trades": 1,
+        "sharpe": 0.35774761429822316,
+        "sortino": 0.400539897143637,
+        "total_return": 0.09916798897865253,
+        "turnover_per_year": 0.6702127659574468,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "pullback",
+      "frozen_params": {
+        "entry_lookback": 7,
+        "exit_len": 7,
+        "trend_len": 100
+      },
+      "id": "S7",
+      "instrument": "META",
+      "n_bars_incl_warmin": 376,
+      "n_window_bars": 375,
+      "p1_sweep": "p1-mean-reversion-daily",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 376,
+        "sharpe_delta": -0.3291928750043903,
+        "sharpe_se": 0.8186658965843358,
+        "timeframe": "daily",
+        "tstat": -0.4021089389186229,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705883591Z-e75c6a265469.json",
+      "strategy_metrics": {
+        "cagr": -0.006125819893569973,
+        "max_drawdown": -0.16449861684232947,
+        "n_bars": 376,
+        "n_trades": 20,
+        "sharpe": 0.028554739293832863,
+        "sortino": 0.014816461396488123,
+        "total_return": -0.009126322416378008,
+        "turnover_per_year": 13.404255319148936,
+        "win_rate": 0.8
+      },
+      "subject": "pullback__META__daily",
+      "timeframe": "daily",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 00:00:00",
+      "window": [
+        "2025-01-10 00:00:00",
+        "2026-07-10 00:00:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.4634381664873388,
+        "max_drawdown": -0.3085261554125701,
+        "n_bars": 2602,
+        "n_trades": 1,
+        "sharpe": 1.322014676004794,
+        "sortino": 1.3549963726193046,
+        "total_return": 0.8310530786239452,
+        "turnover_per_year": 0.6295157571099155,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "sma_crossover",
+      "frozen_params": {
+        "fast": 10,
+        "slow": 75
+      },
+      "id": "S8",
+      "instrument": "GOOGL",
+      "n_bars_incl_warmin": 2602,
+      "n_window_bars": 2601,
+      "p1_sweep": "p1-trend-hourly",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 2602,
+        "sharpe_delta": -0.20854113757324044,
+        "sharpe_se": 0.7935704136412606,
+        "timeframe": "hourly",
+        "tstat": -0.2627884482441315,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705911958Z-32cf50796056.json",
+      "strategy_metrics": {
+        "cagr": 0.29244260368724384,
+        "max_drawdown": -0.18768320923594095,
+        "n_bars": 2602,
+        "n_trades": 48,
+        "sharpe": 1.1134735384315535,
+        "sortino": 0.9123377373813008,
+        "total_return": 0.5030703640136511,
+        "turnover_per_year": 30.216756341275943,
+        "win_rate": 0.3333333333333333
+      },
+      "subject": "sma_crossover__GOOGL__hourly",
+      "timeframe": "hourly",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 20:30:00",
+      "window": [
+        "2025-01-10 14:30:00",
+        "2026-07-10 16:30:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.4634381664873388,
+        "max_drawdown": -0.3085261554125701,
+        "n_bars": 2602,
+        "n_trades": 1,
+        "sharpe": 1.322014676004794,
+        "sortino": 1.3549963726193046,
+        "total_return": 0.8310530786239452,
+        "turnover_per_year": 0.6295157571099155,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "ema_crossover",
+      "frozen_params": {
+        "fast": 20,
+        "slow": 50
+      },
+      "id": "S9",
+      "instrument": "GOOGL",
+      "n_bars_incl_warmin": 2602,
+      "n_window_bars": 2601,
+      "p1_sweep": "p1-trend-hourly",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 2602,
+        "sharpe_delta": -0.13606248236747698,
+        "sharpe_se": 0.7935905913217681,
+        "timeframe": "hourly",
+        "tstat": -0.17145173324302843,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705941222Z-fbaceee1ea05.json",
+      "strategy_metrics": {
+        "cagr": 0.3194501626233641,
+        "max_drawdown": -0.18616024486196325,
+        "n_bars": 2602,
+        "n_trades": 44,
+        "sharpe": 1.185952193637317,
+        "sortino": 0.9761275865412479,
+        "total_return": 0.5532701121695283,
+        "turnover_per_year": 27.69869331283628,
+        "win_rate": 0.36363636363636365
+      },
+      "subject": "ema_crossover__GOOGL__hourly",
+      "timeframe": "hourly",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 20:30:00",
+      "window": [
+        "2025-01-10 14:30:00",
+        "2026-07-10 16:30:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.4634381664873388,
+        "max_drawdown": -0.3085261554125701,
+        "n_bars": 2602,
+        "n_trades": 1,
+        "sharpe": 1.322014676004794,
+        "sortino": 1.3549963726193046,
+        "total_return": 0.8310530786239452,
+        "turnover_per_year": 0.6295157571099155,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "donchian",
+      "frozen_params": {
+        "entry": 40,
+        "exit": 40
+      },
+      "id": "S10",
+      "instrument": "GOOGL",
+      "n_bars_incl_warmin": 2602,
+      "n_window_bars": 2601,
+      "p1_sweep": "p1-trend-hourly",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 2602,
+        "sharpe_delta": -0.4283620194089067,
+        "sharpe_se": 0.7935169934435394,
+        "timeframe": "hourly",
+        "tstat": -0.539827152976259,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705970665Z-b0f615a41c56.json",
+      "strategy_metrics": {
+        "cagr": 0.2199253995888455,
+        "max_drawdown": -0.2752967683378744,
+        "n_bars": 2602,
+        "n_trades": 31,
+        "sharpe": 0.8936526565958872,
+        "sortino": 0.7215229061122895,
+        "total_return": 0.3713311948034792,
+        "turnover_per_year": 19.51498847040738,
+        "win_rate": 0.375
+      },
+      "subject": "donchian__GOOGL__hourly",
+      "timeframe": "hourly",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 20:30:00",
+      "window": [
+        "2025-01-10 14:30:00",
+        "2026-07-10 16:30:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.06801078042296504,
+        "max_drawdown": -0.3261219326338719,
+        "n_bars": 2602,
+        "n_trades": 1,
+        "sharpe": 0.3620224569874423,
+        "sortino": 0.3754557057754509,
+        "total_return": 0.11017909194537889,
+        "turnover_per_year": 0.6295157571099155,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "donchian",
+      "frozen_params": {
+        "entry": 40,
+        "exit": 40
+      },
+      "id": "S11",
+      "instrument": "AMZN",
+      "n_bars_incl_warmin": 2602,
+      "n_window_bars": 2601,
+      "p1_sweep": "p1-trend-hourly",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 2602,
+        "sharpe_delta": -0.24909494962482365,
+        "sharpe_se": 0.7934218346202574,
+        "timeframe": "hourly",
+        "tstat": -0.3139502075135655,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164705999316Z-78b3162b659f.json",
+      "strategy_metrics": {
+        "cagr": -0.0008909183813724519,
+        "max_drawdown": -0.2674821590901928,
+        "n_bars": 2602,
+        "n_trades": 32,
+        "sharpe": 0.11292750736261864,
+        "sortino": 0.09486085747186547,
+        "total_return": -0.0014148729036704832,
+        "turnover_per_year": 20.144504227517295,
+        "win_rate": 0.25
+      },
+      "subject": "donchian__AMZN__hourly",
+      "timeframe": "hourly",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 20:30:00",
+      "window": [
+        "2025-01-10 14:30:00",
+        "2026-07-10 16:30:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.05804579941069021,
+        "max_drawdown": -0.3479966541136179,
+        "n_bars": 2602,
+        "n_trades": 1,
+        "sharpe": 0.3382096692910727,
+        "sortino": 0.3726500803437557,
+        "total_return": 0.0937697293066535,
+        "turnover_per_year": 0.6295157571099155,
+        "win_rate": 1.0
+      },
+      "contingency": null,
+      "family": "macd",
+      "frozen_params": {
+        "fast": 5,
+        "signal": 5,
+        "slow": 26
+      },
+      "id": "S12",
+      "instrument": "META",
+      "n_bars_incl_warmin": 2602,
+      "n_window_bars": 2601,
+      "p1_sweep": "p1-trend-hourly",
+      "promotion_grade_k1": {
+        "alpha_one_sided": 0.05,
+        "min_tstat": 1.6448536269514715,
+        "n_periods": 2602,
+        "sharpe_delta": -0.5783871729629643,
+        "sharpe_se": 0.793427275745702,
+        "timeframe": "hourly",
+        "tstat": -0.7289731405053695,
+        "variants_tried": 1,
+        "verdict": "KILLED"
+      },
+      "role": "SECONDARY",
+      "run_file": "experiments/runs/20260710T164706051351Z-483fcc452687.json",
+      "strategy_metrics": {
+        "cagr": -0.09209277352079259,
+        "max_drawdown": -0.3054983540234505,
+        "n_bars": 2602,
+        "n_trades": 331,
+        "sharpe": -0.24017750367189156,
+        "sortino": -0.2010544862136859,
+        "total_return": -0.1422752699933556,
+        "turnover_per_year": 208.36971560338202,
+        "win_rate": 0.3795180722891566
+      },
+      "subject": "macd__META__hourly",
+      "timeframe": "hourly",
+      "verdict": "HOLDOUT-MISS",
+      "warmin_bar": "2025-01-08 20:30:00",
+      "window": [
+        "2025-01-10 14:30:00",
+        "2026-07-10 16:30:00"
+      ],
+      "window_start_effective": "2025-01-09 00:00:00",
+      "window_start_requested": "2025-01-09"
+    }
+  ],
+  "window_start_requested": "2025-01-09"
+}
