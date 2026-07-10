@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.19018014817087803,
+    "max_drawdown": -0.1750377211554467,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.9563838736789603,
+    "sortino": 0.9205291292483438,
+    "total_return": 0.3010564005585086,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "caa0bbb7abe7",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T03:12:31+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "64d1d061afe4e5093c2529db14b9defa5552e5f4",
+  "instrument": "MSFT",
+  "metrics": {
+    "cagr": 0.16163411165295605,
+    "max_drawdown": -0.11299026314255245,
+    "n_bars": 2476,
+    "n_trades": 32,
+    "sharpe": 1.1268223337647854,
+    "sortino": 0.859452837580943,
+    "total_return": 0.25417692982832096,
+    "turnover_per_year": 21.169628432956383,
+    "win_rate": 0.5
+  },
+  "n_bars": 2476,
+  "notes": "P1 trend-hourly sweep: top full-dev-period variant of 44 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-hourly/ema_crossover__MSFT.json)",
+  "params": {
+    "fast": 15,
+    "slow": 75
+  },
+  "run_id": "20260710T031231008222Z-caa0bbb7abe7",
+  "schema_version": 1,
+  "strategy": "ema_crossover",
+  "timeframe": "hourly",
+  "variants_tried": 44
+}

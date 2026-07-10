@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 1.1848430526782217,
+    "max_drawdown": -0.34215233426589897,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.9493204747433084,
+    "sortino": 1.928590389640925,
+    "total_return": 2.2588733042509337,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "a2239348f718",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T03:12:37+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "64d1d061afe4e5093c2529db14b9defa5552e5f4",
+  "instrument": "NVDA",
+  "metrics": {
+    "cagr": 0.6358793715922786,
+    "max_drawdown": -0.2674366441621421,
+    "n_bars": 2476,
+    "n_trades": 136,
+    "sharpe": 1.9215132623753537,
+    "sortino": 1.3634192127139264,
+    "total_return": 1.1042935519108785,
+    "turnover_per_year": 89.97092084006462,
+    "win_rate": 0.4852941176470588
+  },
+  "n_bars": 2476,
+  "notes": "P1 trend-hourly sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-trend-hourly/macd__NVDA.json)",
+  "params": {
+    "fast": 16,
+    "signal": 9,
+    "slow": 50
+  },
+  "run_id": "20260710T031237223749Z-a2239348f718",
+  "schema_version": 1,
+  "strategy": "macd",
+  "timeframe": "hourly",
+  "variants_tried": 48
+}

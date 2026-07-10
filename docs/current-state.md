@@ -18,14 +18,21 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Verify against live source control — this section is a dated snapshot.)
 
-- Nothing at the moment — the mean-reversion lane below merged with its
-  claim deleted (the stale trend-lane entry is long merged); next per
-  QUEUE § Next: trend × hourly.
+- Nothing at the moment — the trend × hourly lane below merged with its
+  claim deleted; next per QUEUE § Next: P2 validation of the accumulated
+  candidates.
 
 ## Recently shipped (newest first)
 
 (Merged work only, newest first.)
 
+- P1 trend × hourly sweep (2026-07-10): the daily trend grids re-run on
+  hourly bars (4 families, 177 variants × 8 tickers, committed hourly cache
+  2023-08 → 2025-01), walk-forward OOS vs buy-and-hold — results and honest
+  read in [p1-trend-hourly-results.md](p1-trend-hourly-results.md); 5/32
+  lanes beat B&H over a single ~8.5-month OOS regime (the negative result is
+  the headline; MACD churn is cost-eaten at 1,638 bars/yr), GOOGL-sma/ema/
+  donchian, AMZN-donchian, META-macd carried to P2 as candidates only.
 - P1 mean-reversion sweep (2026-07-10): 3 sub-families (RSI-threshold,
   Bollinger/z-score band reversion, short-horizon pullback ± trend filter),
   144 variants × 8 tickers × daily, walk-forward OOS vs buy-and-hold —

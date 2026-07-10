@@ -21,3 +21,5 @@ touches real money or credentials. Anything money-adjacent goes to ⚑ needs-own
   P1 sweep results (trend-following × 8 tickers × daily).
 - **[docs/p1-mean-reversion-results.md](docs/p1-mean-reversion-results.md)** — second
   P1 sweep results (mean-reversion × 8 tickers × daily).
+- **[docs/p1-trend-hourly-results.md](docs/p1-trend-hourly-results.md)** — third
+  P1 sweep results (trend-following × 8 tickers × hourly).
