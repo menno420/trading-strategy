@@ -1,10 +1,19 @@
 # Research Round 2 — Pre-Registration
 
-> **Status:** `binding` — pre-registered Round 2 protocol. Committed and merged
-> before any Round 2 sweep, backtest, or outcome exists. Post-holdout,
-> dev-only: promotion is closed (see banner below).
+> **Status:** `binding` — pre-registered Round 2 protocol, now **COMPLETE /
+> CLOSED** (2026-07-10): all 78 registered configs ran within the frozen
+> grids (R1–R3, PRs #47–#49; contingency untouched) and the round is closed
+> (R4). Was committed and merged before any Round 2 sweep, backtest, or
+> outcome existed. Post-holdout, dev-only: promotion is closed (see banner
+> below). Outcomes: [research-round-2-results.md](research-round-2-results.md);
+> round summary appended to [final-report.md](final-report.md). No token for
+> "closed" exists in the badge taxonomy; the grids/rules here remain the
+> binding record of what was registered.
 
-- **Status detail:** pre-registered (no sweeps run, no outcomes computed as of this commit)
+- **Status detail:** complete/closed — pre-registered 2026-07-10 before any
+  outcome existed (PR #46); executed R1–R3 (PRs #47–#49, 78/78 registered
+  configs, 0 contingency); closed by R4 2026-07-10. 5 KEEP / 9 KILL
+  (dev-candidates only; promotion closed).
 - **Date:** 2026-07-10
 - **Git context:** branched from `main` @ `c47f74d` ("control: status close-out — paper-lane foundation complete (#40-#43), lane opens 2026-07-11 (#45)")
 - **Author:** agent lane, coordinator-directed
