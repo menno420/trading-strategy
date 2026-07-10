@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.4725930379502681,
+    "max_drawdown": -0.6724111795465292,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 1.0699244352672317,
+    "sortino": 1.1118228949321804,
+    "total_return": 330.5691749661434,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "624570296828",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:24+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "NVDA",
+  "metrics": {
+    "cagr": 0.36983847252422075,
+    "max_drawdown": -0.5891043946237217,
+    "n_bars": 3779,
+    "n_trades": 55,
+    "sharpe": 1.0534759859469713,
+    "sortino": 0.9293493572215783,
+    "total_return": 111.07223998729633,
+    "turnover_per_year": 3.66763694098968,
+    "win_rate": 0.42857142857142855
+  },
+  "n_bars": 3779,
+  "notes": "p4-transfer: ema_crossover frozen from META P1 p1-trend-following-daily (top_full_period_variant); transfer instrument",
+  "params": {
+    "fast": 25,
+    "slow": 50
+  },
+  "run_id": "20260710T043224449593Z-624570296828",
+  "schema_version": 1,
+  "strategy": "ema_crossover",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

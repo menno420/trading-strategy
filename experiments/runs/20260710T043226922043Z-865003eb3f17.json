@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.03133748206697451,
+    "max_drawdown": -0.761864757704005,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.25283259990457096,
+    "sortino": 0.24404674159100437,
+    "total_return": 0.5883962288444033,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "865003eb3f17",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:26+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "SLV",
+  "metrics": {
+    "cagr": -0.03129392031149303,
+    "max_drawdown": -0.6377912245616129,
+    "n_bars": 3779,
+    "n_trades": 372,
+    "sharpe": -0.1507562717483281,
+    "sortino": -0.07593745018062091,
+    "total_return": -0.37922363318681107,
+    "turnover_per_year": 24.806562582693836,
+    "win_rate": 0.5913978494623656
+  },
+  "n_bars": 3779,
+  "notes": "p4-transfer: rsi_mean_reversion frozen from META P1 p1-mean-reversion-daily (top_full_period_variant); transfer instrument",
+  "params": {
+    "overbought": 50,
+    "oversold": 10,
+    "period": 2
+  },
+  "run_id": "20260710T043226922043Z-865003eb3f17",
+  "schema_version": 1,
+  "strategy": "rsi_mean_reversion",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

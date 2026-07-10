@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.42908207843060886,
+    "max_drawdown": -0.833830983670915,
+    "n_bars": 3767,
+    "n_trades": 1,
+    "sharpe": 0.9120554396024015,
+    "sortino": 0.923949627079613,
+    "total_return": 206.90197400349632,
+    "turnover_per_year": 0.06689673480222989,
+    "win_rate": 1.0
+  },
+  "config_hash": "beb6eee49730",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:26+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "BTC-USD",
+  "metrics": {
+    "cagr": 0.03844487048420264,
+    "max_drawdown": -0.5742502209932709,
+    "n_bars": 3767,
+    "n_trades": 388,
+    "sharpe": 0.2830821806744169,
+    "sortino": 0.13754971258372287,
+    "total_return": 0.7575452030764545,
+    "turnover_per_year": 25.9559331032652,
+    "win_rate": 0.7061855670103093
+  },
+  "n_bars": 3767,
+  "notes": "p4-transfer: rsi_mean_reversion frozen from META P1 p1-mean-reversion-daily (top_full_period_variant); transfer instrument",
+  "params": {
+    "overbought": 50,
+    "oversold": 10,
+    "period": 2
+  },
+  "run_id": "20260710T043227052840Z-beb6eee49730",
+  "schema_version": 1,
+  "strategy": "rsi_mean_reversion",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

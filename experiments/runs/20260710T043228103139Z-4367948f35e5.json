@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.19648460629262,
+    "max_drawdown": -0.17373597467716206,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.78603160528156,
+    "sortino": 0.7715409001752499,
+    "total_return": 0.3114881101432365,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "4367948f35e5",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:28+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "SLV",
+  "metrics": {
+    "cagr": 0.12027039634913295,
+    "max_drawdown": -0.1252550351825752,
+    "n_bars": 2476,
+    "n_trades": 51,
+    "sharpe": 0.673789159471739,
+    "sortino": 0.5050026840615974,
+    "total_return": 0.18728890830514877,
+    "turnover_per_year": 33.73909531502424,
+    "win_rate": 0.4230769230769231
+  },
+  "n_bars": 2476,
+  "notes": "p4-transfer: sma_crossover frozen from GOOGL P1 p1-trend-hourly (top_full_period_variant); transfer instrument",
+  "params": {
+    "fast": 10,
+    "slow": 75
+  },
+  "run_id": "20260710T043228103139Z-4367948f35e5",
+  "schema_version": 1,
+  "strategy": "sma_crossover",
+  "timeframe": "hourly",
+  "variants_tried": 1
+}

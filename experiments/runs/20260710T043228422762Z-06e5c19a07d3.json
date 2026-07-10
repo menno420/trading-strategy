@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.21775921764929063,
+    "max_drawdown": -0.17318917243678122,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.9623126414443511,
+    "sortino": 0.9283177014918956,
+    "total_return": 0.3468976932435337,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "06e5c19a07d3",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:28+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.09338528144151192,
+    "max_drawdown": -0.16580223508399106,
+    "n_bars": 2476,
+    "n_trades": 32,
+    "sharpe": 0.5852976561886379,
+    "sortino": 0.4001001932742464,
+    "total_return": 0.14448363084844118,
+    "turnover_per_year": 21.169628432956383,
+    "win_rate": 0.625
+  },
+  "n_bars": 2476,
+  "notes": "p4-transfer: donchian frozen from GOOGL P1 p1-trend-hourly (top_full_period_variant); transfer instrument",
+  "params": {
+    "entry": 40,
+    "exit": 40
+  },
+  "run_id": "20260710T043228422762Z-06e5c19a07d3",
+  "schema_version": 1,
+  "strategy": "donchian",
+  "timeframe": "hourly",
+  "variants_tried": 1
+}

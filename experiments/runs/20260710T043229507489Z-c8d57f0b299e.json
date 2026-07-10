@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2379989246663936,
+    "max_drawdown": -0.08213643510085478,
+    "n_bars": 2475,
+    "n_trades": 1,
+    "sharpe": 1.702407701124485,
+    "sortino": 1.6560733427529886,
+    "total_return": 0.38069993758379694,
+    "turnover_per_year": 0.6618181818181819,
+    "win_rate": 1.0
+  },
+  "config_hash": "c8d57f0b299e",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:29+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "GLD",
+  "metrics": {
+    "cagr": -0.03688313299084456,
+    "max_drawdown": -0.11527194240847238,
+    "n_bars": 2475,
+    "n_trades": 300,
+    "sharpe": -0.32267269189796705,
+    "sortino": -0.24633367146351068,
+    "total_return": -0.05520163884849327,
+    "turnover_per_year": 198.54545454545456,
+    "win_rate": 0.44
+  },
+  "n_bars": 2475,
+  "notes": "p4-transfer: macd frozen from META P1 p1-trend-hourly (top_full_period_variant); transfer instrument",
+  "params": {
+    "fast": 5,
+    "signal": 5,
+    "slow": 26
+  },
+  "run_id": "20260710T043229507489Z-c8d57f0b299e",
+  "schema_version": 1,
+  "strategy": "macd",
+  "timeframe": "hourly",
+  "variants_tried": 1
+}

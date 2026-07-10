@@ -1,0 +1,50 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.4725930379502681,
+    "max_drawdown": -0.6724111795465292,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 1.0699244352672317,
+    "sortino": 1.1118228949321804,
+    "total_return": 330.5691749661434,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "30870cf1c9cc",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:25+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "NVDA",
+  "metrics": {
+    "cagr": 0.18880378565446,
+    "max_drawdown": -0.36112529719901376,
+    "n_bars": 3779,
+    "n_trades": 183,
+    "sharpe": 0.8697352511952338,
+    "sortino": 0.5481280260055115,
+    "total_return": 12.37687394797247,
+    "turnover_per_year": 12.203228367292935,
+    "win_rate": 0.42391304347826086
+  },
+  "n_bars": 3779,
+  "notes": "p4-transfer: macd_supertrend frozen from BTC-USD P1 p1-video-strategy-daily (top_full_period_variant); transfer instrument",
+  "params": {
+    "ema_len": 100,
+    "macd_fast": 12,
+    "macd_signal": 9,
+    "macd_slow": 26,
+    "st_mult": 2.0,
+    "st_period": 14
+  },
+  "run_id": "20260710T043225754292Z-30870cf1c9cc",
+  "schema_version": 1,
+  "strategy": "macd_supertrend",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

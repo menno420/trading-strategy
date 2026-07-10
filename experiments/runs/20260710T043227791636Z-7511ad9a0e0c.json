@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.42908207843060886,
+    "max_drawdown": -0.833830983670915,
+    "n_bars": 3767,
+    "n_trades": 1,
+    "sharpe": 0.9120554396024015,
+    "sortino": 0.923949627079613,
+    "total_return": 206.90197400349632,
+    "turnover_per_year": 0.06689673480222989,
+    "win_rate": 1.0
+  },
+  "config_hash": "7511ad9a0e0c",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:27+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "BTC-USD",
+  "metrics": {
+    "cagr": 0.06890962109928211,
+    "max_drawdown": -0.3561483117280776,
+    "n_bars": 3767,
+    "n_trades": 222,
+    "sharpe": 0.3969511737811505,
+    "sortino": 0.176332488034924,
+    "total_return": 1.7078325488204467,
+    "turnover_per_year": 14.851075126095036,
+    "win_rate": 0.6936936936936937
+  },
+  "n_bars": 3767,
+  "notes": "p4-transfer: pullback frozen from META P1 p1-mean-reversion-daily (top_full_period_variant); transfer instrument",
+  "params": {
+    "entry_lookback": 7,
+    "exit_len": 7,
+    "trend_len": 100
+  },
+  "run_id": "20260710T043227791636Z-7511ad9a0e0c",
+  "schema_version": 1,
+  "strategy": "pullback",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

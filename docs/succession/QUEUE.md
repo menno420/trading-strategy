@@ -52,6 +52,19 @@
    boundary violations; contract + residual-bypass rule ("all research
    code loads via `load_ohlcv`") documented — see
    [docs/holdout-enforcement.md](../holdout-enforcement.md). 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over). **DONE 2026-07-10** (gen-2, lane `holdout-collab`): the conventions the repo demonstrably practices (READY-never-draft, arm-then-REST-squash-on-green with the two-way arm wall, self-merge grant, post-merge review, terminal refusal branch, heartbeat-before-work, claims lifecycle, status ender, substrate-gate interplay) ported as verified against PRs #14–#24 — see [docs/collaboration-model.md](../collaboration-model.md).
+7. P4 cross-instrument transfer validation. **DONE 2026-07-10** (gen-2,
+   lane `p4-transfer__multi__daily-hourly`): the 13 P2 subjects (12
+   UNVALIDATABLE-PRE-HOLDOUT + the promoted AAPL-donchian) run with
+   params frozen verbatim from the P1 sweep JSONs on every other
+   committed instrument in their timeframe (daily × 8, hourly × 7; 99
+   backtests, 0 new variants), full pre-holdout windows vs B&H,
+   pre-registered ≥2/3 / ≥1/3 verdict rule — **13/13 TRANSFER-FAILED**
+   (13/99 pairs beat B&H; even the P2-promoted AAPL-donchian failed 1/8;
+   the negative result is the headline) — see
+   [docs/p4-transfer-results.md](../p4-transfer-results.md). No transfer
+   verdict promotes anything; holdout untouched.
+8. P5 final-report prep: holdout unlock protocol + ranked report
+   skeleton — ⚑ owner may want to gate the unlock.
 
 ## ⚑ Owner clicks outstanding
 See control/status.md — env setup script verification (paste-ready script now at environments/setup-universal.sh), auto-merge tick, archive the DOA successor session.
