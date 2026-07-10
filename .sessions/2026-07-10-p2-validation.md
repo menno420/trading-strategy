@@ -41,6 +41,17 @@ loader for Yahoo (proxy workaround implemented in src/trading_lab/data.py).
   (`claims/p2-validation.md`), session card (this file), branch
   `p2-validation-20260710T032758Z`, READY PR, merge on green. Overlap check
   at claim time: `claims/` held only its README; zero open PRs on the repo.
+- 2026-07-10T03:40Z — P2 validation phase (branch `p2-validation-results`):
+  verdicts for all 14 open candidates, params frozen from the P1 sweep
+  JSONs' `top_full_period_variant` (variants_tried=1 per run, zero
+  re-tuning). 12/14 UNVALIDATABLE-PRE-HOLDOUT (P1 consumed every
+  pre-holdout bar in their timeframes — structural data exhaustion; math in
+  the doc). Fetched pre-2010 daily history for AAPL/GOOGL into
+  `data/p2ext/daily/` (max close discrepancy vs committed cache ~1e-6);
+  real P2 runs: AAPL-donchian PROMOTED-TO-FINDING (Sharpe 0.62 vs B&H 0.54,
+  1980→2009), GOOGL-pullback KILLED (0.26 vs 1.05, 2004→2009). 2 ledger
+  rows, index regenerated, `docs/p2-validation-results.md` + QUEUE item 4
+  DONE. Holdout untouched.
 
 ## Close-out (heartbeat phase)
 

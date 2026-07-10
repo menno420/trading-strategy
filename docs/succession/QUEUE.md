@@ -32,7 +32,16 @@
    ~8.5-month OOS regime (the negative result is the headline; MACD churn
    is cost-eaten at 1,638 bars/yr), GOOGL-sma/ema/donchian, AMZN-donchian,
    META-macd carried to P2 as candidates only.
-   4. P2 validation of AAPL-donchian + META-trend candidates (plus the mean-reversion candidates from item 2 and the trend-hourly candidates from item 3). 5. Holdout enforcement hardening. 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over, still undone).
+4. P2 validation of AAPL-donchian + META-trend candidates (plus the
+   mean-reversion candidates from item 2 and the trend-hourly candidates
+   from item 3). **DONE 2026-07-10** (lane `p2-validation`): all 14 open
+   candidates given verdicts with params frozen from the P1 sweep JSONs —
+   1 PROMOTED-TO-FINDING (AAPL-donchian, Sharpe 0.62 vs B&H 0.54 on
+   1980→2009 pre-consumption data), 1 KILLED (GOOGL-pullback), 12
+   UNVALIDATABLE-PRE-HOLDOUT (P1 consumed every pre-holdout bar in their
+   timeframes; exact math in the doc) — see
+   [docs/p2-validation-results.md](../p2-validation-results.md).
+5. Holdout enforcement hardening. 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over, still undone).
 
 ## ⚑ Owner clicks outstanding
 See control/status.md — env setup script verification (paste-ready script now at environments/setup-universal.sh), auto-merge tick, archive the DOA successor session.
