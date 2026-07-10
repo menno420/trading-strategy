@@ -33,6 +33,17 @@ UNIVERSE = TECH_TICKERS + METAL_TICKERS
 HOLDOUT_START = "2025-01-09"
 
 # --------------------------------------------------------------------------
+# Paper lane (docs/paper-lane-protocol.md — pre-registered, binding)
+# --------------------------------------------------------------------------
+# The P5 holdout read is SPENT (ORDER 008). The paper lane may compute
+# signals ONLY from bars with timestamp >= PAPER_LANE_START — strictly after
+# the last bar the holdout evaluation consumed (fetched 2026-07-10). Bars in
+# [HOLDOUT_START, PAPER_LANE_START) are spent and untouchable, forever.
+# Served exclusively by ``trading_lab.data.load_paper_ohlcv`` (protocol §3,
+# §9 A2). Do not change this constant.
+PAPER_LANE_START = "2026-07-11"
+
+# --------------------------------------------------------------------------
 # Timeframes
 # --------------------------------------------------------------------------
 TIMEFRAMES = ("daily", "hourly")

@@ -18,6 +18,11 @@ HOLDOUT ENFORCEMENT: ``load_ohlcv`` drops every bar with
 passed explicitly. That flag exists ONLY for the roadmap-P5 final review and
 emits a loud warning so accidental peeking is visible in logs and pytest.
 The raw cache files may contain holdout bars; no analysis code reads them.
+
+PAPER LANE: ``load_paper_ohlcv`` is the only rail for the forward
+paper-trading lane (docs/paper-lane-protocol.md §3). It returns ONLY bars
+with ``timestamp >= config.PAPER_LANE_START`` (2026-07-11), has no unlock
+parameter, and cannot return a bar from the spent holdout window.
 """
 
 from __future__ import annotations
@@ -270,6 +275,53 @@ def load_ohlcv(ticker: str, timeframe: str = "daily", *,
         df = df[df.index >= pd.Timestamp(start)]
     if end is not None:
         df = df[df.index < pd.Timestamp(end)]
+    return df
+
+
+def load_paper_ohlcv(ticker: str, timeframe: str = "daily", *,
+                     start: str | None = None, end: str | None = None,
+                     data_dir: Path | None = None) -> pd.DataFrame:
+    """Paper-lane loader rail: bars ``>= config.PAPER_LANE_START`` ONLY.
+
+    The dedicated rail required by docs/paper-lane-protocol.md §3 (§9,
+    ambiguity A2). It reads the same standard cache that ``fetch_ohlcv`` /
+    ``save_cache`` populate, then keeps only bars with
+    ``timestamp >= config.PAPER_LANE_START`` (2026-07-11) — genuinely new
+    data that did not exist when the candidate's parameters were frozen.
+
+    Guarantees, by construction:
+
+    * It can NEVER return a bar before ``PAPER_LANE_START`` — neither a
+      spent-holdout bar in ``[HOLDOUT_START, PAPER_LANE_START)`` nor a
+      consumed dev bar before ``HOLDOUT_START``. The lane filter runs
+      FIRST, so ``start``/``end`` can only narrow the window, never widen
+      it backwards.
+    * There is deliberately NO unlock parameter of any kind, and nothing
+      is forwarded to ``load_ohlcv``; the holdout rail there (and its
+      ``HoldoutViolationWarning``) is untouched.
+    """
+    path = cache_path(ticker, timeframe, data_dir)
+    if not path.exists():
+        raise FileNotFoundError(
+            f"no cached data for {ticker} {timeframe} at {path}; "
+            "run trading_lab.data.fetch_ohlcv + save_cache first")
+    df = pd.read_csv(path, parse_dates=["timestamp"], index_col="timestamp")
+    check_integrity(df, ticker)
+
+    lane_start = pd.Timestamp(config.PAPER_LANE_START)
+    df = df[df.index >= lane_start]
+
+    if start is not None:
+        df = df[df.index >= pd.Timestamp(start)]
+    if end is not None:
+        df = df[df.index < pd.Timestamp(end)]
+
+    # Belt-and-suspenders invariant: unreachable given the filter above,
+    # but the rail's contract is worth a hard check, not a comment.
+    if len(df) and df.index.min() < lane_start:
+        raise DataIntegrityError(
+            f"{ticker}: paper-lane rail invariant violated — bar "
+            f"{df.index.min()} < PAPER_LANE_START {config.PAPER_LANE_START}")
     return df
 
 
