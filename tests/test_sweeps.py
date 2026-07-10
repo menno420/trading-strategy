@@ -3,7 +3,8 @@
 import pytest
 
 from trading_lab import sweeps
-from trading_lab.strategies import STRATEGIES, TREND_FOLLOWING_FAMILY
+from trading_lab.strategies import (STRATEGIES, TREND_FOLLOWING_FAMILY,
+                                    VIDEO_STRATEGY_FAMILY)
 
 
 class TestTrendFollowingGrids:
@@ -44,3 +45,39 @@ class TestTrendFollowingGrids:
 
     def test_deterministic_order(self):
         assert sweeps.variants("donchian") == sweeps.variants("donchian")
+
+
+class TestVideoStrategyGrids:
+    def test_families_match_strategy_registry(self):
+        assert set(sweeps.VIDEO_STRATEGY_FAMILIES) == set(VIDEO_STRATEGY_FAMILY)
+        for fam in sweeps.VIDEO_STRATEGY_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and docs/p1-video-strategy-results.md must match these.
+        counts = sweeps.video_variants_per_family()
+        assert counts == {"supertrend_flip": 36, "macd_supertrend": 36,
+                          "ema_crossover": 20}
+        assert sweeps.video_total_variants() == 92
+
+    def test_control_grid_contains_video_winner(self):
+        # The video's stated best dual-EMA setting (slow=400, fast=45) must be
+        # a grid point of the control interpretation.
+        assert {"fast": 45, "slow": 400} in sweeps.video_variants("ema_crossover")
+        for params in sweeps.video_variants("ema_crossover"):
+            assert params["fast"] < params["slow"]
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.VIDEO_STRATEGY_FAMILIES:
+            for params in sweeps.video_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.video_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.video_variants("supertrend_flip")
+                == sweeps.video_variants("supertrend_flip"))

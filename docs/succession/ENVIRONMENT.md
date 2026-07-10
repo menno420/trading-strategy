@@ -22,6 +22,19 @@ Use `environments/setup-universal.sh` (this repo) as the environment's setup scr
   EXIT=0
   ```
 
+## Verified
+
+**Verified: YES — gen-2 cold boot, 2026-07-10T02:32:27Z** (ORDER 005 item 2).
+Evidence, this container, main + video-strategy lane branch: `python3 -m
+pytest -q` → 107 passed (86 at handoff + 21 added by the video lane);
+`python3 bootstrap.py check --strict` → exit 0 (also green with
+`--require-session-log`); data-loader fetch through
+`src/trading_lab/data.py` → BTC-USD daily via yfinance, 4,314 bars
+(2014-09-17 → 2026-07-10), cached to `data/daily/BTC-USD.csv.gz`, holdout
+enforced at load (3,767 dev bars). Note: ORDER 005 said to "flip the
+Verified line" but this file had none — a succession-doc miss; the line
+above is the flip, added by gen-2.
+
 ## Environment variables required by this lane
 - **None.** Market data (yfinance) is keyless; the egress proxy and its CA bundle (`REQUESTS_CA_BUNDLE`, `HTTPS_PROXY`) are platform-provided, not lane config; git/GitHub auth is platform-provided. Do not add secrets to this repo or its environment unless a future lane adds an authenticated data source — then add the NAME here first.
 
