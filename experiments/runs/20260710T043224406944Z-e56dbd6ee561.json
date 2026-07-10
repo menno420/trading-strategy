@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.21377063927729822,
+    "max_drawdown": -0.3646004454130759,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9142669643667102,
+    "sortino": 0.9094050636198474,
+    "total_return": 17.269032233311567,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "e56dbd6ee561",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:24+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "MSFT",
+  "metrics": {
+    "cagr": 0.12237324269482763,
+    "max_drawdown": -0.317755306700909,
+    "n_bars": 3779,
+    "n_trades": 55,
+    "sharpe": 0.6898374542472375,
+    "sortino": 0.5819321699239582,
+    "total_return": 4.647556849500478,
+    "turnover_per_year": 3.66763694098968,
+    "win_rate": 0.35714285714285715
+  },
+  "n_bars": 3779,
+  "notes": "p4-transfer: ema_crossover frozen from META P1 p1-trend-following-daily (top_full_period_variant); transfer instrument",
+  "params": {
+    "fast": 25,
+    "slow": 50
+  },
+  "run_id": "20260710T043224406944Z-e56dbd6ee561",
+  "schema_version": 1,
+  "strategy": "ema_crossover",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

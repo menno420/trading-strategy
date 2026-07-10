@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2734335609408409,
+    "max_drawdown": -0.44190221764923054,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9770349722730817,
+    "sortino": 0.9660426622264756,
+    "total_return": 36.516973629033615,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "e0ff228e54c7",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:27+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.05536176577938168,
+    "max_drawdown": -0.19149855665225923,
+    "n_bars": 3779,
+    "n_trades": 261,
+    "sharpe": 0.4757765097874011,
+    "sortino": 0.25329402551920394,
+    "total_return": 1.2435072716871391,
+    "turnover_per_year": 17.40460439269648,
+    "win_rate": 0.7099236641221374
+  },
+  "n_bars": 3779,
+  "notes": "p4-transfer: pullback frozen from META P1 p1-mean-reversion-daily (top_full_period_variant); transfer instrument",
+  "params": {
+    "entry_lookback": 7,
+    "exit_len": 7,
+    "trend_len": 100
+  },
+  "run_id": "20260710T043227160851Z-e0ff228e54c7",
+  "schema_version": 1,
+  "strategy": "pullback",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

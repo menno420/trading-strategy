@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2734335609408409,
+    "max_drawdown": -0.44190221764923054,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9770349722730817,
+    "sortino": 0.9660426622264756,
+    "total_return": 36.516973629033615,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "3fe114833d0e",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:23+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.14749934900451778,
+    "max_drawdown": -0.3262426254617614,
+    "n_bars": 3779,
+    "n_trades": 67,
+    "sharpe": 0.7231866770554197,
+    "sortino": 0.5964378144515327,
+    "total_return": 6.871356901105864,
+    "turnover_per_year": 4.46784863720561,
+    "win_rate": 0.5882352941176471
+  },
+  "n_bars": 3779,
+  "notes": "p4-transfer: sma_crossover frozen from META P1 p1-trend-following-daily (top_full_period_variant); transfer instrument",
+  "params": {
+    "fast": 15,
+    "slow": 75
+  },
+  "run_id": "20260710T043224002660Z-3fe114833d0e",
+  "schema_version": 1,
+  "strategy": "sma_crossover",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

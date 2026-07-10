@@ -153,3 +153,6 @@ P2 added exactly **2 backtest runs, 1 variant each, zero re-tuning** (see
   `experiments/sweeps/p1-mean-reversion-daily/pullback__GOOGL.json`.
 - The holdout (bars ≥ 2025-01-09) remains untouched; both P2 windows end
   in 2009.
+
+Next: P4 cross-instrument transfer validation of these subjects —
+[p4-transfer-results.md](p4-transfer-results.md).

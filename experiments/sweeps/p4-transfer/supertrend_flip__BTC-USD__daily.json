@@ -1,0 +1,287 @@
+{
+  "beats_bh_count": 1,
+  "family": "supertrend_flip",
+  "frozen_params": {
+    "ema_len": 200,
+    "macd_fast": 12,
+    "macd_signal": 9,
+    "macd_slow": 26,
+    "st_mult": 2.0,
+    "st_period": 14
+  },
+  "home_instrument": "BTC-USD",
+  "n_transfer_instruments": 8,
+  "p1_sweep": "p1-video-strategy-daily",
+  "params_match_preregistered_list": true,
+  "runs": [
+    {
+      "beats_bh_sharpe": true,
+      "benchmark_metrics": {
+        "cagr": 0.2734335609408409,
+        "max_drawdown": -0.44190221764923054,
+        "n_bars": 3779,
+        "n_trades": 1,
+        "sharpe": 0.9770349722730817,
+        "sortino": 0.9660426622264756,
+        "total_return": 36.516973629033615,
+        "turnover_per_year": 0.06668430801799419,
+        "win_rate": 1.0
+      },
+      "instrument": "AAPL",
+      "n_bars": 3779,
+      "run_file": "experiments/runs/20260710T043225034191Z-622b31a19f9b.json",
+      "strategy_metrics": {
+        "cagr": 0.17211594313063872,
+        "max_drawdown": -0.26181912823187947,
+        "n_bars": 3779,
+        "n_trades": 152,
+        "sharpe": 1.0594980189785501,
+        "sortino": 0.7237293868563219,
+        "total_return": 9.82143627122858,
+        "turnover_per_year": 10.136014818735116,
+        "win_rate": 0.5263157894736842
+      },
+      "window": [
+        "2010-01-04 00:00:00",
+        "2025-01-08 00:00:00"
+      ]
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.21377063927729822,
+        "max_drawdown": -0.3646004454130759,
+        "n_bars": 3779,
+        "n_trades": 1,
+        "sharpe": 0.9142669643667102,
+        "sortino": 0.9094050636198474,
+        "total_return": 17.269032233311567,
+        "turnover_per_year": 0.06668430801799419,
+        "win_rate": 1.0
+      },
+      "instrument": "MSFT",
+      "n_bars": 3779,
+      "run_file": "experiments/runs/20260710T043225103547Z-47316979625f.json",
+      "strategy_metrics": {
+        "cagr": 0.08439044131747786,
+        "max_drawdown": -0.2373575778413669,
+        "n_bars": 3779,
+        "n_trades": 158,
+        "sharpe": 0.5785076541811222,
+        "sortino": 0.45066000532677053,
+        "total_return": 2.3701217056755604,
+        "turnover_per_year": 10.53612066684308,
+        "win_rate": 0.4936708860759494
+      },
+      "window": [
+        "2010-01-04 00:00:00",
+        "2025-01-08 00:00:00"
+      ]
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.4725930379502681,
+        "max_drawdown": -0.6724111795465292,
+        "n_bars": 3779,
+        "n_trades": 1,
+        "sharpe": 1.0699244352672317,
+        "sortino": 1.1118228949321804,
+        "total_return": 330.5691749661434,
+        "turnover_per_year": 0.06668430801799419,
+        "win_rate": 1.0
+      },
+      "instrument": "NVDA",
+      "n_bars": 3779,
+      "run_file": "experiments/runs/20260710T043225181964Z-5e20a59b792e.json",
+      "strategy_metrics": {
+        "cagr": 0.25551556646695883,
+        "max_drawdown": -0.5291814667037814,
+        "n_bars": 3779,
+        "n_trades": 157,
+        "sharpe": 0.948064608593343,
+        "sortino": 0.7225716924457853,
+        "total_return": 29.33467691817587,
+        "turnover_per_year": 10.469436358825087,
+        "win_rate": 0.4430379746835443
+      },
+      "window": [
+        "2010-01-04 00:00:00",
+        "2025-01-08 00:00:00"
+      ]
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.18277329617606042,
+        "max_drawdown": -0.435371916777587,
+        "n_bars": 3779,
+        "n_trades": 1,
+        "sharpe": 0.7546852072703625,
+        "sortino": 0.7683881733429755,
+        "total_return": 11.394624375794688,
+        "turnover_per_year": 0.06668430801799419,
+        "win_rate": 1.0
+      },
+      "instrument": "GOOGL",
+      "n_bars": 3779,
+      "run_file": "experiments/runs/20260710T043225252000Z-6518f54a564d.json",
+      "strategy_metrics": {
+        "cagr": 0.06873417238958512,
+        "max_drawdown": -0.29879791023559465,
+        "n_bars": 3779,
+        "n_trades": 167,
+        "sharpe": 0.4815506449464161,
+        "sortino": 0.37561877494938367,
+        "total_return": 1.709760314308491,
+        "turnover_per_year": 11.136279439005028,
+        "win_rate": 0.4642857142857143
+      },
+      "window": [
+        "2010-01-04 00:00:00",
+        "2025-01-08 00:00:00"
+      ]
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.26328655934387113,
+        "max_drawdown": -0.557692284578402,
+        "n_bars": 3779,
+        "n_trades": 1,
+        "sharpe": 0.8638800519755336,
+        "sortino": 0.8727857658651618,
+        "total_return": 32.275558046263065,
+        "turnover_per_year": 0.06668430801799419,
+        "win_rate": 1.0
+      },
+      "instrument": "AMZN",
+      "n_bars": 3779,
+      "run_file": "experiments/runs/20260710T043225324148Z-efc3f6a9e489.json",
+      "strategy_metrics": {
+        "cagr": 0.06949955078973824,
+        "max_drawdown": -0.3646875568392669,
+        "n_bars": 3779,
+        "n_trades": 178,
+        "sharpe": 0.4406749664810214,
+        "sortino": 0.32408099414661157,
+        "total_return": 1.7390080040887632,
+        "turnover_per_year": 11.869806827202964,
+        "win_rate": 0.550561797752809
+      },
+      "window": [
+        "2010-01-04 00:00:00",
+        "2025-01-08 00:00:00"
+      ]
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.2503750759881207,
+        "max_drawdown": -0.7639908308825444,
+        "n_bars": 3180,
+        "n_trades": 1,
+        "sharpe": 0.7565094998122481,
+        "sortino": 0.773033570694168,
+        "total_return": 15.770896171028816,
+        "turnover_per_year": 0.07924528301886792,
+        "win_rate": 1.0
+      },
+      "instrument": "META",
+      "n_bars": 3180,
+      "run_file": "experiments/runs/20260710T043225392630Z-79b94b811c94.json",
+      "strategy_metrics": {
+        "cagr": 0.07397087002708647,
+        "max_drawdown": -0.3777740961924465,
+        "n_bars": 3180,
+        "n_trades": 141,
+        "sharpe": 0.42919486008670016,
+        "sortino": 0.33404206140221526,
+        "total_return": 1.4609107145189113,
+        "turnover_per_year": 11.173584905660377,
+        "win_rate": 0.43661971830985913
+      },
+      "window": [
+        "2012-05-18 00:00:00",
+        "2025-01-08 00:00:00"
+      ]
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.05513217979353291,
+        "max_drawdown": -0.45324522209074203,
+        "n_bars": 3779,
+        "n_trades": 1,
+        "sharpe": 0.4288612934839662,
+        "sortino": 0.41325051095354487,
+        "total_return": 1.2361994689445917,
+        "turnover_per_year": 0.06668430801799419,
+        "win_rate": 1.0
+      },
+      "instrument": "GLD",
+      "n_bars": 3779,
+      "run_file": "experiments/runs/20260710T043225460541Z-475dbc65b9bb.json",
+      "strategy_metrics": {
+        "cagr": 0.010720495876958003,
+        "max_drawdown": -0.24936095827809446,
+        "n_bars": 3779,
+        "n_trades": 161,
+        "sharpe": 0.1659001754381678,
+        "sortino": 0.09875278075603099,
+        "total_return": 0.17340439913432149,
+        "turnover_per_year": 10.736173590897064,
+        "win_rate": 0.37037037037037035
+      },
+      "window": [
+        "2010-01-04 00:00:00",
+        "2025-01-08 00:00:00"
+      ]
+    },
+    {
+      "beats_bh_sharpe": false,
+      "benchmark_metrics": {
+        "cagr": 0.03133748206697451,
+        "max_drawdown": -0.761864757704005,
+        "n_bars": 3779,
+        "n_trades": 1,
+        "sharpe": 0.25283259990457096,
+        "sortino": 0.24404674159100437,
+        "total_return": 0.5883962288444033,
+        "turnover_per_year": 0.06668430801799419,
+        "win_rate": 1.0
+      },
+      "instrument": "SLV",
+      "n_bars": 3779,
+      "run_file": "experiments/runs/20260710T043225527174Z-0a931af91c44.json",
+      "strategy_metrics": {
+        "cagr": -0.01912104064630038,
+        "max_drawdown": -0.5351742456034729,
+        "n_bars": 3779,
+        "n_trades": 143,
+        "sharpe": -0.04262015167193269,
+        "sortino": -0.02362222042441422,
+        "total_return": -0.251374610339297,
+        "turnover_per_year": 9.535856046573167,
+        "win_rate": 0.3472222222222222
+      },
+      "window": [
+        "2010-01-04 00:00:00",
+        "2025-01-08 00:00:00"
+      ]
+    }
+  ],
+  "subject": "supertrend_flip__BTC-USD__daily",
+  "timeframe": "daily",
+  "transfer_instruments": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "GOOGL",
+    "AMZN",
+    "META",
+    "GLD",
+    "SLV"
+  ],
+  "verdict": "TRANSFER-FAILED"
+}

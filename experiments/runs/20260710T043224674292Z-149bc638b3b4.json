@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.42908207843060886,
+    "max_drawdown": -0.833830983670915,
+    "n_bars": 3767,
+    "n_trades": 1,
+    "sharpe": 0.9120554396024015,
+    "sortino": 0.923949627079613,
+    "total_return": 206.90197400349632,
+    "turnover_per_year": 0.06689673480222989,
+    "win_rate": 1.0
+  },
+  "config_hash": "149bc638b3b4",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T04:32:24+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "c70c25584843ec2af7c86cecea64bdc891fce08a",
+  "instrument": "BTC-USD",
+  "metrics": {
+    "cagr": 0.5101088394232194,
+    "max_drawdown": -0.6351893063918453,
+    "n_bars": 3767,
+    "n_trades": 45,
+    "sharpe": 1.1604835717190896,
+    "sortino": 0.9296312641977037,
+    "total_return": 473.1210015677404,
+    "turnover_per_year": 3.010353066100345,
+    "win_rate": 0.4782608695652174
+  },
+  "n_bars": 3767,
+  "notes": "p4-transfer: ema_crossover frozen from META P1 p1-trend-following-daily (top_full_period_variant); transfer instrument",
+  "params": {
+    "fast": 25,
+    "slow": 50
+  },
+  "run_id": "20260710T043224674292Z-149bc638b3b4",
+  "schema_version": 1,
+  "strategy": "ema_crossover",
+  "timeframe": "daily",
+  "variants_tried": 1
+}
