@@ -65,6 +65,24 @@
    verdict promotes anything; holdout untouched.
 8. P5 final-report prep: holdout unlock protocol + ranked report
    skeleton — ⚑ owner may want to gate the unlock.
+   **PREP DONE 2026-07-10** (gen-2, lane `p5-prep`): pre-registered
+   one-shot holdout evaluation protocol landed —
+   [docs/p5-holdout-protocol.md](../p5-holdout-protocol.md) (closed
+   13-subject list: primary AAPL-donchian 15/5 daily + 12 pre-registered
+   secondaries, params frozen verbatim from the P1 sweep JSONs, engine
+   defaults, holdout window 2025-01-09 → data end, verdict rules written
+   before any holdout number exists, owner-gated mechanical unlock steps
+   per docs/holdout-enforcement.md) — and the ranked final-report
+   skeleton with every pre-holdout section fully written —
+   [docs/final-report.md](../final-report.md) (ranked table of all
+   candidates with variants-tried denominators, the sole P2 finding, the
+   13/13 P4 transfer failures and all negative results as first-class
+   content, §Holdout deliberately empty). **REMAINING (owner-gated,
+   ⚑):** the explicit owner unlock + the one-shot holdout evaluation
+   itself, per the protocol doc — no session runs it without a new
+   owner ORDER; the holdout stayed sealed through this prep (no
+   `holdout_unlocked` marker anywhere, all ledger rows
+   `data_end ≤ 2025-01-08`).
 
 ## ⚑ Owner clicks outstanding
 See control/status.md — env setup script verification (paste-ready script now at environments/setup-universal.sh), auto-merge tick, archive the DOA successor session.
