@@ -317,3 +317,65 @@ class TestPullback:
             STRATEGIES["pullback"](random_walk, exit_len=1)
         with pytest.raises(ValueError, match="trend_len"):
             STRATEGIES["pullback"](random_walk, trend_len=-1)
+
+
+class TestVolFilteredTrend:
+    def test_filter_off_equals_plain_sma_crossover(self, random_walk):
+        plain = STRATEGIES["sma_crossover"](random_walk, fast=10, slow=30)
+        off = STRATEGIES["vol_filtered_trend"](random_walk, fast=10, slow=30,
+                                               vol_filter=False)
+        pd.testing.assert_series_equal(plain, off)
+
+    def test_warmup_flat_until_filter_defined(self):
+        # With the filter ON, positions must stay flat until BOTH the slow
+        # SMA and the vol median are defined (ambiguity resolves against the
+        # strategy). Warm-up here: 5 (vol incl. pct_change NaN) + 19 more
+        # bars for the 20-bar median -> first definable bar is iloc[24].
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        pos = STRATEGIES["vol_filtered_trend"](up, fast=5, slow=10,
+                                               vol_window=5, med_window=20)
+        assert (pos.iloc[:24] == 0.0).all()
+
+    def test_long_in_calm_uptrend(self):
+        # Smooth uptrend: realized vol is (near-)constant, but with strictly
+        # convergent linspace returns the trailing median sits above the
+        # newest vol about half the time; use decaying noise so late vol is
+        # clearly below its trailing median while the trend is up.
+        rng = np.random.default_rng(7)
+        n = 160
+        drift = np.linspace(100, 200, n)
+        noise = rng.normal(0.0, 1.0, n) * np.linspace(3.0, 0.1, n)
+        ohlcv = make_ohlcv(drift + noise)
+        pos = STRATEGIES["vol_filtered_trend"](ohlcv, fast=5, slow=10,
+                                               vol_window=5, med_window=20)
+        assert (pos.iloc[-25:] == 1.0).all()
+
+    def test_high_vol_regime_blocks_uptrend_entry(self):
+        # Uptrend whose volatility EXPANDS: recent vol ends up above its
+        # trailing median, so the filter must veto the (still bullish)
+        # crossover; the filter-off arm stays long.
+        rng = np.random.default_rng(11)
+        n = 160
+        drift = np.linspace(100, 200, n)
+        noise = rng.normal(0.0, 1.0, n) * np.linspace(0.1, 6.0, n)
+        ohlcv = make_ohlcv(drift + noise)
+        on = STRATEGIES["vol_filtered_trend"](ohlcv, fast=5, slow=40,
+                                              vol_window=5, med_window=20)
+        off = STRATEGIES["vol_filtered_trend"](ohlcv, fast=5, slow=40,
+                                               vol_filter=False)
+        assert (off.iloc[60:] == 1.0).mean() > 0.9   # trend arm is long
+        assert (on.iloc[60:] == 0.0).mean() > 0.5    # filter vetoes often
+
+    def test_flat_in_downtrend(self):
+        down = make_ohlcv(np.linspace(200, 100, 160))
+        pos = STRATEGIES["vol_filtered_trend"](down, fast=5, slow=10,
+                                               vol_window=5, med_window=20)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="fast"):
+            STRATEGIES["vol_filtered_trend"](random_walk, fast=50, slow=20)
+        with pytest.raises(ValueError, match="vol_window"):
+            STRATEGIES["vol_filtered_trend"](random_walk, vol_window=1)
+        with pytest.raises(ValueError, match="med_window"):
+            STRATEGIES["vol_filtered_trend"](random_walk, med_window=1)

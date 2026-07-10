@@ -181,3 +181,56 @@ def mean_reversion_variants_per_family() -> dict[str, int]:
 def mean_reversion_total_variants() -> int:
     """Total distinct configurations in the mean-reversion sweep."""
     return sum(mean_reversion_variants_per_family().values())
+
+
+# ---------------------------------------------------------------------------
+# Round 2 slice R1: vol_filtered_trend (lane: r2-vol_filtered_trend × 4 × daily)
+# ---------------------------------------------------------------------------
+# Grid frozen by the pre-registration (docs/research-round-2.md §3a) — any
+# change requires a committed amendment to that doc BEFORE running:
+# fast ∈ {10, 20}, slow ∈ {50, 100, 200} with fast < slow, filter ∈ {on, off}
+# → 12 variants/instrument × 4 instruments = 48 registered configs. The
+# vol-filter windows (20-bar realized vol vs its trailing 252-bar median)
+# are frozen in the strategy's defaults and are NOT swept.
+
+_R2_VOL_TREND_AXES: dict[str, dict[str, list]] = {
+    "vol_filtered_trend": {"fast": [10, 20],
+                           "slow": [50, 100, 200],
+                           "vol_filter": [True, False]},
+}
+
+_R2_VOL_TREND_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "vol_filtered_trend": lambda p: p["fast"] < p["slow"],
+}
+
+R2_VOL_TREND_FAMILIES = tuple(_R2_VOL_TREND_AXES)
+
+# Instruments frozen by the pre-registration (§3a).
+R2_VOL_TREND_INSTRUMENTS = ("AAPL", "MSFT", "NVDA", "GLD")
+
+
+def r2_vol_trend_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-2 R1 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R2_VOL_TREND_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R1 family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R2_VOL_TREND_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r2_vol_trend_variants_per_family() -> dict[str, int]:
+    """R1 variant counts by family (multiple-testing bookkeeping)."""
+    return {fam: len(r2_vol_trend_variants(fam))
+            for fam in R2_VOL_TREND_FAMILIES}
+
+
+def r2_vol_trend_total_configs() -> int:
+    """Total registered R1 configs: variants × instruments (Round-2
+    accounting counts each instrument × grid point as one config — the
+    pre-registration's 48)."""
+    return (sum(r2_vol_trend_variants_per_family().values())
+            * len(R2_VOL_TREND_INSTRUMENTS))
