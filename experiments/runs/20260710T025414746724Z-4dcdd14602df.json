@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.4725930379502681,
+    "max_drawdown": -0.6724111795465292,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 1.0699244352672317,
+    "sortino": 1.1118228949321804,
+    "total_return": 330.5691749661434,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "4dcdd14602df",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T02:54:14+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "880a31592ee85600d386cc960a99254f9da3af97",
+  "instrument": "NVDA",
+  "metrics": {
+    "cagr": 0.2436242243407083,
+    "max_drawdown": -0.5267000503704544,
+    "n_bars": 3779,
+    "n_trades": 650,
+    "sharpe": 0.8186606248488575,
+    "sortino": 0.6912725408063938,
+    "total_return": 25.3003691538495,
+    "turnover_per_year": 43.34480021169622,
+    "win_rate": 0.676923076923077
+  },
+  "n_bars": 3779,
+  "notes": "P1 mean-reversion sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-mean-reversion-daily/rsi_mean_reversion__NVDA.json)",
+  "params": {
+    "overbought": 70,
+    "oversold": 30,
+    "period": 2
+  },
+  "run_id": "20260710T025414746724Z-4dcdd14602df",
+  "schema_version": 1,
+  "strategy": "rsi_mean_reversion",
+  "timeframe": "daily",
+  "variants_tried": 48
+}

@@ -125,3 +125,59 @@ def video_variants_per_family() -> dict[str, int]:
 def video_total_variants() -> int:
     """Total distinct configurations in the video-strategy sweep."""
     return sum(video_variants_per_family().values())
+
+# ---------------------------------------------------------------------------
+# P1 mean-reversion family (lane: mean-reversion × all-8 × daily)
+# ---------------------------------------------------------------------------
+# Three sub-families: RSI-threshold reversion (the P0 baseline strategy,
+# reused — periods bracket the classic Wilder 14 and the short-horizon 2/3
+# of the Connors literature), Bollinger/z-score band reversion, and
+# short-horizon pullback entries with and without a long-term trend filter
+# (trend_len=0 disables the filter). Kept bounded on purpose: every extra
+# variant raises the multiple-testing burden on any winner. Mean-reversion
+# trades often — the grids deliberately include slower exits so the sweep can
+# see whether turnover/costs are the binding constraint.
+
+_MEAN_REVERSION_AXES: dict[str, dict[str, list]] = {
+    "rsi_mean_reversion": {"period": [2, 3, 5, 14],
+                           "oversold": [10, 20, 25, 30],
+                           "overbought": [50, 60, 70]},
+    "bollinger_reversion": {"lookback": [10, 15, 20, 30],
+                            "z_entry": [1.0, 1.5, 2.0, 2.5],
+                            "z_exit": [0.0, 0.5, 1.0]},
+    "pullback": {"entry_lookback": [3, 5, 7, 10],
+                 "exit_len": [3, 5, 7, 10],
+                 "trend_len": [0, 100, 200]},
+}
+
+_MEAN_REVERSION_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "rsi_mean_reversion": lambda p: p["oversold"] < p["overbought"],
+    "bollinger_reversion": lambda p: p["z_exit"] > -p["z_entry"],
+    "pullback": lambda p: True,
+}
+
+MEAN_REVERSION_FAMILIES = tuple(_MEAN_REVERSION_AXES)
+
+
+def mean_reversion_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a mean-reversion ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _MEAN_REVERSION_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown mean-reversion family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _MEAN_REVERSION_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def mean_reversion_variants_per_family() -> dict[str, int]:
+    """Mean-reversion variant counts by family (multiple-testing bookkeeping)."""
+    return {fam: len(mean_reversion_variants(fam))
+            for fam in MEAN_REVERSION_FAMILIES}
+
+
+def mean_reversion_total_variants() -> int:
+    """Total distinct configurations in the mean-reversion sweep."""
+    return sum(mean_reversion_variants_per_family().values())

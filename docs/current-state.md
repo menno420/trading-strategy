@@ -18,13 +18,21 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Verify against live source control — this section is a dated snapshot.)
 
-- Branch `claude/p1-trend-following-daily`: P1 sweep, lane
-  `trend-following__all8__daily` (claim in `claims/`).
+- Nothing at the moment — the mean-reversion lane below merged with its
+  claim deleted (the stale trend-lane entry is long merged); next per
+  QUEUE § Next: trend × hourly.
 
 ## Recently shipped (newest first)
 
 (Merged work only, newest first.)
 
+- P1 mean-reversion sweep (2026-07-10): 3 sub-families (RSI-threshold,
+  Bollinger/z-score band reversion, short-horizon pullback ± trend filter),
+  144 variants × 8 tickers × daily, walk-forward OOS vs buy-and-hold —
+  results and honest read in
+  [p1-mean-reversion-results.md](p1-mean-reversion-results.md); 3/24 lanes
+  beat B&H (the negative result is the headline), GOOGL-pullback /
+  META-rsi / META-pullback carried to P2 as candidates only.
 - P1 video-strategy sweep (2026-07-10): three competing interpretations of
   the DaviddTech video's under-specified rules (SuperTrend-flip,
   MACD-cross + SuperTrend/EMA, dual-EMA control), 92 variants × BTC-USD ×

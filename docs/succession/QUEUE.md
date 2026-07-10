@@ -17,7 +17,14 @@
    variants × BTC-USD × daily, walk-forward OOS vs B&H — see
    `docs/p1-video-strategy-results.md`; dual-EMA control negative-complete,
    supertrend_flip / macd_supertrend carried to P2 as candidates.
-   2. Mean-reversion × daily sweep. 3. Trend × hourly. 4. P2 validation of AAPL-donchian + META-trend candidates. 5. Holdout enforcement hardening. 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over, still undone).
+2. Mean-reversion × daily sweep. **DONE 2026-07-10** (gen-2, lane
+   `mean-reversion__all8__daily`): 3 sub-families (RSI-threshold,
+   Bollinger/z-score band reversion, pullback ± trend filter) × 144
+   variants × 8 tickers × daily, walk-forward OOS vs B&H — see
+   `docs/p1-mean-reversion-results.md`; 3/24 lanes beat B&H (the negative
+   result is the headline), GOOGL-pullback / META-rsi / META-pullback
+   carried to P2 as candidates only.
+   3. Trend × hourly. 4. P2 validation of AAPL-donchian + META-trend candidates (plus the mean-reversion candidates from item 2). 5. Holdout enforcement hardening. 6. Port PR-lifecycle conventions into docs/collaboration-model.md (carried over, still undone).
 
 ## ⚑ Owner clicks outstanding
 See control/status.md — env setup script verification (paste-ready script now at environments/setup-universal.sh), auto-merge tick, archive the DOA successor session.

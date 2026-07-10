@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.05513217979353291,
+    "max_drawdown": -0.45324522209074203,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.4288612934839662,
+    "sortino": 0.41325051095354487,
+    "total_return": 1.2361994689445917,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "8c2581996f89",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T02:55:13+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "880a31592ee85600d386cc960a99254f9da3af97",
+  "instrument": "GLD",
+  "metrics": {
+    "cagr": 0.013812196226662632,
+    "max_drawdown": -0.15990120238042005,
+    "n_bars": 3779,
+    "n_trades": 310,
+    "sharpe": 0.2302931858258852,
+    "sortino": 0.11948861565089632,
+    "total_return": 0.22839780496328133,
+    "turnover_per_year": 20.672135485578195,
+    "win_rate": 0.6258064516129033
+  },
+  "n_bars": 3779,
+  "notes": "P1 mean-reversion sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-mean-reversion-daily/pullback__GLD.json)",
+  "params": {
+    "entry_lookback": 5,
+    "exit_len": 5,
+    "trend_len": 100
+  },
+  "run_id": "20260710T025513716491Z-8c2581996f89",
+  "schema_version": 1,
+  "strategy": "pullback",
+  "timeframe": "daily",
+  "variants_tried": 48
+}

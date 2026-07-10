@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2734335609408409,
+    "max_drawdown": -0.44190221764923054,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9770349722730817,
+    "sortino": 0.9660426622264756,
+    "total_return": 36.516973629033615,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "13d31fcac9b7",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T02:53:55+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "880a31592ee85600d386cc960a99254f9da3af97",
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.10438157387468228,
+    "max_drawdown": -0.21809247624353323,
+    "n_bars": 3779,
+    "n_trades": 579,
+    "sharpe": 0.7089936452408989,
+    "sortino": 0.4839578147865405,
+    "total_return": 3.432167577715921,
+    "turnover_per_year": 38.61021434241863,
+    "win_rate": 0.7206896551724138
+  },
+  "n_bars": 3779,
+  "notes": "P1 mean-reversion sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-mean-reversion-daily/pullback__AAPL.json)",
+  "params": {
+    "entry_lookback": 3,
+    "exit_len": 5,
+    "trend_len": 200
+  },
+  "run_id": "20260710T025355956516Z-13d31fcac9b7",
+  "schema_version": 1,
+  "strategy": "pullback",
+  "timeframe": "daily",
+  "variants_tried": 48
+}

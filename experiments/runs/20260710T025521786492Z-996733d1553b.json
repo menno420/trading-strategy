@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.03133748206697451,
+    "max_drawdown": -0.761864757704005,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.25283259990457096,
+    "sortino": 0.24404674159100437,
+    "total_return": 0.5883962288444033,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "996733d1553b",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T02:55:21+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "880a31592ee85600d386cc960a99254f9da3af97",
+  "instrument": "SLV",
+  "metrics": {
+    "cagr": 0.06411639991234352,
+    "max_drawdown": -0.6230478658218053,
+    "n_bars": 3779,
+    "n_trades": 155,
+    "sharpe": 0.41865191739502755,
+    "sortino": 0.2789182087491283,
+    "total_return": 1.5393931723482734,
+    "turnover_per_year": 10.336067742789098,
+    "win_rate": 0.6923076923076923
+  },
+  "n_bars": 3779,
+  "notes": "P1 mean-reversion sweep: top full-dev-period variant of 48 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS finding lives in experiments/sweeps/p1-mean-reversion-daily/bollinger_reversion__SLV.json)",
+  "params": {
+    "lookback": 20,
+    "z_entry": 1.5,
+    "z_exit": 1.0
+  },
+  "run_id": "20260710T025521786492Z-996733d1553b",
+  "schema_version": 1,
+  "strategy": "bollinger_reversion",
+  "timeframe": "daily",
+  "variants_tried": 48
+}
