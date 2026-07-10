@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.0654220120715483,
+    "max_drawdown": -0.3403103861055259,
+    "n_bars": 376,
+    "n_trades": 1,
+    "sharpe": 0.35774761429822316,
+    "sortino": 0.400539897143637,
+    "total_return": 0.09916798897865253,
+    "turnover_per_year": 0.6702127659574468,
+    "win_rate": 1.0
+  },
+  "config_hash": "577ed236b6d1",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T16:47:05+00:00",
+  "data_end": "2026-07-10 00:00:00",
+  "data_start": "2025-01-08 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4070a9b85e7b65fe9292fe434db64f8209959422",
+  "holdout_unlocked": true,
+  "instrument": "META",
+  "metrics": {
+    "cagr": -0.13829901128198763,
+    "max_drawdown": -0.3379044247587959,
+    "n_bars": 376,
+    "n_trades": 6,
+    "sharpe": -0.5401291738784737,
+    "sortino": -0.3661660327780162,
+    "total_return": -0.19915599324834354,
+    "turnover_per_year": 4.0212765957446805,
+    "win_rate": 0.3333333333333333
+  },
+  "n_bars": 376,
+  "notes": "P5 one-shot holdout evaluation (ORDER 008; binding protocol docs/p5-holdout-protocol.md, subject S3 SECONDARY). Params frozen verbatim from experiments/sweeps/p1-trend-following-daily/donchian__META.json (top_full_period_variant), verified at run time. Scored window 2025-01-10 00:00:00 -> 2026-07-10 00:00:00; data_start is one pre-window warm-in bar (zero return/zero cost by engine construction) so the position decided on the last dev bar fills at the first window open (protocol \u00a74). Benchmark B&H on the identical slice. Data: data/p5holdout/ (fresh fetch, standard path).",
+  "params": {
+    "entry": 55,
+    "exit": 55
+  },
+  "run_id": "20260710T164705763292Z-577ed236b6d1",
+  "schema_version": 1,
+  "strategy": "donchian",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

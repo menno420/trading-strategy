@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.20323777480757288,
+    "max_drawdown": -0.3066533045542761,
+    "n_bars": 376,
+    "n_trades": 1,
+    "sharpe": 0.7403492494393099,
+    "sortino": 0.762116712544901,
+    "total_return": 0.31792129920406564,
+    "turnover_per_year": 0.6702127659574468,
+    "win_rate": 1.0
+  },
+  "config_hash": "45c47f3e9649",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T16:47:05+00:00",
+  "data_end": "2026-07-10 00:00:00",
+  "data_start": "2025-01-08 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4070a9b85e7b65fe9292fe434db64f8209959422",
+  "holdout_unlocked": true,
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.0893096145779988,
+    "max_drawdown": -0.1176254260216062,
+    "n_bars": 376,
+    "n_trades": 17,
+    "sharpe": 0.7594843279323369,
+    "sortino": 0.5128385470919156,
+    "total_return": 0.13614079301305781,
+    "turnover_per_year": 11.393617021276595,
+    "win_rate": 0.6666666666666666
+  },
+  "n_bars": 376,
+  "notes": "P5 one-shot holdout evaluation (ORDER 008; binding protocol docs/p5-holdout-protocol.md, subject P PRIMARY). Params frozen verbatim from experiments/sweeps/p1-trend-following-daily/donchian__AAPL.json (top_full_period_variant), verified at run time. Scored window 2025-01-10 00:00:00 -> 2026-07-10 00:00:00; data_start is one pre-window warm-in bar (zero return/zero cost by engine construction) so the position decided on the last dev bar fills at the first window open (protocol \u00a74). Benchmark B&H on the identical slice. Data: data/p5holdout/ (fresh fetch, standard path).",
+  "params": {
+    "entry": 15,
+    "exit": 5
+  },
+  "run_id": "20260710T164705692772Z-45c47f3e9649",
+  "schema_version": 1,
+  "strategy": "donchian",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

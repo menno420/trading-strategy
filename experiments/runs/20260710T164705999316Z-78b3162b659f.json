@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.06801078042296504,
+    "max_drawdown": -0.3261219326338719,
+    "n_bars": 2602,
+    "n_trades": 1,
+    "sharpe": 0.3620224569874423,
+    "sortino": 0.3754557057754509,
+    "total_return": 0.11017909194537889,
+    "turnover_per_year": 0.6295157571099155,
+    "win_rate": 1.0
+  },
+  "config_hash": "78b3162b659f",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T16:47:05+00:00",
+  "data_end": "2026-07-10 16:30:00",
+  "data_start": "2025-01-08 20:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4070a9b85e7b65fe9292fe434db64f8209959422",
+  "holdout_unlocked": true,
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": -0.0008909183813724519,
+    "max_drawdown": -0.2674821590901928,
+    "n_bars": 2602,
+    "n_trades": 32,
+    "sharpe": 0.11292750736261864,
+    "sortino": 0.09486085747186547,
+    "total_return": -0.0014148729036704832,
+    "turnover_per_year": 20.144504227517295,
+    "win_rate": 0.25
+  },
+  "n_bars": 2602,
+  "notes": "P5 one-shot holdout evaluation (ORDER 008; binding protocol docs/p5-holdout-protocol.md, subject S11 SECONDARY). Params frozen verbatim from experiments/sweeps/p1-trend-hourly/donchian__AMZN.json (top_full_period_variant), verified at run time. Scored window 2025-01-10 14:30:00 -> 2026-07-10 16:30:00; data_start is one pre-window warm-in bar (zero return/zero cost by engine construction) so the position decided on the last dev bar fills at the first window open (protocol \u00a74). Benchmark B&H on the identical slice. Data: data/p5holdout/ (fresh fetch, standard path).",
+  "params": {
+    "entry": 40,
+    "exit": 40
+  },
+  "run_id": "20260710T164705999316Z-78b3162b659f",
+  "schema_version": 1,
+  "strategy": "donchian",
+  "timeframe": "hourly",
+  "variants_tried": 1
+}

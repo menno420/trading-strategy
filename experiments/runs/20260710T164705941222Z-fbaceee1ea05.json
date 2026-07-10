@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.4634381664873388,
+    "max_drawdown": -0.3085261554125701,
+    "n_bars": 2602,
+    "n_trades": 1,
+    "sharpe": 1.322014676004794,
+    "sortino": 1.3549963726193046,
+    "total_return": 0.8310530786239452,
+    "turnover_per_year": 0.6295157571099155,
+    "win_rate": 1.0
+  },
+  "config_hash": "fbaceee1ea05",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-10T16:47:05+00:00",
+  "data_end": "2026-07-10 16:30:00",
+  "data_start": "2025-01-08 20:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4070a9b85e7b65fe9292fe434db64f8209959422",
+  "holdout_unlocked": true,
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.3194501626233641,
+    "max_drawdown": -0.18616024486196325,
+    "n_bars": 2602,
+    "n_trades": 44,
+    "sharpe": 1.185952193637317,
+    "sortino": 0.9761275865412479,
+    "total_return": 0.5532701121695283,
+    "turnover_per_year": 27.69869331283628,
+    "win_rate": 0.36363636363636365
+  },
+  "n_bars": 2602,
+  "notes": "P5 one-shot holdout evaluation (ORDER 008; binding protocol docs/p5-holdout-protocol.md, subject S9 SECONDARY). Params frozen verbatim from experiments/sweeps/p1-trend-hourly/ema_crossover__GOOGL.json (top_full_period_variant), verified at run time. Scored window 2025-01-10 14:30:00 -> 2026-07-10 16:30:00; data_start is one pre-window warm-in bar (zero return/zero cost by engine construction) so the position decided on the last dev bar fills at the first window open (protocol \u00a74). Benchmark B&H on the identical slice. Data: data/p5holdout/ (fresh fetch, standard path).",
+  "params": {
+    "fast": 20,
+    "slow": 50
+  },
+  "run_id": "20260710T164705941222Z-fbaceee1ea05",
+  "schema_version": 1,
+  "strategy": "ema_crossover",
+  "timeframe": "hourly",
+  "variants_tried": 1
+}
