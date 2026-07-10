@@ -1,8 +1,8 @@
 # 2026-07-10 — P2 walk-forward validation of open candidates (QUEUE item 4)
 
-> **Status:** `complete` — heartbeat phase landed (claim + card, READY PR,
-> merge on green); P2 validation work continues via amendments to this card
-> or a follow-up card (wind-down-card precedent).
+> **Status:** `complete` — full session closed: heartbeat (claim + card,
+> PR #20), P2 validation of all 14 candidates (PR #21, merged 19f9a5c), and
+> this wrap-up (status overwrite + claim released). Lane closed.
 
 📊 Model: withheld per session policy · p2-validation lane · start 2026-07-10T03:27:58Z
 
@@ -53,17 +53,33 @@ loader for Yahoo (proxy workaround implemented in src/trading_lab/data.py).
   rows, index regenerated, `docs/p2-validation-results.md` + QUEUE item 4
   DONE. Holdout untouched.
 
-## Close-out (heartbeat phase)
+## Close-out (full session)
 
-**Done:** heartbeat/skeleton — lane claim + this card, READY PR, tests +
-substrate-gate on green. No analysis code run; no backtests in this phase.
+**Done:** all three phases of the session —
 
-**Next (guard recipe):** P2 validation phase lands as an amendment to this
-card or a follow-up card on a NEW branch off updated main: for each candidate
-above, regime-diverse re-validation outside the P1 selection window
-(consumed windows are recorded in the P1 results docs and
-`experiments/sweeps/*/<family>__<ticker>.json`), deflated-Sharpe accounting
-against the recorded variants_tried, untuned-instrument transfer checks;
-results doc `docs/p2-validation-results.md` (badged + linked from a
-reachable doc), ledger runs per validated candidate, claim deleted + QUEUE
-item 4 marked DONE in the lane PR. Holdout stays untouched.
+1. Heartbeat/skeleton (PR #20): lane claim `claims/p2-validation.md` + this
+   card, READY PR, tests + substrate-gate green, landed on green.
+2. P2 validation (PR #21, merged as main `19f9a5c`): verdicts for all 14
+   open candidates with params frozen from the P1 sweep JSONs — 1
+   PROMOTED-TO-FINDING (AAPL-donchian daily, entry=15/exit=5, pre-2010
+   window Sharpe 0.619 vs B&H 0.540), 1 KILLED (GOOGL-pullback daily,
+   Sharpe 0.256 vs B&H 1.054), 12 UNVALIDATABLE-PRE-HOLDOUT (structural
+   data exhaustion — P1 consumed every pre-holdout bar in their
+   timeframes). Full read: `docs/p2-validation-results.md`. 2 ledger rows,
+   index regenerated, QUEUE item 4 marked DONE. Holdout untouched.
+3. Wrap-up (this PR, branch `p2-validation-wrapup`): inbox re-read at HEAD
+   (no orders newer than ORDER 005), this card flipped to full-session
+   close-out, claim `claims/p2-validation.md` deleted (lane closed),
+   `control/status.md` overwritten.
+
+**Verify:** `python3 bootstrap.py check --strict --require-session-log
+--session-log .sessions/2026-07-10-p2-validation.md` → exit 0;
+`python3 -m pytest -q` green at PR #21.
+
+**Next (guard recipe):** standing default resumes at QUEUE.md § Next item 5
+(holdout enforcement hardening: segregate `data/holdout/`, gate check on
+holdout reads, enforce `data_end ≤ HOLDOUT_START` in every ledger row),
+then item 6 (port PR-lifecycle conventions into
+`docs/collaboration-model.md`). New session = new claim + new card.
+
+Session end: 2026-07-10T03:42:56Z. Badge stays `complete`.
