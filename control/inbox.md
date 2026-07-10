@@ -60,3 +60,9 @@ variants-tried counted — negative counts as done); control/status.md
 overwritten with orders: acked=001 (= this ORDER 005), a next-update-by
 line, and ⚑ items if any. Standing default thereafter: QUEUE.md § Next,
 top to bottom.
+
+## ORDER 006 · 2026-07-10T11:16:01Z · status: new
+priority: P1
+do: SELF-ARM YOUR WAKE ROUTINE. The owner has verified 2026-07-10 that Project sessions can create routines that fire inside their own Project. Create yours: cadence every 4 hours, prompt: 'Read control/inbox.md at HEAD and run the standing ritual from your instructions.' Record in control/status.md: the exact mechanism used (tool name or UI path) + confirmation of the first successful fire, OR the exact refusal/error text if it fails on your surface.
+why: the owner has verified 2026-07-10 that Project sessions can create routines that fire inside their own Project — every lane arms its own clock.
+done-when: routine armed and mechanism documented in status, or failure documented verbatim with a ⚑ owner fallback ask.
