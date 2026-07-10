@@ -1,9 +1,9 @@
 # 2026-07-10 — holdout enforcement hardening + collaboration-model port (QUEUE items 5+6)
 
-> **Status:** `complete` — heartbeat phase landed (claim + card, READY PR,
-> merge on green); the session itself is in progress — lane work (QUEUE
-> items 5 and 6) continues via amendments to this card or follow-up PRs
-> (wind-down-card precedent).
+> **Status:** `complete` — full session closed: heartbeat (claim + card,
+> PR #23), holdout enforcement hardening (PR #24, QUEUE item 5),
+> collaboration-model port (PR #25, QUEUE item 6), and this wrap-up
+> (status overwrite + claim released). Lane closed.
 
 📊 Model: withheld per session policy · holdout-collab lane · start 2026-07-10T03:50:19Z
 
@@ -67,13 +67,36 @@ agents; use the data loader for Yahoo (proxy workaround in
   hangs to Bash timeout, exit 143 — poll checks via the GitHub MCP
   instead).
 
-## Close-out (heartbeat phase)
+## Close-out (full session)
 
-**Done:** lane claim + this card landed via READY PR with tests +
-substrate-gate green. Lane work (QUEUE items 5 and 6) follows in this
-session's next PRs; this card flips to a full-session close-out when the
-lane closes (claim deleted at close).
+**Done:** all four phases of the session —
 
-**Next (guard recipe):** QUEUE item 5 implementation (holdout hardening),
-then item 6 (`docs/collaboration-model.md`), then wrap-up PR: card
-close-out, claim release, `control/status.md` overwrite.
+1. Heartbeat/skeleton (PR #23): lane claim `claims/holdout-collab.md` +
+   this card, READY PR, tests + substrate-gate green, landed on green.
+2. Holdout enforcement hardening (PR #24, QUEUE item 5): ledger guard —
+   `build_record` and the `write_run` choke point raise on any
+   `data_end >= HOLDOUT_START` unless `holdout_unlocked=True` stamps a
+   visible marker (P5-only); CI audit test over every
+   `experiments/index.jsonl` row and every `experiments/runs/*.json`;
+   loader edge cases pinned in 3 new tests; contract doc
+   `docs/holdout-enforcement.md` (`binding`) linked from founding-plan.
+   QUEUE item 5 marked DONE.
+3. Collaboration-model port (PR #25, QUEUE item 6): "PR lifecycle (as
+   practiced)" + "Session lifecycle around PRs (as practiced)" sections in
+   `docs/collaboration-model.md`, verified against merged PRs #14–#24;
+   NEXT-BOOT wall appended for the curl check-runs hang (poll via the
+   GitHub MCP instead). QUEUE item 6 marked DONE.
+4. Wrap-up (this PR, branch `wrapup-holdout-collab`): inbox re-read at
+   HEAD 4924a1b (no orders newer than ORDER 005), this card flipped to
+   full-session close-out, claim `claims/holdout-collab.md` deleted (lane
+   closed), `control/status.md` overwritten.
+
+**Verify:** `python3 bootstrap.py check --strict --require-session-log
+--session-log .sessions/2026-07-10-holdout-collab.md` → exit 0;
+`python3 -m pytest` — 133 passed at PR #25.
+
+**Next (guard recipe):** QUEUE.md § Next is exhausted (items 1–6 all
+DONE). Next session pulls direction from NEXT-BOOT / the inbox; new
+session = new claim + new card.
+
+Session end: 2026-07-10T04:16:42Z. Badge stays `complete`.
