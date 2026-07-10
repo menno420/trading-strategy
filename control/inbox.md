@@ -66,3 +66,30 @@ priority: P1
 do: SELF-ARM YOUR WAKE ROUTINE. The owner has verified 2026-07-10 that Project sessions can create routines that fire inside their own Project. Create yours: cadence every 4 hours, prompt: 'Read control/inbox.md at HEAD and run the standing ritual from your instructions.' Record in control/status.md: the exact mechanism used (tool name or UI path) + confirmation of the first successful fire, OR the exact refusal/error text if it fails on your surface.
 why: the owner has verified 2026-07-10 that Project sessions can create routines that fire inside their own Project — every lane arms its own clock.
 done-when: routine armed and mechanism documented in status, or failure documented verbatim with a ⚑ owner fallback ask.
+
+## ORDER 007 · 2026-07-10T12:47:35Z · status: new
+priority: P1
+do: PROMOTION-SIGNIFICANCE BAR — before ANY holdout use. (1) Add the founding
+plan's own preferred deflated-Sharpe (or an equivalent explicit significance
+test, e.g. a minimum t-stat on the Sharpe delta) to the promotion rule in
+code: a candidate PROMOTES only if it beats buy-and-hold net of costs AND
+clears the significance bar; below the bar the honest label is RULE-PASS /
+candidate, not PROMOTED-TO-FINDING. The current rule contains no statistics
+at all, so any positive delta promotes. (2) Re-grade the AAPL-donchian 15/5
+promotion under the new bar, honestly: its edge is +0.079 Sharpe against a
+standard error of ~0.19 at that horizon — ~0.4 standard errors, deep inside
+noise — and your own P4 transfer result (13/13 FAIL) already argues against
+it. Expected outcome: DEMOTE to candidate; if the math genuinely says
+otherwise, show the computation in the ledger. (3) Ledger the re-grade as a
+first-class entry (what the rule was, what it becomes, what the re-grade
+concluded and why), and update any doc/status line that still calls
+AAPL-donchian a promoted finding. Context: night-review Q3 (fleet-manager
+docs/findings/night-review-2026-07-10.md) — the one-shot holdout is the
+repo's single most valuable pre-registered asset; it must not be spent on a
+candidate that has never cleared a significance test.
+why: the promotion label currently overstates the finding — calibrated to
+mechanical rule-compliance, not statistical reality; the missing bar is the
+founding plan's own stated preference, computed nowhere in the repo.
+done-when: significance rule coded (with a test) + AAPL-donchian re-graded
+under it + the re-grade ledgered + control/status.md acks 007. The P5
+holdout stays SEALED throughout — this order gates, it does not spend.
