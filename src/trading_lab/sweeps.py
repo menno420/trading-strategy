@@ -283,3 +283,59 @@ def r2_keltner_total_configs() -> int:
     pre-registration's 24)."""
     return (sum(r2_keltner_variants_per_family().values())
             * len(R2_KELTNER_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 2 slice R3: xsec_momentum (lane: r2-xsec_momentum × 9-basket × daily)
+# ---------------------------------------------------------------------------
+# Grid frozen by the pre-registration (docs/research-round-2.md §3c) — any
+# change requires a committed amendment to that doc BEFORE running:
+# L ∈ {63, 126, 252}, k ∈ {2, 3} → 6 registered configs. First
+# PORTFOLIO-level lane: each config is ONE portfolio rule over all 9 cached
+# daily instruments, so configs = grid points (NOT × instruments). The
+# 21-bar rebalance interval is frozen in the pre-registration and NOT swept.
+
+_R2_XSEC_AXES: dict[str, dict[str, list]] = {
+    "xsec_momentum": {"L": [63, 126, 252], "k": [2, 3]},
+}
+
+_R2_XSEC_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "xsec_momentum": lambda p: True,
+}
+
+R2_XSEC_FAMILIES = tuple(_R2_XSEC_AXES)
+
+# All 9 cached daily instruments (pre-reg §1, §3c), alphabetical — the
+# column order of the aligned panel (also the deterministic ranking
+# tie-break order in strategies/xsec_momentum.py).
+R2_XSEC_INSTRUMENTS = ("AAPL", "AMZN", "BTC-USD", "GLD", "GOOGL", "META",
+                       "MSFT", "NVDA", "SLV")
+
+# Frozen by the pre-registration (§3c): rebalance every 21 bars. Not swept.
+R2_XSEC_REBALANCE_EVERY = 21
+
+
+def r2_xsec_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-2 R3 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R2_XSEC_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R3 family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R2_XSEC_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r2_xsec_variants_per_family() -> dict[str, int]:
+    """R3 variant counts by family (multiple-testing bookkeeping)."""
+    return {fam: len(r2_xsec_variants(fam))
+            for fam in R2_XSEC_FAMILIES}
+
+
+def r2_xsec_total_configs() -> int:
+    """Total registered R3 configs. Portfolio lane: ONE config per grid
+    point over the whole 9-instrument basket (the pre-registration's 6) —
+    unlike R1/R2, instruments do NOT multiply the count."""
+    return sum(r2_xsec_variants_per_family().values())

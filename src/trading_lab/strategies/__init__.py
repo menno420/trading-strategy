@@ -22,7 +22,14 @@ Families:
   vol_filtered_trend (slice R1 — SMA crossover gated by a realized-vol
   calm-regime filter; the filter-off arm is the within-family baseline);
   keltner_breakout (slice R2 — long on close > EMA(n) + m*ATR(n), exit on
-  close < EMA(n)).
+  close < EMA(n)); xsec_momentum (slice R3 — cross-sectional momentum
+  PORTFOLIO over the 9-instrument basket; different interface, see below).
+
+Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
+closes (one column per instrument) and return a target-weight DataFrame
+for ``trading_lab.portfolio.run_portfolio_backtest`` — they do NOT fit the
+single-instrument ``generate(ohlcv, **params) -> pd.Series`` interface and
+are deliberately kept out of ``STRATEGIES``.
 """
 
 from __future__ import annotations
@@ -30,7 +37,7 @@ from __future__ import annotations
 from . import (bollinger_reversion, buy_and_hold, donchian, ema_crossover,
                keltner_breakout, macd, macd_supertrend, pullback,
                rsi_mean_reversion, sma_crossover, supertrend_flip,
-               vol_filtered_trend)
+               vol_filtered_trend, xsec_momentum)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -85,10 +92,21 @@ R2_VOL_TREND_FAMILY = ["vol_filtered_trend"]
 # in the r2-keltner_breakout × {BTC-USD, META, AMZN, SLV} × daily lane.
 R2_KELTNER_FAMILY = ["keltner_breakout"]
 
-__all__ = ["STRATEGIES", "DEFAULT_PARAMS", "TREND_FOLLOWING_FAMILY",
+# Round 2 slice R3 (docs/research-round-2.md §3c): the single PORTFOLIO
+# family swept in the r2-xsec_momentum × 9-instrument-basket × daily lane.
+# Portfolio interface (weights over a panel), so it lives in
+# PORTFOLIO_STRATEGIES, not STRATEGIES.
+R2_XSEC_FAMILY = ["xsec_momentum"]
+
+PORTFOLIO_STRATEGIES = {
+    "xsec_momentum": xsec_momentum.generate_weights,
+}
+
+__all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
+           "TREND_FOLLOWING_FAMILY",
            "VIDEO_STRATEGY_FAMILY", "MEAN_REVERSION_FAMILY",
-           "R2_VOL_TREND_FAMILY", "R2_KELTNER_FAMILY",
+           "R2_VOL_TREND_FAMILY", "R2_KELTNER_FAMILY", "R2_XSEC_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
-           "vol_filtered_trend", "keltner_breakout"]
+           "vol_filtered_trend", "keltner_breakout", "xsec_momentum"]
