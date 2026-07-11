@@ -93,8 +93,12 @@ draft"; ORDER 005's done-when: "skeleton PR merged self-landed").
   minutes of session start).
 - Card conventions: Status badge up top (born-red wall: a card badged
   in-progress cannot pass substrate-gate — badge `complete`, scoped to the
-  landed phase); Model line reads "withheld per session policy"; timestamps
-  come from `date -u` only.
+  landed phase); the `📊 Model:` line records the **family-level** model
+  name the session's own harness reports (e.g. `fable-5`) — never a full
+  model-id string, and never "withheld" (that null convention was retired
+  2026-07-11 by ORDER 009, fleet model-attribution rule: per-session
+  self-report in the committed card is the only reliable attribution
+  surface); timestamps come from `date -u` only.
 - After the first heartbeat, **batch status/card writes into substantive
   PRs** (#15, #17, #19 folded the whole lane wrap-up into the deliverable
   PR); at most **one status-only PR per session** (#22, a standalone

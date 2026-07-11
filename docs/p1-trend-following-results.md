@@ -85,6 +85,7 @@ OOS CAGR / max-drawdown detail is in the sweep files; two illustrative rows:
   weakest instrument — noise until proven otherwise.
 - **Survivors for P2 walk-forward/deflated-Sharpe scrutiny:** AAPL donchian,
   META sma/ema/donchian — carried forward as *candidates*, not findings.
+- *Annotation (2026-07-11, ORDER 009, historical record only):* AAPL sma (1.04*) and AAPL macd (1.04*) were starred as B&H-beats in the headline table yet are absent from the survivors list above with no stated drop rule — non-load-bearing (program complete, holdout spent, the P2 selection is never re-read).
 
 ## Reproduce
 
