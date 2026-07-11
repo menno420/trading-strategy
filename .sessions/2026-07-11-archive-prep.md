@@ -1,6 +1,9 @@
 # 2026-07-11 — archive prep: coordinator chat close-out, knowledge capture, session enders
 
-> **Status:** `in-progress`
+> **Status:** `complete` — one PR (#62), doc/close-out only: chat-only
+> knowledge captured durable, heartbeat current, all six session enders
+> run, in-flight work classified (0 open PRs / 0 stray branches / 0
+> claims). Zero market-data access; holdout SPENT and untouched.
 
 📊 Model: fable-5 · close-out worker (coordinator chat archive prep) · start 2026-07-11T19:33:12Z
 
