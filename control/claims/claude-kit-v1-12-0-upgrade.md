@@ -1,1 +1,0 @@
-- `claude/kit-v1-12-0-upgrade` · **kit v1.11.0→v1.12.0 upgrade** — vendored substrate-kit dist bump via release-asset path · expected files: `bootstrap.py`, `.substrate/**`, `.sessions/2026-07-11-kit-v1-12-0-upgrade.md` · 2026-07-11
