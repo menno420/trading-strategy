@@ -20,6 +20,14 @@ trading-lab is built in Python 3.11+ (pandas, pytest).
    append the finding same session.
 4. `docs/AGENT_ORIENTATION.md` — the task-specific reading router.
 
+## Kit machinery — search hygiene
+
+`bootstrap.py` (~12k generated lines) and `.substrate/` (kit state + a byte
+backup of the previous dist) are substrate-kit machinery, not project code.
+Exclude them from repo-wide searches: `grep -r --exclude=bootstrap.py
+--exclude-dir=.substrate …`, or ripgrep `rg -g '!bootstrap.py' -g
+'!.substrate' …`.
+
 ## Architecture — layers & import rules
 
 Layered research pipeline: data/ (raw + cached market data, daily and hourly bars for tech stocks and gold/silver) -> src/ (strategy, backtest engine, validation) -> tests/. Import rule: src/ never imports from tests/; strategies depend on the backtest engine, never the reverse; nothing imports broker or order-execution libraries — this is a research-only lab, no live trading code anywhere.
