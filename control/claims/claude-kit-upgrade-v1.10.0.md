@@ -1,0 +1,1 @@
+- claude/kit-upgrade-v1.10.0 · kit upgrade v1.9.0 → v1.10.0 (distribution seat) · expected: bootstrap.py, .substrate/, .github/workflows/substrate-gate.yml, .sessions/ · 2026-07-11
