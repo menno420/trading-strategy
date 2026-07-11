@@ -43,3 +43,5 @@ frontmatter keeps the score.
 ## Backlog
 
 (Captured ideas, each with a state and a next destination — none left at `raw`.)
+
+- [trigger-registry-2026-07-11.md](trigger-registry-2026-07-11.md) — in-repo trigger registry (`control/triggers.md`) so routine bindings survive chat archival · state `routed` · next: discuss-first with the fleet manager / kit seat (fleet-wide convention candidate).

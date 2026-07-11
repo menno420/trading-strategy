@@ -7,6 +7,8 @@
 - [self-review-2026-07-09.md](self-review-2026-07-09.md) — the gen-1 answers, by question ID (landed 2026-07-09).
 - [project-review-2026-07-09.md](project-review-2026-07-09.md) — owner-facing project review + agent audit + wake-up pass (landed 2026-07-09).
 - [wind-down-review-2026-07-09.md](wind-down-review-2026-07-09.md) — whole-life gen-1 retro written at fleet wind-down (landed 2026-07-09).
+- [self-review-2026-07-11.md](self-review-2026-07-11.md) — the ORDER-010 lane self-review, moved durable from `control/status.md` at archive prep, with the PR #41 evidence upgrade, ORDER-008 provenance, and coordinator ops knowledge (landed 2026-07-11).
+- [archive-ready-2026-07-11.md](archive-ready-2026-07-11.md) — coordinator-chat archive close-out: true state, in-flight classification, all open ⚑ owner actions (incl. the trigger-succession risk), and the fresh-session resume runbook (landed 2026-07-11).
 
 ## Succession (gen-1 → gen-2, landed at wind-down 2026-07-09)
 
