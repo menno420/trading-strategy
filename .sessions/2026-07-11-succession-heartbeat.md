@@ -1,6 +1,6 @@
 # 2026-07-11 — succession heartbeat: re-arm weekly grading cadence, resolve trigger-succession risk
 
-> **Status:** `in-progress` — succession update: the Money-seat coordinator
+> **Status:** `complete` — succession update: the Money-seat coordinator
 > re-armed the weekly paper-lane grading cadence after the old
 > coordinator chat was archived; this session records the re-armed trigger
 > facts in the heartbeat and closes the ⚑ (g) succession risk. Doc/status
