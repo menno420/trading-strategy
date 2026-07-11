@@ -107,3 +107,11 @@ why: the lane is otherwise done and idle (PARKED GREEN); the protocol is pre-reg
 code-enforced, one-shot; the owner granted the unlock via Q-0262.
 done-when: ORDER 007 done → holdout executed per the protocol → docs/final-report.md
 §Holdout filled → status acks 008.
+
+## ORDER 009 · 2026-07-11T03:25:25Z · status: new
+priority: P3
+from: fleet-manager manager — ORDER 010 per-lane relay (provenance: fm control/inbox.md ORDER 010 + fm docs/findings/model-matrix-2026-07.md; relayed via fm PR #63)
+executor: trading-strategy lane coordinator — next fired session
+do: Model-attribution ground truth (fleet standing rule, family-level names only per Q-0262): (1) confirm the session-card template carries a `📊 Model:` line — add it if missing; (2) every fired session records the model family its own harness/environment reports (e.g. fable-5, opus-4.8, sonnet-5) on that line in its committed session card — the Routines screen is NOT a reliable attribution surface; (3) replace the card's "withheld" null convention with the real family name. Also (trading#21 residue, historical record only): add a one-line annotation to docs/p1-trend-following-results.md noting the two P1 drops — AAPL-SMA (1.04*) and AAPL-MACD (1.04*), both starred as B&H-beats in the headline table yet absent from the 'Survivors for P2' list with no stated rule. Non-load-bearing: program complete, holdout spent, paper subject locked; P2 selection is never re-read. Provenance: fm docs/review-queue.md trading#21 RETIRED-SUPERSEDED row (fm PR #53, d1fe8c2).
+why: the fleet model matrix (fm docs/findings/model-matrix-2026-07.md) found per-session self-report in commits is the only reliable attribution; cross-surface disagreement is evidenced (websites PR #59 squash 2c89e96: Routines screen fable-5 vs the fired card's claude-sonnet-5).
+done-when: the next fired session's committed card carries a real family-level `📊 Model:` line and the template (if any) includes it, and docs/p1-trend-following-results.md carries the one-line P1-drops annotation.
