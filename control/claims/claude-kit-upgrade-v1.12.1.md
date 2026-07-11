@@ -1,1 +1,0 @@
-- `claude/kit-upgrade-v1.12.1` · **kit-upgrade** — vendored substrate-kit v1.12.0 → v1.12.1 (distribution seat, substrate-gate false-green fix) · bootstrap.py, substrate.config.json, .substrate/, .github/workflows/substrate-gate.yml, .sessions/ · 2026-07-11
