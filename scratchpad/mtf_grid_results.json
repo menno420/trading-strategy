@@ -1,0 +1,971 @@
+{
+  "meta": {
+    "phase": "PHASE 2 grid (DEV-ONLY, promotion-closed)",
+    "rule": "long on lower-band touch z_L<=-k gated by higher-TF in-range |z_H|<k; exit z_L>=0; long/flat; costs ON",
+    "costs": "5 bps slippage + 1 bp commission per side (engine defaults)",
+    "grid": {
+      "k": [
+        2.0,
+        2.5
+      ],
+      "lookback": [
+        20,
+        50
+      ],
+      "pairs": [
+        "1h/4h",
+        "2h/daily",
+        "daily/weekly"
+      ],
+      "n_configs": 12
+    },
+    "aggregation": "OOS pooled across tickers per config (per-bar returns concatenated; trades pooled)",
+    "holdout": "excluded (load_ohlcv default, < 2025-01-09)"
+  },
+  "denominator": {
+    "this_config": 1,
+    "this_lane_configs": 12,
+    "program_prior_configs": 590,
+    "program_cumulative_configs": 602,
+    "prior_holdout_reads": 13,
+    "conditioning_descriptive_passes": 4
+  },
+  "configs": [
+    {
+      "pair": "1h/4h",
+      "k": 2.0,
+      "lookback": 20,
+      "ppy": 1638.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 5,
+      "n_tickers": 8,
+      "n_oos_bars_pooled": 11743,
+      "n_trades_pooled": 185,
+      "net_expectancy_per_trade": 0.00455368778390122,
+      "win_rate": 0.6648648648648648,
+      "strat_oos_sharpe": 0.6749942317088063,
+      "bh_oos_sharpe": 1.0572317346511333,
+      "sharpe_delta": -0.38223750294232695,
+      "tail_loss_profile": {
+        "worst_trade": -0.1489285302929514,
+        "best_trade": 0.10137343503050666,
+        "median_win": 0.013310028037022636,
+        "median_loss": -0.013475552657118917,
+        "p05_trade": -0.026723829580977097,
+        "p95_trade": 0.036443733093553324,
+        "worst_over_median_win": -11.189197338931052
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 1468,
+          "n_trades": 20,
+          "strat_sharpe": 0.8944381763753526,
+          "bh_sharpe": 1.6685135279789878
+        },
+        "AMZN": {
+          "n_oos_bars": 1468,
+          "n_trades": 23,
+          "strat_sharpe": 0.7120011026272469,
+          "bh_sharpe": 1.023015992901405
+        },
+        "GLD": {
+          "n_oos_bars": 1467,
+          "n_trades": 20,
+          "strat_sharpe": 1.3186334204299819,
+          "bh_sharpe": 1.6760189091944433
+        },
+        "GOOGL": {
+          "n_oos_bars": 1468,
+          "n_trades": 23,
+          "strat_sharpe": 0.6616157742226741,
+          "bh_sharpe": 1.5000845944536652
+        },
+        "META": {
+          "n_oos_bars": 1468,
+          "n_trades": 22,
+          "strat_sharpe": 0.1612380328899616,
+          "bh_sharpe": 0.7393567798280563
+        },
+        "MSFT": {
+          "n_oos_bars": 1468,
+          "n_trades": 24,
+          "strat_sharpe": 0.44396704793858294,
+          "bh_sharpe": 0.30384242023874447
+        },
+        "NVDA": {
+          "n_oos_bars": 1468,
+          "n_trades": 26,
+          "strat_sharpe": 0.6446991474139986,
+          "bh_sharpe": 1.1958948109597731
+        },
+        "SLV": {
+          "n_oos_bars": 1468,
+          "n_trades": 27,
+          "strat_sharpe": 1.355799690583558,
+          "bh_sharpe": 0.9201554855164213
+        }
+      }
+    },
+    {
+      "pair": "1h/4h",
+      "k": 2.0,
+      "lookback": 50,
+      "ppy": 1638.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 5,
+      "n_tickers": 8,
+      "n_oos_bars_pooled": 11743,
+      "n_trades_pooled": 94,
+      "net_expectancy_per_trade": 0.008138018624043791,
+      "win_rate": 0.723404255319149,
+      "strat_oos_sharpe": 0.653312914607124,
+      "bh_oos_sharpe": 1.0572317346511333,
+      "sharpe_delta": -0.40391882004400925,
+      "tail_loss_profile": {
+        "worst_trade": -0.11877786633006937,
+        "best_trade": 0.05851168292652842,
+        "median_win": 0.017355612670914344,
+        "median_loss": -0.014531153284649212,
+        "p05_trade": -0.03548115614587861,
+        "p95_trade": 0.04256079012008517,
+        "worst_over_median_win": -6.84377259289296
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 1468,
+          "n_trades": 11,
+          "strat_sharpe": 1.2803965311274965,
+          "bh_sharpe": 1.6685135279789878
+        },
+        "AMZN": {
+          "n_oos_bars": 1468,
+          "n_trades": 13,
+          "strat_sharpe": 0.6113332754979933,
+          "bh_sharpe": 1.023015992901405
+        },
+        "GLD": {
+          "n_oos_bars": 1467,
+          "n_trades": 11,
+          "strat_sharpe": 1.4094263797339206,
+          "bh_sharpe": 1.6760189091944433
+        },
+        "GOOGL": {
+          "n_oos_bars": 1468,
+          "n_trades": 11,
+          "strat_sharpe": 0.5949172226467284,
+          "bh_sharpe": 1.5000845944536652
+        },
+        "META": {
+          "n_oos_bars": 1468,
+          "n_trades": 16,
+          "strat_sharpe": 2.1037399355969697,
+          "bh_sharpe": 0.7393567798280563
+        },
+        "MSFT": {
+          "n_oos_bars": 1468,
+          "n_trades": 13,
+          "strat_sharpe": 0.3129362473087799,
+          "bh_sharpe": 0.30384242023874447
+        },
+        "NVDA": {
+          "n_oos_bars": 1468,
+          "n_trades": 11,
+          "strat_sharpe": 0.5960585855925338,
+          "bh_sharpe": 1.1958948109597731
+        },
+        "SLV": {
+          "n_oos_bars": 1468,
+          "n_trades": 8,
+          "strat_sharpe": -0.5426651678668356,
+          "bh_sharpe": 0.9201554855164213
+        }
+      }
+    },
+    {
+      "pair": "1h/4h",
+      "k": 2.5,
+      "lookback": 20,
+      "ppy": 1638.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 5,
+      "n_tickers": 8,
+      "n_oos_bars_pooled": 11743,
+      "n_trades_pooled": 131,
+      "net_expectancy_per_trade": 0.0058067378667266524,
+      "win_rate": 0.6793893129770993,
+      "strat_oos_sharpe": 0.7304618832149831,
+      "bh_oos_sharpe": 1.0572317346511333,
+      "sharpe_delta": -0.3267698514361502,
+      "tail_loss_profile": {
+        "worst_trade": -0.1489285302929514,
+        "best_trade": 0.10137343503050666,
+        "median_win": 0.013488767563442972,
+        "median_loss": -0.009750277603347512,
+        "p05_trade": -0.019660769692190605,
+        "p95_trade": 0.034646560570834706,
+        "worst_over_median_win": -11.040929394956361
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 1468,
+          "n_trades": 12,
+          "strat_sharpe": 1.3797092390454022,
+          "bh_sharpe": 1.6685135279789878
+        },
+        "AMZN": {
+          "n_oos_bars": 1468,
+          "n_trades": 16,
+          "strat_sharpe": 0.5708832339525355,
+          "bh_sharpe": 1.023015992901405
+        },
+        "GLD": {
+          "n_oos_bars": 1467,
+          "n_trades": 18,
+          "strat_sharpe": 1.928887334518352,
+          "bh_sharpe": 1.6760189091944433
+        },
+        "GOOGL": {
+          "n_oos_bars": 1468,
+          "n_trades": 16,
+          "strat_sharpe": 1.0474611696250027,
+          "bh_sharpe": 1.5000845944536652
+        },
+        "META": {
+          "n_oos_bars": 1468,
+          "n_trades": 15,
+          "strat_sharpe": -0.30913758865728613,
+          "bh_sharpe": 0.7393567798280563
+        },
+        "MSFT": {
+          "n_oos_bars": 1468,
+          "n_trades": 17,
+          "strat_sharpe": 0.44455515627159736,
+          "bh_sharpe": 0.30384242023874447
+        },
+        "NVDA": {
+          "n_oos_bars": 1468,
+          "n_trades": 18,
+          "strat_sharpe": 0.9143565815349929,
+          "bh_sharpe": 1.1958948109597731
+        },
+        "SLV": {
+          "n_oos_bars": 1468,
+          "n_trades": 19,
+          "strat_sharpe": 0.9395224684981391,
+          "bh_sharpe": 0.9201554855164213
+        }
+      }
+    },
+    {
+      "pair": "1h/4h",
+      "k": 2.5,
+      "lookback": 50,
+      "ppy": 1638.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 5,
+      "n_tickers": 8,
+      "n_oos_bars_pooled": 11743,
+      "n_trades_pooled": 63,
+      "net_expectancy_per_trade": 0.009458306146864947,
+      "win_rate": 0.7142857142857143,
+      "strat_oos_sharpe": 0.5931270658011354,
+      "bh_oos_sharpe": 1.0572317346511333,
+      "sharpe_delta": -0.4641046688499979,
+      "tail_loss_profile": {
+        "worst_trade": -0.11877786633006937,
+        "best_trade": 0.11218495269172202,
+        "median_win": 0.021677687912560195,
+        "median_loss": -0.019483501814217985,
+        "p05_trade": -0.04341142519806893,
+        "p95_trade": 0.042947494193986246,
+        "worst_over_median_win": -5.479268213896958
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 1468,
+          "n_trades": 8,
+          "strat_sharpe": 1.2165001679706042,
+          "bh_sharpe": 1.6685135279789878
+        },
+        "AMZN": {
+          "n_oos_bars": 1468,
+          "n_trades": 9,
+          "strat_sharpe": 0.3037564951767441,
+          "bh_sharpe": 1.023015992901405
+        },
+        "GLD": {
+          "n_oos_bars": 1467,
+          "n_trades": 4,
+          "strat_sharpe": 0.48092167112791806,
+          "bh_sharpe": 1.6760189091944433
+        },
+        "GOOGL": {
+          "n_oos_bars": 1468,
+          "n_trades": 8,
+          "strat_sharpe": 0.6848522861237601,
+          "bh_sharpe": 1.5000845944536652
+        },
+        "META": {
+          "n_oos_bars": 1468,
+          "n_trades": 10,
+          "strat_sharpe": 1.4547915762904415,
+          "bh_sharpe": 0.7393567798280563
+        },
+        "MSFT": {
+          "n_oos_bars": 1468,
+          "n_trades": 7,
+          "strat_sharpe": -0.3409242710958276,
+          "bh_sharpe": 0.30384242023874447
+        },
+        "NVDA": {
+          "n_oos_bars": 1468,
+          "n_trades": 10,
+          "strat_sharpe": 1.3231900932744198,
+          "bh_sharpe": 1.1958948109597731
+        },
+        "SLV": {
+          "n_oos_bars": 1468,
+          "n_trades": 7,
+          "strat_sharpe": -0.3823647480462964,
+          "bh_sharpe": 0.9201554855164213
+        }
+      }
+    },
+    {
+      "pair": "2h/daily",
+      "k": 2.0,
+      "lookback": 20,
+      "ppy": 819.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 1,
+      "n_tickers": 8,
+      "n_oos_bars_pooled": 3264,
+      "n_trades_pooled": 52,
+      "net_expectancy_per_trade": 0.005942721355144225,
+      "win_rate": 0.7115384615384616,
+      "strat_oos_sharpe": 0.6180438248286665,
+      "bh_oos_sharpe": 1.2574064555461297,
+      "sharpe_delta": -0.6393626307174632,
+      "tail_loss_profile": {
+        "worst_trade": -0.11177167766037388,
+        "best_trade": 0.04711104107186159,
+        "median_win": 0.016282858847596504,
+        "median_loss": -0.014085983320926032,
+        "p05_trade": -0.028258250131670385,
+        "p95_trade": 0.0341565059599955,
+        "worst_over_median_win": -6.864376747752277
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 408,
+          "n_trades": 6,
+          "strat_sharpe": 0.09880219544245383,
+          "bh_sharpe": 1.1259847963647642
+        },
+        "AMZN": {
+          "n_oos_bars": 408,
+          "n_trades": 6,
+          "strat_sharpe": 1.1333319143349811,
+          "bh_sharpe": 2.4044991001058174
+        },
+        "GLD": {
+          "n_oos_bars": 408,
+          "n_trades": 6,
+          "strat_sharpe": 1.2185839302269026,
+          "bh_sharpe": 1.2539013547468842
+        },
+        "GOOGL": {
+          "n_oos_bars": 408,
+          "n_trades": 6,
+          "strat_sharpe": 0.5310504809327989,
+          "bh_sharpe": 1.4704649847202549
+        },
+        "META": {
+          "n_oos_bars": 408,
+          "n_trades": 7,
+          "strat_sharpe": 0.9631756515314028,
+          "bh_sharpe": 1.477603048478122
+        },
+        "MSFT": {
+          "n_oos_bars": 408,
+          "n_trades": 7,
+          "strat_sharpe": 1.1695521202419654,
+          "bh_sharpe": 0.4506223936747475
+        },
+        "NVDA": {
+          "n_oos_bars": 408,
+          "n_trades": 8,
+          "strat_sharpe": 0.17284350836330176,
+          "bh_sharpe": 1.2794237626485447
+        },
+        "SLV": {
+          "n_oos_bars": 408,
+          "n_trades": 6,
+          "strat_sharpe": 0.6571033424326941,
+          "bh_sharpe": 0.8012317728603495
+        }
+      }
+    },
+    {
+      "pair": "2h/daily",
+      "k": 2.0,
+      "lookback": 50,
+      "ppy": 819.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 1,
+      "n_tickers": 8,
+      "n_oos_bars_pooled": 3264,
+      "n_trades_pooled": 29,
+      "net_expectancy_per_trade": 0.017723668687265024,
+      "win_rate": 0.7241379310344828,
+      "strat_oos_sharpe": 1.1676614798778697,
+      "bh_oos_sharpe": 1.2574064555461297,
+      "sharpe_delta": -0.08974497566826001,
+      "tail_loss_profile": {
+        "worst_trade": -0.021337121006754,
+        "best_trade": 0.0542034173085999,
+        "median_win": 0.031337023898137195,
+        "median_loss": -0.008122654416983233,
+        "p05_trade": -0.009238549412181652,
+        "p95_trade": 0.04591633439393291,
+        "worst_over_median_win": -0.6808917488818192
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 408,
+          "n_trades": 4,
+          "strat_sharpe": -0.1872183671757185,
+          "bh_sharpe": 1.1259847963647642
+        },
+        "AMZN": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": 2.628871580411743,
+          "bh_sharpe": 2.4044991001058174
+        },
+        "GLD": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": 0.9416007102964373,
+          "bh_sharpe": 1.2539013547468842
+        },
+        "GOOGL": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": 0.7687446937277228,
+          "bh_sharpe": 1.4704649847202549
+        },
+        "META": {
+          "n_oos_bars": 408,
+          "n_trades": 4,
+          "strat_sharpe": 1.601097375920249,
+          "bh_sharpe": 1.477603048478122
+        },
+        "MSFT": {
+          "n_oos_bars": 408,
+          "n_trades": 5,
+          "strat_sharpe": 1.5451024386252632,
+          "bh_sharpe": 0.4506223936747475
+        },
+        "NVDA": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": 1.2140200004765143,
+          "bh_sharpe": 1.2794237626485447
+        },
+        "SLV": {
+          "n_oos_bars": 408,
+          "n_trades": 4,
+          "strat_sharpe": 1.5207735571644578,
+          "bh_sharpe": 0.8012317728603495
+        }
+      }
+    },
+    {
+      "pair": "2h/daily",
+      "k": 2.5,
+      "lookback": 20,
+      "ppy": 819.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 1,
+      "n_tickers": 8,
+      "n_oos_bars_pooled": 3264,
+      "n_trades_pooled": 32,
+      "net_expectancy_per_trade": 0.005538952193825823,
+      "win_rate": 0.6875,
+      "strat_oos_sharpe": 0.4458940033348924,
+      "bh_oos_sharpe": 1.2574064555461297,
+      "sharpe_delta": -0.8115124522112374,
+      "tail_loss_profile": {
+        "worst_trade": -0.11177167766037388,
+        "best_trade": 0.04711104107186159,
+        "median_win": 0.018094267192093616,
+        "median_loss": -0.010291199322048472,
+        "p05_trade": -0.033991094845656336,
+        "p95_trade": 0.03383361249128506,
+        "worst_over_median_win": -6.177187308763358
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": 0.14844047917309047,
+          "bh_sharpe": 1.1259847963647642
+        },
+        "AMZN": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": 0.9564719466558419,
+          "bh_sharpe": 2.4044991001058174
+        },
+        "GLD": {
+          "n_oos_bars": 408,
+          "n_trades": 4,
+          "strat_sharpe": 0.40808338631497104,
+          "bh_sharpe": 1.2539013547468842
+        },
+        "GOOGL": {
+          "n_oos_bars": 408,
+          "n_trades": 4,
+          "strat_sharpe": 1.4832163917517531,
+          "bh_sharpe": 1.4704649847202549
+        },
+        "META": {
+          "n_oos_bars": 408,
+          "n_trades": 4,
+          "strat_sharpe": 1.1344690127923827,
+          "bh_sharpe": 1.477603048478122
+        },
+        "MSFT": {
+          "n_oos_bars": 408,
+          "n_trades": 5,
+          "strat_sharpe": 0.23143830541265228,
+          "bh_sharpe": 0.4506223936747475
+        },
+        "NVDA": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": -0.903519894929819,
+          "bh_sharpe": 1.2794237626485447
+        },
+        "SLV": {
+          "n_oos_bars": 408,
+          "n_trades": 6,
+          "strat_sharpe": 1.3644366231164506,
+          "bh_sharpe": 0.8012317728603495
+        }
+      }
+    },
+    {
+      "pair": "2h/daily",
+      "k": 2.5,
+      "lookback": 50,
+      "ppy": 819.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 1,
+      "n_tickers": 8,
+      "n_oos_bars_pooled": 3264,
+      "n_trades_pooled": 19,
+      "net_expectancy_per_trade": 0.020217731513594142,
+      "win_rate": 0.7894736842105263,
+      "strat_oos_sharpe": 1.042700220134747,
+      "bh_oos_sharpe": 1.2574064555461297,
+      "sharpe_delta": -0.21470623541138267,
+      "tail_loss_profile": {
+        "worst_trade": -0.008629239517397025,
+        "best_trade": 0.0542034173085999,
+        "median_win": 0.027112700358105313,
+        "median_loss": -0.00463506648063472,
+        "p05_trade": -0.007717386336652199,
+        "p95_trade": 0.04291551933222301,
+        "worst_over_median_win": -0.31827296445657516
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": 0.7898904650281383,
+          "bh_sharpe": 1.1259847963647642
+        },
+        "AMZN": {
+          "n_oos_bars": 408,
+          "n_trades": 1,
+          "strat_sharpe": 1.6239258352581738,
+          "bh_sharpe": 2.4044991001058174
+        },
+        "GLD": {
+          "n_oos_bars": 408,
+          "n_trades": 1,
+          "strat_sharpe": -0.29685782573068553,
+          "bh_sharpe": 1.2539013547468842
+        },
+        "GOOGL": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": 0.7687446937277228,
+          "bh_sharpe": 1.4704649847202549
+        },
+        "META": {
+          "n_oos_bars": 408,
+          "n_trades": 3,
+          "strat_sharpe": 2.0751434510473024,
+          "bh_sharpe": 1.477603048478122
+        },
+        "MSFT": {
+          "n_oos_bars": 408,
+          "n_trades": 2,
+          "strat_sharpe": 0.527369447585135,
+          "bh_sharpe": 0.4506223936747475
+        },
+        "NVDA": {
+          "n_oos_bars": 408,
+          "n_trades": 2,
+          "strat_sharpe": 0.8285383368125262,
+          "bh_sharpe": 1.2794237626485447
+        },
+        "SLV": {
+          "n_oos_bars": 408,
+          "n_trades": 4,
+          "strat_sharpe": 2.1290407111844245,
+          "bh_sharpe": 0.8012317728603495
+        }
+      }
+    },
+    {
+      "pair": "daily/weekly",
+      "k": 2.0,
+      "lookback": 20,
+      "ppy": 252.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 10,
+      "n_tickers": 9,
+      "n_oos_bars_pooled": 24328,
+      "n_trades_pooled": 374,
+      "net_expectancy_per_trade": 0.015569406367531648,
+      "win_rate": 0.7245989304812834,
+      "strat_oos_sharpe": 0.33941185449861655,
+      "bh_oos_sharpe": 0.8141460357326793,
+      "sharpe_delta": -0.47473418123406275,
+      "tail_loss_profile": {
+        "worst_trade": -0.39402140195116386,
+        "best_trade": 0.1897211281637361,
+        "median_win": 0.0336705582361565,
+        "median_loss": -0.041108346315310684,
+        "p05_trade": -0.12956358829780532,
+        "p95_trade": 0.11646683915917319,
+        "worst_over_median_win": -11.702253321361669
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 2771,
+          "n_trades": 40,
+          "strat_sharpe": 0.25766057052641117,
+          "bh_sharpe": 0.9833312817370933
+        },
+        "AMZN": {
+          "n_oos_bars": 2771,
+          "n_trades": 43,
+          "strat_sharpe": 0.5133894655914978,
+          "bh_sharpe": 0.8162167978697467
+        },
+        "BTC-USD": {
+          "n_oos_bars": 2759,
+          "n_trades": 38,
+          "strat_sharpe": -0.036906936807218335,
+          "bh_sharpe": 0.847297298846476
+        },
+        "GLD": {
+          "n_oos_bars": 2771,
+          "n_trades": 45,
+          "strat_sharpe": 0.45948865907605907,
+          "bh_sharpe": 0.5457575368419647
+        },
+        "GOOGL": {
+          "n_oos_bars": 2771,
+          "n_trades": 38,
+          "strat_sharpe": 0.3986052011288038,
+          "bh_sharpe": 0.7671700807178562
+        },
+        "META": {
+          "n_oos_bars": 2172,
+          "n_trades": 32,
+          "strat_sharpe": 0.3578572469765244,
+          "bh_sharpe": 0.6974188472239242
+        },
+        "MSFT": {
+          "n_oos_bars": 2771,
+          "n_trades": 44,
+          "strat_sharpe": 1.030512462385498,
+          "bh_sharpe": 1.0702240481183123
+        },
+        "NVDA": {
+          "n_oos_bars": 2771,
+          "n_trades": 45,
+          "strat_sharpe": 0.6342987915026196,
+          "bh_sharpe": 1.376678347884476
+        },
+        "SLV": {
+          "n_oos_bars": 2771,
+          "n_trades": 49,
+          "strat_sharpe": 0.22660764924348134,
+          "bh_sharpe": 0.258851887482054
+        }
+      }
+    },
+    {
+      "pair": "daily/weekly",
+      "k": 2.0,
+      "lookback": 50,
+      "ppy": 252.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 10,
+      "n_tickers": 9,
+      "n_oos_bars_pooled": 24328,
+      "n_trades_pooled": 164,
+      "net_expectancy_per_trade": 0.033774789054035845,
+      "win_rate": 0.7682926829268293,
+      "strat_oos_sharpe": 0.34527296092863646,
+      "bh_oos_sharpe": 0.8141460357326793,
+      "sharpe_delta": -0.46887307480404283,
+      "tail_loss_profile": {
+        "worst_trade": -0.365514767958132,
+        "best_trade": 0.5147119133037279,
+        "median_win": 0.06284479109217034,
+        "median_loss": -0.06143699013935611,
+        "p05_trade": -0.12596209990994164,
+        "p95_trade": 0.1704854185623668,
+        "worst_over_median_win": -5.816150576776608
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 2771,
+          "n_trades": 19,
+          "strat_sharpe": 0.38594687137875067,
+          "bh_sharpe": 0.9833312817370933
+        },
+        "AMZN": {
+          "n_oos_bars": 2771,
+          "n_trades": 16,
+          "strat_sharpe": 0.3792812500373028,
+          "bh_sharpe": 0.8162167978697467
+        },
+        "BTC-USD": {
+          "n_oos_bars": 2759,
+          "n_trades": 21,
+          "strat_sharpe": 0.3866408985488315,
+          "bh_sharpe": 0.847297298846476
+        },
+        "GLD": {
+          "n_oos_bars": 2771,
+          "n_trades": 21,
+          "strat_sharpe": 0.272926687169164,
+          "bh_sharpe": 0.5457575368419647
+        },
+        "GOOGL": {
+          "n_oos_bars": 2771,
+          "n_trades": 19,
+          "strat_sharpe": 0.5267215760152956,
+          "bh_sharpe": 0.7671700807178562
+        },
+        "META": {
+          "n_oos_bars": 2172,
+          "n_trades": 14,
+          "strat_sharpe": 0.16277886303525105,
+          "bh_sharpe": 0.6974188472239242
+        },
+        "MSFT": {
+          "n_oos_bars": 2771,
+          "n_trades": 16,
+          "strat_sharpe": 0.7300383628693429,
+          "bh_sharpe": 1.0702240481183123
+        },
+        "NVDA": {
+          "n_oos_bars": 2771,
+          "n_trades": 16,
+          "strat_sharpe": 0.29358948042994426,
+          "bh_sharpe": 1.376678347884476
+        },
+        "SLV": {
+          "n_oos_bars": 2771,
+          "n_trades": 22,
+          "strat_sharpe": 0.35768353441955725,
+          "bh_sharpe": 0.258851887482054
+        }
+      }
+    },
+    {
+      "pair": "daily/weekly",
+      "k": 2.5,
+      "lookback": 20,
+      "ppy": 252.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 10,
+      "n_tickers": 9,
+      "n_oos_bars_pooled": 24328,
+      "n_trades_pooled": 204,
+      "net_expectancy_per_trade": 0.023570877961584556,
+      "win_rate": 0.7401960784313726,
+      "strat_oos_sharpe": 0.34321833150446884,
+      "bh_oos_sharpe": 0.8141460357326793,
+      "sharpe_delta": -0.47092770422821045,
+      "tail_loss_profile": {
+        "worst_trade": -0.39402140195116386,
+        "best_trade": 0.34479298147255766,
+        "median_win": 0.0381998822402585,
+        "median_loss": -0.03692461764681165,
+        "p05_trade": -0.09985215823061634,
+        "p95_trade": 0.13561105078536312,
+        "worst_over_median_win": -10.31472818353111
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 2771,
+          "n_trades": 21,
+          "strat_sharpe": 0.018362284905205976,
+          "bh_sharpe": 0.9833312817370933
+        },
+        "AMZN": {
+          "n_oos_bars": 2771,
+          "n_trades": 20,
+          "strat_sharpe": 0.3178385715319966,
+          "bh_sharpe": 0.8162167978697467
+        },
+        "BTC-USD": {
+          "n_oos_bars": 2759,
+          "n_trades": 23,
+          "strat_sharpe": 0.3970269197176949,
+          "bh_sharpe": 0.847297298846476
+        },
+        "GLD": {
+          "n_oos_bars": 2771,
+          "n_trades": 22,
+          "strat_sharpe": 0.47406638330030976,
+          "bh_sharpe": 0.5457575368419647
+        },
+        "GOOGL": {
+          "n_oos_bars": 2771,
+          "n_trades": 21,
+          "strat_sharpe": 0.5963179682947335,
+          "bh_sharpe": 0.7671700807178562
+        },
+        "META": {
+          "n_oos_bars": 2172,
+          "n_trades": 25,
+          "strat_sharpe": 0.5499386325266823,
+          "bh_sharpe": 0.6974188472239242
+        },
+        "MSFT": {
+          "n_oos_bars": 2771,
+          "n_trades": 21,
+          "strat_sharpe": 0.7674175034324155,
+          "bh_sharpe": 1.0702240481183123
+        },
+        "NVDA": {
+          "n_oos_bars": 2771,
+          "n_trades": 21,
+          "strat_sharpe": 0.3996509135129683,
+          "bh_sharpe": 1.376678347884476
+        },
+        "SLV": {
+          "n_oos_bars": 2771,
+          "n_trades": 30,
+          "strat_sharpe": -0.03179070762240753,
+          "bh_sharpe": 0.258851887482054
+        }
+      }
+    },
+    {
+      "pair": "daily/weekly",
+      "k": 2.5,
+      "lookback": 50,
+      "ppy": 252.0,
+      "train_size_used": 1008,
+      "std_window_splits_feasible": 10,
+      "n_tickers": 9,
+      "n_oos_bars_pooled": 24328,
+      "n_trades_pooled": 98,
+      "net_expectancy_per_trade": 0.04281938782267147,
+      "win_rate": 0.7959183673469388,
+      "strat_oos_sharpe": 0.30682444457141334,
+      "bh_oos_sharpe": 0.8141460357326793,
+      "sharpe_delta": -0.507321591161266,
+      "tail_loss_profile": {
+        "worst_trade": -0.365514767958132,
+        "best_trade": 0.42403768404471154,
+        "median_win": 0.07037499176919593,
+        "median_loss": -0.07434270086052497,
+        "p05_trade": -0.18908226768254693,
+        "p95_trade": 0.1890813157812763,
+        "worst_over_median_win": -5.193816137938401
+      },
+      "order007": null,
+      "per_ticker": {
+        "AAPL": {
+          "n_oos_bars": 2771,
+          "n_trades": 13,
+          "strat_sharpe": 0.27205427988239717,
+          "bh_sharpe": 0.9833312817370933
+        },
+        "AMZN": {
+          "n_oos_bars": 2771,
+          "n_trades": 13,
+          "strat_sharpe": 0.5003745039049656,
+          "bh_sharpe": 0.8162167978697467
+        },
+        "BTC-USD": {
+          "n_oos_bars": 2759,
+          "n_trades": 13,
+          "strat_sharpe": 0.25756740978101483,
+          "bh_sharpe": 0.847297298846476
+        },
+        "GLD": {
+          "n_oos_bars": 2771,
+          "n_trades": 13,
+          "strat_sharpe": 0.5638296838208823,
+          "bh_sharpe": 0.5457575368419647
+        },
+        "GOOGL": {
+          "n_oos_bars": 2771,
+          "n_trades": 12,
+          "strat_sharpe": 0.5264805881074098,
+          "bh_sharpe": 0.7671700807178562
+        },
+        "META": {
+          "n_oos_bars": 2172,
+          "n_trades": 9,
+          "strat_sharpe": 0.32823322925291903,
+          "bh_sharpe": 0.6974188472239242
+        },
+        "MSFT": {
+          "n_oos_bars": 2771,
+          "n_trades": 9,
+          "strat_sharpe": 0.5180446680989503,
+          "bh_sharpe": 1.0702240481183123
+        },
+        "NVDA": {
+          "n_oos_bars": 2771,
+          "n_trades": 6,
+          "strat_sharpe": 0.1560264847771897,
+          "bh_sharpe": 1.376678347884476
+        },
+        "SLV": {
+          "n_oos_bars": 2771,
+          "n_trades": 10,
+          "strat_sharpe": 0.20825733205845556,
+          "bh_sharpe": 0.258851887482054
+        }
+      }
+    }
+  ]
+}
