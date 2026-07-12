@@ -1,6 +1,6 @@
 # 2026-07-12 — docs re-stamp (current-state + CAPABILITIES to live GitHub state)
 
-> **Status:** `in-progress`
+> **Status:** `complete`
 
 📊 Model: Fable-class · docs-restamp lane (worker session) · start 2026-07-12T20:48Z
 
@@ -31,3 +31,50 @@ retired REST/MCP squash-on-green exception noted as superseded).
   (`> **Status:** `in-progress``), to be flipped `complete` as the deliberate
   last step. Collision check: `control/claims/` at HEAD contains only
   `README.md` — no active claims, no overlap with the docs scope.
+- 2026-07-12T20:49Z — claim `control/claims/claude-docs-restamp.md` committed
+  (second commit); branch pushed; PR #77 opened READY (non-draft).
+- 2026-07-12T20:50Z — work commit `be77f18`: `docs/current-state.md`
+  In-flight snapshot re-stamped to live state (0 open PRs, 0 claims, main @
+  `0cbc22c`; PR #40 + enabler bullets moved to Recently shipped as terminal);
+  `docs/CAPABILITIES.md` first Append-log entry (enabler landing path, PR #65
+  `bf885f0`, REST/MCP squash-on-green exception RETIRED-superseded).
+  `python3 bootstrap.py check --strict` → only the by-design born-red HOLD on
+  this card remained; docs-gate clean.
+- 2026-07-12T20:52Z — CI on the work push: pytest green, enable-auto-merge
+  green, substrate-gate red with only the designed born-red HOLD → flipping
+  this card `complete` in this final commit.
+
+## Previous-session review
+
+⟲ Previous-session review: PR #76 ender close-out landed clean — 0 open
+PRs / 0 claims at close, the grading + failsafe trigger table recorded in
+`control/status.md`, and correct born-red → complete card discipline.
+
+## Close-out
+
+**Done:** docs-only re-stamp, one PR (#77, `claude/docs-restamp`) —
+`docs/current-state.md` In-flight section re-stamped to live 2026-07-12
+GitHub state (PR #40 design-docs and the auto-merge enabler recorded
+terminal; enabler landed via PR #65, merged 2026-07-12T08:18:48Z,
+`bf885f0`, proven on PRs #66–#76), and `docs/CAPABILITIES.md` Append log
+given its first hand-filled entry (enabler landing path; old REST/MCP
+squash-on-green exception RETIRED-superseded). Structure, Status badges,
+and reachability (via `docs/AGENT_ORIENTATION.md`) preserved.
+
+**Verify:** `python3 bootstrap.py check --strict` — all checks clean except
+the by-design born-red HOLD on this card, which this flip commit clears.
+Integrity: zero `data/**` reads, zero backtests, holdout untouched,
+`control/inbox.md` + `control/status.md` byte-untouched. No merge action
+taken by this session — the enabler is the landing path.
+
+💡 **Idea (new, deduped against recent cards):** the "In flight" section of
+`docs/current-state.md` decays silently — this whole session existed because
+two terminal lanes sat there for days. Since squash merges put `(#N)` in
+commit subjects, `bootstrap.py check` could grow a cheap offline advisory
+that flags any In-flight bullet citing a PR number that already appears in
+`git log --oneline main` subjects (anchor: the docs-gate checker, next to
+the reachability check; test: a fixture bullet citing a merged PR number).
+Recent cards' ideas (enabler install, ender close-out, order acks) don't
+cover this.
+
+Session end: badge flipped `complete` in this final commit.
