@@ -16,7 +16,12 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 ## In flight
 
-(Verify against live source control — this section is a dated snapshot.)
+(Verify against live source control — this section is a dated snapshot.
+Live state as of 2026-07-12: **0 open PRs, 0 active claims**, main @
+`0cbc22c` (PR #76 ender close-out). Paper lane FLAT/WATCH — sole ledger
+record `paper-0001` WATCH; holdout SPENT. First weekly grading pass due
+2026-07-17T09:06Z — trigger `trig_015aNMg5ncoSE2Roe4MKjQnr`, rebind owned
+by the coordinator.)
 
 - MTF Bollinger mean-reversion (branch `claude/bollinger-mtf-dev`, DEV-ONLY /
   ILLUSTRATIVE, promotion CLOSED): a dev-window test of the owner's
@@ -53,23 +58,22 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
   (BEAT/MISS/FLAT; ties and late commits are MISS, against the
   strategy), appends verdicts idempotently, leaves WATCH/ENTRY rows
   untouched, and reads market data ONLY via the paper-lane rail.
-- Paper-lane design docs (PR #40, branch `paper-lane/design-docs`):
-  paper-only designs for a capped pre-registered
-  [sniper bucket](sniper-bucket.md) and a 70/20/10
-  [hybrid allocator](hybrid-allocator.md) — docs only, no code, no real
-  money, holdout untouched (it is SPENT).
-- Auto-merge enabler (branch `claude/install-auto-merge-enabler`): the
-  substrate-kit enabler wired byte-identical into
-  `.github/workflows/auto-merge-enabler.yml` so green `claude/*` PRs
-  self-land once the owner flips two one-time repo settings — see
-  [operations/auto-merge-guards.md](operations/auto-merge-guards.md) for
-  the six-field owner actions ("Allow auto-merge" ON + a `main` ruleset
-  requiring `substrate-gate`). Parks READY+green until the toggle is on.
 
 ## Recently shipped (newest first)
 
 (Merged work only, newest first.)
 
+- Auto-merge enabler LANDED (PR #65, merged 2026-07-12T08:18:48Z,
+  `bf885f0` — was branch `claude/install-auto-merge-enabler`): the
+  substrate-kit enabler at `.github/workflows/auto-merge-enabler.yml`
+  arms squash auto-merge on non-draft `claude/*` PRs and is the standing
+  landing path — proven on PRs #66–#76. Owner-action guards:
+  [operations/auto-merge-guards.md](operations/auto-merge-guards.md).
+- Paper-lane design docs LANDED (PR #40, branch `paper-lane/design-docs`;
+  recorded terminal 2026-07-12): paper-only designs for a capped
+  pre-registered [sniper bucket](sniper-bucket.md) and a 70/20/10
+  [hybrid allocator](hybrid-allocator.md) — docs only, no code, no real
+  money, holdout untouched (it is SPENT).
 - Research Round 2 CLOSED (PRs #46–#49 + close-out, 2026-07-10): the
   post-holdout, dev-only round pre-registered in
   [research-round-2.md](research-round-2.md) (PR #46, merged before any
