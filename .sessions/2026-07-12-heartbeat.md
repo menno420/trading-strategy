@@ -1,13 +1,13 @@
 # 2026-07-12 — heartbeat: control/status.md refresh
 
-> **Status:** `in-progress` — heartbeat-only refresh of `control/status.md`:
+> **Status:** `complete` — heartbeat-only refresh of `control/status.md`:
 > record the three research PRs that self-landed after the 10:35Z stamp
 > (#69/#70/#71) + the #72 kit bump, add the two new ⚑ needs-owner items
 > (Bollinger MTF preregistration decision; optional minute-data acquisition),
 > refresh routine state, and re-affirm the inbox re-read at HEAD. RESEARCH-ONLY
 > RAIL: docs/status only — NO `data/**` reads, NO backtests, paper-lane files
-> byte-untouched, `control/inbox.md` byte-untouched. This card is born red
-> (`in-progress`) and flips `complete` as the deliberate last content change
+> byte-untouched, `control/inbox.md` byte-untouched. This card was born red
+> (`in-progress`) and flipped `complete` as the deliberate last content change
 > before push.
 
 📊 Model: opus-4.8 · claude/heartbeat-2026-07-12 lane (Money seat) · start 2026-07-12T12:11Z
