@@ -123,3 +123,11 @@ do: quick self-review of this lane covering roughly the last 24h (2026-07-10 ~20
 why: owner-requested fleet-wide self-review (2026-07-11), relayed by the fleet-manager coordinator on the owner's in-session instruction.
 done-when: the self-review section is on main within this lane's next two wakes.
 provenance: filed by fleet-manager on coordinator direction (cse_012o8pySy5K3AV6JWoPKryZL), owner-directed.
+
+## ORDER 011 · 2026-07-12T08:30Z · status: new
+priority: P1
+owner: Venture Lab (Money seat) coordinator (executor)
+provenance: filed by the fleet manager — relocation of startup-prompt v3.1 F1 trading rows + F2 (prompts are STATELESS since v3.2, owner correction 2026-07-12; fleet-manager PR #108).
+do: (1) Land PR #64 (succession heartbeat) via the non-author review-merge path and PR #65 (auto-merge-enabler install) per doctrine — both OPEN. (2) Before 2026-07-17: verify the weekly grading pass has a LIVE executor — the grading trigger is a BUSINESS cron (rebind, never just delete): if the session it is bound to is archived, create the replacement bound to the live seat, verify, delete the old, and record ids in status; if no executor can be secured in time, run scripts/grade_paper.py in-session per docs/paper-lane-protocol.md §6–§7. Research-only rail holds throughout.
+why: verified 2026-07-12: #64 OPEN, #65 OPEN; the grading trigger (trig_015aNMg5…) is present in fleet-manager telemetry/triggers-snapshot.json and documented bound to the Money-seat coordinator (PR #64 body).
+done-when: #64/#65 terminal; the 2026-07-17 pass has a verified executor (ids in status) or is executed and graded.
