@@ -1,11 +1,13 @@
 # 2026-07-12 — broker-research: NL-legal small-account custom-bot landscape
 
-> **Status:** `in-progress` — RESEARCH-ONLY lane. Synthesising five desk-research
-> files (four broker clusters + NL crypto-legality) into one merged, cited
-> landscape doc for a small-account (€100–200) custom-bot owner. Born-red HOLD
-> while the doc lands; flips `complete` as the deliberate last step. NO accounts
-> created, NO trades, NO backtests, zero `data/**` reads, holdout untouched,
-> `control/inbox.md` + `control/status.md` byte-untouched.
+> **Status:** `complete` — RESEARCH-ONLY lane. Merged five desk-research files
+> (four broker clusters + NL crypto-legality) into one cited landscape doc for a
+> small-account (€100–200) custom-bot owner:
+> `docs/research/broker-bot-options-nl-2026-07-12.md` (indexed from
+> `docs/research/README.md`). Born-red first commit → flipped complete as the
+> deliberate last step. NO accounts created, NO trades, NO backtests, zero
+> `data/**` reads, holdout untouched, `control/inbox.md` + `control/status.md`
+> byte-untouched.
 
 📊 Model: opus · broker-research-nl lane (fired worker session, Money-seat coordinator direction) · start 2026-07-12T11:05:45Z
 
