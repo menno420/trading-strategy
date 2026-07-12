@@ -1,6 +1,6 @@
 # 2026-07-12 — Position-sizing vet (dev-only, illustrative)
 
-> **Status:** `in-progress` — vetting the owner's small-account position-sizing
+> **Status:** `complete` — vetting the owner's small-account position-sizing
 > idea (80% / 40% fractional vs fixed stake) with fractional-Kelly math + a
 > self-contained synthetic Monte Carlo. RESEARCH-ONLY / DEV-ONLY / ILLUSTRATIVE:
 > NO holdout reads, NO market-data module imports, NO accounts, NO live/paper
@@ -48,7 +48,19 @@ ILLUSTRATIVE. Research-only rail throughout; nothing here promotes anything.
   (`docs/paper-lane-protocol.md` §6, weekly cadence, first re-armed pass
   2026-07-17), and the go-live OWNER-ACTION gate (`docs/sniper-bucket.md` §8 /
   `docs/founding-plan.md` RESEARCH-ONLY).
-- [[work continues — script + doc written, MC run, card flipped complete last]]
+- Wrote `scripts/position_sizing_mc.py` (pure numpy + stdlib; verified it imports
+  nothing from the repo — no `trading_lab`, no data loader, no market data, no
+  holdout). Ran it (deterministic, seed 20260712, 10k paths, σ=3% base + 2%/5%
+  sensitivity); captured the results table. Analytic drag matches MC exactly
+  (µ=0, f=0.8, σ=3% → exp(−½·0.64·0.0009·200)=€94.4 vs MC median €94.43).
+- Wrote `docs/research/position-sizing-vet-2026-07-12.md` (DEV-ONLY / ILLUSTRATIVE)
+  with the plain-language owner verdict first, the fractional-Kelly math
+  (g≈f·µ−½f²σ², f*=µ/σ², over-betting past 2f*), the €100–200 cost-reality
+  breakeven table, the MC tables, and the constructive paper-lane alternative.
+  Raw dump: `docs/research/position-sizing-mc-2026-07-12.json`.
+- Linked the doc from the read-path doc `docs/current-state.md` §In flight (fixed
+  the reachability orphan finding). 223 pytest green; `check --strict` green after
+  this flip.
 
 ## Previous-session review
 
@@ -64,7 +76,16 @@ would happen." This session adds no orders work and touches neither
 
 ## Close-out
 
-**Done:** _(filled at close)_
+**Done:** on branch `claude/position-sizing-vet` —
+
+1. `.sessions/2026-07-12-position-sizing-vet.md` — this card (first commit
+   born-red → flipped `complete` as the deliberate last step).
+2. `scripts/position_sizing_mc.py` — self-contained synthetic Monte Carlo
+   (pure numpy + stdlib, no repo/data/holdout imports).
+3. `docs/research/position-sizing-vet-2026-07-12.md` — the DEV-ONLY /
+   ILLUSTRATIVE research note (owner verdict, math, cost reality, MC tables,
+   paper-lane alternative) + `docs/research/position-sizing-mc-2026-07-12.json`.
+4. `docs/current-state.md` §In flight — one bullet linking the doc (reachability).
 
 **Verify:** `python3 bootstrap.py check --strict` → green after this card flips
 `complete`. Integrity audit at close: zero `data/**` reads, zero market-data
