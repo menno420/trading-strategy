@@ -1,6 +1,6 @@
 # 2026-07-12 — succession heartbeat (reland): re-arm weekly grading cadence on a claude/* branch
 
-> **Status:** `in-progress` — reland of PR #64 onto a `claude/*` head so the
+> **Status:** `complete` — reland of PR #64 onto a `claude/*` head so the
 > now-live auto-merge enabler (PR #65) can arm it server-side. Same surgical
 > succession update (re-armed triggers, ⚑ (g) RESOLVED, seat merge) PLUS the
 > enabler-landed note and ⚑ (c) RESOLVED. Doc/status only: zero `data/**`
