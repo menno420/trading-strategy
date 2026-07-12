@@ -1,6 +1,6 @@
 # 2026-07-12 — MTF Bollinger mean-reversion (dev-only, null result)
 
-> **Status:** `in-progress` — exploring the owner's multi-timeframe (MTF)
+> **Status:** `complete` — exploring the owner's multi-timeframe (MTF)
 > Bollinger mean-reversion hypothesis on cached dev data. RESEARCH-ONLY /
 > DEV-ONLY / ILLUSTRATIVE: NO holdout reads (`load_ohlcv` default rail, bars
 > < 2025-01-09), NO network fetch, NO accounts, NO live/paper trading, NO
