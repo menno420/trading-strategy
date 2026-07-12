@@ -1,6 +1,6 @@
 # Broker & exchange landscape for a small-account custom bot (NL, 2026-07-12)
 
-> **Status:** `research` — desk research only, RESEARCH-ONLY lane. Ranked,
+> **Status:** `reference` — desk research only, RESEARCH-ONLY lane. Ranked,
 > cited landscape of NL-legal places to run a personal trading bot on a
 > €100–200 account. No accounts were created, no trades placed, no backtests
 > run. This doc identifies the cheapest place to run a bot; it is **not**
