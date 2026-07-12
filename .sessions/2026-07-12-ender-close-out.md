@@ -1,6 +1,6 @@
 # 2026-07-12 — ender-close-out
 
-> **Status:** `in-progress`
+> **Status:** `complete`
 
 📊 Model: opus-4.8 · trading-strategy session-ender (Money-seat coordinator direction) · start 2026-07-12T19:53Z
 
