@@ -35,6 +35,13 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
   [sniper bucket](sniper-bucket.md) and a 70/20/10
   [hybrid allocator](hybrid-allocator.md) — docs only, no code, no real
   money, holdout untouched (it is SPENT).
+- Auto-merge enabler (branch `claude/install-auto-merge-enabler`): the
+  substrate-kit enabler wired byte-identical into
+  `.github/workflows/auto-merge-enabler.yml` so green `claude/*` PRs
+  self-land once the owner flips two one-time repo settings — see
+  [operations/auto-merge-guards.md](operations/auto-merge-guards.md) for
+  the six-field owner actions ("Allow auto-merge" ON + a `main` ruleset
+  requiring `substrate-gate`). Parks READY+green until the toggle is on.
 
 ## Recently shipped (newest first)
 
