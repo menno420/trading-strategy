@@ -18,6 +18,16 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Verify against live source control — this section is a dated snapshot.)
 
+- Position-sizing vet (branch `claude/position-sizing-vet`, DEV-ONLY /
+  ILLUSTRATIVE): a research note vetting the owner's small-account sizing
+  idea (80% vs 40% fractional vs fixed stake) with fractional-Kelly math
+  and a self-contained synthetic Monte Carlo (no market data, no holdout,
+  no OOS/FINDING claim) —
+  [research/position-sizing-vet-2026-07-12.md](research/position-sizing-vet-2026-07-12.md),
+  script `scripts/position_sizing_mc.py`. Honest verdict: sizing scales
+  edge and drag but never creates edge, and our own holdout shows no
+  positive net edge (0/13 cleared the bar), so the base case is a
+  compounding loss; points live-€ decisions to the frozen paper lane.
 - Paper lane (post-holdout standing mission): the pre-registered
   forward paper-trading protocol for the surviving RULE-PASS candidate
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
