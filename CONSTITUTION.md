@@ -25,6 +25,9 @@
   a missing credential: check `docs/CAPABILITIES.md` (the verified ledger) →
   check the environment → attempt once and capture the exact error → append
   the finding same session.
+- **Recurring actions run through the skill index.** `docs/SKILLS.md` names
+  every kit-shipped skill and when to reach for it — check it before
+  improvising a procedure or repo-searching "how do we do X here".
 - When a doc and a source file disagree: Adopt-time state: planted docs were unrendered and CI unwired. Fix: answer the interview slots, run bootstrap.py render --live, install .substrate/ci/substrate-gate.yml into .github/workflows/, and engage the session loop (session-start/session-close). Ongoing: whenever check --strict flags drift, fix docs in the same session before closing.
 
 ## Autonomy rails — act vs. ask
