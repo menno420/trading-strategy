@@ -110,3 +110,11 @@ as venue `any`.)
 (Hand-filled by sessions, per the discovery rule. Seed rows above are
 kit-owned — they refresh at upgrade between the fence markers; local
 findings go here, below the fence.)
+
+- 2026-07-12 · capability · `any` · **Auto-merge enabler is the PR landing
+  path**: `.github/workflows/auto-merge-enabler.yml` arms native squash
+  auto-merge on non-draft `claude/*` PRs, so green agent PRs self-land —
+  installed via PR #65 (merged 2026-07-12T08:18:48Z, `bf885f0`) · evidence:
+  proven on PRs #66–#76 (e.g. enabler check run 29206751463 on #76) ·
+  workaround: none needed — the prior REST/MCP squash-on-green exception
+  (ORDER 002 era) is RETIRED-superseded by the enabler; never revive it.
