@@ -18,6 +18,19 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 
 (Verify against live source control — this section is a dated snapshot.)
 
+- MTF Bollinger mean-reversion (branch `claude/bollinger-mtf-dev`, DEV-ONLY /
+  ILLUSTRATIVE, promotion CLOSED): a dev-window test of the owner's
+  multi-timeframe Bollinger idea (lower-TF band touch gated by higher-TF band
+  position). Verdict is a clean NULL — the conditioning probabilities do not
+  separate (Test A runs opposite the hypothesis; Test B success Δ = −0.056,
+  wrong sign), and all 12 pre-declared trading configs are KILLED (every OOS
+  Sharpe delta vs buy-and-hold negative, net of costs). No FINDING/PROMOTED,
+  holdout untouched. Research note
+  [research/bollinger-mtf-dev-2026-07-12.md](research/bollinger-mtf-dev-2026-07-12.md);
+  owner-gated preregistration draft for any future minute-data OOS run
+  [proposals/bollinger-mtf-preregistration-draft.md](proposals/bollinger-mtf-preregistration-draft.md);
+  reusable causal helper `src/trading_lab/mtf.py` (tests `tests/test_mtf.py`),
+  scripts `scripts/mtf_conditioning_study.py` + `scripts/mtf_bollinger_grid.py`.
 - Position-sizing vet (branch `claude/position-sizing-vet`, DEV-ONLY /
   ILLUSTRATIVE): a research note vetting the owner's small-account sizing
   idea (80% vs 40% fractional vs fixed stake) with fractional-Kelly math
