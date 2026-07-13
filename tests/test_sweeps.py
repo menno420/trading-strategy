@@ -772,3 +772,84 @@ class TestR3TrixIchimokuGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_trix_ichimoku_variants("ichimoku_trend")
                 == sweeps.r3_trix_ichimoku_variants("ichimoku_trend"))
+
+
+class TestR3TrendNewTickersGrid:
+    def test_families_are_existing_registered_strategies(self):
+        # Slice 10 completes the trend-family coverage of the slice-3
+        # instruments with NO new strategy code: every family must already
+        # exist in the registry.
+        for fam in sweeps.R3_TREND_NEW_TICKERS_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-trend-new-tickers sweep files must match these. 12
+        # variants per family × 4 families × 6 instruments = 288 registered
+        # configs.
+        counts = sweeps.r3_trend_new_tickers_variants_per_family()
+        assert counts == {"donchian": 12, "ema_crossover": 12,
+                          "macd": 12, "supertrend_flip": 12}
+        assert len(sweeps.R3_TREND_NEW_TICKERS_INSTRUMENTS) == 6
+        assert sweeps.r3_trend_new_tickers_total_configs() == 288
+
+    def test_instruments_are_exactly_the_slice3_set(self):
+        # The lane reuses the slice-3 instruments (and caches) verbatim, and
+        # they stay disjoint from the frozen universe.
+        from trading_lab import config
+        assert (sweeps.R3_TREND_NEW_TICKERS_INSTRUMENTS
+                == sweeps.R3_NEW_TICKERS_INSTRUMENTS)
+        assert not (set(sweeps.R3_TREND_NEW_TICKERS_INSTRUMENTS)
+                    & set(config.UNIVERSE))
+
+    def test_grids_are_subsets_of_published_family_axes(self):
+        # Each slice-10 grid point must be a valid point of the family's
+        # existing published grid (P1 trend axes; the P1 video-lane
+        # supertrend grid) — no new parameter territory is opened.
+        for fam in ("donchian", "ema_crossover", "macd"):
+            published = sweeps.variants(fam)
+            for params in sweeps.r3_trend_new_tickers_variants(fam):
+                assert params in published
+        video_grid = sweeps.video_variants("supertrend_flip")
+        for params in sweeps.r3_trend_new_tickers_variants("supertrend_flip"):
+            assert params in video_grid
+
+    def test_donchian_grid_disjoint_from_slice3_probe(self):
+        # Slice 3 already registered a 6-point donchian probe on these
+        # instruments; this slice must not register any of those points a
+        # second time.
+        probe = sweeps.r3_new_tickers_variants("donchian")
+        for params in sweeps.r3_trend_new_tickers_variants("donchian"):
+            assert params not in probe
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # The supertrend MACD triple is frozen at the classic 12/26/9 (one
+        # of the two video-lane triples) and NOT swept.
+        for params in sweeps.r3_trend_new_tickers_variants("donchian"):
+            assert params["exit"] <= params["entry"]
+            assert set(params) == {"entry", "exit"}
+        for params in sweeps.r3_trend_new_tickers_variants("ema_crossover"):
+            assert params["fast"] < params["slow"]
+            assert set(params) == {"fast", "slow"}
+        for params in sweeps.r3_trend_new_tickers_variants("macd"):
+            assert params["fast"] < params["slow"]
+            assert set(params) == {"fast", "slow", "signal"}
+        for params in sweeps.r3_trend_new_tickers_variants("supertrend_flip"):
+            assert set(params) == {"st_period", "st_mult", "ema_len",
+                                   "macd_fast", "macd_slow", "macd_signal"}
+            assert (params["macd_fast"], params["macd_slow"],
+                    params["macd_signal"]) == (12, 26, 9)
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_TREND_NEW_TICKERS_FAMILIES:
+            for params in sweeps.r3_trend_new_tickers_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_trend_new_tickers_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_trend_new_tickers_variants("supertrend_flip")
+                == sweeps.r3_trend_new_tickers_variants("supertrend_flip"))
