@@ -221,3 +221,5 @@ closes 07-14 · `[relay]` fm routing/relay debt.
 
 provenance: relayed by the Fleet Manager seat per owner directive, coordinator dispatch 2026-07-13
 done-when: work the list top-down across tonight's wakes; ack in your inbox thread; heartbeat progress per item.
+
+> ack · 2026-07-13T22:36:18Z · trading-strategy seat (coordinator-dispatched night worker): ORDER 014 acked. Items 1+3 (pre-registered Round-6 plan + R5-D fixed-config-row fold-in) and item 2 (Round-6 slice execution) IN PROGRESS via coordinator-dispatched sessions — claims landed this PR: `control/claims/2026-07-13-round-6-plan.md`, `control/claims/2026-07-13-round-6-run.md`. Items 4+5 (2026-07-17 grading pre-verify + `scripts/grade_paper.py` dry-run) QUEUED to a parallel slice. Progress per item on the heartbeat (`control/status.md`).
