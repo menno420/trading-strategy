@@ -982,3 +982,118 @@ class TestAtrTrailing:
             STRATEGIES["atr_trailing"](random_walk, atr_period=1)
         with pytest.raises(ValueError, match="k"):
             STRATEGIES["atr_trailing"](random_walk, k=0.0)
+
+
+class TestXsecReversal:
+    """Round 3 slice 7 portfolio family: the mirror thesis of
+    xsec_momentum — long equal-weight the k WORST trailing-N-bar
+    performers. Panel interface, so it lives in PORTFOLIO_STRATEGIES,
+    not STRATEGIES. Tests mirror TestXsecMomentum."""
+
+    @staticmethod
+    def make_closes(growth: dict, n: int = 60) -> pd.DataFrame:
+        """Aligned closes panel, one column per ticker, constant per-bar
+        growth rates so trailing total returns rank deterministically."""
+        idx = pd.bdate_range("2024-01-01", periods=n)
+        return pd.DataFrame({t: 100.0 * (1.0 + g) ** np.arange(n)
+                             for t, g in sorted(growth.items())}, index=idx)
+
+    def test_registered_as_portfolio_strategy_only(self):
+        from trading_lab.strategies import (PORTFOLIO_STRATEGIES,
+                                            R3_XSEC_EXPANDED_FAMILY)
+        assert R3_XSEC_EXPANDED_FAMILY == ["xsec_momentum", "xsec_reversal"]
+        assert "xsec_reversal" in PORTFOLIO_STRATEGIES
+        assert "xsec_reversal" not in STRATEGIES  # panel interface
+
+    def test_ranking_selects_bottom_k_by_trailing_return(self):
+        from trading_lab.strategies.xsec_reversal import generate_weights
+        closes = self.make_closes({"A": 0.01, "B": 0.03, "C": 0.02,
+                                   "D": 0.00})
+        w = generate_weights(closes, N=5, k=2, rebalance_every=5)
+        first = w.iloc[5]  # first decision bar (iloc N)
+        assert first["A"] == 0.5 and first["D"] == 0.5  # bottom-2 (worst)
+        assert first["B"] == 0.0 and first["C"] == 0.0
+
+    def test_mirror_of_momentum_at_k_complement(self):
+        # With 4 instruments, reversal's bottom-2 is exactly the complement
+        # of momentum's top-2 on the same panel and schedule.
+        from trading_lab.strategies.xsec_momentum import \
+            generate_weights as mom
+        from trading_lab.strategies.xsec_reversal import \
+            generate_weights as rev
+        closes = self.make_closes({"A": 0.01, "B": 0.03, "C": 0.02,
+                                   "D": 0.00})
+        wm = mom(closes, L=5, k=2, rebalance_every=5).iloc[5]
+        wr = rev(closes, N=5, k=2, rebalance_every=5).iloc[5]
+        assert ((wm > 0) ^ (wr > 0)).all()  # disjoint memberships
+
+    def test_decision_rows_only_on_the_weekly_schedule(self):
+        from trading_lab.strategies.xsec_reversal import generate_weights
+        closes = self.make_closes({"A": 0.01, "B": 0.02}, n=30)
+        w = generate_weights(closes, N=10, k=1, rebalance_every=5)
+        decision_ilocs = np.nonzero(~w.isna().all(axis=1).to_numpy())[0]
+        assert list(decision_ilocs) == [10, 15, 20, 25]
+        # warm-up: nothing before iloc N
+        assert w.iloc[:10].isna().all().all()
+
+    def test_weights_are_equal_weight_bottom_k(self):
+        from trading_lab.strategies.xsec_reversal import generate_weights
+        closes = self.make_closes({"A": 0.01, "B": 0.03, "C": 0.02,
+                                   "D": 0.00}, n=90)
+        for k in (2, 3):
+            w = generate_weights(closes, N=5, k=k, rebalance_every=5)
+            rows = w.dropna(how="all")
+            assert len(rows) > 0
+            assert np.allclose(rows.sum(axis=1), 1.0)
+            assert ((rows == 0.0) | np.isclose(rows, 1.0 / k)).all().all()
+            assert ((rows > 0).sum(axis=1) == k).all()
+
+    def test_membership_switches_when_laggard_rotates(self):
+        from trading_lab.strategies.xsec_reversal import generate_weights
+        # A lags for the first half (flat while B compounds), then the
+        # roles swap: B goes flat while A accelerates.
+        n = 80
+        a = np.concatenate([np.full(40, 100.0),
+                            100.0 * 1.03 ** np.arange(40)])
+        b = np.concatenate([100.0 * 1.03 ** np.arange(40),
+                            np.full(40, 100.0 * 1.03 ** 39)])
+        idx = pd.bdate_range("2024-01-01", periods=n)
+        closes = pd.DataFrame({"A": a, "B": b}, index=idx)
+        w = generate_weights(closes, N=10, k=1, rebalance_every=5)
+        assert w.iloc[10]["A"] == 1.0   # A is the early laggard
+        assert w.iloc[75]["B"] == 1.0   # B is the late laggard
+
+    def test_tie_breaks_deterministically_by_column_order(self):
+        from trading_lab.strategies.xsec_reversal import generate_weights
+        closes = self.make_closes({"A": 0.02, "B": 0.02})  # identical returns
+        w = generate_weights(closes, N=5, k=1, rebalance_every=5)
+        assert w.iloc[5]["A"] == 1.0 and w.iloc[5]["B"] == 0.0
+
+    def test_causality_prefix_invariance(self):
+        from trading_lab.strategies.xsec_reversal import generate_weights
+        rng = np.random.default_rng(42)
+        idx = pd.bdate_range("2024-01-01", periods=150)
+        closes = pd.DataFrame(
+            {t: 100.0 * np.exp(np.cumsum(rng.normal(0.0, 0.02, 150)))
+             for t in ("A", "B", "C")}, index=idx)
+        full = generate_weights(closes, N=10, k=2, rebalance_every=5)
+        cut = 100
+        truncated = generate_weights(closes.iloc[:cut], N=10, k=2,
+                                     rebalance_every=5)
+        pd.testing.assert_frame_equal(full.iloc[:cut], truncated)
+
+    def test_rejects_bad_params(self):
+        from trading_lab.strategies.xsec_reversal import generate_weights
+        closes = self.make_closes({"A": 0.01, "B": 0.02})
+        with pytest.raises(ValueError, match="N"):
+            generate_weights(closes, N=0, k=1)
+        with pytest.raises(ValueError, match="k"):
+            generate_weights(closes, N=5, k=0)
+        with pytest.raises(ValueError, match="k"):
+            generate_weights(closes, N=5, k=3)  # only 2 instruments
+        with pytest.raises(ValueError, match="rebalance_every"):
+            generate_weights(closes, N=5, k=1, rebalance_every=0)
+        with pytest.raises(ValueError, match="NaN"):
+            bad = closes.copy()
+            bad.iloc[3, 0] = np.nan
+            generate_weights(bad, N=5, k=1)

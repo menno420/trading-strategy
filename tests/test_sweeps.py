@@ -628,3 +628,81 @@ class TestR3BreakoutGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_breakout_variants("atr_trailing")
                 == sweeps.r3_breakout_variants("atr_trailing"))
+
+
+class TestR3XsecExpandedGrid:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import (PORTFOLIO_STRATEGIES,
+                                            R3_XSEC_EXPANDED_FAMILY,
+                                            STRATEGIES)
+        assert (set(sweeps.R3_XSEC_EXPANDED_FAMILIES)
+                == set(R3_XSEC_EXPANDED_FAMILY))
+        for fam in sweeps.R3_XSEC_EXPANDED_FAMILIES:
+            assert fam in PORTFOLIO_STRATEGIES
+            assert fam not in STRATEGIES  # panel interface, not per-ticker
+
+    def test_counts_match_declaration(self):
+        # Declared BEFORE the sweep ran: xsec_momentum reuses the Round-2
+        # R3 axes verbatim (L ∈ {63, 126, 252} × k ∈ {2, 3} = 6);
+        # xsec_reversal mirrors them at short horizons (N ∈ {5, 10, 21} ×
+        # k ∈ {2, 3} = 6). Portfolio lane: configs are grid points, NOT ×
+        # instruments — 12 registered configs total.
+        counts = sweeps.r3_xsec_expanded_variants_per_family()
+        assert counts == {"xsec_momentum": 6, "xsec_reversal": 6}
+        assert sweeps.r3_xsec_expanded_total_configs() == 12
+
+    def test_momentum_axes_are_the_round2_axes_verbatim(self):
+        assert (sweeps.r3_xsec_expanded_variants("xsec_momentum")
+                == sweeps.r2_xsec_variants("xsec_momentum"))
+
+    def test_basket_is_the_14_equity_etf_instruments(self):
+        # Frozen 8-ticker universe minus BTC-USD, plus the six slice-3
+        # instruments — all-equity/ETF so the aligned common index stays
+        # on exchange trading days. Alphabetical (panel column order =
+        # ranking tie-break order).
+        assert sweeps.R3_XSEC_EXPANDED_INSTRUMENTS == (
+            "AAPL", "AMZN", "GLD", "GOOGL", "JPM", "META", "MSFT",
+            "NVDA", "QQQ", "SLV", "SPY", "TLT", "TSLA", "XOM")
+        assert len(sweeps.R3_XSEC_EXPANDED_INSTRUMENTS) == 14
+        assert "BTC-USD" not in sweeps.R3_XSEC_EXPANDED_INSTRUMENTS
+        assert (tuple(sorted(sweeps.R3_XSEC_EXPANDED_INSTRUMENTS))
+                == sweeps.R3_XSEC_EXPANDED_INSTRUMENTS)
+
+    def test_grids_are_exactly_the_registered_products(self):
+        variants = sweeps.r3_xsec_expanded_variants("xsec_reversal")
+        assert ({(p["N"], p["k"]) for p in variants}
+                == {(N, k) for N in (5, 10, 21) for k in (2, 3)})
+        for params in variants:
+            assert set(params) == {"N", "k"}  # nothing else is swept
+
+    def test_rebalance_cadences_frozen_not_swept(self):
+        assert sweeps.R3_XSEC_EXPANDED_REBALANCE_EVERY == {
+            "xsec_momentum": 21, "xsec_reversal": 5}
+        for fam in sweeps.R3_XSEC_EXPANDED_FAMILIES:
+            for params in sweeps.r3_xsec_expanded_variants(fam):
+                assert "rebalance_every" not in params
+
+    def test_every_variant_runs(self):
+        from trading_lab.strategies import PORTFOLIO_STRATEGIES
+        rng = np.random.default_rng(23)
+        idx = pd.bdate_range("2020-01-01", periods=300)
+        closes = pd.DataFrame(
+            {t: 100.0 * np.exp(np.cumsum(rng.normal(0.0, 0.02, 300)))
+             for t in sweeps.R3_XSEC_EXPANDED_INSTRUMENTS}, index=idx)
+        for fam in sweeps.R3_XSEC_EXPANDED_FAMILIES:
+            rebal = sweeps.R3_XSEC_EXPANDED_REBALANCE_EVERY[fam]
+            for params in sweeps.r3_xsec_expanded_variants(fam):
+                w = PORTFOLIO_STRATEGIES[fam](
+                    closes, rebalance_every=rebal, **params)
+                rows = w.dropna(how="all")
+                assert len(rows) > 0
+                assert np.allclose(rows.sum(axis=1), 1.0)
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_xsec_expanded_variants("astrology")
+
+    def test_deterministic_order(self):
+        for fam in sweeps.R3_XSEC_EXPANDED_FAMILIES:
+            assert (sweeps.r3_xsec_expanded_variants(fam)
+                    == sweeps.r3_xsec_expanded_variants(fam))
