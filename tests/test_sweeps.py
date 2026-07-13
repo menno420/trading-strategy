@@ -272,3 +272,49 @@ class TestR2XsecMomentumGrid:
     def test_deterministic_order(self):
         assert (sweeps.r2_xsec_variants("xsec_momentum")
                 == sweeps.r2_xsec_variants("xsec_momentum"))
+
+
+class TestR3StochWillrGrid:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R3_STOCH_WILLR_FAMILY
+        assert (set(sweeps.R3_STOCH_WILLR_FAMILIES)
+                == set(R3_STOCH_WILLR_FAMILY))
+        for fam in sweeps.R3_STOCH_WILLR_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-stoch-willr sweep files must match these. 12 variants
+        # per family over the full 8-ticker universe = 192 registered
+        # configs.
+        from trading_lab import config
+        counts = sweeps.r3_stoch_willr_variants_per_family()
+        assert counts == {"stochastic_reversion": 12,
+                          "williams_r_reversion": 12}
+        assert sweeps.R3_STOCH_WILLR_INSTRUMENTS == tuple(config.UNIVERSE)
+        assert len(sweeps.R3_STOCH_WILLR_INSTRUMENTS) == 8
+        assert sweeps.r3_stoch_willr_total_configs() == 192
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # The stochastic d_period smoothing (3) is frozen at the strategy
+        # default and NOT swept.
+        for params in sweeps.r3_stoch_willr_variants("stochastic_reversion"):
+            assert params["buy_below"] < params["sell_above"]
+            assert set(params) == {"k_period", "buy_below", "sell_above"}
+        for params in sweeps.r3_stoch_willr_variants("williams_r_reversion"):
+            assert params["buy_below"] < params["sell_above"]
+            assert set(params) == {"period", "buy_below", "sell_above"}
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_STOCH_WILLR_FAMILIES:
+            for params in sweeps.r3_stoch_willr_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_stoch_willr_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_stoch_willr_variants("stochastic_reversion")
+                == sweeps.r3_stoch_willr_variants("stochastic_reversion"))

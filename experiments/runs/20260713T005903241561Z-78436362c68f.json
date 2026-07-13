@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.21377063927729822,
+    "max_drawdown": -0.3646004454130759,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9142669643667102,
+    "sortino": 0.9094050636198474,
+    "total_return": 17.269032233311567,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "78436362c68f",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T00:59:03+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "1ff9494d985270f719e9401b76c0a1340598edbb",
+  "instrument": "MSFT",
+  "metrics": {
+    "cagr": 0.10830579040754396,
+    "max_drawdown": -0.21168008277244477,
+    "n_bars": 3779,
+    "n_trades": 191,
+    "sharpe": 0.7890265096533156,
+    "sortino": 0.44119075828041576,
+    "total_return": 3.6743024822423935,
+    "turnover_per_year": 12.736702831436888,
+    "win_rate": 0.78125
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 stoch-willr sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-stoch-willr/williams_r_reversion__MSFT.json)",
+  "params": {
+    "buy_below": -80,
+    "period": 14,
+    "sell_above": -20
+  },
+  "run_id": "20260713T005903241561Z-78436362c68f",
+  "schema_version": 1,
+  "strategy": "williams_r_reversion",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
