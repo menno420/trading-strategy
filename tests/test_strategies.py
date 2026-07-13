@@ -857,3 +857,128 @@ class TestXsecMomentum:
             bad = closes.copy()
             bad.iloc[3, 0] = np.nan
             generate_weights(bad, L=5, k=1)
+
+
+class TestBollingerBreakout:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["bollinger_breakout"](random_walk, period=20,
+                                               num_std=2.0)
+        assert (pos.iloc[:19] == 0.0).all()
+
+    def test_enters_on_breakout_exits_below_middle(self):
+        # Flat base (std ~ 0), a hard jump far above the upper band (entry),
+        # a plateau, then a crash far below the middle band (exit) — the
+        # keltner_breakout test path, re-run against SMA + k*std bands.
+        prices = np.concatenate([
+            np.full(40, 100.0),   # base: bands are tight around 100
+            np.full(30, 140.0),   # breakout bar at iloc[40], then plateau
+            np.full(20, 80.0),    # crash below the middle band at iloc[70]
+        ])
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["bollinger_breakout"](ohlcv, period=5, num_std=1.5)
+        assert pos.iloc[40] == 1.0             # breakout bar goes long
+        assert (pos.iloc[40:70] == 1.0).all()  # held through the plateau
+        assert (pos.iloc[70:] == 0.0).all()    # exit once close < middle
+
+    def test_holds_between_middle_and_upper_band(self):
+        # Late in the plateau the bands have converged onto the close
+        # (std -> 0, middle == close): no fresh breakout fires there, yet
+        # the state machine must HOLD the long, not flip-flop.
+        prices = np.concatenate([np.full(40, 100.0), np.full(60, 140.0)])
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["bollinger_breakout"](ohlcv, period=5, num_std=1.5)
+        close = ohlcv["close"]
+        middle = close.rolling(5).mean()
+        assert np.allclose(close.iloc[80:], middle.iloc[80:])
+        assert (pos.iloc[80:] == 1.0).all()
+
+    def test_inverse_thesis_of_reversion_in_steady_uptrend(self):
+        # A steady uptrend keeps the close pinned above the middle band:
+        # the breakout family rides it long while the reversion family
+        # (which buys only stretches BELOW the lower band) never enters.
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        pos_break = STRATEGIES["bollinger_breakout"](up, period=20,
+                                                     num_std=1.0)
+        pos_revert = STRATEGIES["bollinger_reversion"](up, lookback=20,
+                                                       z_entry=1.0)
+        assert (pos_break.iloc[25:] == 1.0).all()
+        assert (pos_revert == 0.0).all()
+
+    def test_flat_series_never_enters(self):
+        # Constant price: std = 0, close == middle == upper band. Entry
+        # needs a strict '>' (tie resolves against the strategy) — flat.
+        flat = make_ohlcv(np.full(120, 100.0))
+        pos = STRATEGIES["bollinger_breakout"](flat, period=5, num_std=2.0)
+        assert (pos == 0.0).all()
+
+    def test_flat_in_downtrend(self):
+        down = make_ohlcv(np.linspace(200, 100, 160))
+        pos = STRATEGIES["bollinger_breakout"](down, period=20, num_std=1.5)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="period"):
+            STRATEGIES["bollinger_breakout"](random_walk, period=1)
+        with pytest.raises(ValueError, match="num_std"):
+            STRATEGIES["bollinger_breakout"](random_walk, num_std=0.0)
+
+
+class TestAtrTrailing:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["atr_trailing"](random_walk, entry_lookback=20,
+                                         atr_period=14, k=3.0)
+        assert (pos.iloc[:20] == 0.0).all()
+
+    def test_enters_on_channel_breakout_exits_on_trailing_stop(self):
+        # Flat base, a hard jump above the 20-bar high channel (entry), a
+        # plateau (ATR decays toward 0, stop ratchets up under the highs),
+        # then a modest dip that pierces highest-close - k*ATR (exit).
+        prices = np.concatenate([
+            np.full(40, 100.0),   # base: channel pinned at 100
+            np.full(30, 140.0),   # breakout bar at iloc[40], then plateau
+            np.full(20, 130.0),   # dip below the tight stop at iloc[70]
+        ])
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["atr_trailing"](ohlcv, entry_lookback=20,
+                                         atr_period=14, k=2.0)
+        assert pos.iloc[40] == 1.0             # breakout bar goes long
+        assert (pos.iloc[40:70] == 1.0).all()  # held through the plateau
+        assert (pos.iloc[70:] == 0.0).all()    # stopped out on the dip;
+        # no re-entry: 130 never breaks the (140-high) channel again
+
+    def test_stop_ratchets_with_highest_close_not_entry_price(self):
+        # After a rally the trade must be stopped out on a pullback that is
+        # still far ABOVE the entry price: the chandelier hangs from the
+        # highest close since entry, not from the entry level.
+        prices = np.concatenate([
+            np.full(40, 100.0),           # base
+            np.linspace(104, 200, 30),    # breakout + rally to 200
+            np.full(20, 150.0),           # pullback: > entry, < ratcheted stop
+        ])
+        ohlcv = make_ohlcv(prices)
+        pos = STRATEGIES["atr_trailing"](ohlcv, entry_lookback=20,
+                                         atr_period=14, k=2.0)
+        assert (pos.iloc[41:70] == 1.0).all()  # long through the rally
+        assert (pos.iloc[70:] == 0.0).all()    # stopped despite close > entry
+
+    def test_flat_series_never_enters(self):
+        # Constant price: close equals the prior 20-bar high. Entry needs a
+        # strict '>' (tie resolves against the strategy) — flat forever.
+        flat = make_ohlcv(np.full(120, 100.0))
+        pos = STRATEGIES["atr_trailing"](flat, entry_lookback=20,
+                                         atr_period=14, k=3.0)
+        assert (pos == 0.0).all()
+
+    def test_flat_in_downtrend(self):
+        down = make_ohlcv(np.linspace(200, 100, 160))
+        pos = STRATEGIES["atr_trailing"](down, entry_lookback=20,
+                                         atr_period=14, k=2.0)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="entry_lookback"):
+            STRATEGIES["atr_trailing"](random_walk, entry_lookback=1)
+        with pytest.raises(ValueError, match="atr_period"):
+            STRATEGIES["atr_trailing"](random_walk, atr_period=1)
+        with pytest.raises(ValueError, match="k"):
+            STRATEGIES["atr_trailing"](random_walk, k=0.0)

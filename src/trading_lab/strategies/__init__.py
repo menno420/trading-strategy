@@ -41,7 +41,14 @@ Families:
   slice 5 (lane r3-meanrev-hourly × all-8 × hourly): NO new strategies —
   the four existing mean-reversion families (rsi_mean_reversion,
   bollinger_reversion, stochastic_reversion, williams_r_reversion)
-  re-swept on hourly bars (timeframe expansion).
+  re-swept on hourly bars (timeframe expansion); slice 6 (lane
+  r3-breakout × 12-ticker mixed set × daily): bollinger_breakout (long on
+  close crossing ABOVE the upper Bollinger band, exit below the middle
+  band — the trend/breakout INVERSE of bollinger_reversion's thesis, and
+  the SMA+k·std sibling of keltner_breakout), atr_trailing
+  (chandelier-style ATR trailing stop: N-day-high breakout entry, exit
+  when close falls below highest-close-since-entry − k×ATR — the lab's
+  first stateful trailing-stop exit).
 
 Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
 closes (one column per instrument) and return a target-weight DataFrame
@@ -52,12 +59,13 @@ are deliberately kept out of ``STRATEGIES``.
 
 from __future__ import annotations
 
-from . import (adx_filtered_sma, aroon_trend, bollinger_reversion,
-               buy_and_hold, cci_reversion, donchian, ema_crossover,
-               keltner_breakout, macd, macd_supertrend, pullback,
-               roc_momentum, rsi_mean_reversion, sma_crossover,
-               stochastic_reversion, supertrend_flip, vol_filtered_trend,
-               williams_r_reversion, xsec_momentum)
+from . import (adx_filtered_sma, aroon_trend, atr_trailing,
+               bollinger_breakout, bollinger_reversion, buy_and_hold,
+               cci_reversion, donchian, ema_crossover, keltner_breakout,
+               macd, macd_supertrend, pullback, roc_momentum,
+               rsi_mean_reversion, sma_crossover, stochastic_reversion,
+               supertrend_flip, vol_filtered_trend, williams_r_reversion,
+               xsec_momentum)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -78,6 +86,8 @@ STRATEGIES = {
     "adx_filtered_sma": adx_filtered_sma.generate,
     "aroon_trend": aroon_trend.generate,
     "cci_reversion": cci_reversion.generate,
+    "bollinger_breakout": bollinger_breakout.generate,
+    "atr_trailing": atr_trailing.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -104,6 +114,8 @@ DEFAULT_PARAMS = {
                          "adx_min": 20.0},
     "aroon_trend": {"period": 25, "entry": 0.0, "exit": 0.0},
     "cci_reversion": {"period": 20, "buy_below": -100, "sell_above": 100},
+    "bollinger_breakout": {"period": 20, "num_std": 2.0},
+    "atr_trailing": {"entry_lookback": 20, "atr_period": 14, "k": 3.0},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -154,6 +166,12 @@ R3_AROON_CCI_FAMILY = ["aroon_trend", "cci_reversion"]
 R3_MEANREV_HOURLY_FAMILY = ["rsi_mean_reversion", "bollinger_reversion",
                             "stochastic_reversion", "williams_r_reversion"]
 
+# Round 3 slice 6 (ORDER 012 night-run, post-holdout dev-only): the two
+# breakout/trailing-stop trend families swept in the r3-breakout ×
+# 12-ticker mixed set (frozen 8-ticker universe + SPY/QQQ/TSLA/TLT) ×
+# daily lane — the trend counterparts of the existing band families.
+R3_BREAKOUT_FAMILY = ["bollinger_breakout", "atr_trailing"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
 }
@@ -164,9 +182,11 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "R2_VOL_TREND_FAMILY", "R2_KELTNER_FAMILY", "R2_XSEC_FAMILY",
            "R3_STOCH_WILLR_FAMILY", "R3_ROC_ADX_FAMILY",
            "R3_AROON_CCI_FAMILY", "R3_MEANREV_HOURLY_FAMILY",
+           "R3_BREAKOUT_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
            "vol_filtered_trend", "keltner_breakout", "stochastic_reversion",
            "williams_r_reversion", "roc_momentum", "adx_filtered_sma",
-           "aroon_trend", "cci_reversion", "xsec_momentum"]
+           "aroon_trend", "cci_reversion", "bollinger_breakout",
+           "atr_trailing", "xsec_momentum"]

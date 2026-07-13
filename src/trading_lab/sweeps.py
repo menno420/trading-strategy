@@ -684,3 +684,80 @@ def r3_meanrev_hourly_total_configs() -> int:
     R1/R2 and the earlier Round-3 lanes)."""
     return (sum(r3_meanrev_hourly_variants_per_family().values())
             * len(R3_MEANREV_HOURLY_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 6: Bollinger breakout + ATR trailing stop (lane: r3-breakout
+# × 12-ticker mixed set × daily — ORDER 012 night-run, post-holdout
+# DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# Two breakout/trailing-stop TREND families, declared here BEFORE the sweep
+# ran — the trend counterparts of the existing band families:
+# bollinger_breakout is the inverse thesis of the merged bollinger_reversion
+# (long on close crossing ABOVE the upper band; exit below the MIDDLE band,
+# the committed exit semantic — the SMA+k·std sibling of keltner_breakout's
+# EMA+m·ATR channel); atr_trailing is a chandelier-style trailing stop
+# (N-day-high breakout entry, exit below highest-close-since-entry − k×ATR).
+# bollinger_breakout axes reuse the reversion family's published band axes
+# (period {10, 20, 50} spans the reversion lookbacks plus the Keltner slow
+# 50; num_std {1.0, 1.5, 2.0, 2.5} is the reversion z_entry axis verbatim,
+# so every band width already sits in the burden ledger). atr_trailing axes
+# anchor the classics: turtle entry channels {20, 55}, Wilder/chandelier ATR
+# windows {14, 22}, and the published chandelier multipliers {2.0, 3.0}
+# bracketed by a loose 4.0. The slice-2/4 committed-control-arm convention
+# (banded/gated grids must include their neutral arm) is NOT applicable
+# here: neither grid has a hysteresis band or an on/off gate — both are
+# pure threshold families, like the reversion grids slice 5 noted the same
+# for. Kept bounded on purpose: every extra variant raises the
+# multiple-testing burden on any winner.
+
+_R3_BREAKOUT_AXES: dict[str, dict[str, list]] = {
+    "bollinger_breakout": {"period": [10, 20, 50],
+                           "num_std": [1.0, 1.5, 2.0, 2.5]},
+    "atr_trailing": {"entry_lookback": [20, 55],
+                     "atr_period": [14, 22],
+                     "k": [2.0, 3.0, 4.0]},
+}
+
+_R3_BREAKOUT_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "bollinger_breakout": lambda p: True,
+    "atr_trailing": lambda p: True,
+}
+
+R3_BREAKOUT_FAMILIES = tuple(_R3_BREAKOUT_AXES)
+
+# The 12-ticker mixed set of the slice-4 lane, reused verbatim: the full
+# frozen 8-ticker universe (config.UNIVERSE order) PLUS four of the slice-3
+# new instruments (SPY, QQQ, TSLA, TLT). config.UNIVERSE stays frozen; the
+# new instruments remain lane-local, reusing the slice-3 caches.
+R3_BREAKOUT_INSTRUMENTS = ("AAPL", "MSFT", "NVDA", "GOOGL", "AMZN",
+                           "META", "GLD", "SLV",
+                           "SPY", "QQQ", "TSLA", "TLT")
+
+
+def r3_breakout_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-6 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_BREAKOUT_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R3 breakout family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_BREAKOUT_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_breakout_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-6 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_breakout_variants(fam))
+            for fam in R3_BREAKOUT_FAMILIES}
+
+
+def r3_breakout_total_configs() -> int:
+    """Total registered Round-3 slice-6 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes)."""
+    return (sum(r3_breakout_variants_per_family().values())
+            * len(R3_BREAKOUT_INSTRUMENTS))
