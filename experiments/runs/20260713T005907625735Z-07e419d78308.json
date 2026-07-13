@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.26328655934387113,
+    "max_drawdown": -0.557692284578402,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8638800519755336,
+    "sortino": 0.8727857658651618,
+    "total_return": 32.275558046263065,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "07e419d78308",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T00:59:07+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "1ff9494d985270f719e9401b76c0a1340598edbb",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.08890530533871477,
+    "max_drawdown": -0.41097766252982193,
+    "n_bars": 3779,
+    "n_trades": 201,
+    "sharpe": 0.5272072789800246,
+    "sortino": 0.3063980606055813,
+    "total_return": 2.5867814944520644,
+    "turnover_per_year": 13.403545911616831,
+    "win_rate": 0.6732673267326733
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 stoch-willr sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-stoch-willr/williams_r_reversion__AMZN.json)",
+  "params": {
+    "buy_below": -80,
+    "period": 14,
+    "sell_above": -20
+  },
+  "run_id": "20260713T005907625735Z-07e419d78308",
+  "schema_version": 1,
+  "strategy": "williams_r_reversion",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
