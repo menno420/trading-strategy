@@ -1042,3 +1042,80 @@ class TestR3GatedNewTickersGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_gated_new_tickers_variants("macd_supertrend")
                 == sweeps.r3_gated_new_tickers_variants("macd_supertrend"))
+
+
+class TestR3BtcCoverageGrid:
+    # The declared slice-13 families, in lane order — the ten
+    # single-instrument families Round 3 added, none of which had ever
+    # run on BTC-USD before this slice.
+    EXPECTED_FAMILIES = ("stochastic_reversion", "williams_r_reversion",
+                         "roc_momentum", "adx_filtered_sma",
+                         "aroon_trend", "cci_reversion",
+                         "bollinger_breakout", "atr_trailing",
+                         "trix_momentum", "ichimoku_trend")
+
+    def test_families_are_exactly_the_round3_single_instrument_set(self):
+        # Slice 13 completes the BTC-USD coverage of the Round-3 families
+        # with NO new strategy code: every family must already exist in
+        # the registry, and the set is pinned (xsec_momentum is a basket
+        # strategy and deliberately out of scope — its slice-9 lane
+        # excludes BTC-USD over the calendar-mixing problem).
+        assert sweeps.R3_BTC_COVERAGE_FAMILIES == self.EXPECTED_FAMILIES
+        for fam in sweeps.R3_BTC_COVERAGE_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger
+        # records and the r3-btc-coverage sweep files must match these.
+        # 12 × 10 families × 1 instrument = 120 registered configs.
+        counts = sweeps.r3_btc_coverage_variants_per_family()
+        assert counts == {fam: 12 for fam in self.EXPECTED_FAMILIES}
+        assert sweeps.R3_BTC_COVERAGE_INSTRUMENTS == ("BTC-USD",)
+        assert sweeps.r3_btc_coverage_total_configs() == 120
+
+    def test_grids_are_the_source_lane_grids_verbatim(self):
+        # The whole point of the lane: each family's Round-3 grid reused
+        # VERBATIM — the subset relation degenerates to equality with the
+        # declaring lane's grid (delegation makes drift impossible; this
+        # pin makes it visible).
+        assert (sweeps.r3_btc_coverage_variants("stochastic_reversion")
+                == sweeps.r3_stoch_willr_variants("stochastic_reversion"))
+        assert (sweeps.r3_btc_coverage_variants("williams_r_reversion")
+                == sweeps.r3_stoch_willr_variants("williams_r_reversion"))
+        assert (sweeps.r3_btc_coverage_variants("roc_momentum")
+                == sweeps.r3_roc_adx_variants("roc_momentum"))
+        assert (sweeps.r3_btc_coverage_variants("adx_filtered_sma")
+                == sweeps.r3_roc_adx_variants("adx_filtered_sma"))
+        assert (sweeps.r3_btc_coverage_variants("aroon_trend")
+                == sweeps.r3_aroon_cci_variants("aroon_trend"))
+        assert (sweeps.r3_btc_coverage_variants("cci_reversion")
+                == sweeps.r3_aroon_cci_variants("cci_reversion"))
+        assert (sweeps.r3_btc_coverage_variants("bollinger_breakout")
+                == sweeps.r3_breakout_variants("bollinger_breakout"))
+        assert (sweeps.r3_btc_coverage_variants("atr_trailing")
+                == sweeps.r3_breakout_variants("atr_trailing"))
+        assert (sweeps.r3_btc_coverage_variants("trix_momentum")
+                == sweeps.r3_trix_ichimoku_variants("trix_momentum"))
+        assert (sweeps.r3_btc_coverage_variants("ichimoku_trend")
+                == sweeps.r3_trix_ichimoku_variants("ichimoku_trend"))
+
+    def test_instrument_is_lane_local(self):
+        # BTC-USD is not in the frozen universe; the lane reuses the
+        # committed P1 video-lane cache and fetches nothing.
+        from trading_lab import config
+        assert not (set(sweeps.R3_BTC_COVERAGE_INSTRUMENTS)
+                    & set(config.UNIVERSE))
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_BTC_COVERAGE_FAMILIES:
+            for params in sweeps.r3_btc_coverage_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_btc_coverage_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_btc_coverage_variants("ichimoku_trend")
+                == sweeps.r3_btc_coverage_variants("ichimoku_trend"))
