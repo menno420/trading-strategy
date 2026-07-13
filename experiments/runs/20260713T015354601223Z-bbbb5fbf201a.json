@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.29438417184440935,
+    "max_drawdown": -0.22752014737711135,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.0537931964448592,
+    "sortino": 1.0644793070114111,
+    "total_return": 0.47704820339228293,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "bbbb5fbf201a",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T01:53:54+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "5fbdca804d37625d18bfb3093711b2085266ac3c",
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.12873474504371973,
+    "max_drawdown": -0.04441468058670428,
+    "n_bars": 2476,
+    "n_trades": 14,
+    "sharpe": 1.6155259962795316,
+    "sortino": 0.5388331003826299,
+    "total_return": 0.20087521379462014,
+    "turnover_per_year": 9.261712439418417,
+    "win_rate": 1.0
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 meanrev-hourly sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-meanrev-hourly/rsi_mean_reversion__GOOGL.json)",
+  "params": {
+    "overbought": 60,
+    "oversold": 20,
+    "period": 14
+  },
+  "run_id": "20260713T015354601223Z-bbbb5fbf201a",
+  "schema_version": 1,
+  "strategy": "rsi_mean_reversion",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}
