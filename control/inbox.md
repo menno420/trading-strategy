@@ -180,6 +180,9 @@ why: owner morning review.
 done-when: report in both files; Fleet Manager compiles the roll-up.
 
 ## ORDER 014 · 2026-07-13T22:14Z · status: new
+priority: P1
+do: work this seat's EAP final-night worklist below, top-down, across tonight's wakes (fm ORDER 045 relay; body verbatim below).
+why: owner directive 2026-07-13 — last night of the EAP; every project needs a full list to work tonight.
 <!-- ORDER BODY for trading-strategy control/inbox.md — append verbatim below the
      '## ORDER NNN · <ts> · status: new' header the lane worker adds
      (repo's own next free number + fresh date -u timestamp). -->
