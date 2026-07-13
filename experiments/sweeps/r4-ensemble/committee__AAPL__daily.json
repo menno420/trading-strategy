@@ -1,0 +1,505 @@
+{
+  "beats_benchmark": true,
+  "beats_best_member": true,
+  "benchmark_oos_sharpe": 0.9629342541555703,
+  "best_member": {
+    "note": "best committed stitched OOS Sharpe over ALL the group's KEEP lanes (superset incl. deduped-out duplicates \u2014 can only raise the bar)",
+    "oos_sharpe": 1.1321373853930108,
+    "source_file": "experiments/sweeps/r3-aroon-cci/aroon_trend__AAPL.json",
+    "strategy": "aroon_trend",
+    "sweep": "r3-aroon-cci"
+  },
+  "committee": {
+    "dedup": "one member per family; performance-blind lexicographic (sweep, source_file) tiebreak; deduped-out lanes still count in the best-member comparison",
+    "deduped_out": [],
+    "grouping": "instrument x timeframe \u2014 committees never mix timeframes (adopted convention, plan silent; declared in the grid commit)",
+    "member_count": 3,
+    "members": [
+      {
+        "committed_oos_sharpe": 1.1321373853930108,
+        "per_split_params": [
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": 0.0,
+              "period": 25
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": 0.0,
+              "period": 25
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": 0.0,
+              "period": 25
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": -50.0,
+              "period": 14
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -50.0,
+              "period": 14
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 14
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 14
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 14
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 14
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 14
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 1.1321373853930108,
+        "source_file": "experiments/sweeps/r3-aroon-cci/aroon_trend__AAPL.json",
+        "strategy": "aroon_trend",
+        "sweep": "r3-aroon-cci"
+      },
+      {
+        "committed_oos_sharpe": 1.044589430364566,
+        "per_split_params": [
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 10
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 10
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "num_std": 2.5,
+              "period": 10
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "num_std": 2.0,
+              "period": 20
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.5,
+              "period": 20
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 20
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 20
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 20
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 20
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 20
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 1.044589430364566,
+        "source_file": "experiments/sweeps/r3-breakout/bollinger_breakout__AAPL.json",
+        "strategy": "bollinger_breakout",
+        "sweep": "r3-breakout"
+      },
+      {
+        "committed_oos_sharpe": 0.9853528010327962,
+        "per_split_params": [
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 0
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "period": 12,
+              "signal_period": 0
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "period": 12,
+              "signal_period": 0
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 5
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 5
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 5
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 5
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 5
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 5
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "period": 9,
+              "signal_period": 0
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.9853528010327962,
+        "source_file": "experiments/sweeps/r3-trix-ichimoku/trix_momentum__AAPL.json",
+        "strategy": "trix_momentum",
+        "sweep": "r3-trix-ichimoku"
+      }
+    ],
+    "weighting": "equal (position = mean of member positions)"
+  },
+  "committee_oos_sharpe": 1.1452887554199804,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:29:15+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "committee_equal_weight",
+  "fidelity_guard": {
+    "all_members_reproduced": true,
+    "rule": "every member's baseline replay must reproduce its committed stitched OOS Sharpe within 1e-08"
+  },
+  "git_sha": "90a5f17b11c1f570ce4f4e749713ea44125217f3",
+  "instrument": "AAPL",
+  "kill_criterion": "KEEP (dev-candidate only) iff committee stitched OOS Sharpe > best single member AND > same-window same-cost B&H AND > 0; ties/ambiguity KILL",
+  "ledger": "ledgered: one row per committee, strategy 'committee_equal_weight', variants_tried=1 \u2014 a committee is a genuinely new composite run (unlike the R4-B replay, which was report-only)",
+  "ledger_file": "experiments/runs/20260713T102915943304Z-c772a87c8fad.json",
+  "member_oos_sharpes": {
+    "aroon_trend@r3-aroon-cci": 1.1321373853930108,
+    "bollinger_breakout@r3-breakout": 1.044589430364566,
+    "trix_momentum@r3-trix-ichimoku": 0.9853528010327962
+  },
+  "n_bars": 3779,
+  "no_research": "frozen replay of each member's committed walk-forward per-split params on the same test windows; the committee (the mean) is the only new object \u2014 no search of any kind",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-C \u2014 Ensemble / committee of survivors",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "ORDER 007 bar at the round-standard K=12 \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding); the committee is one pre-declared config but the bar is never lowered",
+    "sharpe_delta": 0.1823545012644101,
+    "sharpe_se": 0.3166389982691005,
+    "timeframe": "daily",
+    "tstat": 0.5759066389839742,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "sweep": "r4-ensemble",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "verdict": "KEEP (dev-candidate only)",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.2693149788889191,
+      "max_drawdown": -0.37393891494272313,
+      "n_bars": 2520,
+      "n_trades": 1,
+      "sharpe": 0.9629342541555703,
+      "sortino": 0.9384038436723108,
+      "total_return": 9.856605346814524,
+      "turnover_per_year": 0.1,
+      "win_rate": 1.0
+    },
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.19427139384334824,
+      "max_drawdown": -0.2033149787392895,
+      "n_bars": 2520,
+      "sharpe": 1.1452887554199804,
+      "sortino": 0.9922910352015886,
+      "total_return": 4.902422569779277
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 1.059409026669097
+      },
+      {
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": -0.09086882694488371
+      },
+      {
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.039627814927265435
+      },
+      {
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 2.5121980494828278
+      },
+      {
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -0.2856836670276986
+      },
+      {
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 3.094673448484301
+      },
+      {
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 1.5022111481035287
+      },
+      {
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 1.3540521721047467
+      },
+      {
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -0.019488763072671927
+      },
+      {
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 1.517464117776854
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008
+  }
+}

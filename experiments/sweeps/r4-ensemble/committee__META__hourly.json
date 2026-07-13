@@ -1,0 +1,518 @@
+{
+  "beats_benchmark": true,
+  "beats_best_member": false,
+  "benchmark_oos_sharpe": 0.49397799449244817,
+  "best_member": {
+    "note": "best committed stitched OOS Sharpe over ALL the group's KEEP lanes (superset incl. deduped-out duplicates \u2014 can only raise the bar)",
+    "oos_sharpe": 1.5290958634343552,
+    "source_file": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__META.json",
+    "strategy": "stochastic_reversion",
+    "sweep": "r3-meanrev-hourly"
+  },
+  "committee": {
+    "dedup": "one member per family; performance-blind lexicographic (sweep, source_file) tiebreak; deduped-out lanes still count in the best-member comparison",
+    "deduped_out": [],
+    "grouping": "instrument x timeframe \u2014 committees never mix timeframes (adopted convention, plan silent; declared in the grid commit)",
+    "member_count": 6,
+    "members": [
+      {
+        "committed_oos_sharpe": 0.7543042611517722,
+        "per_split_params": [
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 50
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 10
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 10
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 10
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.5,
+              "period": 10
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.7543042611517722,
+        "source_file": "experiments/sweeps/r3-hourly-completion/bollinger_breakout__META.json",
+        "strategy": "bollinger_breakout",
+        "sweep": "r3-hourly-completion"
+      },
+      {
+        "committed_oos_sharpe": 0.6248966631165285,
+        "per_split_params": [
+          {
+            "params": {
+              "lookback": 20,
+              "z_entry": 1.5,
+              "z_exit": 0.5
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "lookback": 20,
+              "z_entry": 1.5,
+              "z_exit": 0.5
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "lookback": 20,
+              "z_entry": 1.5,
+              "z_exit": 0.5
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "lookback": 30,
+              "z_entry": 1.5,
+              "z_exit": 0.5
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "lookback": 30,
+              "z_entry": 2.0,
+              "z_exit": 0.5
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.6248966631165285,
+        "source_file": "experiments/sweeps/r3-meanrev-hourly/bollinger_reversion__META.json",
+        "strategy": "bollinger_reversion",
+        "sweep": "r3-meanrev-hourly"
+      },
+      {
+        "committed_oos_sharpe": 1.5226012644237967,
+        "per_split_params": [
+          {
+            "params": {
+              "buy_below": -100,
+              "period": 28,
+              "sell_above": 0
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "buy_below": -150,
+              "period": 28,
+              "sell_above": 0
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "buy_below": -150,
+              "period": 20,
+              "sell_above": 100
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "buy_below": -100,
+              "period": 20,
+              "sell_above": 100
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "buy_below": -150,
+              "period": 20,
+              "sell_above": 100
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 1.5226012644237967,
+        "source_file": "experiments/sweeps/r3-hourly-completion/cci_reversion__META.json",
+        "strategy": "cci_reversion",
+        "sweep": "r3-hourly-completion"
+      },
+      {
+        "committed_oos_sharpe": 0.5828235209249497,
+        "per_split_params": [
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 52,
+              "tenkan": 7
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 52,
+              "tenkan": 7
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 52,
+              "tenkan": 7
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.5828235209249497,
+        "source_file": "experiments/sweeps/r3-hourly-completion/ichimoku_trend__META.json",
+        "strategy": "ichimoku_trend",
+        "sweep": "r3-hourly-completion"
+      },
+      {
+        "committed_oos_sharpe": 1.5290958634343552,
+        "per_split_params": [
+          {
+            "params": {
+              "buy_below": 20,
+              "k_period": 14,
+              "sell_above": 80
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "buy_below": 10,
+              "k_period": 14,
+              "sell_above": 80
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "buy_below": 10,
+              "k_period": 14,
+              "sell_above": 80
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "buy_below": 20,
+              "k_period": 21,
+              "sell_above": 70
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "buy_below": 20,
+              "k_period": 21,
+              "sell_above": 70
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 1.5290958634343552,
+        "source_file": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__META.json",
+        "strategy": "stochastic_reversion",
+        "sweep": "r3-meanrev-hourly"
+      },
+      {
+        "committed_oos_sharpe": 0.6478708406288505,
+        "per_split_params": [
+          {
+            "params": {
+              "buy_below": -80,
+              "period": 14,
+              "sell_above": -20
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "buy_below": -80,
+              "period": 14,
+              "sell_above": -30
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "buy_below": -90,
+              "period": 14,
+              "sell_above": -20
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "buy_below": -80,
+              "period": 21,
+              "sell_above": -30
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "buy_below": -80,
+              "period": 21,
+              "sell_above": -30
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.6478708406288505,
+        "source_file": "experiments/sweeps/r3-meanrev-hourly/williams_r_reversion__META.json",
+        "strategy": "williams_r_reversion",
+        "sweep": "r3-meanrev-hourly"
+      }
+    ],
+    "weighting": "equal (position = mean of member positions)"
+  },
+  "committee_oos_sharpe": 1.40602305082707,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:29:17+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "committee_equal_weight",
+  "fidelity_guard": {
+    "all_members_reproduced": true,
+    "rule": "every member's baseline replay must reproduce its committed stitched OOS Sharpe within 1e-08"
+  },
+  "git_sha": "90a5f17b11c1f570ce4f4e749713ea44125217f3",
+  "instrument": "META",
+  "kill_criterion": "KEEP (dev-candidate only) iff committee stitched OOS Sharpe > best single member AND > same-window same-cost B&H AND > 0; ties/ambiguity KILL",
+  "ledger": "ledgered: one row per committee, strategy 'committee_equal_weight', variants_tried=1 \u2014 a committee is a genuinely new composite run (unlike the R4-B replay, which was report-only)",
+  "ledger_file": "experiments/runs/20260713T102917902980Z-9bf243babd10.json",
+  "member_oos_sharpes": {
+    "bollinger_breakout@r3-hourly-completion": 0.7543042611517722,
+    "bollinger_reversion@r3-meanrev-hourly": 0.6248966631165285,
+    "cci_reversion@r3-hourly-completion": 1.5226012644237967,
+    "ichimoku_trend@r3-hourly-completion": 0.5828235209249497,
+    "stochastic_reversion@r3-meanrev-hourly": 1.5290958634343552,
+    "williams_r_reversion@r3-meanrev-hourly": 0.6478708406288505
+  },
+  "n_bars": 2476,
+  "no_research": "frozen replay of each member's committed walk-forward per-split params on the same test windows; the committee (the mean) is the only new object \u2014 no search of any kind",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-C \u2014 Ensemble / committee of survivors",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 1260,
+    "note": "ORDER 007 bar at the round-standard K=12 \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding); the committee is one pre-declared config but the bar is never lowered",
+    "sharpe_delta": 0.9120450563346217,
+    "sharpe_se": 1.1405193924051293,
+    "timeframe": "hourly",
+    "tstat": 0.7996751851902312,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "sweep": "r4-ensemble",
+  "sweep_verdict": "KILL",
+  "timeframe": "hourly",
+  "verdict": "KILL",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.11827065158039862,
+      "max_drawdown": -0.2038390834598428,
+      "n_bars": 1260,
+      "n_trades": 1,
+      "sharpe": 0.49397799449244817,
+      "sortino": 0.45770539470080773,
+      "total_return": 0.08979243833184758,
+      "turnover_per_year": 1.2999999999999998,
+      "win_rate": 1.0
+    },
+    "n_splits": 5,
+    "oos_end": "2024-11-22 14:30:00",
+    "oos_metrics": {
+      "cagr": 0.16553942967370738,
+      "max_drawdown": -0.07796190511644574,
+      "n_bars": 1260,
+      "sharpe": 1.40602305082707,
+      "sortino": 1.529410302347007,
+      "total_return": 0.12505717158323693
+    },
+    "oos_start": "2024-03-07 18:30:00",
+    "per_split": [
+      {
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.4813255671142946
+      },
+      {
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 4.547221196655098
+      },
+      {
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 1.4064263523144507
+      },
+      {
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 2.076788384704215
+      },
+      {
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -0.5557347033770189
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008
+  }
+}

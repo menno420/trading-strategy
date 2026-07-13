@@ -1,0 +1,1247 @@
+{
+  "beats_benchmark": true,
+  "beats_best_member": false,
+  "benchmark_oos_sharpe": 0.1962113994495629,
+  "best_member": {
+    "note": "best committed stitched OOS Sharpe over ALL the group's KEEP lanes (superset incl. deduped-out duplicates \u2014 can only raise the bar)",
+    "oos_sharpe": 0.482387358927847,
+    "source_file": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+    "strategy": "ema_crossover",
+    "sweep": "r3-trend-new-tickers"
+  },
+  "committee": {
+    "dedup": "one member per family; performance-blind lexicographic (sweep, source_file) tiebreak; deduped-out lanes still count in the best-member comparison",
+    "deduped_out": [
+      {
+        "source_file": "experiments/sweeps/r3-trend-new-tickers/donchian__TLT.json",
+        "strategy": "donchian",
+        "sweep": "r3-trend-new-tickers"
+      }
+    ],
+    "grouping": "instrument x timeframe \u2014 committees never mix timeframes (adopted convention, plan silent; declared in the grid commit)",
+    "member_count": 9,
+    "members": [
+      {
+        "committed_oos_sharpe": 0.3353124976908604,
+        "per_split_params": [
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 14
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": -50.0,
+              "period": 25
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": 0.0,
+              "period": 14
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -50.0,
+              "period": 25
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": 0.0,
+              "period": 50
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": 0.0,
+              "period": 50
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 50
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 50
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 50
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 50
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.3353124976908604,
+        "source_file": "experiments/sweeps/r3-aroon-cci/aroon_trend__TLT.json",
+        "strategy": "aroon_trend",
+        "sweep": "r3-aroon-cci"
+      },
+      {
+        "committed_oos_sharpe": 0.28480307225447293,
+        "per_split_params": [
+          {
+            "params": {
+              "entry": 55,
+              "exit": 20
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "entry": 55,
+              "exit": 10
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 10
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 10
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 10
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 10
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 20
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 20
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 20
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 20
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.28480307225447293,
+        "source_file": "experiments/sweeps/r3-new-tickers/donchian__TLT.json",
+        "strategy": "donchian",
+        "sweep": "r3-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.482387358927847,
+        "per_split_params": [
+          {
+            "params": {
+              "fast": 30,
+              "slow": 50
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 50
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 50
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 50
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 50
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 50
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 50
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 50
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.482387358927847,
+        "source_file": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+        "strategy": "ema_crossover",
+        "sweep": "r3-trend-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.20262832214552423,
+        "per_split_params": [
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 52,
+              "tenkan": 7
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 52,
+              "tenkan": 12
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 52,
+              "tenkan": 12
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 52,
+              "tenkan": 12
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 52,
+              "tenkan": 12
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.20262832214552423,
+        "source_file": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__TLT.json",
+        "strategy": "ichimoku_trend",
+        "sweep": "r3-trix-ichimoku"
+      },
+      {
+        "committed_oos_sharpe": 0.47241324779522303,
+        "per_split_params": [
+          {
+            "params": {
+              "entry_lookback": 5,
+              "exit_len": 10,
+              "trend_len": 0
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "entry_lookback": 5,
+              "exit_len": 10,
+              "trend_len": 0
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "entry_lookback": 3,
+              "exit_len": 10,
+              "trend_len": 0
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "entry_lookback": 5,
+              "exit_len": 10,
+              "trend_len": 200
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "entry_lookback": 5,
+              "exit_len": 10,
+              "trend_len": 0
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "entry_lookback": 5,
+              "exit_len": 10,
+              "trend_len": 200
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "entry_lookback": 5,
+              "exit_len": 10,
+              "trend_len": 200
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "entry_lookback": 5,
+              "exit_len": 10,
+              "trend_len": 0
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "entry_lookback": 5,
+              "exit_len": 10,
+              "trend_len": 200
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "entry_lookback": 5,
+              "exit_len": 10,
+              "trend_len": 200
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.47241324779522303,
+        "source_file": "experiments/sweeps/r3-meanrev-new-tickers/pullback__TLT.json",
+        "strategy": "pullback",
+        "sweep": "r3-meanrev-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.4144905172004556,
+        "per_split_params": [
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.4144905172004556,
+        "source_file": "experiments/sweeps/r3-new-tickers/sma_crossover__TLT.json",
+        "strategy": "sma_crossover",
+        "sweep": "r3-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.3612280527026055,
+        "per_split_params": [
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 3.0,
+              "st_period": 14
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 200,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 200,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 14
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 14
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.3612280527026055,
+        "source_file": "experiments/sweeps/r3-trend-new-tickers/supertrend_flip__TLT.json",
+        "strategy": "supertrend_flip",
+        "sweep": "r3-trend-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.23904391154603494,
+        "per_split_params": [
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 0
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 0
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 9
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 9
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 0
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 9
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 0
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 0
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "period": 12,
+              "signal_period": 0
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "period": 12,
+              "signal_period": 0
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.23904391154603494,
+        "source_file": "experiments/sweeps/r3-trix-ichimoku/trix_momentum__TLT.json",
+        "strategy": "trix_momentum",
+        "sweep": "r3-trix-ichimoku"
+      },
+      {
+        "committed_oos_sharpe": 0.4144905172004556,
+        "per_split_params": [
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50,
+              "vol_filter": false
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50,
+              "vol_filter": false
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50,
+              "vol_filter": false
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100,
+              "vol_filter": false
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100,
+              "vol_filter": false
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100,
+              "vol_filter": false
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100,
+              "vol_filter": false
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50,
+              "vol_filter": false
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50,
+              "vol_filter": false
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50,
+              "vol_filter": false
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.4144905172004556,
+        "source_file": "experiments/sweeps/r3-gated-new-tickers/vol_filtered_trend__TLT.json",
+        "strategy": "vol_filtered_trend",
+        "sweep": "r3-gated-new-tickers"
+      }
+    ],
+    "weighting": "equal (position = mean of member positions)"
+  },
+  "committee_oos_sharpe": 0.40779795963257515,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:29:19+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "committee_equal_weight",
+  "fidelity_guard": {
+    "all_members_reproduced": true,
+    "rule": "every member's baseline replay must reproduce its committed stitched OOS Sharpe within 1e-08"
+  },
+  "git_sha": "90a5f17b11c1f570ce4f4e749713ea44125217f3",
+  "instrument": "TLT",
+  "kill_criterion": "KEEP (dev-candidate only) iff committee stitched OOS Sharpe > best single member AND > same-window same-cost B&H AND > 0; ties/ambiguity KILL",
+  "ledger": "ledgered: one row per committee, strategy 'committee_equal_weight', variants_tried=1 \u2014 a committee is a genuinely new composite run (unlike the R4-B replay, which was report-only)",
+  "ledger_file": "experiments/runs/20260713T102919315826Z-f9415d8ad656.json",
+  "member_oos_sharpes": {
+    "aroon_trend@r3-aroon-cci": 0.3353124976908604,
+    "donchian@r3-new-tickers": 0.28480307225447293,
+    "ema_crossover@r3-trend-new-tickers": 0.482387358927847,
+    "ichimoku_trend@r3-trix-ichimoku": 0.20262832214552423,
+    "pullback@r3-meanrev-new-tickers": 0.47241324779522303,
+    "sma_crossover@r3-new-tickers": 0.4144905172004556,
+    "supertrend_flip@r3-trend-new-tickers": 0.3612280527026055,
+    "trix_momentum@r3-trix-ichimoku": 0.23904391154603494,
+    "vol_filtered_trend@r3-gated-new-tickers": 0.4144905172004556
+  },
+  "n_bars": 3779,
+  "no_research": "frozen replay of each member's committed walk-forward per-split params on the same test windows; the committee (the mean) is the only new object \u2014 no search of any kind",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-C \u2014 Ensemble / committee of survivors",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "ORDER 007 bar at the round-standard K=12 \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding); the committee is one pre-declared config but the bar is never lowered",
+    "sharpe_delta": 0.21158656018301225,
+    "sharpe_se": 0.31627993276246635,
+    "timeframe": "daily",
+    "tstat": 0.6689850928415326,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "sweep": "r4-ensemble",
+  "sweep_verdict": "KILL",
+  "timeframe": "daily",
+  "verdict": "KILL",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.01796970417993271,
+      "max_drawdown": -0.5018548631774138,
+      "n_bars": 2520,
+      "n_trades": 1,
+      "sharpe": 0.1962113994495629,
+      "sortino": 0.1964380205539646,
+      "total_return": 0.19494669235317086,
+      "turnover_per_year": 0.1,
+      "win_rate": 1.0
+    },
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.03179396889382757,
+      "max_drawdown": -0.17237812717135492,
+      "n_bars": 2520,
+      "sharpe": 0.40779795963257515,
+      "sortino": 0.3782623024918609,
+      "total_return": 0.3675079185590897
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 1.9656130269017864
+      },
+      {
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": -0.9900189842887426
+      },
+      {
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.8085840264398416
+      },
+      {
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.19079550066947132
+      },
+      {
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -0.30994708560034623
+      },
+      {
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 0.9244995963919905
+      },
+      {
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.8898880608529303
+      },
+      {
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": -0.11202394579529973
+      },
+      {
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -0.6182902367493314
+      },
+      {
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 0.24106249889453557
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008
+  }
+}

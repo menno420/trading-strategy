@@ -1,0 +1,734 @@
+{
+  "beats_benchmark": true,
+  "beats_best_member": false,
+  "benchmark_oos_sharpe": 0.6534658611523465,
+  "best_member": {
+    "note": "best committed stitched OOS Sharpe over ALL the group's KEEP lanes (superset incl. deduped-out duplicates \u2014 can only raise the bar)",
+    "oos_sharpe": 0.9934293933081809,
+    "source_file": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__META.json",
+    "strategy": "ichimoku_trend",
+    "sweep": "r3-trix-ichimoku"
+  },
+  "committee": {
+    "dedup": "one member per family; performance-blind lexicographic (sweep, source_file) tiebreak; deduped-out lanes still count in the best-member comparison",
+    "deduped_out": [],
+    "grouping": "instrument x timeframe \u2014 committees never mix timeframes (adopted convention, plan silent; declared in the grid commit)",
+    "member_count": 6,
+    "members": [
+      {
+        "committed_oos_sharpe": 0.6997870461120332,
+        "per_split_params": [
+          {
+            "params": {
+              "adx_min": 25.0,
+              "fast": 10,
+              "slow": 200
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "adx_min": 25.0,
+              "fast": 20,
+              "slow": 50
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "adx_min": 25.0,
+              "fast": 20,
+              "slow": 50
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "adx_min": 20.0,
+              "fast": 10,
+              "slow": 200
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "adx_min": 20.0,
+              "fast": 20,
+              "slow": 50
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "adx_min": 20.0,
+              "fast": 10,
+              "slow": 200
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "adx_min": 20.0,
+              "fast": 10,
+              "slow": 200
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "adx_min": 25.0,
+              "fast": 20,
+              "slow": 50
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.6997870461120332,
+        "source_file": "experiments/sweeps/r3-roc-adx/adx_filtered_sma__META.json",
+        "strategy": "adx_filtered_sma",
+        "sweep": "r3-roc-adx"
+      },
+      {
+        "committed_oos_sharpe": 0.8798014639573765,
+        "per_split_params": [
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -50.0,
+              "period": 50
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": -50.0,
+              "period": 14
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": -50.0,
+              "period": 25
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": -50.0,
+              "period": 25
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "entry": 50.0,
+              "exit": -50.0,
+              "period": 25
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -50.0,
+              "period": 25
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 50
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "period": 50
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.8798014639573765,
+        "source_file": "experiments/sweeps/r3-aroon-cci/aroon_trend__META.json",
+        "strategy": "aroon_trend",
+        "sweep": "r3-aroon-cci"
+      },
+      {
+        "committed_oos_sharpe": 0.82498096405869,
+        "per_split_params": [
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 3.0
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 3.0
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 4.0
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 4.0
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 4.0
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 4.0
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 55,
+              "k": 4.0
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 55,
+              "k": 4.0
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.82498096405869,
+        "source_file": "experiments/sweeps/r3-breakout/atr_trailing__META.json",
+        "strategy": "atr_trailing",
+        "sweep": "r3-breakout"
+      },
+      {
+        "committed_oos_sharpe": 0.9934293933081809,
+        "per_split_params": [
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.9934293933081809,
+        "source_file": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__META.json",
+        "strategy": "ichimoku_trend",
+        "sweep": "r3-trix-ichimoku"
+      },
+      {
+        "committed_oos_sharpe": 0.7341992753429168,
+        "per_split_params": [
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -0.05,
+              "lookback": 252
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -0.05,
+              "lookback": 126
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -0.05,
+              "lookback": 252
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -0.05,
+              "lookback": 63
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -0.05,
+              "lookback": 63
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -0.05,
+              "lookback": 63
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -0.05,
+              "lookback": 126
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "lookback": 63
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.7341992753429168,
+        "source_file": "experiments/sweeps/r3-roc-adx/roc_momentum__META.json",
+        "strategy": "roc_momentum",
+        "sweep": "r3-roc-adx"
+      },
+      {
+        "committed_oos_sharpe": 0.6718543345763552,
+        "per_split_params": [
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 5
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "period": 9,
+              "signal_period": 0
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 9
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 0
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "period": 12,
+              "signal_period": 0
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "period": 12,
+              "signal_period": 0
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 0
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 0
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.6718543345763552,
+        "source_file": "experiments/sweeps/r3-trix-ichimoku/trix_momentum__META.json",
+        "strategy": "trix_momentum",
+        "sweep": "r3-trix-ichimoku"
+      }
+    ],
+    "weighting": "equal (position = mean of member positions)"
+  },
+  "committee_oos_sharpe": 0.8879541432291201,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:29:17+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2012-05-18 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "committee_equal_weight",
+  "fidelity_guard": {
+    "all_members_reproduced": true,
+    "rule": "every member's baseline replay must reproduce its committed stitched OOS Sharpe within 1e-08"
+  },
+  "git_sha": "90a5f17b11c1f570ce4f4e749713ea44125217f3",
+  "instrument": "META",
+  "kill_criterion": "KEEP (dev-candidate only) iff committee stitched OOS Sharpe > best single member AND > same-window same-cost B&H AND > 0; ties/ambiguity KILL",
+  "ledger": "ledgered: one row per committee, strategy 'committee_equal_weight', variants_tried=1 \u2014 a committee is a genuinely new composite run (unlike the R4-B replay, which was report-only)",
+  "ledger_file": "experiments/runs/20260713T102917525860Z-bc6d9270cf26.json",
+  "member_oos_sharpes": {
+    "adx_filtered_sma@r3-roc-adx": 0.6997870461120332,
+    "aroon_trend@r3-aroon-cci": 0.8798014639573765,
+    "atr_trailing@r3-breakout": 0.82498096405869,
+    "ichimoku_trend@r3-trix-ichimoku": 0.9934293933081809,
+    "roc_momentum@r3-roc-adx": 0.7341992753429168,
+    "trix_momentum@r3-trix-ichimoku": 0.6718543345763552
+  },
+  "n_bars": 3180,
+  "no_research": "frozen replay of each member's committed walk-forward per-split params on the same test windows; the committee (the mean) is the only new object \u2014 no search of any kind",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-C \u2014 Ensemble / committee of survivors",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2016,
+    "note": "ORDER 007 bar at the round-standard K=12 \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding); the committee is one pre-declared config but the bar is never lowered",
+    "sharpe_delta": 0.23448828207677364,
+    "sharpe_se": 0.35382983371993554,
+    "timeframe": "daily",
+    "tstat": 0.6627148412317784,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "sweep": "r4-ensemble",
+  "sweep_verdict": "KILL",
+  "timeframe": "daily",
+  "verdict": "KILL",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.19346456549497648,
+      "max_drawdown": -0.7639908308825445,
+      "n_bars": 2016,
+      "n_trades": 1,
+      "sharpe": 0.6534658611523465,
+      "sortino": 0.6364839369983315,
+      "total_return": 3.116008216756712,
+      "turnover_per_year": 0.125,
+      "win_rate": 1.0
+    },
+    "n_splits": 8,
+    "oos_end": "2024-05-24 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.19670505002480643,
+      "max_drawdown": -0.2496473076434259,
+      "n_bars": 2016,
+      "sharpe": 0.8879541432291201,
+      "sortino": 0.8631827411311549,
+      "total_return": 3.2062684821671343
+    },
+    "oos_start": "2016-05-23 00:00:00",
+    "per_split": [
+      {
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 1.4112184826579173
+      },
+      {
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 0.3234690863258007
+      },
+      {
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.2243462320516327
+      },
+      {
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 1.1318147080868184
+      },
+      {
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.7030130627812704
+      },
+      {
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": -0.9784880976560438
+      },
+      {
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 2.1368965327810265
+      },
+      {
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 1.6082850593247087
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008
+  }
+}

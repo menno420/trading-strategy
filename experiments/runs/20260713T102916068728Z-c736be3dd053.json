@@ -1,0 +1,50 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.4731732344815418,
+    "max_drawdown": -0.15867619737436112,
+    "n_bars": 1260,
+    "n_trades": 1,
+    "sharpe": 1.570211425462568,
+    "sortino": 1.5606853936135616,
+    "total_return": 0.3471812049090208,
+    "turnover_per_year": 1.2999999999999998,
+    "win_rate": 1.0
+  },
+  "config_hash": "c736be3dd053",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:29:16+00:00",
+  "data_end": "2024-11-22 14:30:00",
+  "data_start": "2024-03-07 18:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "90a5f17b11c1f570ce4f4e749713ea44125217f3",
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.26150738667316986,
+    "max_drawdown": -0.04764763988417098,
+    "n_bars": 1260,
+    "n_trades": 118,
+    "sharpe": 2.4353962790562145,
+    "sortino": 1.8745384119202388,
+    "total_return": 0.19565954943916886,
+    "turnover_per_year": 78.0,
+    "win_rate": 0.6883116883116883
+  },
+  "n_bars": 1260,
+  "notes": "R4-C survivor committee (docs/research-round-4-plan.md \u00a7 R4-C; post-holdout DEV-ONLY, promotion closed). Stitched walk-forward OOS composite of frozen KEEP-dev members (position = mean of member positions); metrics are over the stitched OOS window, not a single-window run. Informational t graded at the round-standard K=12 in the sweep JSON (bar never lowered).",
+  "params": {
+    "members": [
+      "rsi_mean_reversion@r3-meanrev-hourly",
+      "stochastic_reversion@r3-meanrev-hourly"
+    ],
+    "min_members": 2,
+    "weighting": "equal"
+  },
+  "run_id": "20260713T102916068728Z-c736be3dd053",
+  "schema_version": 1,
+  "strategy": "committee_equal_weight",
+  "timeframe": "hourly",
+  "variants_tried": 1
+}
