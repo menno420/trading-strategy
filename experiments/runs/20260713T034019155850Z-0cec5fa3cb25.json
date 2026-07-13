@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.024911525799655276,
+    "max_drawdown": -0.5018548631774145,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.24266820696049476,
+    "sortino": 0.243144573483751,
+    "total_return": 0.4462828953801161,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "0cec5fa3cb25",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T03:40:19+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4e2ee9e5838e4d4aaea0a8db7aa369fb6449ff87",
+  "instrument": "TLT",
+  "metrics": {
+    "cagr": 0.04934512759801457,
+    "max_drawdown": -0.18007868868613064,
+    "n_bars": 3779,
+    "n_trades": 42,
+    "sharpe": 0.4859133235969652,
+    "sortino": 0.37537739669884,
+    "total_return": 1.0591702035942476,
+    "turnover_per_year": 2.800740936755756,
+    "win_rate": 0.47619047619047616
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 gated-new-tickers sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 12, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-gated-new-tickers/vol_filtered_trend__TLT.json)",
+  "params": {
+    "fast": 20,
+    "slow": 100,
+    "vol_filter": false
+  },
+  "run_id": "20260713T034019155850Z-0cec5fa3cb25",
+  "schema_version": 1,
+  "strategy": "vol_filtered_trend",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

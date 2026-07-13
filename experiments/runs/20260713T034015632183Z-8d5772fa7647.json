@@ -1,0 +1,50 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.1523799957491483,
+    "max_drawdown": -0.4132694121577556,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.6577971467582041,
+    "sortino": 0.6472287293945346,
+    "total_return": 7.388633750561228,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "8d5772fa7647",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T03:40:15+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4e2ee9e5838e4d4aaea0a8db7aa369fb6449ff87",
+  "instrument": "JPM",
+  "metrics": {
+    "cagr": 0.049898614833481014,
+    "max_drawdown": -0.1373825105742621,
+    "n_bars": 3779,
+    "n_trades": 128,
+    "sharpe": 0.605565899317601,
+    "sortino": 0.30827884828448665,
+    "total_return": 1.0755180901353767,
+    "turnover_per_year": 8.535591426303256,
+    "win_rate": 0.53125
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 gated-new-tickers sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 12, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-gated-new-tickers/macd_supertrend__JPM.json)",
+  "params": {
+    "ema_len": 100,
+    "macd_fast": 12,
+    "macd_signal": 9,
+    "macd_slow": 26,
+    "st_mult": 3.0,
+    "st_period": 14
+  },
+  "run_id": "20260713T034015632183Z-8d5772fa7647",
+  "schema_version": 1,
+  "strategy": "macd_supertrend",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
