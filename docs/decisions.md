@@ -17,3 +17,22 @@
   discipline let agents work correctly with little steering; adopting the
   kit starts trading-lab governed instead of accreting rules ad hoc.
 - provenance: substrate-kit adoption interview
+
+## [D-0002] Selection-fair replay standing gate for dev-lane KEEP verdicts
+
+- status: decided
+- date: 2026-07-13
+- verdict: From research round 6 onward, a dev-lane KEEP verdict
+  additionally requires that a selection-fair fixed-config replay of the
+  lane's committed top variant beats same-window buy-and-hold with a
+  positive Sharpe; UNGRADEABLE lanes FAIL. Rule doc:
+  [docs/selection-fair-gate.md](selection-fair-gate.md); code:
+  `src/trading_lab/selection_gate.py`. No retroactive re-grading —
+  round ≤5 results stand as published.
+- why: R5-D measured `selection_gap > 0` on only 3 of the program's 5
+  best lanes (SLV −0.313, META hourly −0.396): in-window re-selection
+  can flatter the searched walk-forward number a KEEP is minted on. The
+  selection-free floor becomes a standing gate instead of a
+  once-per-round slice.
+- provenance: docs/research-round-5-results.md § R5-D (PR #110); adopted
+  in PR #111
