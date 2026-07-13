@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.1369418664483757,
+    "max_drawdown": -0.32048971956122474,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8673964015186144,
+    "sortino": 0.7971351390988236,
+    "total_return": 5.852557734879854,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "8d521ddd8d92",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T02:08:16+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "e3dae2151a1d5ff666421f88fbc6ad33a6e853d5",
+  "instrument": "SPY",
+  "metrics": {
+    "cagr": 0.05915641660924775,
+    "max_drawdown": -0.10438550104638145,
+    "n_bars": 3779,
+    "n_trades": 190,
+    "sharpe": 0.7536453017863634,
+    "sortino": 0.5326938225949667,
+    "total_return": 1.3675680803752766,
+    "turnover_per_year": 12.670018523418895,
+    "win_rate": 0.5473684210526316
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 breakout sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-breakout/bollinger_breakout__SPY.json)",
+  "params": {
+    "num_std": 1.5,
+    "period": 20
+  },
+  "run_id": "20260713T020816033306Z-8d521ddd8d92",
+  "schema_version": 1,
+  "strategy": "bollinger_breakout",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
