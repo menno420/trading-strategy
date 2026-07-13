@@ -913,3 +913,82 @@ def r3_trix_ichimoku_total_configs() -> int:
     R1/R2 and the earlier Round-3 lanes)."""
     return (sum(r3_trix_ichimoku_variants_per_family().values())
             * len(R3_TRIX_ICHIMOKU_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 10: FULL TREND FAMILIES × NEW TICKERS (lane:
+# r3-trend-new-tickers × the six slice-3 instruments × daily — ORDER 012
+# night-run, post-holdout DEV-ONLY, promotion closed; lands AFTER the
+# Round-3 synthesis of slices 1-8, extending the round)
+# ---------------------------------------------------------------------------
+# Slice 3 (r3-new-tickers, PR #83) added the six instrument caches but
+# probed them with only 6-variant grids of three families. This slice
+# completes the TREND-family coverage: the four existing trend families
+# with 12-variant sub-grids, declared here BEFORE the sweep ran. NO new
+# strategy code and NO new parameter territory — every grid point is a
+# point of the family's existing published grid (donchian/ema_crossover/
+# macd: the P1 trend axes; supertrend_flip: the P1 video-lane grid), and
+# the subset relation is pinned by tests. The donchian sub-grid is
+# deliberately DISJOINT from the slice-3 donchian probe grid (entry
+# {20,40,55} × exit {10,20}) so no config is registered twice on the same
+# instruments. supertrend_flip honesty note: the family has only ever been
+# run on BTC-USD (the P1 video lane); this is its first run on
+# equities/ETFs, with the MACD triple frozen at the classic 12/26/9 (one
+# of the two video-lane triples) and NOT swept. The instruments reuse the
+# committed slice-3 caches; config.UNIVERSE stays frozen. Kept bounded on
+# purpose: every extra variant raises the multiple-testing burden on any
+# winner.
+
+_R3_TREND_NEW_TICKERS_AXES: dict[str, dict[str, list]] = {
+    "donchian": {"entry": [10, 15, 30, 80, 100], "exit": [5, 15, 30]},
+    "ema_crossover": {"fast": [10, 20, 30], "slow": [50, 100, 150, 200]},
+    "macd": {"fast": [8, 12], "slow": [21, 26, 35], "signal": [5, 9]},
+    "supertrend_flip": {"st_period": [10, 14], "st_mult": [2.0, 3.0, 4.0],
+                        "ema_len": [100, 200],
+                        "macd_fast": [12], "macd_slow": [26],
+                        "macd_signal": [9]},
+}
+
+_R3_TREND_NEW_TICKERS_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "donchian": lambda p: p["exit"] <= p["entry"],
+    "ema_crossover": lambda p: p["fast"] < p["slow"],
+    "macd": lambda p: p["fast"] < p["slow"],
+    "supertrend_flip": lambda p: p["macd_fast"] < p["macd_slow"],
+}
+
+R3_TREND_NEW_TICKERS_FAMILIES = tuple(_R3_TREND_NEW_TICKERS_AXES)
+
+# The six slice-3 instruments, reused verbatim (same tuple object — the
+# identity is the point: this slice completes coverage of THAT surface).
+R3_TREND_NEW_TICKERS_INSTRUMENTS = R3_NEW_TICKERS_INSTRUMENTS
+
+
+def r3_trend_new_tickers_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-10 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_TREND_NEW_TICKERS_AXES[family]
+    except KeyError:
+        raise ValueError(
+            f"unknown R3 trend-new-tickers family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_TREND_NEW_TICKERS_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_trend_new_tickers_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-10 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_trend_new_tickers_variants(fam))
+            for fam in R3_TREND_NEW_TICKERS_FAMILIES}
+
+
+def r3_trend_new_tickers_total_configs() -> int:
+    """Total registered Round-3 slice-10 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes). The per-instrument buy-and-hold
+    baselines already sit on the ledger from slice 3 and are not searched
+    configurations."""
+    return (sum(r3_trend_new_tickers_variants_per_family().values())
+            * len(R3_TREND_NEW_TICKERS_INSTRUMENTS))

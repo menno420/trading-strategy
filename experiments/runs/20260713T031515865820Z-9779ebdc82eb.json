@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.45441141455618816,
+    "max_drawdown": -0.7496779844224901,
+    "n_bars": 3657,
+    "n_trades": 1,
+    "sharpe": 0.9279233460305005,
+    "sortino": 0.9834322968050291,
+    "total_return": 228.5631794612482,
+    "turnover_per_year": 0.06890894175553733,
+    "win_rate": 1.0
+  },
+  "config_hash": "9779ebdc82eb",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T03:15:15+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-06-29 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "327d63d9f9bd63cff6d818178247f9d6b7bf2005",
+  "instrument": "TSLA",
+  "metrics": {
+    "cagr": 0.29062272878779694,
+    "max_drawdown": -0.6593139612933947,
+    "n_bars": 3657,
+    "n_trades": 55,
+    "sharpe": 0.7725344744225604,
+    "sortino": 0.6587511721290475,
+    "total_return": 39.54235955980281,
+    "turnover_per_year": 3.7899917965545526,
+    "win_rate": 0.2857142857142857
+  },
+  "n_bars": 3657,
+  "notes": "Round 3 trend-new-tickers sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 10, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-trend-new-tickers/ema_crossover__TSLA.json)",
+  "params": {
+    "fast": 10,
+    "slow": 150
+  },
+  "run_id": "20260713T031515865820Z-9779ebdc82eb",
+  "schema_version": 1,
+  "strategy": "ema_crossover",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
