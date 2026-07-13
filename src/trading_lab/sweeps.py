@@ -399,3 +399,67 @@ def r3_stoch_willr_total_configs() -> int:
     instrument × grid point counts as one config, as in Round 2 R1/R2)."""
     return (sum(r3_stoch_willr_variants_per_family().values())
             * len(R3_STOCH_WILLR_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 2: ROC momentum + ADX-filtered SMA (lane: r3-roc-adx × all-8
+# × daily — ORDER 012 night-run, post-holdout DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# Two classic trend/momentum families, declared here BEFORE the sweep ran.
+# roc_momentum axes bracket the canonical time-series-momentum lookbacks
+# (quarter/half-year/year: 63, 126, 252 bars) with a simple 0/±5% hysteresis
+# band around the classic zero-threshold rule (entry == exit == 0 IS the
+# classic rule and is in the grid). adx_filtered_sma reuses the Round-2 R1
+# SMA axes (fast {10, 20} × slow {50, 100, 200}) with the two most-cited ADX
+# trend thresholds (20, 25); the ADX period is frozen at the Wilder default
+# 14 and NOT swept (mirroring the frozen stochastic d_period in the
+# r3-stoch-willr lane). Kept bounded on purpose: every extra variant raises
+# the multiple-testing burden on any winner.
+
+_R3_ROC_ADX_AXES: dict[str, dict[str, list]] = {
+    "roc_momentum": {"lookback": [63, 126, 252],
+                     "entry": [0.0, 0.05],
+                     "exit": [-0.05, 0.0]},
+    "adx_filtered_sma": {"fast": [10, 20],
+                         "slow": [50, 100, 200],
+                         "adx_min": [20.0, 25.0]},
+}
+
+_R3_ROC_ADX_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "roc_momentum": lambda p: p["exit"] <= p["entry"],
+    "adx_filtered_sma": lambda p: p["fast"] < p["slow"],
+}
+
+R3_ROC_ADX_FAMILIES = tuple(_R3_ROC_ADX_AXES)
+
+# The full 8-ticker universe (config.UNIVERSE order), daily bars.
+R3_ROC_ADX_INSTRUMENTS = ("AAPL", "MSFT", "NVDA", "GOOGL", "AMZN",
+                          "META", "GLD", "SLV")
+
+
+def r3_roc_adx_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-2 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_ROC_ADX_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R3 roc-adx family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_ROC_ADX_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_roc_adx_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-2 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_roc_adx_variants(fam))
+            for fam in R3_ROC_ADX_FAMILIES}
+
+
+def r3_roc_adx_total_configs() -> int:
+    """Total registered Round-3 slice-2 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the r3-stoch-willr lane)."""
+    return (sum(r3_roc_adx_variants_per_family().values())
+            * len(R3_ROC_ADX_INSTRUMENTS))
