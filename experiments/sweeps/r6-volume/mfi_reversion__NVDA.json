@@ -1,0 +1,606 @@
+{
+  "benchmark_full_period_metrics": {
+    "cagr": 0.4725930379502681,
+    "max_drawdown": -0.6724111795465292,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 1.0699244352672317,
+    "sortino": 1.1118228949321804,
+    "total_return": 330.5691749661434,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T23:02:23+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "mfi_reversion",
+  "family_variants_tried": 180,
+  "full_period_variants": {
+    "note": "single-split in-sample rows for deflated-Sharpe bookkeeping \u2014 NOT findings",
+    "rows": [
+      {
+        "metrics": {
+          "cagr": 0.015447469619697118,
+          "max_drawdown": -0.31285345023708977,
+          "n_trades": 54,
+          "sharpe": 0.17719105388310083,
+          "sortino": 0.0571693443722772,
+          "total_return": 0.25844867345392863,
+          "turnover_per_year": 3.6009526329716857,
+          "win_rate": 0.6666666666666666
+        },
+        "params": {
+          "buy_below": 10,
+          "period": 7,
+          "sell_above": 70
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.03997360328457389,
+          "max_drawdown": -0.3065736201673599,
+          "n_trades": 50,
+          "sharpe": 0.30084595614848675,
+          "sortino": 0.12418777455009854,
+          "total_return": 0.7999779837568621,
+          "turnover_per_year": 3.334215400899709,
+          "win_rate": 0.68
+        },
+        "params": {
+          "buy_below": 10,
+          "period": 7,
+          "sell_above": 80
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.05485382347038792,
+          "max_drawdown": -0.3922356820117512,
+          "n_trades": 130,
+          "sharpe": 0.35161529281321263,
+          "sortino": 0.1729736585185974,
+          "total_return": 1.2273690864997508,
+          "turnover_per_year": 8.668960042339243,
+          "win_rate": 0.7384615384615385
+        },
+        "params": {
+          "buy_below": 20,
+          "period": 7,
+          "sell_above": 70
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.09591834853662973,
+          "max_drawdown": -0.4873096220892422,
+          "n_trades": 111,
+          "sharpe": 0.4727619142300594,
+          "sortino": 0.2887402915484271,
+          "total_return": 2.9492545143730378,
+          "turnover_per_year": 7.401958189997354,
+          "win_rate": 0.7321428571428571
+        },
+        "params": {
+          "buy_below": 20,
+          "period": 7,
+          "sell_above": 80
+        }
+      },
+      {
+        "metrics": {
+          "cagr": -0.0013970104226493918,
+          "max_drawdown": -0.2858039351463646,
+          "n_trades": 2,
+          "sharpe": 0.040770675649473946,
+          "sortino": 0.007780791673222787,
+          "total_return": -0.020746037229654624,
+          "turnover_per_year": 0.13336861603598837,
+          "win_rate": 0.0
+        },
+        "params": {
+          "buy_below": 10,
+          "period": 14,
+          "sell_above": 70
+        }
+      },
+      {
+        "metrics": {
+          "cagr": -0.004820281426006323,
+          "max_drawdown": -0.2858039351463646,
+          "n_trades": 2,
+          "sharpe": 0.011312873527330332,
+          "sortino": 0.0021698917575469706,
+          "total_return": -0.06989693130145003,
+          "turnover_per_year": 0.13336861603598837,
+          "win_rate": 0.0
+        },
+        "params": {
+          "buy_below": 10,
+          "period": 14,
+          "sell_above": 80
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.02669127996636056,
+          "max_drawdown": -0.44028332821319927,
+          "n_trades": 28,
+          "sharpe": 0.22917906276253586,
+          "sortino": 0.09160265766385463,
+          "total_return": 0.48440601368312586,
+          "turnover_per_year": 1.867160624503837,
+          "win_rate": 0.7142857142857143
+        },
+        "params": {
+          "buy_below": 20,
+          "period": 14,
+          "sell_above": 70
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.04871121794958899,
+          "max_drawdown": -0.5059070584172274,
+          "n_trades": 24,
+          "sharpe": 0.3111008930151166,
+          "sortino": 0.16515420504068137,
+          "total_return": 1.0405946163879283,
+          "turnover_per_year": 1.6004233924318603,
+          "win_rate": 0.75
+        },
+        "params": {
+          "buy_below": 20,
+          "period": 14,
+          "sell_above": 80
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.0,
+          "max_drawdown": 0.0,
+          "n_trades": 0,
+          "sharpe": null,
+          "sortino": null,
+          "total_return": 0.0,
+          "turnover_per_year": 0.0,
+          "win_rate": null
+        },
+        "params": {
+          "buy_below": 10,
+          "period": 21,
+          "sell_above": 70
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.0,
+          "max_drawdown": 0.0,
+          "n_trades": 0,
+          "sharpe": null,
+          "sortino": null,
+          "total_return": 0.0,
+          "turnover_per_year": 0.0,
+          "win_rate": null
+        },
+        "params": {
+          "buy_below": 10,
+          "period": 21,
+          "sell_above": 80
+        }
+      },
+      {
+        "metrics": {
+          "cagr": -0.008080935803776335,
+          "max_drawdown": -0.5059070584172274,
+          "n_trades": 4,
+          "sharpe": 0.001962087739715825,
+          "sortino": 0.00046981248643916245,
+          "total_return": -0.11456325239839527,
+          "turnover_per_year": 0.26673723207197675,
+          "win_rate": 0.5
+        },
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 70
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.08779681831664554,
+          "max_drawdown": -0.6174741258307654,
+          "n_trades": 4,
+          "sharpe": 0.48593163885913543,
+          "sortino": 0.23973121725142038,
+          "total_return": 2.532415098480223,
+          "turnover_per_year": 0.26673723207197675,
+          "win_rate": 1.0
+        },
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        }
+      }
+    ]
+  },
+  "git_sha": "ca1427f00410391743d6ee16801eb08d896e2b5d",
+  "instrument": "NVDA",
+  "lane_variants_tried": 360,
+  "n_bars": 3779,
+  "order": "ORDER 014 item 2 night-run (control/inbox.md); pre-registered docs/research-round-6-plan.md \u00a7 R6-A",
+  "post_holdout_dev_only": true,
+  "program_variants_tried": 4719,
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "ORDER 007 bar on the stitched OOS Sharpe delta, Bonferroni K = variants this lane \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": -0.8188081122255796,
+    "sharpe_se": 0.3162990245013556,
+    "timeframe": "daily",
+    "tstat": -2.5887152624527627,
+    "variants_tried": 12,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "selection_gate": {
+    "bench_sharpe": 1.2954289453479517,
+    "fixed_per_split": [
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.7408705368405222
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 1.2345574388448488
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -0.5471081711048098
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 21,
+          "sell_above": 80
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 2.652738177947973
+      }
+    ],
+    "fixed_sharpe": 0.5392595578233701,
+    "gate": "FAIL",
+    "n_periods": 2520,
+    "note": "standing gate [D-0002] (docs/selection-fair-gate.md), run on EVERY Round-6 lane; doubles as the R5-D fixed-config row \u2014 selection_gap informational, no registered threshold; gate replay is report-only (R4-B precedent), not ledgered",
+    "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.539260, bench 1.295429) \u2014 the searched edge does not survive selection-free",
+    "searched_sharpe": 0.47662083312237213,
+    "selection_gap": -0.06263872470099796
+  },
+  "sweep": "r6-volume",
+  "timeframe": "daily",
+  "top_full_period_variant": {
+    "ledger_run": "20260713T230223696903Z-bf280365d894.json",
+    "metrics": {
+      "cagr": 0.08779681831664554,
+      "max_drawdown": -0.6174741258307654,
+      "n_trades": 4,
+      "sharpe": 0.48593163885913543,
+      "sortino": 0.23973121725142038,
+      "total_return": 2.532415098480223,
+      "turnover_per_year": 0.26673723207197675,
+      "win_rate": 1.0
+    },
+    "params": {
+      "buy_below": 20,
+      "period": 21,
+      "sell_above": 80
+    }
+  },
+  "variants_tried": 12,
+  "verdict": "KILL",
+  "verdict_pre_gate": "KILL",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.6395725274898896,
+      "max_drawdown": -0.6724111795465293,
+      "n_bars": 2520,
+      "n_trades": 1,
+      "sharpe": 1.2954289453479517,
+      "sortino": 1.315286672454268,
+      "total_return": 139.38035201753968,
+      "turnover_per_year": 0.1,
+      "win_rate": 1.0
+    },
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.08640674608234344,
+      "max_drawdown": -0.4974124086120896,
+      "n_bars": 2520,
+      "sharpe": 0.47662083312237213,
+      "sortino": 0.21761697037205285,
+      "total_return": 1.2904696268797187
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "params": {
+          "buy_below": 10,
+          "period": 7,
+          "sell_above": 70
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.5493776239960882,
+        "train": [
+          0,
+          1008
+        ],
+        "train_score": 0.35370819099712486
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 14,
+          "sell_above": 70
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 1.4529532939466299,
+        "train": [
+          252,
+          1260
+        ],
+        "train_score": 0.5293538462712847
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 14,
+          "sell_above": 80
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": null,
+        "train": [
+          504,
+          1512
+        ],
+        "train_score": 1.0218597709029291
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 7,
+          "sell_above": 80
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 1.6481522985892223,
+        "train": [
+          756,
+          1764
+        ],
+        "train_score": 1.2627346175534422
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 7,
+          "sell_above": 80
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.21811581487752618,
+        "train": [
+          1008,
+          2016
+        ],
+        "train_score": 1.31837656248609
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 7,
+          "sell_above": 80
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 2.2480587257992606,
+        "train": [
+          1260,
+          2268
+        ],
+        "train_score": 0.8458324747274789
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 7,
+          "sell_above": 80
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.24260514507171557,
+        "train": [
+          1512,
+          2520
+        ],
+        "train_score": 1.355286720797929
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 7,
+          "sell_above": 80
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 0.8175179330067741,
+        "train": [
+          1764,
+          2772
+        ],
+        "train_score": 0.9016168861449047
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 7,
+          "sell_above": 80
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -0.412093582562246,
+        "train": [
+          2016,
+          3024
+        ],
+        "train_score": 0.7775437611637678
+      },
+      {
+        "params": {
+          "buy_below": 20,
+          "period": 7,
+          "sell_above": 80
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 1.190076719485032,
+        "train": [
+          2268,
+          3276
+        ],
+        "train_score": 0.29607546273834706
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 120
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.18474934485308614,
+    "max_drawdown": -0.3669304866323485,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9431749535660251,
+    "sortino": 0.8630452964314186,
+    "total_return": 11.708813005732178,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "b27fa67d8b04",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T23:02:24+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "ca1427f00410391743d6ee16801eb08d896e2b5d",
+  "instrument": "QQQ",
+  "metrics": {
+    "cagr": 0.11403298010926743,
+    "max_drawdown": -0.2341123944400838,
+    "n_bars": 3779,
+    "n_trades": 187,
+    "sharpe": 0.8707395692194989,
+    "sortino": 0.6376829662230499,
+    "total_return": 4.049921375934454,
+    "turnover_per_year": 12.469965599364912,
+    "win_rate": 0.44680851063829785
+  },
+  "n_bars": 3779,
+  "notes": "Round 6 slice R6-A volume sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 014 item 2 night-run; pre-registered docs/research-round-6-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r6-volume/obv_trend__QQQ.json)",
+  "params": {
+    "price_confirm": false,
+    "window": 150
+  },
+  "run_id": "20260713T230224644835Z-b27fa67d8b04",
+  "schema_version": 1,
+  "strategy": "obv_trend",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
