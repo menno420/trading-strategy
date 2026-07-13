@@ -63,6 +63,13 @@ by the coordinator.)
 
 (Merged work only, newest first.)
 
+- Research Round 3 backtest-surface expansion (PRs #81–#88, 2026-07-13,
+  ORDER 012 night run): 8 dev-only slices — 11 new strategy families, 6 new
+  ticker caches, first hourly mean-reversion sweep, xsec lane on XSEC-14 —
+  1,752 registered configs, honest aggregate **0 PROMOTED / 41 KEEP-dev /
+  125 KILL of 166 lanes** (max t 1.04 vs the 2.64 Bonferroni bar; nothing
+  is a finding). Synthesis with full KEEP table and caveats:
+  [research-round-3-results.md](research-round-3-results.md).
 - Auto-merge enabler LANDED (PR #65, merged 2026-07-12T08:18:48Z,
   `bf885f0` — was branch `claude/install-auto-merge-enabler`): the
   substrate-kit enabler at `.github/workflows/auto-merge-enabler.yml`
