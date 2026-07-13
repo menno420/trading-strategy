@@ -1252,3 +1252,82 @@ def r3_btc_coverage_total_configs() -> int:
     searched configuration."""
     return (sum(r3_btc_coverage_variants_per_family().values())
             * len(R3_BTC_COVERAGE_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 14: TREND/MOMENTUM FAMILIES × HOURLY bars (lane:
+# r3-trend-hourly × all-8 × hourly — ORDER 012 night-run, post-holdout
+# DEV-ONLY, promotion closed; lands AFTER the Round-3 synthesis of slices
+# 1-8, extending the round)
+# ---------------------------------------------------------------------------
+# TIMEFRAME expansion, not a strategy expansion — the TREND-side mirror of
+# slice 5 (r3-meanrev-hourly): NO new strategy code — the four Round-3
+# trend/momentum single-instrument families (roc_momentum and
+# adx_filtered_sma from slice 2, aroon_trend from slice 4, trix_momentum
+# from slice 8) are re-swept on hourly bars over the frozen 8-ticker
+# universe (committed hourly caches, dev rail 2023-08-10 → 2025-01-08).
+# Parameter-scaling convention follows the two prior hourly lanes
+# (p1-trend-hourly, r3-meanrev-hourly) exactly: grids stay BAR-denominated
+# — the same lookback numbers mean hours-to-days instead of days-to-weeks
+# (roc lookback 252 bars is ~38.8 hourly sessions ≈ 2 months instead of a
+# year; adx slow 200 is ~31 sessions; trix period 15 is ~2.3 sessions) —
+# and each family's declared Round-3 12-variant daily grid is reused
+# VERBATIM by DELEGATING to the source lane's generator (the slice-13
+# convention: byte-identical grids by construction, so the slice-5
+# subset-of-the-published-daily-axes relation degenerates to equality;
+# both pinned by tests). No new parameter values are introduced, so every
+# hourly variant has a daily twin already in the burden ledger. The frozen
+# non-swept parameters stay frozen (ADX period 14; TRIX zero-line control
+# arm signal_period == 0 stays IN the grid — verbatim reuse inherits the
+# slice-2/4/8 committed-control-arm decisions unchanged). The two Round-3
+# breakout families (bollinger_breakout, atr_trailing) and ichimoku_trend
+# are OUT of scope here: this slice mirrors slice 5's four-family × all-8
+# shape (384 configs) for cross-lane comparability, and takes the four
+# families slices 2/4/8 declared as the round's classic trend/momentum
+# indicators; a breakout/ichimoku hourly lane would be its own declared
+# slice. Kept bounded on purpose: every extra variant raises the
+# multiple-testing burden on any winner.
+
+_R3_TREND_HOURLY_SOURCES: dict[str, Callable[[str], list[dict]]] = {
+    "roc_momentum": r3_roc_adx_variants,
+    "adx_filtered_sma": r3_roc_adx_variants,
+    "aroon_trend": r3_aroon_cci_variants,
+    "trix_momentum": r3_trix_ichimoku_variants,
+}
+
+R3_TREND_HOURLY_FAMILIES = tuple(_R3_TREND_HOURLY_SOURCES)
+
+# The full 8-ticker universe (config.UNIVERSE order) — hourly caches are
+# committed for all 8 (data/hourly/), as in the p1-trend-hourly and
+# r3-meanrev-hourly lanes.
+R3_TREND_HOURLY_INSTRUMENTS = ("AAPL", "MSFT", "NVDA", "GOOGL", "AMZN",
+                               "META", "GLD", "SLV")
+
+
+def r3_trend_hourly_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-14 ``family`` —
+    the family's declared Round-3 daily grid, VERBATIM (delegated to the
+    source lane's generator, so the grids cannot drift apart; on hourly
+    bars the same numbers are bar-denominated per the p1-trend-hourly
+    convention)."""
+    try:
+        source = _R3_TREND_HOURLY_SOURCES[family]
+    except KeyError:
+        raise ValueError(
+            f"unknown R3 trend-hourly family {family!r}") from None
+    return source(family)
+
+
+def r3_trend_hourly_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-14 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_trend_hourly_variants(fam))
+            for fam in R3_TREND_HOURLY_FAMILIES}
+
+
+def r3_trend_hourly_total_configs() -> int:
+    """Total registered Round-3 slice-14 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes)."""
+    return (sum(r3_trend_hourly_variants_per_family().values())
+            * len(R3_TREND_HOURLY_INSTRUMENTS))

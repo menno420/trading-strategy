@@ -1,0 +1,389 @@
+{
+  "benchmark_full_period_metrics": {
+    "cagr": 0.21775921764929063,
+    "max_drawdown": -0.17318917243678122,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.9623126414443511,
+    "sortino": 0.9283177014918956,
+    "total_return": 0.3468976932435337,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:09:17+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "aroon_trend",
+  "family_variants_tried": 96,
+  "full_period_variants": {
+    "note": "single-split in-sample rows for deflated-Sharpe bookkeeping \u2014 NOT findings",
+    "rows": [
+      {
+        "metrics": {
+          "cagr": 0.1619984500310634,
+          "max_drawdown": -0.1432068266158153,
+          "n_trades": 106,
+          "sharpe": 0.8897993083408559,
+          "sortino": 0.6973863648672357,
+          "total_return": 0.2547715860332751,
+          "turnover_per_year": 70.12439418416801,
+          "win_rate": 0.37735849056603776
+        },
+        "params": {
+          "entry": 0.0,
+          "exit": -50.0,
+          "period": 14
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.03070384498832679,
+          "max_drawdown": -0.2021539195219415,
+          "n_trades": 150,
+          "sharpe": 0.2640270733628618,
+          "sortino": 0.1905682970935052,
+          "total_return": 0.04677463637250501,
+          "turnover_per_year": 99.23263327948304,
+          "win_rate": 0.37333333333333335
+        },
+        "params": {
+          "entry": 0.0,
+          "exit": 0.0,
+          "period": 14
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.19087827345797614,
+          "max_drawdown": -0.11409875986959095,
+          "n_trades": 92,
+          "sharpe": 1.043179134916372,
+          "sortino": 0.7780747912712749,
+          "total_return": 0.30221016908028053,
+          "turnover_per_year": 60.8626817447496,
+          "win_rate": 0.3695652173913043
+        },
+        "params": {
+          "entry": 50.0,
+          "exit": -50.0,
+          "period": 14
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.08373849809222578,
+          "max_drawdown": -0.12583326793503347,
+          "n_trades": 130,
+          "sharpe": 0.673527570941182,
+          "sortino": 0.5082885160145871,
+          "total_return": 0.1292545758864707,
+          "turnover_per_year": 86.00161550888531,
+          "win_rate": 0.4461538461538462
+        },
+        "params": {
+          "entry": 50.0,
+          "exit": 0.0,
+          "period": 14
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.20722551342896312,
+          "max_drawdown": -0.1366427448605957,
+          "n_trades": 58,
+          "sharpe": 1.0772488833495937,
+          "sortino": 0.836337674527944,
+          "total_return": 0.3293254315152143,
+          "turnover_per_year": 38.369951534733445,
+          "win_rate": 0.41379310344827586
+        },
+        "params": {
+          "entry": 0.0,
+          "exit": -50.0,
+          "period": 25
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.04945912468004865,
+          "max_drawdown": -0.17727725032947128,
+          "n_trades": 96,
+          "sharpe": 0.3687652885679641,
+          "sortino": 0.2527131456027601,
+          "total_return": 0.07570077568037958,
+          "turnover_per_year": 63.508885298869146,
+          "win_rate": 0.3125
+        },
+        "params": {
+          "entry": 0.0,
+          "exit": 0.0,
+          "period": 25
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.19928224539225026,
+          "max_drawdown": -0.13839782174866977,
+          "n_trades": 48,
+          "sharpe": 1.0729192753000174,
+          "sortino": 0.7936790023257737,
+          "total_return": 0.31612626511991526,
+          "turnover_per_year": 31.754442649434573,
+          "win_rate": 0.5
+        },
+        "params": {
+          "entry": 50.0,
+          "exit": -50.0,
+          "period": 25
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.009337849752609317,
+          "max_drawdown": -0.17603860733732002,
+          "n_trades": 78,
+          "sharpe": 0.13946009643909768,
+          "sortino": 0.08605897478303386,
+          "total_return": 0.014148753627920119,
+          "turnover_per_year": 51.60096930533118,
+          "win_rate": 0.3333333333333333
+        },
+        "params": {
+          "entry": 50.0,
+          "exit": 0.0,
+          "period": 25
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.19687875816526934,
+          "max_drawdown": -0.17358379867959195,
+          "n_trades": 32,
+          "sharpe": 1.0048257351293337,
+          "sortino": 0.7934241990981867,
+          "total_return": 0.31214123193206467,
+          "turnover_per_year": 21.169628432956383,
+          "win_rate": 0.5
+        },
+        "params": {
+          "entry": 0.0,
+          "exit": -50.0,
+          "period": 50
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.22904866586531059,
+          "max_drawdown": -0.16580223508399117,
+          "n_trades": 36,
+          "sharpe": 1.1989499731437008,
+          "sortino": 0.8788715027766562,
+          "total_return": 0.3658171986651486,
+          "turnover_per_year": 23.815831987075928,
+          "win_rate": 0.6666666666666666
+        },
+        "params": {
+          "entry": 0.0,
+          "exit": 0.0,
+          "period": 50
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.20905614983704068,
+          "max_drawdown": -0.17358379867959206,
+          "n_trades": 26,
+          "sharpe": 1.0830850575532838,
+          "sortino": 0.793600048850011,
+          "total_return": 0.33237367835931875,
+          "turnover_per_year": 17.20032310177706,
+          "win_rate": 0.46153846153846156
+        },
+        "params": {
+          "entry": 50.0,
+          "exit": -50.0,
+          "period": 50
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.2156323168557286,
+          "max_drawdown": -0.16580223508399128,
+          "n_trades": 30,
+          "sharpe": 1.177911716085613,
+          "sortino": 0.7821766006085623,
+          "total_return": 0.3433433200034506,
+          "turnover_per_year": 19.846526655896607,
+          "win_rate": 0.6
+        },
+        "params": {
+          "entry": 50.0,
+          "exit": 0.0,
+          "period": 50
+        }
+      }
+    ]
+  },
+  "git_sha": "8e5b1d65a74303841bb080d206478ff7ab9f1ee0",
+  "instrument": "AAPL",
+  "lane_variants_tried": 384,
+  "n_bars": 2476,
+  "negative_bar_crossed": false,
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "program_variants_tried": 3764,
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 1260,
+    "note": "ORDER 007 bar on the stitched OOS Sharpe delta, Bonferroni K = variants this lane, hourly annualization \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": -1.2613936843168452,
+    "sharpe_se": 1.1401920209342291,
+    "timeframe": "hourly",
+    "tstat": -1.106299343581889,
+    "variants_tried": 12,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "sweep": "r3-trend-hourly",
+  "timeframe": "hourly",
+  "top_full_period_variant": {
+    "ledger_run": "20260713T040918306699Z-f4e932ee9307.json",
+    "metrics": {
+      "cagr": 0.22904866586531059,
+      "max_drawdown": -0.16580223508399117,
+      "n_trades": 36,
+      "sharpe": 1.1989499731437008,
+      "sortino": 0.8788715027766562,
+      "total_return": 0.3658171986651486,
+      "turnover_per_year": 23.815831987075928,
+      "win_rate": 0.6666666666666666
+    },
+    "params": {
+      "entry": 0.0,
+      "exit": 0.0,
+      "period": 50
+    }
+  },
+  "variants_tried": 12,
+  "verdict": "KILL",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.4731732344815418,
+      "max_drawdown": -0.15867619737436112,
+      "n_bars": 1260,
+      "n_trades": 1,
+      "sharpe": 1.570211425462568,
+      "sortino": 1.5606853936135616,
+      "total_return": 0.3471812049090208,
+      "turnover_per_year": 1.2999999999999998,
+      "win_rate": 1.0
+    },
+    "n_splits": 5,
+    "oos_end": "2024-11-22 14:30:00",
+    "oos_metrics": {
+      "cagr": 0.04474620288006137,
+      "max_drawdown": -0.17358379867959162,
+      "n_bars": 1260,
+      "sharpe": 0.3088177411457229,
+      "sortino": 0.24132651598487917,
+      "total_return": 0.03424562719626234
+    },
+    "oos_start": "2024-03-07 18:30:00",
+    "per_split": [
+      {
+        "params": {
+          "entry": 50.0,
+          "exit": 0.0,
+          "period": 14
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.13061541443883554,
+        "train": [
+          0,
+          1008
+        ],
+        "train_score": 1.8628504787772806
+      },
+      {
+        "params": {
+          "entry": 50.0,
+          "exit": -50.0,
+          "period": 14
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 1.0902003281619363,
+        "train": [
+          252,
+          1260
+        ],
+        "train_score": 1.6300385325241349
+      },
+      {
+        "params": {
+          "entry": 50.0,
+          "exit": -50.0,
+          "period": 50
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.6225127688918276,
+        "train": [
+          504,
+          1512
+        ],
+        "train_score": 1.755985644191066
+      },
+      {
+        "params": {
+          "entry": 50.0,
+          "exit": -50.0,
+          "period": 50
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": -1.3139104698449107,
+        "train": [
+          756,
+          1764
+        ],
+        "train_score": 1.29293114957085
+      },
+      {
+        "params": {
+          "entry": 0.0,
+          "exit": -50.0,
+          "period": 25
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.6763279266563273,
+        "train": [
+          1008,
+          2016
+        ],
+        "train_score": 1.1947284986873676
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 60
+  }
+}

@@ -1119,3 +1119,103 @@ class TestR3BtcCoverageGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_btc_coverage_variants("ichimoku_trend")
                 == sweeps.r3_btc_coverage_variants("ichimoku_trend"))
+
+
+class TestR3TrendHourlyGrid:
+    # The declared slice-14 families, in lane order — the four Round-3
+    # trend/momentum single-instrument families, the TREND-side mirror of
+    # the slice-5 (r3-meanrev-hourly) timeframe expansion.
+    EXPECTED_FAMILIES = ("roc_momentum", "adx_filtered_sma",
+                         "aroon_trend", "trix_momentum")
+
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R3_TREND_HOURLY_FAMILY
+        assert sweeps.R3_TREND_HOURLY_FAMILIES == self.EXPECTED_FAMILIES
+        assert (set(sweeps.R3_TREND_HOURLY_FAMILIES)
+                == set(R3_TREND_HOURLY_FAMILY))
+        for fam in sweeps.R3_TREND_HOURLY_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_no_new_strategies(self):
+        # Slice 14 is a TIMEFRAME expansion: every family must already be
+        # swept by an earlier daily lane (no new strategy code).
+        earlier = (set(sweeps.R3_ROC_ADX_FAMILIES)
+                   | set(sweeps.R3_AROON_CCI_FAMILIES)
+                   | set(sweeps.R3_TRIX_ICHIMOKU_FAMILIES))
+        assert set(sweeps.R3_TREND_HOURLY_FAMILIES) <= earlier
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-trend-hourly sweep files must match these. 12 variants
+        # per family over the full 8-ticker universe = 384 registered
+        # configs — the slice-5 shape, mirrored.
+        from trading_lab import config
+        counts = sweeps.r3_trend_hourly_variants_per_family()
+        assert counts == {fam: 12 for fam in self.EXPECTED_FAMILIES}
+        assert sweeps.R3_TREND_HOURLY_INSTRUMENTS == tuple(config.UNIVERSE)
+        assert len(sweeps.R3_TREND_HOURLY_INSTRUMENTS) == 8
+        assert sweeps.r3_trend_hourly_total_configs() == 384
+
+    def test_grids_are_the_declared_daily_grids_verbatim(self):
+        # The slice-13 delegation convention: each family's Round-3 daily
+        # grid reused VERBATIM (delegation makes drift impossible; this
+        # pin makes it visible).
+        assert (sweeps.r3_trend_hourly_variants("roc_momentum")
+                == sweeps.r3_roc_adx_variants("roc_momentum"))
+        assert (sweeps.r3_trend_hourly_variants("adx_filtered_sma")
+                == sweeps.r3_roc_adx_variants("adx_filtered_sma"))
+        assert (sweeps.r3_trend_hourly_variants("aroon_trend")
+                == sweeps.r3_aroon_cci_variants("aroon_trend"))
+        assert (sweeps.r3_trend_hourly_variants("trix_momentum")
+                == sweeps.r3_trix_ichimoku_variants("trix_momentum"))
+
+    def test_grids_are_subsets_of_the_published_daily_axes(self):
+        # The p1-trend-hourly / slice-5 convention: bar-denominated grids
+        # reused as-is on hourly bars — no new parameter values. Every
+        # hourly variant must already exist in its family's daily grid
+        # (with verbatim delegation the subset degenerates to equality;
+        # this is the slice-5 membership form, belt-and-braces).
+        daily = {
+            "roc_momentum": sweeps.r3_roc_adx_variants("roc_momentum"),
+            "adx_filtered_sma": sweeps.r3_roc_adx_variants("adx_filtered_sma"),
+            "aroon_trend": sweeps.r3_aroon_cci_variants("aroon_trend"),
+            "trix_momentum": sweeps.r3_trix_ichimoku_variants("trix_momentum"),
+        }
+        for fam in sweeps.R3_TREND_HOURLY_FAMILIES:
+            for params in sweeps.r3_trend_hourly_variants(fam):
+                assert params in daily[fam], (fam, params)
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # Frozen non-swept parameters stay frozen under verbatim reuse
+        # (ADX period 14 NOT swept, as in r3-roc-adx); the committed
+        # control arms are inherited unchanged (aroon entry==exit==0, trix
+        # signal_period==0).
+        for params in sweeps.r3_trend_hourly_variants("roc_momentum"):
+            assert params["exit"] <= params["entry"]
+            assert set(params) == {"lookback", "entry", "exit"}
+        for params in sweeps.r3_trend_hourly_variants("adx_filtered_sma"):
+            assert params["fast"] < params["slow"]
+            assert set(params) == {"fast", "slow", "adx_min"}
+        for params in sweeps.r3_trend_hourly_variants("aroon_trend"):
+            assert params["exit"] <= params["entry"]
+            assert set(params) == {"period", "entry", "exit"}
+        for params in sweeps.r3_trend_hourly_variants("trix_momentum"):
+            assert set(params) == {"period", "signal_period"}
+        assert {"period": 14, "entry": 0.0, "exit": 0.0} in \
+            sweeps.r3_trend_hourly_variants("aroon_trend")
+        assert any(p["signal_period"] == 0
+                   for p in sweeps.r3_trend_hourly_variants("trix_momentum"))
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_TREND_HOURLY_FAMILIES:
+            for params in sweeps.r3_trend_hourly_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_trend_hourly_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_trend_hourly_variants("trix_momentum")
+                == sweeps.r3_trend_hourly_variants("trix_momentum"))

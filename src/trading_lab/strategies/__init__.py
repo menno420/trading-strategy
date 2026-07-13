@@ -207,6 +207,13 @@ R3_XSEC_EXPANDED_FAMILY = ["xsec_momentum", "xsec_reversal"]
 # daily lane.
 R3_TRIX_ICHIMOKU_FAMILY = ["trix_momentum", "ichimoku_trend"]
 
+# Round 3 slice 14 (ORDER 012 night-run, post-holdout dev-only): the four
+# EXISTING Round-3 trend/momentum families re-swept on HOURLY bars in the
+# r3-trend-hourly × all-8-tickers × hourly lane (timeframe expansion — no
+# new strategy code; the trend-side mirror of slice 5).
+R3_TREND_HOURLY_FAMILY = ["roc_momentum", "adx_filtered_sma",
+                          "aroon_trend", "trix_momentum"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
     "xsec_reversal": xsec_reversal.generate_weights,
@@ -219,7 +226,7 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "R3_STOCH_WILLR_FAMILY", "R3_ROC_ADX_FAMILY",
            "R3_AROON_CCI_FAMILY", "R3_MEANREV_HOURLY_FAMILY",
            "R3_BREAKOUT_FAMILY", "R3_XSEC_EXPANDED_FAMILY",
-           "R3_TRIX_ICHIMOKU_FAMILY",
+           "R3_TRIX_ICHIMOKU_FAMILY", "R3_TREND_HOURLY_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",

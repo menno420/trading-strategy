@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.3568015449012083,
+    "max_drawdown": -0.22149983676741947,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.2397262046014743,
+    "sortino": 1.207402601433659,
+    "total_return": 0.5860308071505125,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "0f29ef4b33b9",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:09:26+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "8e5b1d65a74303841bb080d206478ff7ab9f1ee0",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.21012338086420668,
+    "max_drawdown": -0.16806126689834122,
+    "n_bars": 2476,
+    "n_trades": 37,
+    "sharpe": 1.0106275422583997,
+    "sortino": 0.7995011100148677,
+    "total_return": 0.3341518463806781,
+    "turnover_per_year": 24.477382875605816,
+    "win_rate": 0.5789473684210527
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 trend-hourly sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 14, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-trend-hourly/trix_momentum__AMZN.json)",
+  "params": {
+    "period": 21,
+    "signal_period": 0
+  },
+  "run_id": "20260713T040926850107Z-0f29ef4b33b9",
+  "schema_version": 1,
+  "strategy": "trix_momentum",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}

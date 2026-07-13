@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.29438417184440935,
+    "max_drawdown": -0.22752014737711135,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.0537931964448592,
+    "sortino": 1.0644793070114111,
+    "total_return": 0.47704820339228293,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "7dcc69858f5a",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:09:23+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "8e5b1d65a74303841bb080d206478ff7ab9f1ee0",
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.177174646005277,
+    "max_drawdown": -0.13452290422887825,
+    "n_bars": 2476,
+    "n_trades": 13,
+    "sharpe": 0.878278839256248,
+    "sortino": 0.6983533853696269,
+    "total_return": 0.2796260403298998,
+    "turnover_per_year": 8.60016155088853,
+    "win_rate": 0.5714285714285714
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 trend-hourly sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 14, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-trend-hourly/roc_momentum__GOOGL.json)",
+  "params": {
+    "entry": 0.05,
+    "exit": 0.0,
+    "lookback": 252
+  },
+  "run_id": "20260713T040923123531Z-7dcc69858f5a",
+  "schema_version": 1,
+  "strategy": "roc_momentum",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}
