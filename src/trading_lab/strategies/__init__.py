@@ -54,7 +54,15 @@ Families:
   performers, weekly rebalance; the mirror thesis of xsec_momentum, same
   panel interface, see below) plus the EXISTING xsec_momentum re-run on
   the expanded 14-instrument basket (no strategy code change — the
-  universe was already a parameter of the panel interface).
+  universe was already a parameter of the panel interface); slice 8 (lane
+  r3-trix-ichimoku × 12-ticker mixed set × daily): trix_momentum (TRIX
+  triple-smoothed EMA rate-of-change, long while TRIX is above its signal
+  line — signal_period == 0 recovers the classic zero-line rule and is the
+  committed within-family control arm), ichimoku_trend (Ichimoku cloud
+  trend: long when close is above the cloud AND tenkan > kijun, flat on a
+  full cloud break below OR tenkan < kijun, hysteresis in between; spans
+  displaced forward the standard 26 bars using only past data — the lab's
+  first multi-component indicator system).
 
 Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
 closes (one column per instrument) and return a target-weight DataFrame
@@ -67,11 +75,12 @@ from __future__ import annotations
 
 from . import (adx_filtered_sma, aroon_trend, atr_trailing,
                bollinger_breakout, bollinger_reversion, buy_and_hold,
-               cci_reversion, donchian, ema_crossover, keltner_breakout,
-               macd, macd_supertrend, pullback, roc_momentum,
-               rsi_mean_reversion, sma_crossover, stochastic_reversion,
-               supertrend_flip, vol_filtered_trend, williams_r_reversion,
-               xsec_momentum, xsec_reversal)
+               cci_reversion, donchian, ema_crossover, ichimoku_trend,
+               keltner_breakout, macd, macd_supertrend, pullback,
+               roc_momentum, rsi_mean_reversion, sma_crossover,
+               stochastic_reversion, supertrend_flip, trix_momentum,
+               vol_filtered_trend, williams_r_reversion, xsec_momentum,
+               xsec_reversal)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -94,6 +103,8 @@ STRATEGIES = {
     "cci_reversion": cci_reversion.generate,
     "bollinger_breakout": bollinger_breakout.generate,
     "atr_trailing": atr_trailing.generate,
+    "trix_momentum": trix_momentum.generate,
+    "ichimoku_trend": ichimoku_trend.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -122,6 +133,9 @@ DEFAULT_PARAMS = {
     "cci_reversion": {"period": 20, "buy_below": -100, "sell_above": 100},
     "bollinger_breakout": {"period": 20, "num_std": 2.0},
     "atr_trailing": {"entry_lookback": 20, "atr_period": 14, "k": 3.0},
+    "trix_momentum": {"period": 15, "signal_period": 9},
+    "ichimoku_trend": {"tenkan": 9, "kijun": 26, "senkou_b": 52,
+                       "displacement": 26},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -187,6 +201,12 @@ R3_BREAKOUT_FAMILY = ["bollinger_breakout", "atr_trailing"]
 # aligned closes), so both live in PORTFOLIO_STRATEGIES, not STRATEGIES.
 R3_XSEC_EXPANDED_FAMILY = ["xsec_momentum", "xsec_reversal"]
 
+# Round 3 slice 8 (ORDER 012 night-run, post-holdout dev-only): the TRIX
+# momentum + Ichimoku cloud trend families swept in the r3-trix-ichimoku ×
+# 12-ticker mixed set (frozen 8-ticker universe + SPY/QQQ/TSLA/TLT) ×
+# daily lane.
+R3_TRIX_ICHIMOKU_FAMILY = ["trix_momentum", "ichimoku_trend"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
     "xsec_reversal": xsec_reversal.generate_weights,
@@ -199,10 +219,12 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "R3_STOCH_WILLR_FAMILY", "R3_ROC_ADX_FAMILY",
            "R3_AROON_CCI_FAMILY", "R3_MEANREV_HOURLY_FAMILY",
            "R3_BREAKOUT_FAMILY", "R3_XSEC_EXPANDED_FAMILY",
+           "R3_TRIX_ICHIMOKU_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
            "vol_filtered_trend", "keltner_breakout", "stochastic_reversion",
            "williams_r_reversion", "roc_momentum", "adx_filtered_sma",
            "aroon_trend", "cci_reversion", "bollinger_breakout",
-           "atr_trailing", "xsec_momentum", "xsec_reversal"]
+           "atr_trailing", "trix_momentum", "ichimoku_trend",
+           "xsec_momentum", "xsec_reversal"]
