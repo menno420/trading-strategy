@@ -124,3 +124,138 @@ class TestAAPLDonchianRegrade:
                 benchmark_sharpe=AAPL_BH_SHARPE,
                 n_periods=AAPL_N_BARS, timeframe="daily", variants_tried=k)
             assert grade["verdict"] == promotion.VERDICT_RULE_PASS
+
+
+class TestClassifyVerdict:
+    """R4-A three-way sweep verdict (docs/research-round-4-plan.md § R4-A).
+
+    Pre-registered rule: KILL-SIG iff the lane is not a KEEP and
+    tstat <= -min_tstat at the lane's own recorded K -- the same
+    Bonferroni bar, mirrored. Total: missing/NaN inputs degrade to KILL.
+    """
+
+    BAR_K12 = 2.638257273476751  # min_tstat(12), pinned
+
+    def test_bar_constant_matches_min_tstat_k12(self):
+        assert promotion.min_tstat(12) == pytest.approx(self.BAR_K12)
+
+    def test_significantly_negative_is_kill_sig(self):
+        assert promotion.classify_verdict(False, -3.01, self.BAR_K12) == \
+            promotion.SWEEP_KILL_SIG
+
+    def test_boundary_exactly_minus_bar_is_kill_sig(self):
+        # The rule is <=, so t exactly at -bar crosses it.
+        assert promotion.classify_verdict(
+            False, -self.BAR_K12, self.BAR_K12) == promotion.SWEEP_KILL_SIG
+
+    def test_just_inside_the_bar_stays_plain_kill(self):
+        # SPY donchian's t = -2.417 misses the -2.638 bar: plain KILL.
+        assert promotion.classify_verdict(False, -2.417, self.BAR_K12) == \
+            promotion.SWEEP_KILL
+
+    def test_keep_lane_with_negative_tstat_stays_keep(self):
+        # KILL-SIG only ever applies to non-KEEP lanes.
+        assert promotion.classify_verdict(True, -5.0, self.BAR_K12) == \
+            promotion.SWEEP_KEEP
+
+    def test_none_tstat_degrades_to_kill(self):
+        assert promotion.classify_verdict(False, None, self.BAR_K12) == \
+            promotion.SWEEP_KILL
+
+    def test_none_bar_degrades_to_kill(self):
+        assert promotion.classify_verdict(False, -9.9, None) == \
+            promotion.SWEEP_KILL
+
+    def test_nan_tstat_degrades_to_kill(self):
+        assert promotion.classify_verdict(
+            False, float("nan"), self.BAR_K12) == promotion.SWEEP_KILL
+
+    def test_non_numeric_tstat_degrades_to_kill(self):
+        assert promotion.classify_verdict(False, "oops", self.BAR_K12) == \
+            promotion.SWEEP_KILL
+
+    def test_noise_level_negative_is_kill(self):
+        assert promotion.classify_verdict(False, -0.4, self.BAR_K12) == \
+            promotion.SWEEP_KILL
+
+    def test_positive_below_bar_non_keep_is_kill(self):
+        assert promotion.classify_verdict(False, 1.04, self.BAR_K12) == \
+            promotion.SWEEP_KILL
+
+    def test_larger_k_raises_the_mirrored_bar_too(self):
+        # t = -2.9 is KILL-SIG at K=12 (bar 2.638) but plain KILL at
+        # K=75 (bar 3.21) -- the correction never weakens.
+        bar75 = promotion.min_tstat(75)
+        assert promotion.classify_verdict(False, -2.9, self.BAR_K12) == \
+            promotion.SWEEP_KILL_SIG
+        assert promotion.classify_verdict(False, -2.9, bar75) == \
+            promotion.SWEEP_KILL
+
+
+class TestR4KillsigRegradeScript:
+    """Row-builder of scripts/run_r4_killsig_regrade.py on synthetic dicts."""
+
+    @staticmethod
+    def _script():
+        import importlib.util
+        from trading_lab import config
+        path = config.REPO_ROOT / "scripts" / "run_r4_killsig_regrade.py"
+        spec = importlib.util.spec_from_file_location(
+            "run_r4_killsig_regrade", path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+
+    def _lane(self, verdict="KILL", tstat=-1.0, min_tstat=2.638257273476751):
+        return {
+            "sweep": "r3-test", "instrument": "TEST", "family": "fam",
+            "timeframe": "daily", "verdict": verdict,
+            "promotion_grade": {"tstat": tstat, "min_tstat": min_tstat},
+        }
+
+    def test_kill_sig_row(self):
+        mod = self._script()
+        row = mod.regrade_lane(self._lane(tstat=-3.01))
+        assert row["new_verdict"] == promotion.SWEEP_KILL_SIG
+        assert row["original_verdict"] == "KILL"
+        assert row["strategy"] == "fam"
+        assert row["tstat"] == -3.01
+
+    def test_keep_dev_verdict_string_maps_to_keep(self):
+        mod = self._script()
+        row = mod.regrade_lane(
+            self._lane(verdict="KEEP (dev-candidate only)", tstat=-3.01))
+        assert row["new_verdict"] == promotion.SWEEP_KEEP
+
+    def test_missing_tstat_is_ungradeable_not_recomputed(self):
+        mod = self._script()
+        lane = self._lane()
+        del lane["promotion_grade"]
+        lane["verdict"] = None  # the XSEC bookkeeping-only shape
+        row = mod.regrade_lane(lane)
+        assert row["new_verdict"] == mod.UNGRADEABLE
+        assert row["tstat"] is None
+
+    def test_verdict_present_but_no_tstat_is_ungradeable(self):
+        mod = self._script()
+        lane = self._lane()
+        lane["promotion_grade"] = {"min_tstat": 2.64}
+        row = mod.regrade_lane(lane)
+        assert row["new_verdict"] == mod.UNGRADEABLE
+
+    def test_noise_kill_stays_kill(self):
+        mod = self._script()
+        row = mod.regrade_lane(self._lane(tstat=-0.4))
+        assert row["new_verdict"] == promotion.SWEEP_KILL
+
+    def test_committed_tsla_rsi_lane_regrades_kill_sig(self):
+        # Integration pin against the byte-committed r3 summary that
+        # motivated R4-A (PR #91 card: stitched OOS t = -3.01).
+        import json
+        from trading_lab import config
+        mod = self._script()
+        path = (config.EXPERIMENTS_DIR / "sweeps" / "r3-meanrev-new-tickers"
+                / "rsi_mean_reversion__TSLA.json")
+        row = mod.regrade_lane(json.loads(path.read_text()))
+        assert row["new_verdict"] == promotion.SWEEP_KILL_SIG
+        assert row["tstat"] == pytest.approx(-3.0110, abs=1e-4)

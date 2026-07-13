@@ -72,7 +72,11 @@ by the coordinator.)
   [research-round-3-results.md](research-round-3-results.md). Round-4
   follow-up: six new idea classes pre-registered (hypotheses + kill
   criteria before any run) in
-  [research-round-4-plan.md](research-round-4-plan.md).
+  [research-round-4-plan.md](research-round-4-plan.md); results land
+  slice-by-slice in
+  [research-round-4-results.md](research-round-4-results.md) (R4-A KILL-SIG
+  re-grade: 4 significantly-harmful lanes among the 302 committed r3
+  summaries, r3 files byte-untouched).
 - Auto-merge enabler LANDED (PR #65, merged 2026-07-12T08:18:48Z,
   `bf885f0` — was branch `claude/install-auto-merge-enabler`): the
   substrate-kit enabler at `.github/workflows/auto-merge-enabler.yml`
