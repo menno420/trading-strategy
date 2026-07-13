@@ -1284,3 +1284,108 @@ class TestIchimokuTrend:
         with pytest.raises(ValueError, match="displacement"):
             STRATEGIES["ichimoku_trend"](random_walk, tenkan=9, kijun=26,
                                          senkou_b=52, displacement=0)
+
+
+class TestObvTrend:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["obv_trend"](random_walk, window=20)
+        assert (pos.iloc[:19] == 0.0).all()
+
+    def test_long_in_uptrend_flat_in_downtrend(self):
+        # Monotonic closes with constant volume: OBV is a straight line up
+        # (down), so it sits above (below) its own SMA after warm-up.
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        down = make_ohlcv(np.linspace(200, 100, 120))
+        pos_up = STRATEGIES["obv_trend"](up, window=20)
+        pos_down = STRATEGIES["obv_trend"](down, window=20)
+        assert (pos_up.iloc[25:] == 1.0).all()
+        assert (pos_down.iloc[25:] == 0.0).all()
+
+    def test_price_confirm_arm_is_a_subset_of_the_pure_arm(self, random_walk):
+        # The confirmed arm can only ever REMOVE longs from the pure-OBV
+        # control arm, never add them.
+        pure = STRATEGIES["obv_trend"](random_walk, window=20,
+                                       price_confirm=False)
+        confirmed = STRATEGIES["obv_trend"](random_walk, window=20,
+                                            price_confirm=True)
+        assert (confirmed <= pure).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="window"):
+            STRATEGIES["obv_trend"](random_walk, window=1)
+
+
+class TestMfiReversion:
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["mfi_reversion"](random_walk, period=14)
+        assert (pos.iloc[:14] == 0.0).all()
+
+    def test_oversold_recovery_enters_then_overbought_exits(self):
+        # V-shape: 30 falling closes push MFI to 0; the first up-bar lifts
+        # it back through buy_below (entry on the recovery cross), and a
+        # few more up-bars push it above sell_above (exit).
+        closes = np.concatenate([np.linspace(100, 70, 30),
+                                 np.linspace(71, 90, 20)])
+        opens = np.concatenate([[100.0], closes[:-1]])
+        ohlcv = make_ohlcv(opens, closes)
+        pos = STRATEGIES["mfi_reversion"](ohlcv, period=5, buy_below=15,
+                                          sell_above=80)
+        assert pos.iloc[30] == 1.0  # entry on the first recovery bar
+        assert pos.iloc[-1] == 0.0  # exited once MFI ran overbought
+        assert (pos.iloc[:29] == 0.0).all()  # never long on the way down
+
+    def test_zero_flow_is_flat(self):
+        flat = make_ohlcv(np.full(60, 100.0))
+        pos = STRATEGIES["mfi_reversion"](flat, period=5)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="period"):
+            STRATEGIES["mfi_reversion"](random_walk, period=1)
+        with pytest.raises(ValueError, match="buy_below"):
+            STRATEGIES["mfi_reversion"](random_walk, buy_below=80,
+                                        sell_above=20)
+
+
+class TestOvernightGap:
+    @staticmethod
+    def _gapped(gap_bar=40, gap=-5.0, n=60):
+        # Oscillating closes (ATR ~ 1) with opens at the prior close, and
+        # ONE large overnight gap injected at gap_bar.
+        closes = 100.0 + 0.5 * np.cos(np.pi * np.arange(n))
+        opens = np.concatenate([[100.0], closes[:-1]])
+        opens[gap_bar] = closes[gap_bar - 1] + gap
+        return make_ohlcv(opens, closes)
+
+    def test_fade_enters_on_the_down_gap_and_holds(self):
+        ohlcv = self._gapped(gap=-5.0)
+        pos = STRATEGIES["overnight_gap"](ohlcv, gap_atr=1.0, hold=3,
+                                          mode="fade")
+        assert (pos.iloc[40:43] == 1.0).all()  # signal bar + hold window
+        assert pos.iloc[43] == 0.0
+        assert (pos.iloc[:40] == 0.0).all()  # ordinary bars never trigger
+
+    def test_follow_ignores_the_down_gap_and_takes_the_up_gap(self):
+        down = self._gapped(gap=-5.0)
+        up = self._gapped(gap=+5.0)
+        assert (STRATEGIES["overnight_gap"](down, mode="follow") == 0.0).all()
+        pos = STRATEGIES["overnight_gap"](up, gap_atr=1.0, hold=1,
+                                          mode="follow")
+        assert pos.iloc[40] == 1.0
+        assert pos.iloc[41] == 0.0
+
+    def test_gap_during_atr_warmup_is_flat(self):
+        ohlcv = self._gapped(gap_bar=3, gap=-5.0)
+        pos = STRATEGIES["overnight_gap"](ohlcv, gap_atr=1.0, hold=3,
+                                          mode="fade")
+        assert (pos.iloc[:10] == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="mode"):
+            STRATEGIES["overnight_gap"](random_walk, mode="sideways")
+        with pytest.raises(ValueError, match="gap_atr"):
+            STRATEGIES["overnight_gap"](random_walk, gap_atr=0.0)
+        with pytest.raises(ValueError, match="hold"):
+            STRATEGIES["overnight_gap"](random_walk, hold=0)
+        with pytest.raises(ValueError, match="atr_period"):
+            STRATEGIES["overnight_gap"](random_walk, atr_period=1)
