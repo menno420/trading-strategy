@@ -318,3 +318,46 @@ class TestR3StochWillrGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_stoch_willr_variants("stochastic_reversion")
                 == sweeps.r3_stoch_willr_variants("stochastic_reversion"))
+
+
+class TestR3RocAdxGrid:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R3_ROC_ADX_FAMILY
+        assert set(sweeps.R3_ROC_ADX_FAMILIES) == set(R3_ROC_ADX_FAMILY)
+        for fam in sweeps.R3_ROC_ADX_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-roc-adx sweep files must match these. 12 variants per
+        # family over the full 8-ticker universe = 192 registered configs.
+        from trading_lab import config
+        counts = sweeps.r3_roc_adx_variants_per_family()
+        assert counts == {"roc_momentum": 12, "adx_filtered_sma": 12}
+        assert sweeps.R3_ROC_ADX_INSTRUMENTS == tuple(config.UNIVERSE)
+        assert len(sweeps.R3_ROC_ADX_INSTRUMENTS) == 8
+        assert sweeps.r3_roc_adx_total_configs() == 192
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # The ADX period (Wilder default 14) is frozen at the strategy
+        # default and NOT swept.
+        for params in sweeps.r3_roc_adx_variants("roc_momentum"):
+            assert params["exit"] <= params["entry"]
+            assert set(params) == {"lookback", "entry", "exit"}
+        for params in sweeps.r3_roc_adx_variants("adx_filtered_sma"):
+            assert params["fast"] < params["slow"]
+            assert set(params) == {"fast", "slow", "adx_min"}
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_ROC_ADX_FAMILIES:
+            for params in sweeps.r3_roc_adx_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_roc_adx_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_roc_adx_variants("roc_momentum")
+                == sweeps.r3_roc_adx_variants("roc_momentum"))

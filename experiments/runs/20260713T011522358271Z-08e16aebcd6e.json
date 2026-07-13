@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.4725930379502681,
+    "max_drawdown": -0.6724111795465292,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 1.0699244352672317,
+    "sortino": 1.1118228949321804,
+    "total_return": 330.5691749661434,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "08e16aebcd6e",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T01:15:22+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "e0383e540d64b07ddfe679435847863eb217650a",
+  "instrument": "NVDA",
+  "metrics": {
+    "cagr": 0.49574070162728523,
+    "max_drawdown": -0.5038981353384009,
+    "n_bars": 3779,
+    "n_trades": 37,
+    "sharpe": 1.2505127977809052,
+    "sortino": 1.137517399040251,
+    "total_return": 417.93900921314565,
+    "turnover_per_year": 2.467319396665785,
+    "win_rate": 0.631578947368421
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 roc-adx sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-roc-adx/roc_momentum__NVDA.json)",
+  "params": {
+    "entry": 0.0,
+    "exit": -0.05,
+    "lookback": 126
+  },
+  "run_id": "20260713T011522358271Z-08e16aebcd6e",
+  "schema_version": 1,
+  "strategy": "roc_momentum",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

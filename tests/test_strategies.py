@@ -539,6 +539,109 @@ class TestWilliamsRReversion:
                                                sell_above=-80)
 
 
+class TestRocMomentum:
+    def test_classic_zero_threshold_long_up_flat_down(self):
+        # entry == exit == 0 recovers the classic time-series momentum rule.
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        down = make_ohlcv(np.linspace(200, 100, 120))
+        pos_up = STRATEGIES["roc_momentum"](up, lookback=20, entry=0.0,
+                                            exit=0.0)
+        pos_down = STRATEGIES["roc_momentum"](down, lookback=20, entry=0.0,
+                                              exit=0.0)
+        assert (pos_up.iloc[20:] == 1.0).all()
+        assert (pos_down == 0.0).all()
+
+    def test_hysteresis_holds_between_bands(self):
+        # Enter on roc > entry, hold while exit <= roc <= entry, exit only
+        # on roc < exit. lookback=10: 100s, jump to 110 (roc=+10% -> enter),
+        # plateau (roc=0, inside the band -> hold long), ease to 104
+        # (roc=-5.45% < -5% -> exit), plateau (roc=0 -> hold flat).
+        prices = np.concatenate([np.full(30, 100.0), np.full(20, 110.0),
+                                 np.full(20, 104.0)])
+        pos = STRATEGIES["roc_momentum"](make_ohlcv(prices), lookback=10,
+                                         entry=0.05, exit=-0.05)
+        assert (pos.iloc[:30] == 0.0).all()   # warm-up + roc never > entry
+        assert (pos.iloc[30:50] == 1.0).all()  # entry, then held in the band
+        assert (pos.iloc[50:] == 0.0).all()    # exit, then held flat
+
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["roc_momentum"](random_walk, lookback=126)
+        assert (pos.iloc[:126] == 0.0).all()
+
+    def test_flat_prices_stay_flat(self):
+        # roc == 0 is never strictly above the entry threshold.
+        ohlcv = make_ohlcv(np.full(80, 100.0))
+        pos = STRATEGIES["roc_momentum"](ohlcv, lookback=10)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="lookback"):
+            STRATEGIES["roc_momentum"](random_walk, lookback=0)
+        with pytest.raises(ValueError, match="exit"):
+            STRATEGIES["roc_momentum"](random_walk, entry=0.0, exit=0.05)
+
+
+class TestAdxFilteredSma:
+    def test_adx_high_in_trend_low_in_chop(self):
+        # The indicator itself: a clean trend pins ADX high (one-sided
+        # directional movement), a drifting saw keeps it near zero (the
+        # +DM/-DM legs cancel).
+        from trading_lab.strategies.adx_filtered_sma import adx
+        trend = make_ohlcv(np.linspace(100, 200, 120))
+        n = 200
+        saw = make_ohlcv(100.0 + 0.05 * np.arange(n)
+                         + 2.0 * (-1.0) ** np.arange(n))
+        assert (adx(trend, 14).iloc[40:] > 25.0).all()
+        assert (adx(saw, 14).iloc[40:] < 20.0).all()
+
+    def test_long_in_trending_uptrend(self):
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        pos = STRATEGIES["adx_filtered_sma"](up, fast=10, slow=30,
+                                             adx_period=14, adx_min=20.0)
+        assert (pos.iloc[40:] == 1.0).all()
+
+    def test_chop_blocks_the_crossover(self):
+        # Drifting saw: the drift keeps fast SMA > slow SMA (the near-zero
+        # adx_min arm is long), but the alternating bars keep ADX near zero
+        # so the gated arm must stay flat everywhere.
+        n = 200
+        saw = make_ohlcv(100.0 + 0.05 * np.arange(n)
+                         + 2.0 * (-1.0) ** np.arange(n))
+        on = STRATEGIES["adx_filtered_sma"](saw, fast=5, slow=30,
+                                            adx_period=14, adx_min=20.0)
+        off = STRATEGIES["adx_filtered_sma"](saw, fast=5, slow=30,
+                                             adx_period=14, adx_min=0.0)
+        assert (off.iloc[35:] == 1.0).all()  # crossover arm is long
+        assert (on == 0.0).all()             # ADX gate vetoes all of it
+        assert (STRATEGIES["sma_crossover"](saw, fast=5, slow=30).iloc[35:]
+                == off.iloc[35:]).all()      # near-zero gate = plain SMA
+
+    def test_warmup_flat_until_both_defined(self):
+        # Flat until BOTH the slow SMA (slow-1 bars) and ADX (2*adx_period
+        # bars, the stacked Wilder seeds) are defined — here ADX dominates:
+        # first definable bar is iloc[28] for adx_period=14, slow=10.
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        pos = STRATEGIES["adx_filtered_sma"](up, fast=5, slow=10,
+                                             adx_period=14, adx_min=20.0)
+        assert (pos.iloc[:28] == 0.0).all()
+
+    def test_flat_prices_stay_flat(self):
+        # Zero range -> undefined DX -> the trending regime can never be
+        # confirmed (and the SMAs never cross).
+        ohlcv = make_ohlcv(np.full(120, 100.0))
+        pos = STRATEGIES["adx_filtered_sma"](ohlcv, fast=5, slow=10,
+                                             adx_period=5, adx_min=0.0)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="fast"):
+            STRATEGIES["adx_filtered_sma"](random_walk, fast=50, slow=20)
+        with pytest.raises(ValueError, match="adx_period"):
+            STRATEGIES["adx_filtered_sma"](random_walk, adx_period=1)
+        with pytest.raises(ValueError, match="adx_min"):
+            STRATEGIES["adx_filtered_sma"](random_walk, adx_min=100.0)
+
+
 class TestXsecMomentum:
     """Round 2 slice R3 portfolio family: panel interface (weights over
     aligned closes), so it lives in PORTFOLIO_STRATEGIES, not STRATEGIES."""
