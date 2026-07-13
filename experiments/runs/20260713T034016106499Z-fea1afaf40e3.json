@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.06899245598055503,
+    "max_drawdown": -0.6111953832320853,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.3906832284981404,
+    "sortino": 0.3859772608614487,
+    "total_return": 1.7195974573756638,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "fea1afaf40e3",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T03:40:16+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "4e2ee9e5838e4d4aaea0a8db7aa369fb6449ff87",
+  "instrument": "XOM",
+  "metrics": {
+    "cagr": 0.05555552803400832,
+    "max_drawdown": -0.2829590988651386,
+    "n_bars": 3779,
+    "n_trades": 74,
+    "sharpe": 0.4406518743487641,
+    "sortino": 0.26798653945435014,
+    "total_return": 1.2496921296705978,
+    "turnover_per_year": 4.93463879333157,
+    "win_rate": 0.3783783783783784
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 gated-new-tickers sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 12, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 6 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-gated-new-tickers/keltner_breakout__XOM.json)",
+  "params": {
+    "m": 2.0,
+    "n": 50
+  },
+  "run_id": "20260713T034016106499Z-fea1afaf40e3",
+  "schema_version": 1,
+  "strategy": "keltner_breakout",
+  "timeframe": "daily",
+  "variants_tried": 6
+}

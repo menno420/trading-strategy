@@ -955,3 +955,90 @@ class TestR3MeanrevNewTickersGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_meanrev_new_tickers_variants("pullback")
                 == sweeps.r3_meanrev_new_tickers_variants("pullback"))
+
+
+class TestR3GatedNewTickersGrid:
+    def test_families_are_existing_registered_strategies(self):
+        # Slice 12 completes the R2/gated-family coverage of the slice-3
+        # instruments with NO new strategy code: every family must already
+        # exist in the registry.
+        for fam in sweeps.R3_GATED_NEW_TICKERS_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-gated-new-tickers sweep files must match these.
+        # keltner_breakout honestly runs at 6 — its FULL published R2 grid
+        # is only 6 variants and inventing new n/m values would open new
+        # parameter territory. (6 + 12 + 12) × 6 instruments = 180
+        # registered configs.
+        counts = sweeps.r3_gated_new_tickers_variants_per_family()
+        assert counts == {"keltner_breakout": 6,
+                          "vol_filtered_trend": 12,
+                          "macd_supertrend": 12}
+        assert len(sweeps.R3_GATED_NEW_TICKERS_INSTRUMENTS) == 6
+        assert sweeps.r3_gated_new_tickers_total_configs() == 180
+
+    def test_instruments_are_exactly_the_slice3_set(self):
+        # The lane reuses the slice-3 instruments (and caches) verbatim, and
+        # they stay disjoint from the frozen universe.
+        from trading_lab import config
+        assert (sweeps.R3_GATED_NEW_TICKERS_INSTRUMENTS
+                == sweeps.R3_NEW_TICKERS_INSTRUMENTS)
+        assert not (set(sweeps.R3_GATED_NEW_TICKERS_INSTRUMENTS)
+                    & set(config.UNIVERSE))
+
+    def test_grids_are_subsets_of_published_family_axes(self):
+        # Each slice-12 grid point must be a valid point of the family's
+        # existing published grid — no new parameter territory is opened.
+        # keltner_breakout and vol_filtered_trend reuse their full Round-2
+        # grids VERBATIM (the subset relation degenerates to equality);
+        # macd_supertrend is a proper sub-grid of the P1 video-lane grid.
+        assert (sweeps.r3_gated_new_tickers_variants("keltner_breakout")
+                == sweeps.r2_keltner_variants("keltner_breakout"))
+        assert (sweeps.r3_gated_new_tickers_variants("vol_filtered_trend")
+                == sweeps.r2_vol_trend_variants("vol_filtered_trend"))
+        video_grid = sweeps.video_variants("macd_supertrend")
+        for params in sweeps.r3_gated_new_tickers_variants("macd_supertrend"):
+            assert params in video_grid
+
+    def test_vol_filtered_grid_includes_filter_off_control_arm(self):
+        # Slice-2/4 card convention: a gated grid must commit its neutral
+        # arm — vol_filter=False disables the calm-regime gate, and every
+        # (fast, slow) pair must carry it.
+        variants = sweeps.r3_gated_new_tickers_variants("vol_filtered_trend")
+        for fast in (10, 20):
+            for slow in (50, 100, 200):
+                assert {"fast": fast, "slow": slow,
+                        "vol_filter": False} in variants
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # The macd_supertrend MACD triple is frozen at the classic 12/26/9
+        # (one of the two video-lane triples) and NOT swept — slice 10's
+        # supertrend_flip precedent; the vol_filtered_trend vol windows
+        # (20/252) stay frozen at the strategy defaults, as in Round 2.
+        for params in sweeps.r3_gated_new_tickers_variants("keltner_breakout"):
+            assert set(params) == {"n", "m"}
+        for params in sweeps.r3_gated_new_tickers_variants(
+                "vol_filtered_trend"):
+            assert params["fast"] < params["slow"]
+            assert set(params) == {"fast", "slow", "vol_filter"}
+        for params in sweeps.r3_gated_new_tickers_variants("macd_supertrend"):
+            assert set(params) == {"st_period", "st_mult", "ema_len",
+                                   "macd_fast", "macd_slow", "macd_signal"}
+            assert (params["macd_fast"], params["macd_slow"],
+                    params["macd_signal"]) == (12, 26, 9)
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_GATED_NEW_TICKERS_FAMILIES:
+            for params in sweeps.r3_gated_new_tickers_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_gated_new_tickers_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_gated_new_tickers_variants("macd_supertrend")
+                == sweeps.r3_gated_new_tickers_variants("macd_supertrend"))

@@ -1089,3 +1089,91 @@ def r3_meanrev_new_tickers_total_configs() -> int:
     configurations."""
     return (sum(r3_meanrev_new_tickers_variants_per_family().values())
             * len(R3_MEANREV_NEW_TICKERS_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 12: R2/GATED FAMILIES × NEW TICKERS (lane:
+# r3-gated-new-tickers × the six slice-3 instruments × daily — ORDER 012
+# night-run, post-holdout DEV-ONLY, promotion closed; lands AFTER the
+# Round-3 synthesis of slices 1-8, extending the round)
+# ---------------------------------------------------------------------------
+# The R2/gated counterpart of slices 10-11: slice 3 (r3-new-tickers, PR #83)
+# added the six instrument caches, slice 10 completed the TREND coverage and
+# slice 11 the MEAN-REVERSION coverage. This slice completes the remaining
+# single-instrument coverage with the three R2/gated families — ALL of them
+# previously narrow-universe (the honesty note that motivates the slice):
+# vol_filtered_trend has only ever run on the Round-2 §3a four (AAPL, MSFT,
+# NVDA, GLD); keltner_breakout only on the Round-2 §3b four (BTC-USD, META,
+# AMZN, SLV); macd_supertrend only on BTC-USD (the P1 video lane) — its
+# first run on equities/ETFs. Grids declared here BEFORE the sweep ran; NO
+# new strategy code and NO new parameter territory — every grid point is a
+# point of the family's existing published grid, subset relations pinned by
+# tests: vol_filtered_trend reuses its full 12-variant R2 grid VERBATIM
+# (fast {10,20} × slow {50,100,200} × vol_filter {on,off}; the
+# vol_filter=False control arm is committed per the slice-2/4 convention —
+# gated grids include their neutral arm; the vol windows 20/252 stay frozen
+# at the strategy defaults and are NOT swept, as in R2); keltner_breakout
+# reuses its full R2 grid VERBATIM (n {20,50} × m {1.5,2.0,2.5}) — that
+# published grid is only 6 variants, and inventing new n/m values to reach
+# ~12 would open new parameter territory, so this family honestly runs at
+# 6, not 12; macd_supertrend takes a 12-variant sub-grid of the 36-variant
+# P1 video grid (st_period {10,14} × st_mult {2.0,3.0,4.0} × ema_len
+# {100,200}) with the MACD triple frozen at the classic 12/26/9 (one of
+# the two video-lane triples) and NOT swept — slice 10's supertrend_flip
+# precedent, verbatim axes. The instruments reuse the committed slice-3
+# caches; config.UNIVERSE stays frozen. Kept bounded on purpose: every
+# extra variant raises the multiple-testing burden on any winner.
+
+_R3_GATED_NEW_TICKERS_AXES: dict[str, dict[str, list]] = {
+    "keltner_breakout": {"n": [20, 50], "m": [1.5, 2.0, 2.5]},
+    "vol_filtered_trend": {"fast": [10, 20],
+                           "slow": [50, 100, 200],
+                           "vol_filter": [True, False]},
+    "macd_supertrend": {"st_period": [10, 14], "st_mult": [2.0, 3.0, 4.0],
+                        "ema_len": [100, 200],
+                        "macd_fast": [12], "macd_slow": [26],
+                        "macd_signal": [9]},
+}
+
+_R3_GATED_NEW_TICKERS_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "keltner_breakout": lambda p: True,
+    "vol_filtered_trend": lambda p: p["fast"] < p["slow"],
+    "macd_supertrend": lambda p: p["macd_fast"] < p["macd_slow"],
+}
+
+R3_GATED_NEW_TICKERS_FAMILIES = tuple(_R3_GATED_NEW_TICKERS_AXES)
+
+# The six slice-3 instruments, reused verbatim (same tuple object — the
+# identity is the point: this slice completes coverage of THAT surface).
+R3_GATED_NEW_TICKERS_INSTRUMENTS = R3_NEW_TICKERS_INSTRUMENTS
+
+
+def r3_gated_new_tickers_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-12 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_GATED_NEW_TICKERS_AXES[family]
+    except KeyError:
+        raise ValueError(
+            f"unknown R3 gated-new-tickers family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_GATED_NEW_TICKERS_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_gated_new_tickers_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-12 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_gated_new_tickers_variants(fam))
+            for fam in R3_GATED_NEW_TICKERS_FAMILIES}
+
+
+def r3_gated_new_tickers_total_configs() -> int:
+    """Total registered Round-3 slice-12 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes). The per-instrument buy-and-hold
+    baselines already sit on the ledger from slice 3 and are not searched
+    configurations."""
+    return (sum(r3_gated_new_tickers_variants_per_family().values())
+            * len(R3_GATED_NEW_TICKERS_INSTRUMENTS))
