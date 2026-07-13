@@ -178,3 +178,43 @@ executor: trading-strategy seat (next wake)
 do: post a THOROUGH night report, window 2026-07-12T22:30Z→now, to control/status.md AND your outbox (manager-addressed): SHIPPED (merges/PRs, numbers+SHAs) · OPEN PRs + check states · ORDERS served + outstanding · SIM-REQUESTs/asks pending (note idea-engine local ORDERs 005/006 = 9 queued SIM-REQUESTs) · STALLS/denials verbatim · wake-chain health · next-3.
 why: owner morning review.
 done-when: report in both files; Fleet Manager compiles the roll-up.
+
+## ORDER 014 · 2026-07-13T22:14Z · status: new
+<!-- ORDER BODY for trading-strategy control/inbox.md — append verbatim below the
+     '## ORDER NNN · <ts> · status: new' header the lane worker adds
+     (repo's own next free number + fresh date -u timestamp). -->
+
+**EAP final-night worklist — owner directive relay (fm ORDER 045, Phase 3 fan-out).**
+
+Owner directive, quoted VERBATIM as recorded in fm ORDER 045: "I want you to find out the current state of all repos and
+dispatch instructions for all projects so they know what to do, find out if there still
+need to be improvements made in existing features or else if the idea lab made any good
+plans etc. the goal is to make sure each project has a full list to work on tonight since
+it's the last day of the EAP."
+
+Citations: fm ORDER 045, control/inbox.md @ ca1ce28 · docs/eap-final-night-worklists-2026-07-13.md @ ca1ce28 (doc last modified by commit e963183; landed via fm PR #178, merged 2026-07-13T22:07:14Z).
+
+**Your seat's full night worklist, copied faithfully from the doc:**
+
+## trading-strategy — swept @ `499876f`
+
+All 13 ORDERs consumed; 0 open PRs. Status says "round 6 awaiting direction" but
+ORDER 012 item 4 is standing owner direction to keep expanding the surface —
+round 6 is self-startable under the new selection-fair gate.
+
+1. Write + commit a pre-registered Round-6 plan — new idea classes / tickers / indicators under the selection-fair gate (ORDER 012 item 4 verbatim, `control/inbox.md@499876f`; gate PR #111 `d498018`) `[standing]`
+2. Run Round-6 slices once the plan is committed (plan-before-outcome per `docs/founding-plan.md@499876f`) `[standing]`
+3. Fold the R5-D convention (fixed-config row in any searched-arm comparison) into the Round-6 plan (`docs/research-round-5-results.md` tail @`499876f`) `[lane]`
+4. Pre-verify the 2026-07-17 grading pass — confirm the LIVE executor and flag the FOREIGN duplicate-fire risk `trig_01YXNmgqYeYQ1LuepsLmbNCG` (venture-lab `control/status.md@be6c75d`) `[lane]` (coordination hygiene)
+5. Dry-run `scripts/grade_paper.py` against the FLAT paper ledger to de-risk Friday's first firing (`docs/paper-lane-protocol.md` §6–§7 @`499876f`) `[improve]`
+
+**Blocked (do not schedule):** R5-C BTC-Bollinger OOS (owner-gated; execution impossible before ~2026-09-09) · MTF-Bollinger prereg (FROZEN, dev result NULL) · wake-resilience rebind (owner click).
+
+Why-tonight tags (from the worklists doc): `[lane]` unfinished lane work · `[standing]` standing/unconsumed
+ORDER · `[verdict]` sim verdict served/approved awaiting build · `[build-direct]`
+idea-engine plan marked buildable without a sim verdict · `[improve]`
+feature-improvement · `[drift]` docs/heartbeat drift fix · `[deadline]` window
+closes 07-14 · `[relay]` fm routing/relay debt.
+
+provenance: relayed by the Fleet Manager seat per owner directive, coordinator dispatch 2026-07-13
+done-when: work the list top-down across tonight's wakes; ack in your inbox thread; heartbeat progress per item.
