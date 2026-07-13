@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.19018014817087803,
+    "max_drawdown": -0.1750377211554467,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.9563838736789603,
+    "sortino": 0.9205291292483438,
+    "total_return": 0.3010564005585086,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "2e020577b657",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T01:53:51+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "5fbdca804d37625d18bfb3093711b2085266ac3c",
+  "instrument": "MSFT",
+  "metrics": {
+    "cagr": 0.05333570256075859,
+    "max_drawdown": -0.1093242882311477,
+    "n_bars": 2476,
+    "n_trades": 48,
+    "sharpe": 0.4438940986374617,
+    "sortino": 0.2562883924368505,
+    "total_return": 0.08171280558954752,
+    "turnover_per_year": 31.754442649434573,
+    "win_rate": 0.7083333333333334
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 meanrev-hourly sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__MSFT.json)",
+  "params": {
+    "buy_below": 20,
+    "k_period": 28,
+    "sell_above": 80
+  },
+  "run_id": "20260713T015351805606Z-2e020577b657",
+  "schema_version": 1,
+  "strategy": "stochastic_reversion",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}

@@ -37,7 +37,11 @@ Families:
   (Aroon oscillator trend-following with an entry/exit hysteresis band —
   the zero-band arm, i.e. the classic Aroon-Up/Aroon-Down cross, is the
   committed within-family control), cci_reversion (Lambert CCI
-  mean-reversion, oversold cross-up entry — the lab's first CCI indicator).
+  mean-reversion, oversold cross-up entry — the lab's first CCI indicator);
+  slice 5 (lane r3-meanrev-hourly × all-8 × hourly): NO new strategies —
+  the four existing mean-reversion families (rsi_mean_reversion,
+  bollinger_reversion, stochastic_reversion, williams_r_reversion)
+  re-swept on hourly bars (timeframe expansion).
 
 Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
 closes (one column per instrument) and return a target-weight DataFrame
@@ -143,6 +147,13 @@ R3_ROC_ADX_FAMILY = ["roc_momentum", "adx_filtered_sma"]
 # mixed set (frozen 8-ticker universe + SPY/QQQ/TSLA/TLT) × daily lane.
 R3_AROON_CCI_FAMILY = ["aroon_trend", "cci_reversion"]
 
+# Round 3 slice 5 (ORDER 012 night-run, post-holdout dev-only): the four
+# EXISTING mean-reversion families re-swept on HOURLY bars in the
+# r3-meanrev-hourly × all-8-tickers × hourly lane (timeframe expansion —
+# no new strategy code).
+R3_MEANREV_HOURLY_FAMILY = ["rsi_mean_reversion", "bollinger_reversion",
+                            "stochastic_reversion", "williams_r_reversion"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
 }
@@ -152,7 +163,7 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "VIDEO_STRATEGY_FAMILY", "MEAN_REVERSION_FAMILY",
            "R2_VOL_TREND_FAMILY", "R2_KELTNER_FAMILY", "R2_XSEC_FAMILY",
            "R3_STOCH_WILLR_FAMILY", "R3_ROC_ADX_FAMILY",
-           "R3_AROON_CCI_FAMILY",
+           "R3_AROON_CCI_FAMILY", "R3_MEANREV_HOURLY_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",

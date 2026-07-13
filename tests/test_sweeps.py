@@ -484,3 +484,82 @@ class TestR3AroonCciGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_aroon_cci_variants("aroon_trend")
                 == sweeps.r3_aroon_cci_variants("aroon_trend"))
+
+
+class TestR3MeanrevHourlyGrid:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R3_MEANREV_HOURLY_FAMILY
+        assert (set(sweeps.R3_MEANREV_HOURLY_FAMILIES)
+                == set(R3_MEANREV_HOURLY_FAMILY))
+        for fam in sweeps.R3_MEANREV_HOURLY_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_no_new_strategies(self):
+        # Slice 5 is a TIMEFRAME expansion: every family must already be
+        # swept by an earlier daily lane (no new strategy code).
+        earlier = (set(sweeps.MEAN_REVERSION_FAMILIES)
+                   | set(sweeps.R3_STOCH_WILLR_FAMILIES))
+        assert set(sweeps.R3_MEANREV_HOURLY_FAMILIES) <= earlier
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-meanrev-hourly sweep files must match these. 12
+        # variants per family over the full 8-ticker universe = 384
+        # registered configs.
+        from trading_lab import config
+        counts = sweeps.r3_meanrev_hourly_variants_per_family()
+        assert counts == {"rsi_mean_reversion": 12,
+                          "bollinger_reversion": 12,
+                          "stochastic_reversion": 12,
+                          "williams_r_reversion": 12}
+        assert sweeps.R3_MEANREV_HOURLY_INSTRUMENTS == tuple(config.UNIVERSE)
+        assert len(sweeps.R3_MEANREV_HOURLY_INSTRUMENTS) == 8
+        assert sweeps.r3_meanrev_hourly_total_configs() == 384
+
+    def test_grids_are_subsets_of_the_published_daily_axes(self):
+        # The p1-trend-hourly convention: bar-denominated grids reused
+        # as-is on hourly bars — no new parameter values. Every hourly
+        # variant must already exist in its family's daily grid.
+        daily = {
+            "rsi_mean_reversion":
+                sweeps.mean_reversion_variants("rsi_mean_reversion"),
+            "bollinger_reversion":
+                sweeps.mean_reversion_variants("bollinger_reversion"),
+            "stochastic_reversion":
+                sweeps.r3_stoch_willr_variants("stochastic_reversion"),
+            "williams_r_reversion":
+                sweeps.r3_stoch_willr_variants("williams_r_reversion"),
+        }
+        for fam in sweeps.R3_MEANREV_HOURLY_FAMILIES:
+            for params in sweeps.r3_meanrev_hourly_variants(fam):
+                assert params in daily[fam], (fam, params)
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # The stochastic d_period smoothing (3) stays frozen at the
+        # strategy default and is NOT swept (as in r3-stoch-willr).
+        for params in sweeps.r3_meanrev_hourly_variants("rsi_mean_reversion"):
+            assert params["oversold"] < params["overbought"]
+            assert set(params) == {"period", "oversold", "overbought"}
+        for params in sweeps.r3_meanrev_hourly_variants("bollinger_reversion"):
+            assert params["z_exit"] > -params["z_entry"]
+            assert set(params) == {"lookback", "z_entry", "z_exit"}
+        for params in sweeps.r3_meanrev_hourly_variants("stochastic_reversion"):
+            assert params["buy_below"] < params["sell_above"]
+            assert set(params) == {"k_period", "buy_below", "sell_above"}
+        for params in sweeps.r3_meanrev_hourly_variants("williams_r_reversion"):
+            assert params["buy_below"] < params["sell_above"]
+            assert set(params) == {"period", "buy_below", "sell_above"}
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_MEANREV_HOURLY_FAMILIES:
+            for params in sweeps.r3_meanrev_hourly_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_meanrev_hourly_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_meanrev_hourly_variants("bollinger_reversion")
+                == sweeps.r3_meanrev_hourly_variants("bollinger_reversion"))

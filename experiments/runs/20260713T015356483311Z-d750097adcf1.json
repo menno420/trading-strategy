@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.3568015449012083,
+    "max_drawdown": -0.22149983676741947,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.2397262046014743,
+    "sortino": 1.207402601433659,
+    "total_return": 0.5860308071505125,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "d750097adcf1",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T01:53:56+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "5fbdca804d37625d18bfb3093711b2085266ac3c",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.14698023836989438,
+    "max_drawdown": -0.07444284988184413,
+    "n_bars": 2476,
+    "n_trades": 8,
+    "sharpe": 1.2160614406669172,
+    "sortino": 0.3918773504056654,
+    "total_return": 0.2303388076528654,
+    "turnover_per_year": 5.292407108239096,
+    "win_rate": 1.0
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 meanrev-hourly sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-meanrev-hourly/rsi_mean_reversion__AMZN.json)",
+  "params": {
+    "overbought": 70,
+    "oversold": 20,
+    "period": 14
+  },
+  "run_id": "20260713T015356483311Z-d750097adcf1",
+  "schema_version": 1,
+  "strategy": "rsi_mean_reversion",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}

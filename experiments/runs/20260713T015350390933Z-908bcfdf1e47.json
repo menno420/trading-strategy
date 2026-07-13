@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.21775921764929063,
+    "max_drawdown": -0.17318917243678122,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.9623126414443511,
+    "sortino": 0.9283177014918956,
+    "total_return": 0.3468976932435337,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "908bcfdf1e47",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T01:53:50+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "5fbdca804d37625d18bfb3093711b2085266ac3c",
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.08509979395603384,
+    "max_drawdown": -0.1352361535936395,
+    "n_bars": 2476,
+    "n_trades": 75,
+    "sharpe": 0.6837156168545643,
+    "sortino": 0.4428215387389902,
+    "total_return": 0.13139942190556608,
+    "turnover_per_year": 49.61631663974152,
+    "win_rate": 0.7105263157894737
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 meanrev-hourly sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-meanrev-hourly/williams_r_reversion__AAPL.json)",
+  "params": {
+    "buy_below": -90,
+    "period": 21,
+    "sell_above": -30
+  },
+  "run_id": "20260713T015350390933Z-908bcfdf1e47",
+  "schema_version": 1,
+  "strategy": "williams_r_reversion",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}
