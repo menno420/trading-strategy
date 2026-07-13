@@ -1630,3 +1630,111 @@ def r4_regime_total_configs() -> int:
     configurations)."""
     return (sum(r4_regime_variants_per_arm().values())
             * len(R4_REGIME_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 4 slice R4-E: CROSS-ASSET LEAD-LAG EXPOSURE GATE with MANDATORY
+# ungated control arm (lane: r4-crossasset × {SPY, QQQ} × daily —
+# docs/research-round-4-plan.md § R4-E, ORDER 012 night-run, post-holdout
+# DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# The round-3 universe expansion committed TLT, XOM and GLD caches (PRs
+# #90-#92) but used them only as standalone lanes; R4-E is the first (and
+# only registered) cross-asset idea class: gate the exposure of an
+# existing SPY/QQQ trend variant on the momentum SIGN of a DIFFERENT
+# instrument. Per instrument, a GATED arm (trading_lab.strategies
+# .crossasset_gate with gated=True: long the frozen equity trend component
+# only while the gate asset's trailing momentum, aligned onto the equity
+# index lookahead-free, is > 0) is walk-forwarded over the 12-variant grid
+# below, and an UNGATED CONTROL arm (gated=False: the SAME component, no
+# gate — exactly the vol-gate/R4-D control structure) is walk-forwarded
+# over its 1-variant grid on the identical rail, costs and windows.
+# Pre-registered kill criterion (same control-arm rule as R4-D): KILL iff
+# gated stitched OOS Sharpe <= the ungated control's; a KEEP additionally
+# requires beating same-window same-cost B&H. A machine-readable
+# `control_arm_delta` (gated minus control stitched OOS Sharpe) is
+# recorded per lane.
+#
+# The gated grid sweeps ONLY the registered gate axes — the plan-named
+# gate assets (TLT primary; XOM and GLD the pre-declared alternates) and
+# the four standard trailing-momentum horizons (~1/3/6/12 months). The
+# gate rule (long only when gate momentum > 0) and its warm-up convention
+# (undefined -> flat) are FIXED here, in the grid commit, and NOT swept.
+# The equity component is FROZEN at a grid point already committed on
+# BOTH instruments (NO new parameter territory): ema_crossover (20, 100)
+# from the r3-trend-new-tickers grid (PR #90) — the same freeze PR #104
+# used. The control variant deliberately omits `gate_asset` /
+# `gate_lookback`: the control arm never loads or computes any gate-asset
+# data (invariance pinned by tests) — the two arms differ ONLY in the
+# gate.
+#
+# Significance K: 13 = 12 gated + 1 control variant per lane — the honest
+# count of every registered config this lane tries. The plan registers
+# "~12-variant pre-declared grid (K=12)"; counting the control arm RAISES
+# the bar (min_tstat(13) ~ 2.665 > min_tstat(12) ~ 2.638) — K is never
+# counted down, the bar is never lowered (precedent PR #104, which
+# counted its control variants into K the same way). Informational only:
+# promotion is CLOSED. Instruments: SPY and QQQ verbatim per the plan;
+# committed daily caches only, NO new data fetching (all three gate
+# tickers were committed in round 3).
+
+_R4_CROSSASSET_AXES: dict[str, list] = {
+    "gate_asset": ["TLT", "XOM", "GLD"],
+    "gate_lookback": [21, 63, 126, 252],
+}
+
+R4_CROSSASSET_FAMILIES = ("crossasset_gate",)
+R4_CROSSASSET_STRATEGY_NAME = "crossasset_gate"
+
+# The two plan-named equity instruments, verbatim.
+R4_CROSSASSET_INSTRUMENTS = ("SPY", "QQQ")
+
+# The registered gate universe (round-3 committed caches, PRs #90-#92).
+R4_CROSSASSET_GATE_ASSETS = ("TLT", "XOM", "GLD")
+
+# Equity component parameters, FROZEN (committed r3 grid point; never
+# swept — the PR #104 freeze, reused verbatim).
+R4_CROSSASSET_COMPONENT_PARAMS: dict = {
+    "trend_fast": 20, "trend_slow": 100,          # ema_crossover (PR #90)
+}
+
+# Registered significance K per lane: EVERY config this lane tries —
+# 12 gated + 1 control. min_tstat(13) ~ 2.665 >= the round-standard
+# 2.638; the bar only ever rises.
+R4_CROSSASSET_K = 13
+
+
+def r4_crossasset_gated_variants() -> list[dict]:
+    """The 12 GATED-arm parameter dicts (gated=True): the cartesian
+    product of the registered gate axes, with the frozen equity component
+    baked in, in deterministic order."""
+    keys = list(_R4_CROSSASSET_AXES)
+    return [dict(zip(keys, vals), gated=True,
+                 **R4_CROSSASSET_COMPONENT_PARAMS)
+            for vals in product(*(_R4_CROSSASSET_AXES[k] for k in keys))]
+
+
+def r4_crossasset_control_variants() -> list[dict]:
+    """The single UNGATED control-arm parameter dict (gated=False): the
+    same frozen equity component, no gate. `gate_asset`/`gate_lookback`
+    are deliberately omitted — the control arm never loads or computes
+    any gate-asset data (all 12 gated variants collapse to this one
+    allocation when the gate is removed)."""
+    return [dict(gated=False, **R4_CROSSASSET_COMPONENT_PARAMS)]
+
+
+def r4_crossasset_variants_per_arm() -> dict[str, int]:
+    """Round-4 slice R4-E variant counts by arm (multiple-testing
+    bookkeeping)."""
+    return {"gated": len(r4_crossasset_gated_variants()),
+            "control": len(r4_crossasset_control_variants())}
+
+
+def r4_crossasset_total_configs() -> int:
+    """Total registered Round-4 slice R4-E configs: (gated + control)
+    variants × instruments = 13 × 2 = 26 (each instrument × grid point
+    counts as one config, as in Rounds 2-3; the per-instrument B&H
+    baselines already sit on the ledger and are not searched
+    configurations)."""
+    return (sum(r4_crossasset_variants_per_arm().values())
+            * len(R4_CROSSASSET_INSTRUMENTS))

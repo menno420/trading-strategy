@@ -1523,3 +1523,89 @@ class TestR4RegimeGrid:
             pos = strategy(random_walk, **params)
             assert not pos.isna().any()
             assert ((pos >= 0.0) & (pos <= 1.0)).all()
+
+
+class TestR4CrossassetGrid:
+    """R4-E cross-asset exposure gate — grid + constants pinned BEFORE
+    the sweep runs (docs/research-round-4-plan.md § R4-E)."""
+
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R4_CROSSASSET_FAMILY
+        assert set(sweeps.R4_CROSSASSET_FAMILIES) == set(R4_CROSSASSET_FAMILY)
+        assert sweeps.R4_CROSSASSET_STRATEGY_NAME in STRATEGIES
+
+    def test_registered_counts(self):
+        # Pre-registered R4-E accounting: 12 gated + 1 control variant
+        # per lane x 2 instruments = 26 registered configs.
+        assert sweeps.r4_crossasset_variants_per_arm() == {"gated": 12,
+                                                           "control": 1}
+        assert sweeps.r4_crossasset_total_configs() == 26
+        assert sweeps.R4_CROSSASSET_INSTRUMENTS == ("SPY", "QQQ")
+
+    def test_gate_universe_is_the_committed_r3_caches(self):
+        # The plan-named gate assets, verbatim: TLT primary, XOM and GLD
+        # the pre-declared alternates (committed round-3 caches only).
+        from trading_lab.strategies import crossasset_gate
+        assert sweeps.R4_CROSSASSET_GATE_ASSETS == ("TLT", "XOM", "GLD")
+        assert (sweeps.R4_CROSSASSET_GATE_ASSETS
+                == crossasset_gate.GATE_ASSETS)
+
+    def test_k_counts_every_config_and_bar_never_lowered(self):
+        # K = 13 counts EVERY registered config this lane tries (12 gated
+        # + 1 control); the bar RISES above the round-standard 2.638 — K
+        # is never counted down (precedent PR #104).
+        from trading_lab import promotion
+        assert sweeps.R4_CROSSASSET_K == 13
+        assert sweeps.R4_CROSSASSET_K == sum(
+            sweeps.r4_crossasset_variants_per_arm().values())
+        assert (promotion.min_tstat(sweeps.R4_CROSSASSET_K)
+                > promotion.min_tstat(12))
+        assert round(promotion.min_tstat(sweeps.R4_CROSSASSET_K), 3) == 2.665
+
+    def test_gated_variants_shape(self):
+        variants = sweeps.r4_crossasset_gated_variants()
+        assert len(variants) == 12
+        # deterministic and unique
+        assert variants == sweeps.r4_crossasset_gated_variants()
+        assert len({tuple(sorted(v.items())) for v in variants}) == 12
+        for v in variants:
+            assert v["gated"] is True
+            assert v["gate_asset"] in ("TLT", "XOM", "GLD")
+            assert v["gate_lookback"] in (21, 63, 126, 252)
+            # frozen equity component baked into every variant
+            for key, val in sweeps.R4_CROSSASSET_COMPONENT_PARAMS.items():
+                assert v[key] == val
+
+    def test_control_variant_is_the_gateless_collapse(self):
+        controls = sweeps.r4_crossasset_control_variants()
+        assert len(controls) == 1
+        (v,) = controls
+        assert v["gated"] is False
+        # the control arm never loads gate data — the gate axes are
+        # deliberately absent
+        assert "gate_asset" not in v and "gate_lookback" not in v
+        for key, val in sweeps.R4_CROSSASSET_COMPONENT_PARAMS.items():
+            assert v[key] == val
+
+    def test_component_params_are_a_committed_r3_grid_point(self):
+        # NO new parameter territory: the frozen equity component is a
+        # grid point of the committed round-3 trend sweep on BOTH R4-E
+        # instruments (the PR #104 freeze, reused verbatim).
+        comp = sweeps.R4_CROSSASSET_COMPONENT_PARAMS
+        ema_point = {"fast": comp["trend_fast"], "slow": comp["trend_slow"]}
+        assert ema_point in sweeps.r3_trend_new_tickers_variants(
+            "ema_crossover")
+        # the identical freeze PR #104 used (subset of its components)
+        assert comp.items() <= sweeps.R4_REGIME_COMPONENT_PARAMS.items()
+        assert set(sweeps.R4_CROSSASSET_INSTRUMENTS) <= set(
+            sweeps.R3_TREND_NEW_TICKERS_INSTRUMENTS)
+
+    def test_all_variants_runnable(self, random_walk):
+        # Gated variants load the committed dev-rail gate caches
+        # (holdout excluded by the loader default) — offline, local only.
+        strategy = STRATEGIES[sweeps.R4_CROSSASSET_STRATEGY_NAME]
+        for params in (sweeps.r4_crossasset_gated_variants()
+                       + sweeps.r4_crossasset_control_variants()):
+            pos = strategy(random_walk, **params)
+            assert not pos.isna().any()
+            assert ((pos >= 0.0) & (pos <= 1.0)).all()
