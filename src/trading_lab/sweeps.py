@@ -604,3 +604,83 @@ def r3_aroon_cci_total_configs() -> int:
     R1/R2 and the earlier Round-3 lanes)."""
     return (sum(r3_aroon_cci_variants_per_family().values())
             * len(R3_AROON_CCI_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 5: mean-reversion families × HOURLY bars (lane:
+# r3-meanrev-hourly × all-8 × hourly — ORDER 012 night-run, post-holdout
+# DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# TIMEFRAME expansion, not a strategy expansion: NO new strategy code — the
+# four existing mean-reversion families are re-swept on hourly bars over the
+# frozen 8-ticker universe (committed hourly caches, dev rail 2023-08-10 →
+# 2025-01-08). Parameter-scaling convention follows the one prior hourly
+# lane (p1-trend-hourly, docs/p1-trend-hourly-results.md): grids stay
+# BAR-denominated — on hourly bars the same lookback numbers mean
+# hours-to-days instead of days-to-weeks (RSI(14) is ~2 sessions, Bollinger
+# lookback 30 is ~4.6 sessions), which is the natural horizon for intraday
+# mean reversion. Each grid here is a 12-variant SUBSET of the family's
+# existing published daily axes (declared BEFORE the sweep ran): no new
+# parameter values are introduced, so every hourly variant has a daily
+# twin already in the burden ledger. The stochastic d_period smoothing (3)
+# stays frozen at the strategy default and is NOT swept, as in the
+# r3-stoch-willr lane. Kept bounded on purpose: every extra variant raises
+# the multiple-testing burden on any winner.
+
+_R3_MEANREV_HOURLY_AXES: dict[str, dict[str, list]] = {
+    "rsi_mean_reversion": {"period": [2, 5, 14],
+                           "oversold": [20, 30],
+                           "overbought": [60, 70]},
+    "bollinger_reversion": {"lookback": [10, 20, 30],
+                            "z_entry": [1.5, 2.0],
+                            "z_exit": [0.0, 0.5]},
+    "stochastic_reversion": {"k_period": [14, 21, 28],
+                             "buy_below": [10, 20],
+                             "sell_above": [70, 80]},
+    "williams_r_reversion": {"period": [14, 21, 28],
+                             "buy_below": [-90, -80],
+                             "sell_above": [-30, -20]},
+}
+
+_R3_MEANREV_HOURLY_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "rsi_mean_reversion": lambda p: p["oversold"] < p["overbought"],
+    "bollinger_reversion": lambda p: p["z_exit"] > -p["z_entry"],
+    "stochastic_reversion": lambda p: p["buy_below"] < p["sell_above"],
+    "williams_r_reversion": lambda p: p["buy_below"] < p["sell_above"],
+}
+
+R3_MEANREV_HOURLY_FAMILIES = tuple(_R3_MEANREV_HOURLY_AXES)
+
+# The full 8-ticker universe (config.UNIVERSE order) — hourly caches are
+# committed for all 8 (data/hourly/).
+R3_MEANREV_HOURLY_INSTRUMENTS = ("AAPL", "MSFT", "NVDA", "GOOGL", "AMZN",
+                                 "META", "GLD", "SLV")
+
+
+def r3_meanrev_hourly_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-5 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_MEANREV_HOURLY_AXES[family]
+    except KeyError:
+        raise ValueError(
+            f"unknown R3 meanrev-hourly family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_MEANREV_HOURLY_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_meanrev_hourly_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-5 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_meanrev_hourly_variants(fam))
+            for fam in R3_MEANREV_HOURLY_FAMILIES}
+
+
+def r3_meanrev_hourly_total_configs() -> int:
+    """Total registered Round-3 slice-5 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes)."""
+    return (sum(r3_meanrev_hourly_variants_per_family().values())
+            * len(R3_MEANREV_HOURLY_INSTRUMENTS))
