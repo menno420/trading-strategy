@@ -1,0 +1,121 @@
+{
+  "arms": "conditional: 12 variants (metric {adx, sma_slope} x rank_window {126, 252, 504} x weak_family {flat, reversion}, tercile boundaries 1/3 and 2/3 fixed in the grid commit, components frozen at committed r3 points); control: the 2-variant conditionless collapse (trend only / equal-weight mean), identical costs and windows",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "counts": {
+    "conditional_beats_benchmark": 1,
+    "conditional_beats_control": 3,
+    "keep": 0,
+    "kill": 6,
+    "kill_sig": 0,
+    "lanes": 6
+  },
+  "created_utc": "2026-07-13T10:52:10.377461+00:00",
+  "git_sha": "1137e9b29273b535e58b36787687400d9e862719",
+  "lanes": [
+    {
+      "beats_benchmark": false,
+      "beats_control": true,
+      "benchmark_oos_sharpe": 0.7609406160043444,
+      "conditional_oos_sharpe": 0.4025803252350153,
+      "control_arm_delta": 0.02080068366937493,
+      "control_oos_sharpe": 0.38177964156564037,
+      "detail_file": "experiments/sweeps/r4-regime/regime_switch__SPY.json",
+      "instrument": "SPY",
+      "min_tstat": 2.690109527158866,
+      "sweep_verdict": "KILL",
+      "tstat": -1.1330525789823065,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": false,
+      "beats_control": false,
+      "benchmark_oos_sharpe": 0.8711014436622375,
+      "conditional_oos_sharpe": 0.6929764421641584,
+      "control_arm_delta": -0.09929759011254591,
+      "control_oos_sharpe": 0.7922740322767043,
+      "detail_file": "experiments/sweeps/r4-regime/regime_switch__QQQ.json",
+      "instrument": "QQQ",
+      "min_tstat": 2.690109527158866,
+      "sweep_verdict": "KILL",
+      "tstat": -0.5630125547583424,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": false,
+      "beats_control": true,
+      "benchmark_oos_sharpe": 0.7600585812790088,
+      "conditional_oos_sharpe": 0.6436464583623425,
+      "control_arm_delta": 0.16761499357635973,
+      "control_oos_sharpe": 0.47603146478598274,
+      "detail_file": "experiments/sweeps/r4-regime/regime_switch__TSLA.json",
+      "instrument": "TSLA",
+      "min_tstat": 2.690109527158866,
+      "sweep_verdict": "KILL",
+      "tstat": -0.3679762511403133,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": false,
+      "beats_control": true,
+      "benchmark_oos_sharpe": 0.644703682157047,
+      "conditional_oos_sharpe": 0.43939858781626906,
+      "control_arm_delta": 0.03610095466646063,
+      "control_oos_sharpe": 0.40329763314980843,
+      "detail_file": "experiments/sweeps/r4-regime/regime_switch__JPM.json",
+      "instrument": "JPM",
+      "min_tstat": 2.690109527158866,
+      "sweep_verdict": "KILL",
+      "tstat": -0.6491073960000395,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": false,
+      "beats_control": false,
+      "benchmark_oos_sharpe": 0.2940549506913933,
+      "conditional_oos_sharpe": -0.07989997258710194,
+      "control_arm_delta": -0.45315572705286256,
+      "control_oos_sharpe": 0.3732557544657606,
+      "detail_file": "experiments/sweeps/r4-regime/regime_switch__XOM.json",
+      "instrument": "XOM",
+      "min_tstat": 2.690109527158866,
+      "sweep_verdict": "KILL",
+      "tstat": -1.1825418103792238,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_control": false,
+      "benchmark_oos_sharpe": 0.1962113994495629,
+      "conditional_oos_sharpe": 0.21875965179533735,
+      "control_arm_delta": -0.07380366236263519,
+      "control_oos_sharpe": 0.29256331415797254,
+      "detail_file": "experiments/sweeps/r4-regime/regime_switch__TLT.json",
+      "instrument": "TLT",
+      "min_tstat": 2.690109527158866,
+      "sweep_verdict": "KILL",
+      "tstat": 0.07130044969069192,
+      "verdict": "KILL"
+    }
+  ],
+  "ledger_decision": "ledgered: one row per lane \u2014 the CONDITIONAL arm's top full-dev-period variant, round-3 convention (new strategy = new runs); variants_tried = K = 14; the control arm's numbers live in the per-lane sweep JSONs; experiments/index.jsonl rebuilt",
+  "ledger_files": [
+    "experiments/runs/20260713T105152583646Z-4ab1683d2710.json",
+    "experiments/runs/20260713T105156083066Z-b330c08bcad8.json",
+    "experiments/runs/20260713T105159655946Z-a95abf01ec01.json",
+    "experiments/runs/20260713T105203154614Z-a30817d97a19.json",
+    "experiments/runs/20260713T105206828393Z-889be5bea2f6.json",
+    "experiments/runs/20260713T105210333627Z-7411b2ee5038.json"
+  ],
+  "motivation": "PR #92: the vol gate's control arm beat the gated arm 6/6 \u2014 this slice asks the same question on the trend-strength axis, control arm now mandatory",
+  "order": "ORDER 012 (generative rung)",
+  "post_holdout_dev_only": "holdout SPENT, promotion CLOSED; every KEEP is a dev-candidate only, never a finding",
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-D \u2014 Regime-conditional allocation (with mandatory control arm)",
+  "program_variants_tried": 4319,
+  "rule": "per lane: KILL iff conditional stitched OOS Sharpe <= the unconditional control's (pre-registered primary criterion, control_arm_delta recorded machine-readably); KEEP additionally requires beating same-window same-cost B&H and > 0; KILL-SIG at t <= -min_tstat(14) via classify_verdict; t informational only at K=14 (bar ~2.690, raised above the round-standard 2.638 \u2014 never lowered)",
+  "runtime_seconds": 21.2,
+  "schema_version": 1,
+  "slice": "r4-regime"
+}

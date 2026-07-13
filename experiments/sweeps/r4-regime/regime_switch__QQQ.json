@@ -1,0 +1,901 @@
+{
+  "beats_benchmark": false,
+  "beats_control": false,
+  "benchmark_oos_metrics": {
+    "cagr": 0.17694465970845674,
+    "max_drawdown": -0.36693048663234895,
+    "n_bars": 2520,
+    "n_trades": 1,
+    "sharpe": 0.8711014436622375,
+    "sortino": 0.7960136982357146,
+    "total_return": 4.0998855118978845,
+    "turnover_per_year": 0.1,
+    "win_rate": 1.0
+  },
+  "benchmark_oos_sharpe": 0.8711014436622375,
+  "conditional_oos_sharpe": 0.6929764421641584,
+  "control_arm_delta": -0.09929759011254591,
+  "control_oos_sharpe": 0.7922740322767043,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:51:56+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "regime_switch",
+  "family_status": "NEW strategy (regime_switch), committed in the pre-declaration commit; components FROZEN at committed r3 grid points (ema_crossover 20/100 PR #90; rsi_mean_reversion 2/20/60 PR #91) \u2014 no new parameter territory beyond the registered regime axes",
+  "full_period_variants": {
+    "note": "single-split in-sample rows for deflated-Sharpe bookkeeping, BOTH arms \u2014 NOT findings",
+    "rows": [
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.05359797522576071,
+          "max_drawdown": -0.256850486615383,
+          "n_trades": 66,
+          "sharpe": 0.5411412946295586,
+          "sortino": 0.2841264749516698,
+          "total_return": 1.1879325543987815,
+          "turnover_per_year": 4.401164329187616,
+          "win_rate": 0.6666666666666666
+        },
+        "params": {
+          "metric": "adx",
+          "rank_window": 126,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.09030041706835346,
+          "max_drawdown": -0.23213619877034353,
+          "n_trades": 352,
+          "sharpe": 0.7060145269865857,
+          "sortino": 0.4903710205680694,
+          "total_return": 2.6563156423958025,
+          "turnover_per_year": 23.472876422333954,
+          "win_rate": 0.6875
+        },
+        "params": {
+          "metric": "adx",
+          "rank_window": 126,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.04785435620264544,
+          "max_drawdown": -0.24453848517291898,
+          "n_trades": 72,
+          "sharpe": 0.47947859948927635,
+          "sortino": 0.26503767145279983,
+          "total_return": 1.0157343139819615,
+          "turnover_per_year": 4.8012701772955815,
+          "win_rate": 0.6388888888888888
+        },
+        "params": {
+          "metric": "adx",
+          "rank_window": 252,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.07378881440250917,
+          "max_drawdown": -0.22993305380886075,
+          "n_trades": 318,
+          "sharpe": 0.5928390326158579,
+          "sortino": 0.4125106433607212,
+          "total_return": 1.9084422206740146,
+          "turnover_per_year": 21.20560994972215,
+          "win_rate": 0.6918238993710691
+        },
+        "params": {
+          "metric": "adx",
+          "rank_window": 252,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.046820040038949795,
+          "max_drawdown": -0.22993305380886087,
+          "n_trades": 62,
+          "sharpe": 0.48047026546211596,
+          "sortino": 0.25996169477558895,
+          "total_return": 0.9861020683808759,
+          "turnover_per_year": 4.13442709711564,
+          "win_rate": 0.6774193548387096
+        },
+        "params": {
+          "metric": "adx",
+          "rank_window": 504,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.08412158336465869,
+          "max_drawdown": -0.2299330538088611,
+          "n_trades": 276,
+          "sharpe": 0.6922636857289829,
+          "sortino": 0.46330358866238813,
+          "total_return": 2.357613190045949,
+          "turnover_per_year": 18.404869012966394,
+          "win_rate": 0.7101449275362319
+        },
+        "params": {
+          "metric": "adx",
+          "rank_window": 504,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.04017302998286931,
+          "max_drawdown": -0.22581696929587658,
+          "n_trades": 40,
+          "sharpe": 0.4033545457793173,
+          "sortino": 0.2241543298728633,
+          "total_return": 0.8051610578979504,
+          "turnover_per_year": 2.6673723207197675,
+          "win_rate": 0.65
+        },
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 126,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.09373881317668875,
+          "max_drawdown": -0.27563112111057475,
+          "n_trades": 300,
+          "sharpe": 0.6778681102110915,
+          "sortino": 0.4818208696228804,
+          "total_return": 2.8330981668944983,
+          "turnover_per_year": 20.005292405398254,
+          "win_rate": 0.72
+        },
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 126,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.0493029550610149,
+          "max_drawdown": -0.22993305380886087,
+          "n_trades": 24,
+          "sharpe": 0.49551307683673057,
+          "sortino": 0.25913051767775436,
+          "total_return": 1.0579295291557527,
+          "turnover_per_year": 1.6004233924318603,
+          "win_rate": 0.5833333333333334
+        },
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 252,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.08288094353795694,
+          "max_drawdown": -0.22993305380886098,
+          "n_trades": 290,
+          "sharpe": 0.6365406026823561,
+          "sortino": 0.4306125936006601,
+          "total_return": 2.300452155249057,
+          "turnover_per_year": 19.338449325218313,
+          "win_rate": 0.696551724137931
+        },
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 252,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.07622869620532269,
+          "max_drawdown": -0.22993305380886075,
+          "n_trades": 16,
+          "sharpe": 0.7094663359150064,
+          "sortino": 0.3761972114511633,
+          "total_return": 2.0091366539530506,
+          "turnover_per_year": 1.066948928287907,
+          "win_rate": 0.5
+        },
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 504,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        }
+      },
+      {
+        "arm": "conditional",
+        "metrics": {
+          "cagr": 0.11481876670317281,
+          "max_drawdown": -0.22993305380886087,
+          "n_trades": 258,
+          "sharpe": 0.835186028740529,
+          "sortino": 0.5602421703204532,
+          "total_return": 4.103601375312787,
+          "turnover_per_year": 17.2045514686425,
+          "win_rate": 0.6976744186046512
+        },
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 504,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        }
+      },
+      {
+        "arm": "control",
+        "metrics": {
+          "cagr": 0.12490457842699954,
+          "max_drawdown": -0.2572228636343511,
+          "n_trades": 33,
+          "sharpe": 0.8270023918233748,
+          "sortino": 0.6640159915630858,
+          "total_return": 4.841608207021103,
+          "turnover_per_year": 2.200582164593808,
+          "win_rate": 0.5294117647058824
+        },
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        }
+      },
+      {
+        "arm": "control",
+        "metrics": {
+          "cagr": 0.10992596466496907,
+          "max_drawdown": -0.18658415616207413,
+          "n_trades": 609,
+          "sharpe": 0.9095633227919978,
+          "sortino": 0.7958088447895701,
+          "total_return": 3.7778270764795687,
+          "turnover_per_year": 20.37205609949722,
+          "win_rate": 0.5947467166979362
+        },
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        }
+      }
+    ]
+  },
+  "git_sha": "1137e9b29273b535e58b36787687400d9e862719",
+  "instrument": "QQQ",
+  "instrument_status": "slice-3 lane-local instrument (not in the frozen config.UNIVERSE); committed PR #83 cache reused \u2014 the PR #92 vol-gate surface, verbatim",
+  "kill_criterion": "pre-registered R4-D rule: KILL iff conditional stitched OOS Sharpe <= the unconditional control's; KEEP additionally requires beating same-window same-cost B&H and > 0; ties/ambiguity KILL",
+  "lane_variants_tried": 84,
+  "ledger": "ledgered: one row per lane \u2014 the CONDITIONAL arm's top full-period variant (round-3 convention); the control arm's numbers live in this sweep JSON",
+  "ledger_file": "experiments/runs/20260713T105156083066Z-b330c08bcad8.json",
+  "n_bars": 3779,
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-D \u2014 Regime-conditional allocation (with mandatory control arm)",
+  "program_variants_tried": 4319,
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.690109527158866,
+    "n_periods": 2520,
+    "note": "ORDER 007 bar on the conditional arm's stitched OOS Sharpe delta vs B&H, Bonferroni K = 14 (every registered config this lane, bar ~2.690 \u2014 RAISED above the round-standard 2.638, never lowered) \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": -0.17812500149807908,
+    "sharpe_se": 0.3163783826712964,
+    "timeframe": "daily",
+    "tstat": -0.5630125547583424,
+    "variants_tried": 14,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "sweep": "r4-regime",
+  "sweep_verdict": "KILL",
+  "timeframe": "daily",
+  "top_full_period_variant": {
+    "arm": "conditional",
+    "ledger_run": "20260713T105156083066Z-b330c08bcad8.json",
+    "metrics": {
+      "cagr": 0.11481876670317281,
+      "max_drawdown": -0.22993305380886087,
+      "n_trades": 258,
+      "sharpe": 0.835186028740529,
+      "sortino": 0.5602421703204532,
+      "total_return": 4.103601375312787,
+      "turnover_per_year": 17.2045514686425,
+      "win_rate": 0.6976744186046512
+    },
+    "params": {
+      "metric": "sma_slope",
+      "rank_window": 504,
+      "regime_condition": true,
+      "rsi_overbought": 60,
+      "rsi_oversold": 20,
+      "rsi_period": 2,
+      "trend_fast": 20,
+      "trend_slow": 100,
+      "weak_family": "reversion"
+    }
+  },
+  "variants_per_arm": {
+    "conditional": 12,
+    "control": 2
+  },
+  "variants_tried": 14,
+  "verdict": "KILL",
+  "walk_forward_conditional": {
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.09468496212437705,
+      "max_drawdown": -0.22993305380886087,
+      "n_bars": 2520,
+      "sharpe": 0.6929764421641584,
+      "sortino": 0.4726897963660714,
+      "total_return": 1.4711068322895824
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 504,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.8523333964776607,
+        "train": [
+          0,
+          1008
+        ],
+        "train_score": 1.218970622835307
+      },
+      {
+        "params": {
+          "metric": "adx",
+          "rank_window": 126,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 0.46443886296079423,
+        "train": [
+          252,
+          1260
+        ],
+        "train_score": 1.4318117500390897
+      },
+      {
+        "params": {
+          "metric": "adx",
+          "rank_window": 126,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": -0.18833108058862993,
+        "train": [
+          504,
+          1512
+        ],
+        "train_score": 1.5888975461913677
+      },
+      {
+        "params": {
+          "metric": "adx",
+          "rank_window": 126,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 1.84432974677846,
+        "train": [
+          756,
+          1764
+        ],
+        "train_score": 1.28757078989384
+      },
+      {
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 504,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.8616494216603044,
+        "train": [
+          1008,
+          2016
+        ],
+        "train_score": 1.5271883276068328
+      },
+      {
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 252,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 1.292008294744582,
+        "train": [
+          1260,
+          2268
+        ],
+        "train_score": 1.0992313428388
+      },
+      {
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 504,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.5618576197588898,
+        "train": [
+          1512,
+          2520
+        ],
+        "train_score": 0.9978834277435822
+      },
+      {
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 252,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 1.561148528994004,
+        "train": [
+          1764,
+          2772
+        ],
+        "train_score": 0.5898211682743545
+      },
+      {
+        "params": {
+          "metric": "sma_slope",
+          "rank_window": 504,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -0.282592268225367,
+        "train": [
+          2016,
+          3024
+        ],
+        "train_score": 0.9930818197568365
+      },
+      {
+        "params": {
+          "metric": "adx",
+          "rank_window": 504,
+          "regime_condition": true,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 1.2378501347839153,
+        "train": [
+          2268,
+          3276
+        ],
+        "train_score": 0.5867868164824165
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 120
+  },
+  "walk_forward_control": {
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.11330535212685522,
+      "max_drawdown": -0.242566003283181,
+      "n_bars": 2520,
+      "sharpe": 0.7922740322767043,
+      "sortino": 0.6539820047101291,
+      "total_return": 1.9251151629127516
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 1.3951570509280176,
+        "train": [
+          0,
+          1008
+        ],
+        "train_score": 0.7610236183513469
+      },
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 0.22333647093879566,
+        "train": [
+          252,
+          1260
+        ],
+        "train_score": 0.9185291199652951
+      },
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.8252782610808728,
+        "train": [
+          504,
+          1512
+        ],
+        "train_score": 0.9006018545606032
+      },
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 2.86915641112227,
+        "train": [
+          756,
+          1764
+        ],
+        "train_score": 0.7803390389939181
+      },
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.3686999990012369,
+        "train": [
+          1008,
+          2016
+        ],
+        "train_score": 0.8728539229990868
+      },
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 1.7673388668481138,
+        "train": [
+          1260,
+          2268
+        ],
+        "train_score": 0.5696009770633301
+      },
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.8386290494721638,
+        "train": [
+          1512,
+          2520
+        ],
+        "train_score": 1.384117647847036
+      },
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 1.199778242726896,
+        "train": [
+          1764,
+          2772
+        ],
+        "train_score": 0.9797099469597061
+      },
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "flat"
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -2.1930137863863397,
+        "train": [
+          2016,
+          3024
+        ],
+        "train_score": 1.022698291160468
+      },
+      {
+        "params": {
+          "regime_condition": false,
+          "rsi_overbought": 60,
+          "rsi_oversold": 20,
+          "rsi_period": 2,
+          "trend_fast": 20,
+          "trend_slow": 100,
+          "weak_family": "reversion"
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 1.7304725312699947,
+        "train": [
+          2268,
+          3276
+        ],
+        "train_score": 0.7749528906565368
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 20
+  }
+}
