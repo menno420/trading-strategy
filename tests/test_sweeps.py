@@ -1219,3 +1219,123 @@ class TestR3TrendHourlyGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_trend_hourly_variants("trix_momentum")
                 == sweeps.r3_trend_hourly_variants("trix_momentum"))
+
+
+class TestR3HourlyCompletionGrid:
+    # The declared slice-15 families, in lane order — the four Round-3
+    # single-instrument families the hourly matrix still lacked after
+    # slice 5 (mean-reversion) and slice 14 (classic trend/momentum);
+    # this lane completes the Round-3 hourly matrix.
+    EXPECTED_FAMILIES = ("cci_reversion", "bollinger_breakout",
+                         "atr_trailing", "ichimoku_trend")
+
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R3_HOURLY_COMPLETION_FAMILY
+        assert (sweeps.R3_HOURLY_COMPLETION_FAMILIES
+                == self.EXPECTED_FAMILIES)
+        assert (set(sweeps.R3_HOURLY_COMPLETION_FAMILIES)
+                == set(R3_HOURLY_COMPLETION_FAMILY))
+        for fam in sweeps.R3_HOURLY_COMPLETION_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_no_new_strategies(self):
+        # Slice 15 is a TIMEFRAME expansion: every family must already be
+        # swept by an earlier daily lane (no new strategy code).
+        earlier = (set(sweeps.R3_AROON_CCI_FAMILIES)
+                   | set(sweeps.R3_BREAKOUT_FAMILIES)
+                   | set(sweeps.R3_TRIX_ICHIMOKU_FAMILIES))
+        assert set(sweeps.R3_HOURLY_COMPLETION_FAMILIES) <= earlier
+
+    def test_completes_the_hourly_matrix(self):
+        # The three hourly slices (5, 14, 15) are disjoint and together
+        # cover every Round-3 single-instrument family exactly once.
+        s5 = set(sweeps.R3_MEANREV_HOURLY_FAMILIES)
+        s14 = set(sweeps.R3_TREND_HOURLY_FAMILIES)
+        s15 = set(sweeps.R3_HOURLY_COMPLETION_FAMILIES)
+        assert not (s15 & s5) and not (s15 & s14)
+        round3_single_instrument = (
+            set(sweeps.R3_STOCH_WILLR_FAMILIES)
+            | set(sweeps.R3_ROC_ADX_FAMILIES)
+            | set(sweeps.R3_AROON_CCI_FAMILIES)
+            | set(sweeps.R3_BREAKOUT_FAMILIES)
+            | set(sweeps.R3_TRIX_ICHIMOKU_FAMILIES))
+        assert s5 | s14 | s15 >= round3_single_instrument
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-hourly-completion sweep files must match these. 12
+        # variants per family over the full 8-ticker universe = 384
+        # registered configs — the slice-5/14 shape, mirrored.
+        from trading_lab import config
+        counts = sweeps.r3_hourly_completion_variants_per_family()
+        assert counts == {fam: 12 for fam in self.EXPECTED_FAMILIES}
+        assert (sweeps.R3_HOURLY_COMPLETION_INSTRUMENTS
+                == tuple(config.UNIVERSE))
+        assert len(sweeps.R3_HOURLY_COMPLETION_INSTRUMENTS) == 8
+        assert sweeps.r3_hourly_completion_total_configs() == 384
+
+    def test_grids_are_the_declared_daily_grids_verbatim(self):
+        # The slice-13/14 delegation convention: each family's Round-3
+        # daily grid reused VERBATIM (delegation makes drift impossible;
+        # this pin makes it visible).
+        assert (sweeps.r3_hourly_completion_variants("cci_reversion")
+                == sweeps.r3_aroon_cci_variants("cci_reversion"))
+        assert (sweeps.r3_hourly_completion_variants("bollinger_breakout")
+                == sweeps.r3_breakout_variants("bollinger_breakout"))
+        assert (sweeps.r3_hourly_completion_variants("atr_trailing")
+                == sweeps.r3_breakout_variants("atr_trailing"))
+        assert (sweeps.r3_hourly_completion_variants("ichimoku_trend")
+                == sweeps.r3_trix_ichimoku_variants("ichimoku_trend"))
+
+    def test_grids_are_subsets_of_the_published_daily_axes(self):
+        # The p1-trend-hourly / slice-5 convention: bar-denominated grids
+        # reused as-is on hourly bars — no new parameter values. Every
+        # hourly variant must already exist in its family's daily grid
+        # (with verbatim delegation the subset degenerates to equality;
+        # this is the slice-5 membership form, belt-and-braces).
+        daily = {
+            "cci_reversion": sweeps.r3_aroon_cci_variants("cci_reversion"),
+            "bollinger_breakout":
+                sweeps.r3_breakout_variants("bollinger_breakout"),
+            "atr_trailing": sweeps.r3_breakout_variants("atr_trailing"),
+            "ichimoku_trend":
+                sweeps.r3_trix_ichimoku_variants("ichimoku_trend"),
+        }
+        for fam in sweeps.R3_HOURLY_COMPLETION_FAMILIES:
+            for params in sweeps.r3_hourly_completion_variants(fam):
+                assert params in daily[fam], (fam, params)
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # Frozen non-swept parameters stay frozen under verbatim reuse
+        # (ichimoku senkou displacement 26 NOT swept, as in
+        # r3-trix-ichimoku); the committed grid decisions are inherited
+        # unchanged (Hosoda 9/26/52 stays IN the ichimoku grid; the
+        # breakout grids are pure threshold families with no control arm,
+        # per the slice-6 declaration).
+        for params in sweeps.r3_hourly_completion_variants("cci_reversion"):
+            assert params["buy_below"] < params["sell_above"]
+            assert set(params) == {"period", "buy_below", "sell_above"}
+        for params in sweeps.r3_hourly_completion_variants(
+                "bollinger_breakout"):
+            assert set(params) == {"period", "num_std"}
+        for params in sweeps.r3_hourly_completion_variants("atr_trailing"):
+            assert set(params) == {"entry_lookback", "atr_period", "k"}
+        for params in sweeps.r3_hourly_completion_variants("ichimoku_trend"):
+            assert params["tenkan"] < params["kijun"] < params["senkou_b"]
+            assert set(params) == {"tenkan", "kijun", "senkou_b"}
+        assert {"tenkan": 9, "kijun": 26, "senkou_b": 52} in \
+            sweeps.r3_hourly_completion_variants("ichimoku_trend")
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_HOURLY_COMPLETION_FAMILIES:
+            for params in sweeps.r3_hourly_completion_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_hourly_completion_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_hourly_completion_variants("ichimoku_trend")
+                == sweeps.r3_hourly_completion_variants("ichimoku_trend"))

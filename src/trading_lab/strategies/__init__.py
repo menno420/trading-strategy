@@ -214,6 +214,14 @@ R3_TRIX_ICHIMOKU_FAMILY = ["trix_momentum", "ichimoku_trend"]
 R3_TREND_HOURLY_FAMILY = ["roc_momentum", "adx_filtered_sma",
                           "aroon_trend", "trix_momentum"]
 
+# Round 3 slice 15 (ORDER 012 night-run, post-holdout dev-only): the four
+# remaining EXISTING Round-3 single-instrument families re-swept on HOURLY
+# bars in the r3-hourly-completion × all-8-tickers × hourly lane
+# (timeframe expansion — no new strategy code; completes the Round-3
+# hourly matrix started by slices 5 and 14).
+R3_HOURLY_COMPLETION_FAMILY = ["cci_reversion", "bollinger_breakout",
+                               "atr_trailing", "ichimoku_trend"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
     "xsec_reversal": xsec_reversal.generate_weights,
@@ -227,6 +235,7 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "R3_AROON_CCI_FAMILY", "R3_MEANREV_HOURLY_FAMILY",
            "R3_BREAKOUT_FAMILY", "R3_XSEC_EXPANDED_FAMILY",
            "R3_TRIX_ICHIMOKU_FAMILY", "R3_TREND_HOURLY_FAMILY",
+           "R3_HOURLY_COMPLETION_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
