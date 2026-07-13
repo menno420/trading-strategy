@@ -1880,3 +1880,176 @@ def r5a_total_configs() -> int:
     neighbor counts as one new registered config (conservative — the
     burden only ever rises), per the pre-registration's ≤ 40 bound."""
     return sum(r5a_neighbors_per_lane().values())
+
+
+# ---------------------------------------------------------------------------
+# Round 6 (docs/research-round-6-plan.md — pre-registered, ORDER 014 items
+# 1+3; post-holdout DEV-ONLY, promotion CLOSED). FIRST round under the two
+# standing rules landed after Round 5: (1) the selection-fair gate
+# (src/trading_lab/selection_gate.py, PR #111 d498018, decision [D-0002]) —
+# every Round-6 KEEP-dev verdict must pass run_selection_gate/apply_gate;
+# (2) the R5-D convention — every searched-arm comparison carries a
+# fixed-config row (the gate's selection-free replay of the lane's top
+# full-period variant, with selection_gap recorded machine-readably).
+# Grids declared here BEFORE any Round-6 sweep runs (plan-before-outcome);
+# every grid is 12 constraint-valid variants per family, so the per-lane
+# informational bar stays min_tstat(12) ~ 2.638 — never lowered.
+# ---------------------------------------------------------------------------
+
+# --- Slice R6-A: VOLUME families × 15 daily tickers (lane: r6-volume) ------
+# The program's first volume-based indicator class: obv_trend (OBV vs its
+# own SMA; price_confirm=False is the pure-OBV within-family control arm)
+# and mfi_reversion (volume-weighted oscillator reversion, the MFI sibling
+# of RSI/stochastic/Williams %R/CCI). Instruments: the full committed
+# 15-ticker daily surface, verbatim the R4-F seasonality tuple (same
+# object — identity is the point: no new caches, no fetches).
+
+_R6_VOLUME_AXES: dict[str, dict[str, list]] = {
+    "obv_trend": {"window": [10, 20, 50, 100, 150, 200],
+                  "price_confirm": [False, True]},
+    "mfi_reversion": {"period": [7, 14, 21], "buy_below": [10, 20],
+                      "sell_above": [70, 80]},
+}
+
+_R6_VOLUME_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "obv_trend": lambda p: p["window"] >= 2,
+    "mfi_reversion": lambda p: 0 < p["buy_below"] < p["sell_above"] < 100,
+}
+
+R6_VOLUME_FAMILIES = tuple(_R6_VOLUME_AXES)
+
+# Verbatim reuse of the committed R4-F 15-ticker daily surface (same tuple
+# object): AAPL AMZN BTC-USD GLD GOOGL JPM META MSFT NVDA QQQ SLV SPY TLT
+# TSLA XOM — every one a committed data/daily/ cache; nothing fetched.
+R6_VOLUME_INSTRUMENTS = R4_SEASONALITY_INSTRUMENTS
+
+# Per-lane informational K: 12 variants per family grid (rounds 2-5
+# standard); bar min_tstat(12) ~ 2.638, never lowered.
+R6_VOLUME_K = 12
+
+
+def r6_volume_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-6 slice R6-A ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R6_VOLUME_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R6 volume family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals))
+              for vals in product(*(axes[k] for k in keys)))
+    keep = _R6_VOLUME_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r6_volume_variants_per_family() -> dict[str, int]:
+    """Round-6 slice R6-A variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r6_volume_variants(fam))
+            for fam in R6_VOLUME_FAMILIES}
+
+
+def r6_volume_total_configs() -> int:
+    """Total registered Round-6 slice R6-A configs: variants × instruments
+    (each instrument × grid point counts as one config, the Round-2/3
+    convention)."""
+    return (sum(r6_volume_variants_per_family().values())
+            * len(R6_VOLUME_INSTRUMENTS))
+
+
+# --- Slice R6-B: OVERNIGHT-GAP family × 12-ticker mixed set (lane: r6-gap) -
+# The program's first family whose SIGNAL reads the open column:
+# trailing-ATR-normalized overnight gap, with the two mirror theses (fade /
+# follow) committed in the SAME grid so neither can be cherry-picked after
+# outcomes. atr_period is frozen at the lab-standard 14 and NOT swept.
+# Instruments: the 12-ticker mixed equity/ETF set, verbatim the slice-8
+# tuple. BTC-USD is DELIBERATELY excluded: a 24/7 market has no overnight
+# session, so open[t] == close[t-1] up to feed noise and the family is
+# untestable there.
+
+_R6_GAP_AXES: dict[str, dict[str, list]] = {
+    "overnight_gap": {"mode": ["fade", "follow"],
+                      "gap_atr": [0.5, 1.0, 1.5],
+                      "hold": [1, 3]},
+}
+
+_R6_GAP_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "overnight_gap": lambda p: p["gap_atr"] > 0 and p["hold"] >= 1,
+}
+
+R6_GAP_FAMILIES = tuple(_R6_GAP_AXES)
+
+# Verbatim reuse of the committed slice-8 12-ticker mixed set (same tuple
+# object): the frozen 8-ticker universe + SPY/QQQ/TSLA/TLT. No BTC-USD.
+R6_GAP_INSTRUMENTS = R3_TRIX_ICHIMOKU_INSTRUMENTS
+
+R6_GAP_K = 12
+
+
+def r6_gap_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-6 slice R6-B ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R6_GAP_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R6 gap family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals))
+              for vals in product(*(axes[k] for k in keys)))
+    keep = _R6_GAP_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r6_gap_variants_per_family() -> dict[str, int]:
+    """Round-6 slice R6-B variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r6_gap_variants(fam)) for fam in R6_GAP_FAMILIES}
+
+
+def r6_gap_total_configs() -> int:
+    """Total registered Round-6 slice R6-B configs: variants ×
+    instruments."""
+    return (sum(r6_gap_variants_per_family().values())
+            * len(R6_GAP_INSTRUMENTS))
+
+
+# --- Slice R6-C: VOLUME families × 8 hourly tickers (lane:
+# r6-volume-hourly) --------------------------------------------------------
+# Timeframe expansion of R6-A (the Round-3 slice-5/14/15 precedent): the
+# SAME two volume families and the SAME 12-variant grids re-registered on
+# the committed 8-ticker hourly caches. No new strategy code, no new
+# parameter territory — the grid identity with R6-A is pinned by tests.
+# Instruments: verbatim the committed r3-trend-hourly tuple (same object).
+
+R6_VOLUME_HOURLY_FAMILIES = R6_VOLUME_FAMILIES
+
+R6_VOLUME_HOURLY_INSTRUMENTS = R3_TREND_HOURLY_INSTRUMENTS
+
+R6_VOLUME_HOURLY_K = 12
+
+
+def r6_volume_hourly_variants(family: str) -> list[dict]:
+    """Round-6 slice R6-C variants: identical to the R6-A grid for the
+    same family (timeframe expansion — no new parameter territory)."""
+    return r6_volume_variants(family)
+
+
+def r6_volume_hourly_variants_per_family() -> dict[str, int]:
+    """Round-6 slice R6-C variant counts by family."""
+    return {fam: len(r6_volume_hourly_variants(fam))
+            for fam in R6_VOLUME_HOURLY_FAMILIES}
+
+
+def r6_volume_hourly_total_configs() -> int:
+    """Total registered Round-6 slice R6-C configs: variants ×
+    instruments (a config on hourly bars is a different registered config
+    from the same params on daily bars — the burden only ever rises)."""
+    return (sum(r6_volume_hourly_variants_per_family().values())
+            * len(R6_VOLUME_HOURLY_INSTRUMENTS))
+
+
+def r6_total_configs() -> int:
+    """Total registered Round-6 configs across the three verdict-bearing
+    slices (the plan's burden ledger: program cumulative 4359 -> 5055)."""
+    return (r6_volume_total_configs() + r6_gap_total_configs()
+            + r6_volume_hourly_total_configs())

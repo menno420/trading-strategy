@@ -27,6 +27,18 @@ to the coordinator seat, grading executor LIVE. This supersedes the old
 cutover replaced the ender-session-bound triggers with coordinator-seat
 bindings — full disposition in `control/status.md`.)
 
+- Research Round 6 (branch `claude/round-6-plan`, ORDER 014 items 1+3):
+  pre-registered plan [research-round-6-plan.md](research-round-6-plan.md)
+  (badge `binding`, committed before any Round-6 outcome exists) — two new
+  idea classes on committed caches only (volume families `obv_trend` /
+  `mfi_reversion`; overnight-gap family `overnight_gap`) plus the hourly
+  volume expansion; 696 new registered configs (program cumulative 4359 →
+  5055), 58 lanes, per-lane K=12, bar unchanged. First round under the
+  selection-fair standing gate ([selection-fair-gate.md](selection-fair-gate.md),
+  PR #111) with the R5-D
+  fixed-config row folded in as a standing rule. Execution is the
+  separately claimed `claude/round-6-run` slice (ORDER 014 item 2) —
+  plan-before-outcome.
 - Research Round 5 (branch `claude/round-5-research`, PR #110): all four
   pre-registered slices RAN 2026-07-13 against
   [research-round-5-plan.md](research-round-5-plan.md) (committed before
