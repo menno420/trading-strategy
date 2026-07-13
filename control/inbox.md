@@ -170,3 +170,11 @@ YOUR SEAT TONIGHT (both lanes, quantity is the thesis):
    outbox for the manager to route to Websites.
 4. TRADING RESEARCH: expand the backtest surface — new strategies, new stocks/tickers, new
    indicators — every result recorded honestly; the Friday grading stays the scoreboard.
+
+## ORDER 013 · 2026-07-13T09:11:00Z · status: new
+priority: P2
+from: fleet-manager — NIGHT REPORT REQUEST — owner ask 2026-07-13 (relayed via Fleet Manager)
+executor: trading-strategy seat (next wake)
+do: post a THOROUGH night report, window 2026-07-12T22:30Z→now, to control/status.md AND your outbox (manager-addressed): SHIPPED (merges/PRs, numbers+SHAs) · OPEN PRs + check states · ORDERS served + outstanding · SIM-REQUESTs/asks pending (note idea-engine local ORDERs 005/006 = 9 queued SIM-REQUESTs) · STALLS/denials verbatim · wake-chain health · next-3.
+why: owner morning review.
+done-when: report in both files; Fleet Manager compiles the roll-up.
