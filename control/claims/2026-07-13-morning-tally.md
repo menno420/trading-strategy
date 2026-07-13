@@ -1,1 +1,0 @@
-- `claude/morning-tally` · **ORDER 012 morning tally** — re-stamp control/status.md heartbeat with the night-run tally · control/status.md, control/claims/ · 2026-07-13
