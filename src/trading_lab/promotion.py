@@ -73,6 +73,12 @@ SWEEP_KEEP = "KEEP"
 SWEEP_KILL = "KILL"
 SWEEP_KILL_SIG = "KILL-SIG"
 
+# Post-holdout dev-lane KEEP verdict string. Historically a per-script
+# literal in every round-2..5 runner; defined ONCE here for round-6+ code
+# (docs/selection-fair-gate.md). Existing scripts keep their own literals —
+# historical artifacts stay byte-identical.
+VERDICT_KEEP_DEV = "KEEP (dev-candidate only)"
+
 
 def sharpe_se(sharpe_annual: float, n_periods: int, timeframe: str) -> float:
     """Lo (2002) standard error of an annualized Sharpe estimate.
