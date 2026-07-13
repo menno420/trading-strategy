@@ -1476,3 +1476,47 @@ def r4_seasonality_total_configs() -> int:
     toward the bar, per the pre-registered plan."""
     return (sum(r4_seasonality_variants_per_family().values())
             * len(R4_SEASONALITY_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 4 slice R4-C: SURVIVOR COMMITTEE ENSEMBLES (lane: r4-ensemble —
+# docs/research-round-4-plan.md § R4-C, ORDER 012 night-run, post-holdout
+# DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# Round 3 never asked whether survivors *combine*. This slice forms, per
+# instrument x timeframe group with >= R4_ENSEMBLE_MIN_MEMBERS KEEP-dev
+# lanes, an equal-weight signal committee (position = mean of member
+# positions; trading_lab.ensemble.committee_positions) of members FROZEN
+# at their committed walk-forward choices — the committee is the ONLY new
+# object, there is no search inside it (frozen-replay precedent: PR #101).
+# The member universe is the committed, machine-readable KEEP surface of
+# the R4-A re-grade (PR #100): the 58 new_verdict == "KEEP" rows of
+# R4_ENSEMBLE_KEEP_UNIVERSE. Pre-registered rule: KEEP (dev-candidate
+# only) iff the committee beats BOTH the best single member and the
+# same-window same-cost B&H benchmark on stitched OOS Sharpe; otherwise
+# KILL (KILL-SIG possible via promotion.classify_verdict). The t-stat is
+# INFORMATIONAL ONLY, graded at the round-standard K = 12 (bar
+# min_tstat(12) ≈ 2.638): each committee is a single pre-declared config,
+# but the plan registers no smaller K for this slice and the bar is NEVER
+# lowered — so the standard bar stands. Adopted conventions the plan is
+# silent on (decided before any committee ran; see trading_lab.ensemble):
+# grouping is instrument x timeframe (never across timeframes), and one
+# member per family per committee (performance-blind lexicographic
+# tiebreak for duplicate round-3 coverage; the best-member comparison
+# uses ALL the group's KEEP lanes, which can only raise the bar).
+
+# Minimum KEEP-dev lanes for an (instrument, timeframe) group to qualify.
+R4_ENSEMBLE_MIN_MEMBERS = 2
+
+# Registered significance K for the informational t — the round-standard
+# bar, never lowered (min_tstat(12) ≈ 2.638).
+R4_ENSEMBLE_K = 12
+
+# The committed KEEP surface the members come from (R4-A, PR #100).
+R4_ENSEMBLE_KEEP_UNIVERSE = ("experiments/sweeps/r4-killsig-regrade/"
+                             "summary.json")
+R4_ENSEMBLE_EXPECTED_KEEPS = 58
+
+# Ledger strategy name for committee rows (one row per committee,
+# variants_tried=1 — each committee is one pre-declared config).
+R4_ENSEMBLE_STRATEGY_NAME = "committee_equal_weight"

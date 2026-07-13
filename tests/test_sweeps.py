@@ -1404,3 +1404,34 @@ class TestR4SeasonalityGrid:
     def test_deterministic_order(self):
         assert (sweeps.r4_seasonality_variants("weekday_long")
                 == sweeps.r4_seasonality_variants("weekday_long"))
+
+
+class TestR4EnsembleRegistration:
+    """R4-C survivor committees — registered constants pinned BEFORE the
+    sweep runs (docs/research-round-4-plan.md § R4-C)."""
+
+    def test_min_members_is_two(self):
+        # The plan's qualifying rule: >= 2 KEEP-dev families.
+        assert sweeps.R4_ENSEMBLE_MIN_MEMBERS == 2
+
+    def test_informational_k_is_round_standard_and_bar_never_lowered(self):
+        # Each committee is ONE pre-declared config, but the plan registers
+        # no smaller K for this slice — so the informational t is graded at
+        # the round-standard K=12 (bar ~2.638), never below it.
+        from trading_lab import promotion
+        assert sweeps.R4_ENSEMBLE_K == 12
+        assert round(promotion.min_tstat(sweeps.R4_ENSEMBLE_K), 3) == 2.638
+
+    def test_keep_universe_is_the_committed_r4a_surface(self):
+        from trading_lab import config
+        assert sweeps.R4_ENSEMBLE_KEEP_UNIVERSE == \
+            "experiments/sweeps/r4-killsig-regrade/summary.json"
+        assert sweeps.R4_ENSEMBLE_EXPECTED_KEEPS == 58
+        assert (config.REPO_ROOT / sweeps.R4_ENSEMBLE_KEEP_UNIVERSE).exists()
+
+    def test_ledger_strategy_name(self):
+        # Committee rows are ledgered under a clear composite name that is
+        # NOT a registered single-family strategy.
+        from trading_lab.strategies import STRATEGIES
+        assert sweeps.R4_ENSEMBLE_STRATEGY_NAME == "committee_equal_weight"
+        assert sweeps.R4_ENSEMBLE_STRATEGY_NAME not in STRATEGIES
