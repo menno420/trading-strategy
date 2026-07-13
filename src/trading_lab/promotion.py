@@ -67,6 +67,12 @@ VERDICT_PROMOTED = "PROMOTED-TO-FINDING"
 VERDICT_RULE_PASS = "RULE-PASS"
 VERDICT_KILLED = "KILLED"
 
+# Sweep-lane verdict vocabulary (Round-2 KEEP/KILL rule, extended by the
+# pre-registered Round-4 slice R4-A with a "significantly harmful" class).
+SWEEP_KEEP = "KEEP"
+SWEEP_KILL = "KILL"
+SWEEP_KILL_SIG = "KILL-SIG"
+
 
 def sharpe_se(sharpe_annual: float, n_periods: int, timeframe: str) -> float:
     """Lo (2002) standard error of an annualized Sharpe estimate.
@@ -134,3 +140,31 @@ def grade_promotion(*, strategy_sharpe: float, benchmark_sharpe: float,
         "n_periods": int(n_periods),
         "timeframe": timeframe,
     }
+
+
+def classify_verdict(keep: bool, tstat, min_tstat) -> str:
+    """Three-way sweep-lane verdict — R4-A (docs/research-round-4-plan.md).
+
+    Pre-registered rule: **KILL-SIG** iff the lane is not a KEEP and its
+    already-recorded ``tstat <= -min_tstat`` — the SAME Bonferroni bar,
+    mirrored into the negative direction. Zero new arithmetic: both inputs
+    come verbatim from the lane's committed sweep summary. A KILL-SIG is
+    evidence AGAINST the lane (significant harm), never a long/short
+    inversion signal.
+
+    Total by design: a missing/NaN/non-numeric ``tstat`` or ``min_tstat``
+    degrades safely to plain :data:`SWEEP_KILL` — this function never
+    raises and never invents a significance claim it cannot support.
+    """
+    if keep:
+        return SWEEP_KEEP
+    try:
+        t = float(tstat)
+        bar = float(min_tstat)
+    except (TypeError, ValueError):
+        return SWEEP_KILL
+    if math.isnan(t) or math.isnan(bar):
+        return SWEEP_KILL
+    if t <= -bar:
+        return SWEEP_KILL_SIG
+    return SWEEP_KILL
