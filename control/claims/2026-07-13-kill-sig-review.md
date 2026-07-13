@@ -1,0 +1,1 @@
+- `claude/kill-sig-review-2026-07-13` · **KILL-SIG proposal review + disposition** — independent review of the PR #91 card's KILL-SIG verdict-class 💡 (verdict + disposition on a session card; no sweep runs) · `.sessions/`, `control/claims/` · 2026-07-13
