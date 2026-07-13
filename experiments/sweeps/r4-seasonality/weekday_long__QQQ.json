@@ -1,0 +1,435 @@
+{
+  "benchmark_full_period_metrics": {
+    "cagr": 0.18474934485308614,
+    "max_drawdown": -0.3669304866323485,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9431749535660251,
+    "sortino": 0.8630452964314186,
+    "total_return": 11.708813005732178,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "combos": {
+    "note": "the 5 registered day\u00d7ticker combos this lane contributes to K=75 \u2014 each a FIXED single-weekday rule (no selection) replayed over the same walk-forward test windows; the pre-registered R4-F rule (KEEP iff Round-2 rule AND t >= 3.21 at K=75) applies to these rows",
+    "rows": [
+      {
+        "benchmark_oos_sharpe": 0.8711014436622375,
+        "instrument": "QQQ",
+        "keep_standard_rule": false,
+        "min_tstat_k75": 3.208706910435002,
+        "oos_metrics": {
+          "cagr": -0.013704606088339344,
+          "max_drawdown": -0.281164276802809,
+          "n_bars": 2520,
+          "sharpe": -0.13407683102673434,
+          "sortino": -0.0974856455037227,
+          "total_return": -0.1288959170196382
+        },
+        "significant_at_k75": false,
+        "tstat": -3.1785961161955663,
+        "verdict_r4f_registered": "KILL",
+        "weekday": 0,
+        "weekday_name": "Mon"
+      },
+      {
+        "benchmark_oos_sharpe": 0.8711014436622375,
+        "instrument": "QQQ",
+        "keep_standard_rule": false,
+        "min_tstat_k75": 3.208706910435002,
+        "oos_metrics": {
+          "cagr": -0.04937632169376649,
+          "max_drawdown": -0.42382381344975073,
+          "n_bars": 2520,
+          "sharpe": -0.467941337293587,
+          "sortino": -0.33477978767630845,
+          "total_return": -0.3973206991478039
+        },
+        "significant_at_k75": false,
+        "tstat": -4.233505522416834,
+        "verdict_r4f_registered": "KILL-SIG",
+        "weekday": 1,
+        "weekday_name": "Tue"
+      },
+      {
+        "benchmark_oos_sharpe": 0.8711014436622375,
+        "instrument": "QQQ",
+        "keep_standard_rule": false,
+        "min_tstat_k75": 3.208706910435002,
+        "oos_metrics": {
+          "cagr": -0.03842595682603678,
+          "max_drawdown": -0.37517931228996204,
+          "n_bars": 2520,
+          "sharpe": -0.35796123999178026,
+          "sortino": -0.2643305028243745,
+          "total_return": -0.3241857976895993
+        },
+        "significant_at_k75": false,
+        "tstat": -3.8861434950391467,
+        "verdict_r4f_registered": "KILL-SIG",
+        "weekday": 2,
+        "weekday_name": "Wed"
+      },
+      {
+        "benchmark_oos_sharpe": 0.8711014436622375,
+        "instrument": "QQQ",
+        "keep_standard_rule": false,
+        "min_tstat_k75": 3.208706910435002,
+        "oos_metrics": {
+          "cagr": -0.07166012426925772,
+          "max_drawdown": -0.581923310811645,
+          "n_bars": 2520,
+          "sharpe": -0.6430308125451226,
+          "sortino": -0.43026235524522816,
+          "total_return": -0.5245880931835916
+        },
+        "significant_at_k75": false,
+        "tstat": -4.786143701355105,
+        "verdict_r4f_registered": "KILL-SIG",
+        "weekday": 3,
+        "weekday_name": "Thu"
+      },
+      {
+        "benchmark_oos_sharpe": 0.8711014436622375,
+        "instrument": "QQQ",
+        "keep_standard_rule": false,
+        "min_tstat_k75": 3.208706910435002,
+        "oos_metrics": {
+          "cagr": 0.03697766485575871,
+          "max_drawdown": -0.2289190724646809,
+          "n_bars": 2520,
+          "sharpe": 0.4346709727256142,
+          "sortino": 0.3699403778361616,
+          "total_return": 0.4377852486636986
+        },
+        "significant_at_k75": false,
+        "tstat": -1.3798557134507266,
+        "verdict_r4f_registered": "KILL",
+        "weekday": 4,
+        "weekday_name": "Fri"
+      }
+    ]
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:10:40+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "weekday_long",
+  "family_status": "NEW strategy family (weekday_long) \u2014 the program's first calendar rule; registered in trading_lab.sweeps before this script ran",
+  "full_period_variants": {
+    "note": "single-split in-sample rows for deflated-Sharpe bookkeeping \u2014 NOT findings",
+    "rows": [
+      {
+        "metrics": {
+          "cagr": -0.0034190083425506,
+          "max_drawdown": -0.28481051984393857,
+          "n_trades": 1412,
+          "sharpe": -0.005734563325863719,
+          "sortino": -0.0042477723599070325,
+          "total_return": -0.050062804793457705,
+          "turnover_per_year": 94.15824292140779,
+          "win_rate": 0.5509915014164306
+        },
+        "params": {
+          "weekday": 0
+        }
+      },
+      {
+        "metrics": {
+          "cagr": -0.040621199316371315,
+          "max_drawdown": -0.5450018859004826,
+          "n_trades": 1553,
+          "sharpe": -0.403006309726079,
+          "sortino": -0.2935034440194946,
+          "total_return": -0.463063122633418,
+          "turnover_per_year": 103.56073035194497,
+          "win_rate": 0.5148005148005148
+        },
+        "params": {
+          "weekday": 1
+        }
+      },
+      {
+        "metrics": {
+          "cagr": -0.04258848769938195,
+          "max_drawdown": -0.48262245110720947,
+          "n_trades": 1546,
+          "sharpe": -0.42783695472464145,
+          "sortino": -0.3107367891994876,
+          "total_return": -0.4793394353730661,
+          "turnover_per_year": 103.093940195819,
+          "win_rate": 0.5433376455368694
+        },
+        "params": {
+          "weekday": 2
+        }
+      },
+      {
+        "metrics": {
+          "cagr": -0.05697306923383061,
+          "max_drawdown": -0.6536082890657192,
+          "n_trades": 1526,
+          "sharpe": -0.5385737568267356,
+          "sortino": -0.36495230593799466,
+          "total_return": -0.585081761045675,
+          "turnover_per_year": 101.76025403545913,
+          "win_rate": 0.5386631716906947
+        },
+        "params": {
+          "weekday": 3
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.014470302861845363,
+          "max_drawdown": -0.30608381755662395,
+          "n_trades": 1518,
+          "sharpe": 0.20649583864173168,
+          "sortino": 0.17064866190167272,
+          "total_return": 0.2404101576469393,
+          "turnover_per_year": 101.22677957131516,
+          "win_rate": 0.5612648221343873
+        },
+        "params": {
+          "weekday": 4
+        }
+      }
+    ]
+  },
+  "git_sha": "13970716db7abf5416e6b737c82dbe7b7f648a74",
+  "instrument": "QQQ",
+  "instrument_status": "committed daily cache (full committed daily surface \u2014 all 15 caches swept, no post-hoc instrument selection)",
+  "k_registered": 75,
+  "k_registered_note": "the REGISTERED significance K for this slice counts ALL day\u00d7ticker combos: 5 weekdays \u00d7 15 tickers = 75; the bar RISES to min_tstat(75) \u2248 3.21 \u2014 never lowered, never counted down",
+  "lane_variants_tried": 75,
+  "min_tstat_k75": 3.208706910435002,
+  "n_bars": 3779,
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "pre_registration": "docs/research-round-4-plan.md \u00a7 R4-F",
+  "program_variants_tried": 4223,
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.3263478740408408,
+    "n_periods": 2520,
+    "note": "lane-local ORDER 007 bar on the stitched OOS Sharpe delta, Bonferroni K = 5 variants this lane's grid \u2014 INFORMATIONAL ONLY (the registered bar for this slice is K=75); promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": -0.5679913969439193,
+    "sharpe_se": 0.3162565877663882,
+    "timeframe": "daily",
+    "tstat": -1.7959828155848,
+    "variants_tried": 5,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "sweep": "r4-seasonality",
+  "timeframe": "daily",
+  "top_full_period_variant": {
+    "ledger_run": "20260713T101040299295Z-b327b416e389.json",
+    "metrics": {
+      "cagr": 0.014470302861845363,
+      "max_drawdown": -0.30608381755662395,
+      "n_trades": 1518,
+      "sharpe": 0.20649583864173168,
+      "sortino": 0.17064866190167272,
+      "total_return": 0.2404101576469393,
+      "turnover_per_year": 101.22677957131516,
+      "win_rate": 0.5612648221343873
+    },
+    "params": {
+      "weekday": 4
+    }
+  },
+  "variants_tried": 5,
+  "verdict": "KILL",
+  "verdict_k75": {
+    "k": 75,
+    "min_tstat": 3.208706910435002,
+    "note": "REGISTERED verdict at K=75 (pre-registered R4-F rule; KILL-SIG at t <= -3.21 per R4-A's mirrored bar)",
+    "significant_at_k75": false,
+    "tstat": -1.7959828155848,
+    "verdict": "KILL"
+  },
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.17694465970845674,
+      "max_drawdown": -0.36693048663234895,
+      "n_bars": 2520,
+      "n_trades": 1,
+      "sharpe": 0.8711014436622375,
+      "sortino": 0.7960136982357146,
+      "total_return": 4.0998855118978845,
+      "turnover_per_year": 0.1,
+      "win_rate": 1.0
+    },
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.0214271525145302,
+      "max_drawdown": -0.1636693401774243,
+      "n_bars": 2520,
+      "sharpe": 0.3031100467183182,
+      "sortino": 0.24004539125359403,
+      "total_return": 0.2361580030277346
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "params": {
+          "weekday": 0
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.3916288366396117,
+        "train": [
+          0,
+          1008
+        ],
+        "train_score": 0.2541854938998913
+      },
+      {
+        "params": {
+          "weekday": 0
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": -0.34351078077001596,
+        "train": [
+          252,
+          1260
+        ],
+        "train_score": 0.43998523408392143
+      },
+      {
+        "params": {
+          "weekday": 4
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.11031039847449839,
+        "train": [
+          504,
+          1512
+        ],
+        "train_score": -0.042694433342360234
+      },
+      {
+        "params": {
+          "weekday": 0
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.19992762294573585,
+        "train": [
+          756,
+          1764
+        ],
+        "train_score": -0.2301152971269693
+      },
+      {
+        "params": {
+          "weekday": 0
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.5314237098555655,
+        "train": [
+          1008,
+          2016
+        ],
+        "train_score": -0.08293058168464801
+      },
+      {
+        "params": {
+          "weekday": 0
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 0.08762804971350859,
+        "train": [
+          1260,
+          2268
+        ],
+        "train_score": 0.10074858971394317
+      },
+      {
+        "params": {
+          "weekday": 0
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": -0.04674027579882894,
+        "train": [
+          1512,
+          2520
+        ],
+        "train_score": 0.24053464767410748
+      },
+      {
+        "params": {
+          "weekday": 4
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 0.01540827964925354,
+        "train": [
+          1764,
+          2772
+        ],
+        "train_score": 0.7678701033703875
+      },
+      {
+        "params": {
+          "weekday": 4
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": 0.7527414074300776,
+        "train": [
+          2016,
+          3024
+        ],
+        "train_score": 0.7165347138579004
+      },
+      {
+        "params": {
+          "weekday": 4
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 1.104907727568212,
+        "train": [
+          2268,
+          3276
+        ],
+        "train_score": 1.2343459304587385
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 50
+  }
+}

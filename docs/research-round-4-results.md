@@ -167,3 +167,80 @@ at 4× — a clean example of the gradient doing its job.
 No surviving lane is a finding. The holdout is SPENT, promotion is
 CLOSED, and any OOS test of any survivor remains OWNER-GATED on
 post-2026 data.
+
+## R4-F — day-of-week seasonality (2026-07-13)
+
+**Headline: the pre-registered null HOLDS. Across all 75 registered
+day×ticker combos (5 weekdays × 15 daily tickers), NOTHING clears the
+K=75 bar — `significant_at_k75` is false everywhere, exactly as
+hypothesized. Best t anywhere is 0.317 (TSLA Friday) against the 3.209
+bar; 0 combos KEEP under the registered rule, 45 KILL, and 30 are
+KILL-SIG (significantly HARMFUL, t ≤ −3.209). All 15 lane-level
+walk-forwards KILL under the standard Round-2 rule (0 KEEP), with one
+lane-level KILL-SIG at K=75 (TLT, t = −3.43).**
+
+- **K accounting, explicit** (the point of this slice): the lane grid
+  handed to each ticker's walk-forward is 5 weekday variants, but the
+  REGISTERED significance K counts ALL day×ticker combos tested:
+  5 × 15 = **K = 75**, so the bar RISES to `min_tstat(75)` = **3.209**
+  (vs 2.638 at the standard K=12). K was declared in the grid commit
+  before the sweep ran (`trading_lab.sweeps.R4_SEASONALITY_K`, pinned by
+  test) and was never counted down; no multi-day subsets were swept, so
+  nothing was added to K. Every per-lane JSON records both the
+  lane-local informational t (K=5) and the registered K=75 verdict.
+- **Rule applied** (pre-registered): a combo is an R4-F KEEP iff it
+  clears BOTH the Round-2 benchmark rule AND t ≥ 3.209 at K=75;
+  everything else KILL, or KILL-SIG at t ≤ −3.209 (R4-A's mirrored bar,
+  `trading_lab.promotion.classify_verdict`). Runner:
+  `scripts/run_r4_seasonality_sweep.py`; new family
+  `weekday_long` (the program's first calendar rule — t/t+1 fill
+  semantics documented in the strategy module: the variant labeled
+  weekday=d is exposed to the session after each day-d bar; the five
+  variants tile the trading week, so no calendar effect can hide
+  between labels).
+- **Result — null, first-class**: 0 of 75 combos significant at K=75;
+  0 of 75 KEEP under the registered rule; 0 of 15 lanes KEEP under even
+  the standard Round-2 rule. The only combos with positive t are three
+  Fridays — TSLA (0.317), AAPL (0.135), XOM (0.120) — which pass the
+  standard benchmark rule and would have been "dev-candidates" in a
+  round graded at the lane-local bar, but the pre-registered K=75 bar
+  is the ONLY bar this slice registered for significance and they miss
+  it by an order of magnitude. Nothing here is a candidate for anything.
+- **The KILL-SIG mass is a benchmark-exposure artifact, read honestly**:
+  30/75 combos (and TLT at lane level, t = −3.43) are significantly
+  WORSE than same-window same-cost B&H. A rule that is long one session
+  per week holds ~20% market exposure plus a weekly round-trip cost
+  drag, benchmarked against a fully-invested B&H over a mostly-rising
+  dev window — the significant harm says "one-day-a-week exposure loses
+  to being invested", not "these weekdays are cursed". Thursday is the
+  worst-graded day (11 of its 15 combos KILL-SIG, mean t −3.94, worst
+  GOOGL Thu at −5.84) and Friday the least bad (2 KILL-SIG, mean t
+  −1.48, and all three positive-t combos) — a *pattern*, but exactly the
+  kind the 3.209 bar exists to keep out of the findings column, and on
+  the positive side nothing comes remotely close.
+- **Artifacts**: 15 per-lane JSONs (r3 schema + `combos` block +
+  `verdict_k75` block) and the rollup in
+  [`experiments/sweeps/r4-seasonality/`](../experiments/sweeps/r4-seasonality/);
+  these ARE new runs (new family, new configs — unlike the R4-B replay),
+  so each lane's top full-dev-period variant is ledgered (15 rows,
+  `variants_tried=5`, post-hoc-selection caveat in the notes) and
+  `experiments/index.jsonl` rebuilt. Full sweep runtime ~23 s.
+- **Burden ledger**: 75 new registered configs; program cumulative
+  4148 → **4223**.
+
+### Counts
+
+| Level | N | KEEP | KILL | KILL-SIG | significant_at_k75 |
+|---|---|---|---|---|---|
+| registered combos (K=75 rule) | 75 | 0 | 45 | 30 | 0 |
+| lanes (standard Round-2 rule; KILL-SIG at the K=75 bar) | 15 | 0 | 14 | 1 (TLT) | 0 |
+
+Best combo t: **0.317** (TSLA Friday) vs bar **3.209**. Worst combo t:
+**−5.840** (GOOGL Thursday). Lane-level t range: −0.91 (TSLA) to −3.43
+(TLT).
+
+Day-of-week seasonality on this surface is dead at the honestly-counted
+bar — the classic data-mined calendar "edge" does not survive its own K.
+No lane, combo, or day is a finding or a dev-candidate. The holdout is
+SPENT, promotion is CLOSED, and any OOS claim about anything in this
+slice remains OWNER-GATED on post-2026 data.

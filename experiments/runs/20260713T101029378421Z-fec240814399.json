@@ -1,0 +1,45 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.42908207843060886,
+    "max_drawdown": -0.833830983670915,
+    "n_bars": 3767,
+    "n_trades": 1,
+    "sharpe": 0.9120554396024015,
+    "sortino": 0.923949627079613,
+    "total_return": 206.90197400349632,
+    "turnover_per_year": 0.06689673480222989,
+    "win_rate": 1.0
+  },
+  "config_hash": "fec240814399",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:10:29+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "13970716db7abf5416e6b737c82dbe7b7f648a74",
+  "instrument": "BTC-USD",
+  "metrics": {
+    "cagr": 0.01766494405904062,
+    "max_drawdown": -0.48709529478857483,
+    "n_bars": 3767,
+    "n_trades": 1076,
+    "sharpe": 0.18839727296368078,
+    "sortino": 0.12767872789725845,
+    "total_return": 0.299211645876188,
+    "turnover_per_year": 71.98088664719937,
+    "win_rate": 0.5353159851301115
+  },
+  "n_bars": 3767,
+  "notes": "Round 4 R4-F day-of-week seasonality sweep (post-holdout DEV-ONLY, promotion closed \u2014 pre-registered docs/research-round-4-plan.md \u00a7 R4-F, ORDER 012): top full-dev-period variant of 5 tried (post-hoc selection \u2014 in-sample; REGISTERED significance K = 75 across all day\u00d7ticker combos, bar min_tstat(75) \u2248 3.21; the walk-forward OOS number lives in experiments/sweeps/r4-seasonality/weekday_long__BTC-USD.json)",
+  "params": {
+    "weekday": 3
+  },
+  "run_id": "20260713T101029378421Z-fec240814399",
+  "schema_version": 1,
+  "strategy": "weekday_long",
+  "timeframe": "daily",
+  "variants_tried": 5
+}
