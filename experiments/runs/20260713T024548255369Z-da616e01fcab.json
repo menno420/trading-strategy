@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2734335609408409,
+    "max_drawdown": -0.44190221764923054,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9770349722730817,
+    "sortino": 0.9660426622264756,
+    "total_return": 36.516973629033615,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "da616e01fcab",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T02:45:48+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "f62514c20667be01e7152ade2dfee49f1f3f3e58",
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.17519413577630294,
+    "max_drawdown": -0.36043612858277996,
+    "n_bars": 3779,
+    "n_trades": 206,
+    "sharpe": 0.9867175756304264,
+    "sortino": 0.7383379487490176,
+    "total_return": 10.255531871785504,
+    "turnover_per_year": 13.736967451706802,
+    "win_rate": 0.5048543689320388
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 trix-ichimoku sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-trix-ichimoku/trix_momentum__AAPL.json)",
+  "params": {
+    "period": 15,
+    "signal_period": 5
+  },
+  "run_id": "20260713T024548255369Z-da616e01fcab",
+  "schema_version": 1,
+  "strategy": "trix_momentum",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

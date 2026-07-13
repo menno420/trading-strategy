@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.26328655934387113,
+    "max_drawdown": -0.557692284578402,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8638800519755336,
+    "sortino": 0.8727857658651618,
+    "total_return": 32.275558046263065,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "7dde1abd3b60",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T02:45:56+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "f62514c20667be01e7152ade2dfee49f1f3f3e58",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.09355870324617799,
+    "max_drawdown": -0.5083717047675707,
+    "n_bars": 3779,
+    "n_trades": 127,
+    "sharpe": 0.5131801620036672,
+    "sortino": 0.3991046932086954,
+    "total_return": 2.823643419716464,
+    "turnover_per_year": 8.46890711828526,
+    "win_rate": 0.453125
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 trix-ichimoku sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__AMZN.json)",
+  "params": {
+    "kijun": 26,
+    "senkou_b": 52,
+    "tenkan": 12
+  },
+  "run_id": "20260713T024556623247Z-7dde1abd3b60",
+  "schema_version": 1,
+  "strategy": "ichimoku_trend",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
