@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.19648460629262,
+    "max_drawdown": -0.17373597467716206,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.78603160528156,
+    "sortino": 0.7715409001752499,
+    "total_return": 0.3114881101432365,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "dc11951608cf",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:24:04+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "99919414581d2075ba580979617591dac74972e5",
+  "instrument": "SLV",
+  "metrics": {
+    "cagr": 0.1650700348152352,
+    "max_drawdown": -0.08450006837460011,
+    "n_bars": 2476,
+    "n_trades": 64,
+    "sharpe": 1.2184223563189396,
+    "sortino": 0.6805177639113185,
+    "total_return": 0.25978867508476666,
+    "turnover_per_year": 42.339256865912766,
+    "win_rate": 0.5
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 hourly-completion sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 15, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-hourly-completion/bollinger_breakout__SLV.json)",
+  "params": {
+    "num_std": 2.5,
+    "period": 20
+  },
+  "run_id": "20260713T042404736197Z-dc11951608cf",
+  "schema_version": 1,
+  "strategy": "bollinger_breakout",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}

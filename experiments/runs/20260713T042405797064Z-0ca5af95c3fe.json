@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.19648460629262,
+    "max_drawdown": -0.17373597467716206,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.78603160528156,
+    "sortino": 0.7715409001752499,
+    "total_return": 0.3114881101432365,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "0ca5af95c3fe",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:24:05+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "99919414581d2075ba580979617591dac74972e5",
+  "instrument": "SLV",
+  "metrics": {
+    "cagr": 0.06837987379042043,
+    "max_drawdown": -0.18858293980101282,
+    "n_bars": 2476,
+    "n_trades": 69,
+    "sharpe": 0.4782619526776549,
+    "sortino": 0.2930481189507297,
+    "total_return": 0.1051513316048045,
+    "turnover_per_year": 45.6470113085622,
+    "win_rate": 0.45714285714285713
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 hourly-completion sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 15, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-hourly-completion/ichimoku_trend__SLV.json)",
+  "params": {
+    "kijun": 26,
+    "senkou_b": 52,
+    "tenkan": 12
+  },
+  "run_id": "20260713T042405797064Z-0ca5af95c3fe",
+  "schema_version": 1,
+  "strategy": "ichimoku_trend",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}

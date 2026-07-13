@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.21775921764929063,
+    "max_drawdown": -0.17318917243678122,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.9623126414443511,
+    "sortino": 0.9283177014918956,
+    "total_return": 0.3468976932435337,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "ffe2d6501914",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:23:44+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "99919414581d2075ba580979617591dac74972e5",
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.045582077850986114,
+    "max_drawdown": -0.1690057391336287,
+    "n_bars": 2476,
+    "n_trades": 79,
+    "sharpe": 0.3896885136933432,
+    "sortino": 0.26330114805382526,
+    "total_return": 0.06969937131155168,
+    "turnover_per_year": 52.262520193861064,
+    "win_rate": 0.7
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 hourly-completion sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 15, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-hourly-completion/cci_reversion__AAPL.json)",
+  "params": {
+    "buy_below": -100,
+    "period": 20,
+    "sell_above": 100
+  },
+  "run_id": "20260713T042344705018Z-ffe2d6501914",
+  "schema_version": 1,
+  "strategy": "cci_reversion",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}

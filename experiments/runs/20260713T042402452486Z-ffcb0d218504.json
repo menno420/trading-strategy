@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2379989246663936,
+    "max_drawdown": -0.08213643510085478,
+    "n_bars": 2475,
+    "n_trades": 1,
+    "sharpe": 1.702407701124485,
+    "sortino": 1.6560733427529886,
+    "total_return": 0.38069993758379694,
+    "turnover_per_year": 0.6618181818181819,
+    "win_rate": 1.0
+  },
+  "config_hash": "ffcb0d218504",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:24:02+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "99919414581d2075ba580979617591dac74972e5",
+  "instrument": "GLD",
+  "metrics": {
+    "cagr": 0.12863962469310275,
+    "max_drawdown": -0.13106676967541386,
+    "n_bars": 2475,
+    "n_trades": 57,
+    "sharpe": 1.3032560420229475,
+    "sortino": 0.8872884653719687,
+    "total_return": 0.2006335392830425,
+    "turnover_per_year": 37.723636363636366,
+    "win_rate": 0.4482758620689655
+  },
+  "n_bars": 2475,
+  "notes": "Round 3 hourly-completion sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 15, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-hourly-completion/atr_trailing__GLD.json)",
+  "params": {
+    "atr_period": 14,
+    "entry_lookback": 20,
+    "k": 4.0
+  },
+  "run_id": "20260713T042402452486Z-ffcb0d218504",
+  "schema_version": 1,
+  "strategy": "atr_trailing",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}
