@@ -992,3 +992,100 @@ def r3_trend_new_tickers_total_configs() -> int:
     configurations."""
     return (sum(r3_trend_new_tickers_variants_per_family().values())
             * len(R3_TREND_NEW_TICKERS_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 11: MEAN-REVERSION FAMILIES × NEW TICKERS (lane:
+# r3-meanrev-new-tickers × the six slice-3 instruments × daily — ORDER 012
+# night-run, post-holdout DEV-ONLY, promotion closed; lands AFTER the
+# Round-3 synthesis of slices 1-8, extending the round)
+# ---------------------------------------------------------------------------
+# The mean-reversion counterpart of slice 10 (r3-trend-new-tickers): slice 3
+# (r3-new-tickers, PR #83) added the six instrument caches but probed them
+# with only 6-variant grids of three families, and slice 10 completed the
+# TREND-family coverage. This slice completes the MEAN-REVERSION coverage:
+# the five existing mean-reversion families with 12-variant sub-grids,
+# declared here BEFORE the sweep ran. NO new strategy code and NO new
+# parameter territory — every grid point is a point of the family's
+# existing published grid (rsi_mean_reversion/bollinger_reversion/pullback:
+# the P1 mean-reversion axes; stochastic_reversion/williams_r_reversion:
+# the r3-stoch-willr axes, whose full grids are already exactly 12 and are
+# reused VERBATIM), and the subset relations are pinned by tests. Overlap
+# honesty: slice 3 already probed rsi_mean_reversion on these instruments
+# (period {2,5,14} × oversold {30} × overbought {60,70}); this slice's rsi
+# sub-grid keeps the same periods and overboughts but takes oversold from
+# {10, 20} — deliberately DISJOINT from the slice-3 probe so no config is
+# registered twice on the same instruments (slice 10's donchian precedent;
+# disjointness pinned by a test). The bollinger sub-grid is the
+# r3-meanrev-hourly daily-twin subset reused verbatim (every point already
+# in the burden ledger on both timeframes for the frozen universe); the
+# pullback sub-grid commits the trend_len=0 unfiltered control arm per the
+# slice-2/4 convention (gated grids must include their neutral arm); the
+# stochastic d_period smoothing (3) stays frozen at the strategy default
+# and is NOT swept, as in the r3-stoch-willr lane. The instruments reuse
+# the committed slice-3 caches; config.UNIVERSE stays frozen. Kept bounded
+# on purpose: every extra variant raises the multiple-testing burden on
+# any winner.
+
+_R3_MEANREV_NEW_TICKERS_AXES: dict[str, dict[str, list]] = {
+    "rsi_mean_reversion": {"period": [2, 5, 14],
+                           "oversold": [10, 20],
+                           "overbought": [60, 70]},
+    "bollinger_reversion": {"lookback": [10, 20, 30],
+                            "z_entry": [1.5, 2.0],
+                            "z_exit": [0.0, 0.5]},
+    "pullback": {"entry_lookback": [3, 5],
+                 "exit_len": [5, 10],
+                 "trend_len": [0, 100, 200]},
+    "stochastic_reversion": {"k_period": [14, 21, 28],
+                             "buy_below": [10, 20],
+                             "sell_above": [70, 80]},
+    "williams_r_reversion": {"period": [14, 21, 28],
+                             "buy_below": [-90, -80],
+                             "sell_above": [-30, -20]},
+}
+
+_R3_MEANREV_NEW_TICKERS_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "rsi_mean_reversion": lambda p: p["oversold"] < p["overbought"],
+    "bollinger_reversion": lambda p: p["z_exit"] > -p["z_entry"],
+    "pullback": lambda p: True,
+    "stochastic_reversion": lambda p: p["buy_below"] < p["sell_above"],
+    "williams_r_reversion": lambda p: p["buy_below"] < p["sell_above"],
+}
+
+R3_MEANREV_NEW_TICKERS_FAMILIES = tuple(_R3_MEANREV_NEW_TICKERS_AXES)
+
+# The six slice-3 instruments, reused verbatim (same tuple object — the
+# identity is the point: this slice completes coverage of THAT surface).
+R3_MEANREV_NEW_TICKERS_INSTRUMENTS = R3_NEW_TICKERS_INSTRUMENTS
+
+
+def r3_meanrev_new_tickers_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-11 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_MEANREV_NEW_TICKERS_AXES[family]
+    except KeyError:
+        raise ValueError(
+            f"unknown R3 meanrev-new-tickers family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_MEANREV_NEW_TICKERS_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_meanrev_new_tickers_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-11 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_meanrev_new_tickers_variants(fam))
+            for fam in R3_MEANREV_NEW_TICKERS_FAMILIES}
+
+
+def r3_meanrev_new_tickers_total_configs() -> int:
+    """Total registered Round-3 slice-11 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes). The per-instrument buy-and-hold
+    baselines already sit on the ledger from slice 3 and are not searched
+    configurations."""
+    return (sum(r3_meanrev_new_tickers_variants_per_family().values())
+            * len(R3_MEANREV_NEW_TICKERS_INSTRUMENTS))
