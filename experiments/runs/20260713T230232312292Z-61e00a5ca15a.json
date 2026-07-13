@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.45441141455618816,
+    "max_drawdown": -0.7496779844224901,
+    "n_bars": 3657,
+    "n_trades": 1,
+    "sharpe": 0.9279233460305005,
+    "sortino": 0.9834322968050291,
+    "total_return": 228.5631794612482,
+    "turnover_per_year": 0.06890894175553733,
+    "win_rate": 1.0
+  },
+  "config_hash": "61e00a5ca15a",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T23:02:32+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-06-29 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "ca1427f00410391743d6ee16801eb08d896e2b5d",
+  "instrument": "TSLA",
+  "metrics": {
+    "cagr": 0.21788838234625318,
+    "max_drawdown": -0.49356871166573424,
+    "n_bars": 3657,
+    "n_trades": 34,
+    "sharpe": 0.7726792259939345,
+    "sortino": 0.5133570875687727,
+    "total_return": 16.47140005214034,
+    "turnover_per_year": 2.342904019688269,
+    "win_rate": 0.8235294117647058
+  },
+  "n_bars": 3657,
+  "notes": "Round 6 slice R6-A volume sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 014 item 2 night-run; pre-registered docs/research-round-6-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r6-volume/mfi_reversion__TSLA.json)",
+  "params": {
+    "buy_below": 20,
+    "period": 14,
+    "sell_above": 80
+  },
+  "run_id": "20260713T230232312292Z-61e00a5ca15a",
+  "schema_version": 1,
+  "strategy": "mfi_reversion",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

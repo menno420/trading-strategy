@@ -36,9 +36,12 @@ bindings — full disposition in `control/status.md`.)
   5055), 58 lanes, per-lane K=12, bar unchanged. First round under the
   selection-fair standing gate ([selection-fair-gate.md](selection-fair-gate.md),
   PR #111) with the R5-D
-  fixed-config row folded in as a standing rule. Execution is the
-  separately claimed `claude/round-6-run` slice (ORDER 014 item 2) —
-  plan-before-outcome.
+  fixed-config row folded in as a standing rule. Execution RAN
+  2026-07-13 on the separately claimed `claude/round-6-run` slice
+  (ORDER 014 item 2, plan-before-outcome honored) — headline **3
+  KEEP-dev / 47 KILL / 8 KILL-SIG of 58 lanes, 0 promoted**, gate 17
+  PASS / 41 FAIL with 0 KEEPs demoted, no runtime cap hit. Full
+  results: [research-round-6-results.md](research-round-6-results.md).
 - Research Round 5 (branch `claude/round-5-research`, PR #110): all four
   pre-registered slices RAN 2026-07-13 against
   [research-round-5-plan.md](research-round-5-plan.md) (committed before

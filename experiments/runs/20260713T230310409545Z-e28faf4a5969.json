@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.45441141455618816,
+    "max_drawdown": -0.7496779844224901,
+    "n_bars": 3657,
+    "n_trades": 1,
+    "sharpe": 0.9279233460305005,
+    "sortino": 0.9834322968050291,
+    "total_return": 228.5631794612482,
+    "turnover_per_year": 0.06890894175553733,
+    "win_rate": 1.0
+  },
+  "config_hash": "e28faf4a5969",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T23:03:10+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-06-29 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "5e8baac057c01000c0c73dea3b0d3f649929ec28",
+  "instrument": "TSLA",
+  "metrics": {
+    "cagr": 0.08700820840128265,
+    "max_drawdown": -0.6571791668876692,
+    "n_bars": 3657,
+    "n_trades": 383,
+    "sharpe": 0.41671380996905955,
+    "sortino": 0.25970803416425897,
+    "total_return": 2.3558866663425975,
+    "turnover_per_year": 26.392124692370793,
+    "win_rate": 0.5052083333333334
+  },
+  "n_bars": 3657,
+  "notes": "Round 6 slice R6-B overnight-gap sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 014 item 2 night-run; pre-registered docs/research-round-6-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r6-gap/overnight_gap__TSLA.json)",
+  "params": {
+    "gap_atr": 0.5,
+    "hold": 3,
+    "mode": "follow"
+  },
+  "run_id": "20260713T230310409545Z-e28faf4a5969",
+  "schema_version": 1,
+  "strategy": "overnight_gap",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

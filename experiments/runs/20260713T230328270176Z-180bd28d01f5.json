@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 1.1848430526782217,
+    "max_drawdown": -0.34215233426589897,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.9493204747433084,
+    "sortino": 1.928590389640925,
+    "total_return": 2.2588733042509337,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "180bd28d01f5",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T23:03:28+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "6aad0a6cc5618fbdf31be8721d7d3f2dd686c3e9",
+  "instrument": "NVDA",
+  "metrics": {
+    "cagr": 0.5756640409237808,
+    "max_drawdown": -0.3008963947318197,
+    "n_bars": 2476,
+    "n_trades": 109,
+    "sharpe": 1.5804552434291326,
+    "sortino": 1.2730122059133488,
+    "total_return": 0.9883183353092977,
+    "turnover_per_year": 72.10904684975768,
+    "win_rate": 0.2545454545454545
+  },
+  "n_bars": 2476,
+  "notes": "Round 6 slice R6-C volume-hourly sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 014 item 2 night-run; pre-registered docs/research-round-6-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r6-volume-hourly/obv_trend__NVDA.json)",
+  "params": {
+    "price_confirm": false,
+    "window": 150
+  },
+  "run_id": "20260713T230328270176Z-180bd28d01f5",
+  "schema_version": 1,
+  "strategy": "obv_trend",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}
