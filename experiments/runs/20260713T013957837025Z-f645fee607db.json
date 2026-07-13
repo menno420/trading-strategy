@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2734335609408409,
+    "max_drawdown": -0.44190221764923054,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9770349722730817,
+    "sortino": 0.9660426622264756,
+    "total_return": 36.516973629033615,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "f645fee607db",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T01:39:57+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "98bea072367ef1fbcf9b6ad901b5c05d3b1b9e4b",
+  "instrument": "AAPL",
+  "metrics": {
+    "cagr": 0.22468802132231636,
+    "max_drawdown": -0.36806037371799305,
+    "n_bars": 3779,
+    "n_trades": 157,
+    "sharpe": 1.066796088820707,
+    "sortino": 0.88894656360014,
+    "total_return": 19.89453656205318,
+    "turnover_per_year": 10.469436358825087,
+    "win_rate": 0.5189873417721519
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 aroon-cci sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-aroon-cci/aroon_trend__AAPL.json)",
+  "params": {
+    "entry": 0.0,
+    "exit": -50.0,
+    "period": 14
+  },
+  "run_id": "20260713T013957837025Z-f645fee607db",
+  "schema_version": 1,
+  "strategy": "aroon_trend",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

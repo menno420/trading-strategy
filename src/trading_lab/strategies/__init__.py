@@ -32,7 +32,12 @@ Families:
   r3-roc-adx × all-8 × daily): roc_momentum (time-series rate-of-change
   momentum with an entry/exit hysteresis band), adx_filtered_sma (SMA
   crossover gated by a Wilder ADX trending-regime filter — the lab's first
-  ADX indicator; the mirror image of vol_filtered_trend's calm-regime gate).
+  ADX indicator; the mirror image of vol_filtered_trend's calm-regime gate);
+  slice 4 (lane r3-aroon-cci × 12-ticker mixed set × daily): aroon_trend
+  (Aroon oscillator trend-following with an entry/exit hysteresis band —
+  the zero-band arm, i.e. the classic Aroon-Up/Aroon-Down cross, is the
+  committed within-family control), cci_reversion (Lambert CCI
+  mean-reversion, oversold cross-up entry — the lab's first CCI indicator).
 
 Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
 closes (one column per instrument) and return a target-weight DataFrame
@@ -43,9 +48,10 @@ are deliberately kept out of ``STRATEGIES``.
 
 from __future__ import annotations
 
-from . import (adx_filtered_sma, bollinger_reversion, buy_and_hold, donchian,
-               ema_crossover, keltner_breakout, macd, macd_supertrend,
-               pullback, roc_momentum, rsi_mean_reversion, sma_crossover,
+from . import (adx_filtered_sma, aroon_trend, bollinger_reversion,
+               buy_and_hold, cci_reversion, donchian, ema_crossover,
+               keltner_breakout, macd, macd_supertrend, pullback,
+               roc_momentum, rsi_mean_reversion, sma_crossover,
                stochastic_reversion, supertrend_flip, vol_filtered_trend,
                williams_r_reversion, xsec_momentum)
 
@@ -66,6 +72,8 @@ STRATEGIES = {
     "williams_r_reversion": williams_r_reversion.generate,
     "roc_momentum": roc_momentum.generate,
     "adx_filtered_sma": adx_filtered_sma.generate,
+    "aroon_trend": aroon_trend.generate,
+    "cci_reversion": cci_reversion.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -90,6 +98,8 @@ DEFAULT_PARAMS = {
     "roc_momentum": {"lookback": 126, "entry": 0.0, "exit": 0.0},
     "adx_filtered_sma": {"fast": 20, "slow": 50, "adx_period": 14,
                          "adx_min": 20.0},
+    "aroon_trend": {"period": 25, "entry": 0.0, "exit": 0.0},
+    "cci_reversion": {"period": 20, "buy_below": -100, "sell_above": 100},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -128,6 +138,11 @@ R3_STOCH_WILLR_FAMILY = ["stochastic_reversion", "williams_r_reversion"]
 # lane.
 R3_ROC_ADX_FAMILY = ["roc_momentum", "adx_filtered_sma"]
 
+# Round 3 slice 4 (ORDER 012 night-run, post-holdout dev-only): the Aroon
+# trend + CCI reversion families swept in the r3-aroon-cci × 12-ticker
+# mixed set (frozen 8-ticker universe + SPY/QQQ/TSLA/TLT) × daily lane.
+R3_AROON_CCI_FAMILY = ["aroon_trend", "cci_reversion"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
 }
@@ -137,9 +152,10 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "VIDEO_STRATEGY_FAMILY", "MEAN_REVERSION_FAMILY",
            "R2_VOL_TREND_FAMILY", "R2_KELTNER_FAMILY", "R2_XSEC_FAMILY",
            "R3_STOCH_WILLR_FAMILY", "R3_ROC_ADX_FAMILY",
+           "R3_AROON_CCI_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
            "vol_filtered_trend", "keltner_breakout", "stochastic_reversion",
            "williams_r_reversion", "roc_momentum", "adx_filtered_sma",
-           "xsec_momentum"]
+           "aroon_trend", "cci_reversion", "xsec_momentum"]

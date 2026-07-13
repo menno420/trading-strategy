@@ -425,3 +425,62 @@ class TestR3NewTickersGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_new_tickers_variants("donchian")
                 == sweeps.r3_new_tickers_variants("donchian"))
+
+
+class TestR3AroonCciGrid:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R3_AROON_CCI_FAMILY
+        assert set(sweeps.R3_AROON_CCI_FAMILIES) == set(R3_AROON_CCI_FAMILY)
+        for fam in sweeps.R3_AROON_CCI_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-aroon-cci sweep files must match these. 12 variants per
+        # family over the 12-ticker mixed set = 288 registered configs.
+        counts = sweeps.r3_aroon_cci_variants_per_family()
+        assert counts == {"aroon_trend": 12, "cci_reversion": 12}
+        assert len(sweeps.R3_AROON_CCI_INSTRUMENTS) == 12
+        assert sweeps.r3_aroon_cci_total_configs() == 288
+
+    def test_instruments_universe_plus_four_new(self):
+        # The mixed set is exactly the frozen 8-ticker universe (in
+        # config.UNIVERSE order) followed by four of the slice-3 new
+        # instruments — config.UNIVERSE itself stays frozen at 8.
+        from trading_lab import config
+        assert sweeps.R3_AROON_CCI_INSTRUMENTS[:8] == tuple(config.UNIVERSE)
+        assert sweeps.R3_AROON_CCI_INSTRUMENTS[8:] == ("SPY", "QQQ", "TSLA",
+                                                       "TLT")
+        assert (set(sweeps.R3_AROON_CCI_INSTRUMENTS[8:])
+                <= set(sweeps.R3_NEW_TICKERS_INSTRUMENTS))
+        assert len(config.UNIVERSE) == 8
+
+    def test_aroon_grid_includes_the_classic_control_arm(self):
+        # Slice-2 card convention: a banded/gated grid must commit its
+        # neutral arm. entry == exit == 0 IS the classic Aroon-Up/Aroon-Down
+        # cross, so every period is paired with the pure-cross control.
+        variants = sweeps.r3_aroon_cci_variants("aroon_trend")
+        for period in (14, 25, 50):
+            assert {"period": period, "entry": 0.0, "exit": 0.0} in variants
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        for params in sweeps.r3_aroon_cci_variants("aroon_trend"):
+            assert params["exit"] <= params["entry"]
+            assert set(params) == {"period", "entry", "exit"}
+        for params in sweeps.r3_aroon_cci_variants("cci_reversion"):
+            assert params["buy_below"] < params["sell_above"]
+            assert set(params) == {"period", "buy_below", "sell_above"}
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_AROON_CCI_FAMILIES:
+            for params in sweeps.r3_aroon_cci_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_aroon_cci_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_aroon_cci_variants("aroon_trend")
+                == sweeps.r3_aroon_cci_variants("aroon_trend"))

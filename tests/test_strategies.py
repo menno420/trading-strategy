@@ -642,6 +642,125 @@ class TestAdxFilteredSma:
             STRATEGIES["adx_filtered_sma"](random_walk, adx_min=100.0)
 
 
+class TestAroonTrend:
+    def test_aroon_extremes_in_clean_trends(self):
+        # The indicator itself: a monotone uptrend keeps the new high on
+        # the current bar (Aroon-Up = 100) and the low at the window's far
+        # edge (Aroon-Down = 0), so the oscillator pins at +100; a monotone
+        # downtrend mirrors to -100.
+        from trading_lab.strategies.aroon_trend import aroon
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        down = make_ohlcv(np.linspace(200, 100, 120))
+        assert (aroon(up, 25)["osc"].iloc[25:] == 100.0).all()
+        assert (aroon(down, 25)["osc"].iloc[25:] == -100.0).all()
+
+    def test_classic_zero_band_long_up_flat_down(self):
+        # entry == exit == 0 recovers the classic Aroon-Up/Aroon-Down cross
+        # (the committed within-family control arm).
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        down = make_ohlcv(np.linspace(200, 100, 120))
+        pos_up = STRATEGIES["aroon_trend"](up, period=25, entry=0.0, exit=0.0)
+        pos_down = STRATEGIES["aroon_trend"](down, period=25, entry=0.0,
+                                             exit=0.0)
+        assert (pos_up.iloc[25:] == 1.0).all()
+        assert (pos_down == 0.0).all()
+
+    def test_hysteresis_holds_between_bands(self):
+        # period=10: a fresh uptrend pins the oscillator at +100 (> entry
+        # -> enter); the subsequent plateau ages the trend's last high out
+        # of the window while every plateau bar ties both extremes — the
+        # first-occurrence argmax/argmin then put the tied high at the
+        # window's oldest bar (Aroon-Up -> 0) and the tied low equally old
+        # (Aroon-Down -> 0), so the oscillator decays through the band
+        # (hold long) and settles at 0 without ever crossing exit=-50:
+        # the entry state must persist to the very end.
+        prices = np.concatenate([np.linspace(100, 130, 30),
+                                 np.full(30, 130.0)])
+        pos = STRATEGIES["aroon_trend"](make_ohlcv(prices), period=10,
+                                        entry=50.0, exit=-50.0)
+        assert (pos.iloc[10:] == 1.0).all()   # entered at +100, never exits
+        # Same path with exit=0 exits nothing either (osc reaches 0, never
+        # strictly below), but a strict-positive exit line does fire:
+        tight = STRATEGIES["aroon_trend"](make_ohlcv(prices), period=10,
+                                          entry=50.0, exit=50.0)
+        assert tight.iloc[-1] == 0.0          # decayed osc < 50: exited
+
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["aroon_trend"](random_walk, period=25)
+        assert (pos.iloc[:25] == 0.0).all()
+
+    def test_flat_prices_stay_flat(self):
+        # All-equal highs/lows: argmax/argmin land on the window's oldest
+        # bar, so both Aroon legs read 0 and the oscillator is 0 — never
+        # strictly above the entry threshold.
+        ohlcv = make_ohlcv(np.full(80, 100.0))
+        pos = STRATEGIES["aroon_trend"](ohlcv, period=10)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="period"):
+            STRATEGIES["aroon_trend"](random_walk, period=1)
+        with pytest.raises(ValueError, match="exit"):
+            STRATEGIES["aroon_trend"](random_walk, entry=0.0, exit=50.0)
+
+
+class TestCciReversion:
+    def test_cci_sign_matches_price_vs_mean(self):
+        # The indicator itself: a V-shaped path drives CCI deeply negative
+        # at the trough and positive on the recovery.
+        from trading_lab.strategies.cci_reversion import cci
+        prices = np.concatenate([np.full(40, 100.0)
+                                 + 0.5 * np.sin(np.arange(40)),
+                                 np.linspace(100, 80, 15),
+                                 np.linspace(80, 105, 30)])
+        c = cci(make_ohlcv(prices), 20)
+        assert c.min() < -100.0
+        assert c.max() > 100.0
+
+    def test_enters_on_recovery_not_on_dip(self):
+        # The dip itself (CCI falling below buy_below) must NOT enter; the
+        # cross back UP through buy_below is the entry; the rally above
+        # sell_above exits.
+        prices = np.concatenate([np.full(40, 100.0)
+                                 + 0.5 * np.sin(np.arange(40)),
+                                 np.linspace(100, 80, 15),
+                                 np.linspace(80, 105, 30)])
+        ohlcv = make_ohlcv(prices)
+        from trading_lab.strategies.cci_reversion import cci
+        c = cci(ohlcv, 20)
+        pos = STRATEGIES["cci_reversion"](ohlcv, period=20, buy_below=-100,
+                                          sell_above=100)
+        first_below = (c < -100).idxmax()
+        assert pos.loc[first_below] == 0.0   # dip bar: still flat
+        assert (pos == 1.0).any()            # recovery cross: entered
+        assert pos.iloc[-1] == 0.0           # exit above sell_above
+
+    def test_uptrend_never_enters(self):
+        # A monotone uptrend never dips oversold, so the mean-reversion
+        # entry never triggers.
+        up = make_ohlcv(np.linspace(100, 200, 120))
+        pos = STRATEGIES["cci_reversion"](up, period=20, buy_below=-100,
+                                          sell_above=100)
+        assert (pos == 0.0).all()
+
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["cci_reversion"](random_walk, period=20)
+        assert (pos.iloc[:19] == 0.0).all()
+
+    def test_flat_prices_stay_flat(self):
+        # Zero mean absolute deviation -> undefined CCI -> no signal.
+        ohlcv = make_ohlcv(np.full(80, 100.0))
+        pos = STRATEGIES["cci_reversion"](ohlcv, period=10)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="period"):
+            STRATEGIES["cci_reversion"](random_walk, period=1)
+        with pytest.raises(ValueError, match="buy_below"):
+            STRATEGIES["cci_reversion"](random_walk, buy_below=50,
+                                        sell_above=100)
+
+
 class TestXsecMomentum:
     """Round 2 slice R3 portfolio family: panel interface (weights over
     aligned closes), so it lives in PORTFOLIO_STRATEGIES, not STRATEGIES."""

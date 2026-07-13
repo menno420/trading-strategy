@@ -533,3 +533,74 @@ def r3_new_tickers_total_configs() -> int:
     counted."""
     return (sum(r3_new_tickers_variants_per_family().values())
             * len(R3_NEW_TICKERS_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 4: Aroon trend + CCI reversion (lane: r3-aroon-cci ×
+# 12-ticker mixed set × daily — ORDER 012 night-run, post-holdout DEV-ONLY,
+# promotion closed)
+# ---------------------------------------------------------------------------
+# Two classic-indicator families, declared here BEFORE the sweep ran.
+# aroon_trend axes bracket the published Aroon windows (Chande's 25 plus a
+# faster 14 and a slower 50) with a simple 0/±50 hysteresis band around the
+# classic zero-threshold rule — entry == exit == 0 IS the classic
+# Aroon-Up/Aroon-Down cross and is committed in the grid as the
+# within-family control arm (adopting the slice-2 card's convention:
+# banded/gated grids must include their neutral arm). cci_reversion axes
+# bracket Lambert's default 20-bar window (14/20/28) with a deep and a
+# shallow oversold line (−150/−100) and both canonical exits (back to the
+# mean, 0; or overbought, +100). Kept bounded on purpose: every extra
+# variant raises the multiple-testing burden on any winner.
+
+_R3_AROON_CCI_AXES: dict[str, dict[str, list]] = {
+    "aroon_trend": {"period": [14, 25, 50],
+                    "entry": [0.0, 50.0],
+                    "exit": [-50.0, 0.0]},
+    "cci_reversion": {"period": [14, 20, 28],
+                      "buy_below": [-150, -100],
+                      "sell_above": [0, 100]},
+}
+
+_R3_AROON_CCI_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "aroon_trend": lambda p: p["exit"] <= p["entry"],
+    "cci_reversion": lambda p: p["buy_below"] < p["sell_above"],
+}
+
+R3_AROON_CCI_FAMILIES = tuple(_R3_AROON_CCI_AXES)
+
+# The 12-ticker mixed set: the full frozen 8-ticker universe
+# (config.UNIVERSE order) PLUS four of the slice-3 new instruments
+# (SPY, QQQ, TSLA, TLT — broad market, large-cap growth, mega-cap outside
+# the universe, long-duration rates). config.UNIVERSE stays frozen; the
+# new instruments remain lane-local, reusing the slice-3 caches.
+R3_AROON_CCI_INSTRUMENTS = ("AAPL", "MSFT", "NVDA", "GOOGL", "AMZN",
+                            "META", "GLD", "SLV",
+                            "SPY", "QQQ", "TSLA", "TLT")
+
+
+def r3_aroon_cci_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-4 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_AROON_CCI_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R3 aroon-cci family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_AROON_CCI_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_aroon_cci_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-4 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_aroon_cci_variants(fam))
+            for fam in R3_AROON_CCI_FAMILIES}
+
+
+def r3_aroon_cci_total_configs() -> int:
+    """Total registered Round-3 slice-4 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes)."""
+    return (sum(r3_aroon_cci_variants_per_family().values())
+            * len(R3_AROON_CCI_INSTRUMENTS))
