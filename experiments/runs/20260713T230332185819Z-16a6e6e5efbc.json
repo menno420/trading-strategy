@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.2379989246663936,
+    "max_drawdown": -0.08213643510085478,
+    "n_bars": 2475,
+    "n_trades": 1,
+    "sharpe": 1.702407701124485,
+    "sortino": 1.6560733427529886,
+    "total_return": 0.38069993758379694,
+    "turnover_per_year": 0.6618181818181819,
+    "win_rate": 1.0
+  },
+  "config_hash": "16a6e6e5efbc",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T23:03:32+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "6aad0a6cc5618fbdf31be8721d7d3f2dd686c3e9",
+  "instrument": "GLD",
+  "metrics": {
+    "cagr": 0.07584701721702514,
+    "max_drawdown": -0.08256228098566898,
+    "n_bars": 2475,
+    "n_trades": 194,
+    "sharpe": 0.7867761451238274,
+    "sortino": 0.6168474297622898,
+    "total_return": 0.11679815291453455,
+    "turnover_per_year": 128.39272727272729,
+    "win_rate": 0.35051546391752575
+  },
+  "n_bars": 2475,
+  "notes": "Round 6 slice R6-C volume-hourly sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 014 item 2 night-run; pre-registered docs/research-round-6-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r6-volume-hourly/obv_trend__GLD.json)",
+  "params": {
+    "price_confirm": false,
+    "window": 50
+  },
+  "run_id": "20260713T230332185819Z-16a6e6e5efbc",
+  "schema_version": 1,
+  "strategy": "obv_trend",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}
