@@ -48,7 +48,13 @@ Families:
   the SMA+k·std sibling of keltner_breakout), atr_trailing
   (chandelier-style ATR trailing stop: N-day-high breakout entry, exit
   when close falls below highest-close-since-entry − k×ATR — the lab's
-  first stateful trailing-stop exit).
+  first stateful trailing-stop exit); slice 7 (lane r3-xsec-expanded ×
+  14-instrument basket × daily): xsec_reversal (short-term cross-sectional
+  REVERSAL portfolio — long equal-weight the k WORST trailing-N-bar
+  performers, weekly rebalance; the mirror thesis of xsec_momentum, same
+  panel interface, see below) plus the EXISTING xsec_momentum re-run on
+  the expanded 14-instrument basket (no strategy code change — the
+  universe was already a parameter of the panel interface).
 
 Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
 closes (one column per instrument) and return a target-weight DataFrame
@@ -65,7 +71,7 @@ from . import (adx_filtered_sma, aroon_trend, atr_trailing,
                macd, macd_supertrend, pullback, roc_momentum,
                rsi_mean_reversion, sma_crossover, stochastic_reversion,
                supertrend_flip, vol_filtered_trend, williams_r_reversion,
-               xsec_momentum)
+               xsec_momentum, xsec_reversal)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -172,8 +178,18 @@ R3_MEANREV_HOURLY_FAMILY = ["rsi_mean_reversion", "bollinger_reversion",
 # daily lane — the trend counterparts of the existing band families.
 R3_BREAKOUT_FAMILY = ["bollinger_breakout", "atr_trailing"]
 
+# Round 3 slice 7 (ORDER 012 night-run, post-holdout dev-only): the two
+# PORTFOLIO families swept in the r3-xsec-expanded × 14-instrument basket
+# (XSEC-14: frozen 8-ticker universe minus BTC-USD, plus the six slice-3
+# instruments SPY/QQQ/TSLA/JPM/XOM/TLT) × daily lane — the existing
+# xsec_momentum on the expanded basket plus its NEW mirror thesis,
+# short-term cross-sectional reversal. Panel interface (weights over
+# aligned closes), so both live in PORTFOLIO_STRATEGIES, not STRATEGIES.
+R3_XSEC_EXPANDED_FAMILY = ["xsec_momentum", "xsec_reversal"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
+    "xsec_reversal": xsec_reversal.generate_weights,
 }
 
 __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
@@ -182,11 +198,11 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "R2_VOL_TREND_FAMILY", "R2_KELTNER_FAMILY", "R2_XSEC_FAMILY",
            "R3_STOCH_WILLR_FAMILY", "R3_ROC_ADX_FAMILY",
            "R3_AROON_CCI_FAMILY", "R3_MEANREV_HOURLY_FAMILY",
-           "R3_BREAKOUT_FAMILY",
+           "R3_BREAKOUT_FAMILY", "R3_XSEC_EXPANDED_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
            "vol_filtered_trend", "keltner_breakout", "stochastic_reversion",
            "williams_r_reversion", "roc_momentum", "adx_filtered_sma",
            "aroon_trend", "cci_reversion", "bollinger_breakout",
-           "atr_trailing", "xsec_momentum"]
+           "atr_trailing", "xsec_momentum", "xsec_reversal"]

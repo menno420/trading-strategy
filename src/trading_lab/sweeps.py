@@ -761,3 +761,81 @@ def r3_breakout_total_configs() -> int:
     R1/R2 and the earlier Round-3 lanes)."""
     return (sum(r3_breakout_variants_per_family().values())
             * len(R3_BREAKOUT_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 7: cross-sectional lane on the EXPANDED universe (lane:
+# r3-xsec-expanded × 14-instrument basket × daily — ORDER 012 night-run,
+# post-holdout DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# The lab's second PORTFOLIO-level lane, declared here BEFORE the sweep ran.
+# Two families over ONE basket: the EXISTING xsec_momentum (Round-2 R3 grid
+# axes reused verbatim: L ∈ {63, 126, 252} × k ∈ {2, 3}, 21-bar rebalance
+# frozen — no strategy code change, the universe was already a parameter)
+# and the NEW xsec_reversal mirror thesis (short-term reversal: long
+# equal-weight the k WORST trailing-N-bar performers; N ∈ {5, 10, 21} spans
+# week/fortnight/month, the classic short-horizon reversal windows; k
+# ∈ {2, 3} mirrors the momentum axis; WEEKLY 5-bar rebalance frozen — a
+# monthly cadence would time-average away the short-horizon signal). The
+# basket is the 14 daily EQUITY/ETF instruments the lab has caches for:
+# the frozen 8-ticker universe minus BTC-USD, plus the six slice-3
+# instruments (SPY, QQQ, TSLA, JPM, XOM, TLT). BTC-USD is deliberately
+# excluded: an all-equity/ETF basket keeps the aligned common index on
+# exchange trading days (the Round-2 lane dropped BTC weekend bars for the
+# same reason). config.UNIVERSE stays frozen; the slice-3 instruments
+# remain lane-local, reusing the committed caches. Portfolio lane: configs
+# are grid points, NOT × instruments (Round-2 R3 accounting). Kept bounded
+# on purpose: every extra variant raises the multiple-testing burden.
+
+_R3_XSEC_EXPANDED_AXES: dict[str, dict[str, list]] = {
+    "xsec_momentum": {"L": [63, 126, 252], "k": [2, 3]},
+    "xsec_reversal": {"N": [5, 10, 21], "k": [2, 3]},
+}
+
+_R3_XSEC_EXPANDED_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "xsec_momentum": lambda p: True,
+    "xsec_reversal": lambda p: True,
+}
+
+R3_XSEC_EXPANDED_FAMILIES = tuple(_R3_XSEC_EXPANDED_AXES)
+
+# The 14-instrument expanded basket (XSEC-14), alphabetical — the column
+# order of the aligned panel and the deterministic ranking tie-break order
+# in both portfolio strategies.
+R3_XSEC_EXPANDED_INSTRUMENTS = ("AAPL", "AMZN", "GLD", "GOOGL", "JPM",
+                                "META", "MSFT", "NVDA", "QQQ", "SLV",
+                                "SPY", "TLT", "TSLA", "XOM")
+
+# Rebalance cadences, frozen per family and NOT swept: xsec_momentum keeps
+# the Round-2 21-bar (monthly) cadence; xsec_reversal is 5-bar (weekly) —
+# short-horizon reversal decays too fast for a monthly cadence.
+R3_XSEC_EXPANDED_REBALANCE_EVERY = {"xsec_momentum": 21, "xsec_reversal": 5}
+
+
+def r3_xsec_expanded_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-7 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_XSEC_EXPANDED_AXES[family]
+    except KeyError:
+        raise ValueError(
+            f"unknown R3 xsec-expanded family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_XSEC_EXPANDED_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_xsec_expanded_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-7 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_xsec_expanded_variants(fam))
+            for fam in R3_XSEC_EXPANDED_FAMILIES}
+
+
+def r3_xsec_expanded_total_configs() -> int:
+    """Total registered Round-3 slice-7 configs. Portfolio lane: ONE config
+    per grid point over the whole 14-instrument basket (Round-2 R3
+    accounting) — unlike the single-instrument lanes, instruments do NOT
+    multiply the count."""
+    return sum(r3_xsec_expanded_variants_per_family().values())
