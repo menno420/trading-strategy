@@ -1,1 +1,0 @@
-- `claude/r4-seasonality` · **R4-F day-of-week sweep** — 15 daily tickers × 5 weekdays, K=75 · src/trading_lab/, scripts/, experiments/, tests/ · 2026-07-13
