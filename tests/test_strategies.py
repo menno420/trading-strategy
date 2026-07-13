@@ -435,6 +435,110 @@ class TestKeltnerBreakout:
             STRATEGIES["keltner_breakout"](random_walk, m=0.0)
 
 
+def _oversold_recovery_prices() -> np.ndarray:
+    """Shared Round-3 test path: base, selloff (oscillator pinned oversold),
+    flat bottom, slow recovery (cross-up entry, then exit above the exit
+    band), flat top."""
+    return np.concatenate([
+        np.full(30, 100.0),
+        np.linspace(100, 60, 20),   # selloff -> oscillator pinned near 0/-100
+        np.full(5, 60.0),
+        np.linspace(60, 100, 40),   # slow recovery -> cross up, then exit
+        np.full(10, 100.0),
+    ])
+
+
+class TestStochasticReversion:
+    def test_no_entry_while_pinned_oversold(self):
+        # Cross-UP semantics: being oversold is not the signal — the
+        # recovery through the band is. Flat all through the selloff.
+        ohlcv = make_ohlcv(_oversold_recovery_prices())
+        pos = STRATEGIES["stochastic_reversion"](ohlcv, k_period=20,
+                                                 d_period=1, buy_below=20,
+                                                 sell_above=80)
+        assert (pos.iloc[30:55] == 0.0).all()  # selloff + flat bottom
+
+    def test_enters_on_cross_up_exits_above_exit_band(self):
+        ohlcv = make_ohlcv(_oversold_recovery_prices())
+        pos = STRATEGIES["stochastic_reversion"](ohlcv, k_period=20,
+                                                 d_period=1, buy_below=20,
+                                                 sell_above=80)
+        assert (pos.iloc[:59] == 0.0).all()      # nothing before the cross
+        assert (pos.iloc[59:64] == 1.0).all()    # long after %K crosses up
+        assert (pos.iloc[64:] == 0.0).all()      # exited once %K > 80
+
+    def test_smoothing_delays_the_cross(self):
+        # d_period=3 smooths %K, so the cross up through the band (and the
+        # exit) land one bar later than the fast (d_period=1) oscillator.
+        ohlcv = make_ohlcv(_oversold_recovery_prices())
+        pos3 = STRATEGIES["stochastic_reversion"](ohlcv, k_period=20,
+                                                  d_period=3, buy_below=20,
+                                                  sell_above=80)
+        assert (pos3.iloc[:60] == 0.0).all()
+        assert (pos3.iloc[60:65] == 1.0).all()
+        assert (pos3.iloc[65:] == 0.0).all()
+
+    def test_warmup_flat(self, random_walk):
+        # raw %K defined from iloc k_period-1; the d-bar SMA needs d_period-1
+        # more bars -> first definable bar is iloc 15 for (14, 3).
+        pos = STRATEGIES["stochastic_reversion"](random_walk, k_period=14,
+                                                 d_period=3)
+        assert (pos.iloc[:15] == 0.0).all()
+
+    def test_flat_prices_stay_flat(self):
+        ohlcv = make_ohlcv(np.full(80, 100.0))
+        pos = STRATEGIES["stochastic_reversion"](ohlcv, k_period=14)
+        assert (pos == 0.0).all()  # zero range -> undefined %K -> no signal
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="k_period"):
+            STRATEGIES["stochastic_reversion"](random_walk, k_period=1)
+        with pytest.raises(ValueError, match="d_period"):
+            STRATEGIES["stochastic_reversion"](random_walk, d_period=0)
+        with pytest.raises(ValueError, match="buy_below"):
+            STRATEGIES["stochastic_reversion"](random_walk, buy_below=90,
+                                               sell_above=80)
+
+
+class TestWilliamsRReversion:
+    def test_matches_fast_stochastic_complement(self, random_walk):
+        # %R = %K - 100 at d_period=1, so with the thresholds mapped the two
+        # strategies must emit identical positions (the smoothed stochastic
+        # arm is what makes the Round-3 families distinct).
+        willr = STRATEGIES["williams_r_reversion"](random_walk, period=14,
+                                                   buy_below=-80,
+                                                   sell_above=-20)
+        stoch = STRATEGIES["stochastic_reversion"](random_walk, k_period=14,
+                                                   d_period=1, buy_below=20,
+                                                   sell_above=80)
+        pd.testing.assert_series_equal(willr, stoch)
+
+    def test_enters_on_rise_from_oversold_exits_above_exit(self):
+        ohlcv = make_ohlcv(_oversold_recovery_prices())
+        pos = STRATEGIES["williams_r_reversion"](ohlcv, period=20,
+                                                 buy_below=-80,
+                                                 sell_above=-20)
+        assert (pos.iloc[30:55] == 0.0).all()    # pinned oversold: no entry
+        assert (pos.iloc[59:64] == 1.0).all()    # long after %R rises through
+        assert (pos.iloc[64:] == 0.0).all()      # exited once %R > -20
+
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["williams_r_reversion"](random_walk, period=14)
+        assert (pos.iloc[:13] == 0.0).all()
+
+    def test_flat_prices_stay_flat(self):
+        ohlcv = make_ohlcv(np.full(80, 100.0))
+        pos = STRATEGIES["williams_r_reversion"](ohlcv, period=14)
+        assert (pos == 0.0).all()  # zero range -> undefined %R -> no signal
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="period"):
+            STRATEGIES["williams_r_reversion"](random_walk, period=1)
+        with pytest.raises(ValueError, match="buy_below"):
+            STRATEGIES["williams_r_reversion"](random_walk, buy_below=-20,
+                                               sell_above=-80)
+
+
 class TestXsecMomentum:
     """Round 2 slice R3 portfolio family: panel interface (weights over
     aligned closes), so it lives in PORTFOLIO_STRATEGIES, not STRATEGIES."""

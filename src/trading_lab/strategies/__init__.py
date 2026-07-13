@@ -24,6 +24,11 @@ Families:
   keltner_breakout (slice R2 — long on close > EMA(n) + m*ATR(n), exit on
   close < EMA(n)); xsec_momentum (slice R3 — cross-sectional momentum
   PORTFOLIO over the 9-instrument basket; different interface, see below).
+* Round 3 (post-holdout dev-only, ORDER 012 night-run, lane
+  r3-stoch-willr × all-8 × daily): stochastic_reversion (slow stochastic
+  %K oversold cross-up entry), williams_r_reversion (Williams %R oversold
+  cross-up entry — the unsmoothed complement of the stochastic; the two
+  families probe smoothed vs raw oscillator reversion).
 
 Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
 closes (one column per instrument) and return a target-weight DataFrame
@@ -36,8 +41,9 @@ from __future__ import annotations
 
 from . import (bollinger_reversion, buy_and_hold, donchian, ema_crossover,
                keltner_breakout, macd, macd_supertrend, pullback,
-               rsi_mean_reversion, sma_crossover, supertrend_flip,
-               vol_filtered_trend, xsec_momentum)
+               rsi_mean_reversion, sma_crossover, stochastic_reversion,
+               supertrend_flip, vol_filtered_trend, williams_r_reversion,
+               xsec_momentum)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -52,6 +58,8 @@ STRATEGIES = {
     "pullback": pullback.generate,
     "vol_filtered_trend": vol_filtered_trend.generate,
     "keltner_breakout": keltner_breakout.generate,
+    "stochastic_reversion": stochastic_reversion.generate,
+    "williams_r_reversion": williams_r_reversion.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -69,6 +77,10 @@ DEFAULT_PARAMS = {
     "pullback": {"entry_lookback": 5, "exit_len": 5, "trend_len": 200},
     "vol_filtered_trend": {"fast": 20, "slow": 50, "vol_filter": True},
     "keltner_breakout": {"n": 20, "m": 2.0},
+    "stochastic_reversion": {"k_period": 14, "d_period": 3,
+                             "buy_below": 20, "sell_above": 80},
+    "williams_r_reversion": {"period": 14, "buy_below": -80,
+                             "sell_above": -20},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -98,6 +110,10 @@ R2_KELTNER_FAMILY = ["keltner_breakout"]
 # PORTFOLIO_STRATEGIES, not STRATEGIES.
 R2_XSEC_FAMILY = ["xsec_momentum"]
 
+# Round 3 (ORDER 012 night-run, post-holdout dev-only): the two oscillator
+# reversion families swept in the r3-stoch-willr × all-8-tickers × daily lane.
+R3_STOCH_WILLR_FAMILY = ["stochastic_reversion", "williams_r_reversion"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
 }
@@ -106,7 +122,9 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "TREND_FOLLOWING_FAMILY",
            "VIDEO_STRATEGY_FAMILY", "MEAN_REVERSION_FAMILY",
            "R2_VOL_TREND_FAMILY", "R2_KELTNER_FAMILY", "R2_XSEC_FAMILY",
+           "R3_STOCH_WILLR_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
-           "vol_filtered_trend", "keltner_breakout", "xsec_momentum"]
+           "vol_filtered_trend", "keltner_breakout", "stochastic_reversion",
+           "williams_r_reversion", "xsec_momentum"]

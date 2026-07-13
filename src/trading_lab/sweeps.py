@@ -339,3 +339,63 @@ def r2_xsec_total_configs() -> int:
     point over the whole 9-instrument basket (the pre-registration's 6) —
     unlike R1/R2, instruments do NOT multiply the count."""
     return sum(r2_xsec_variants_per_family().values())
+
+
+# ---------------------------------------------------------------------------
+# Round 3: stochastic + Williams %R reversion (lane: r3-stoch-willr × all-8
+# × daily — ORDER 012 night-run, post-holdout DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# Two classic oversold-oscillator reversion families, declared here BEFORE
+# the sweep ran. Axes bracket the published defaults (14-bar window, 20/80
+# stochastic bands, -80/-20 Williams bands) with slower windows and both a
+# deep and a shallow oversold line. Williams %R is the unsmoothed complement
+# of the stochastic (%R = %K - 100 at d_period=1); the stochastic arm is
+# smoothed (d_period=3, frozen, NOT swept), so the pair probes smoothed vs
+# raw oscillator reversion. Kept bounded on purpose: every extra variant
+# raises the multiple-testing burden on any winner.
+
+_R3_STOCH_WILLR_AXES: dict[str, dict[str, list]] = {
+    "stochastic_reversion": {"k_period": [14, 21, 28],
+                             "buy_below": [10, 20],
+                             "sell_above": [70, 80]},
+    "williams_r_reversion": {"period": [14, 21, 28],
+                             "buy_below": [-90, -80],
+                             "sell_above": [-30, -20]},
+}
+
+_R3_STOCH_WILLR_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "stochastic_reversion": lambda p: p["buy_below"] < p["sell_above"],
+    "williams_r_reversion": lambda p: p["buy_below"] < p["sell_above"],
+}
+
+R3_STOCH_WILLR_FAMILIES = tuple(_R3_STOCH_WILLR_AXES)
+
+# The full 8-ticker universe (config.UNIVERSE order), daily bars.
+R3_STOCH_WILLR_INSTRUMENTS = ("AAPL", "MSFT", "NVDA", "GOOGL", "AMZN",
+                              "META", "GLD", "SLV")
+
+
+def r3_stoch_willr_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_STOCH_WILLR_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R3 stoch-willr family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_STOCH_WILLR_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_stoch_willr_variants_per_family() -> dict[str, int]:
+    """Round-3 variant counts by family (multiple-testing bookkeeping)."""
+    return {fam: len(r3_stoch_willr_variants(fam))
+            for fam in R3_STOCH_WILLR_FAMILIES}
+
+
+def r3_stoch_willr_total_configs() -> int:
+    """Total registered Round-3 configs: variants × instruments (each
+    instrument × grid point counts as one config, as in Round 2 R1/R2)."""
+    return (sum(r3_stoch_willr_variants_per_family().values())
+            * len(R3_STOCH_WILLR_INSTRUMENTS))
