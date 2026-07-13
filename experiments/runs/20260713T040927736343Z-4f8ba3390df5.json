@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.5632571510710067,
+    "max_drawdown": -0.2038390834598428,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.4629025292919335,
+    "sortino": 1.4894358472766738,
+    "total_return": 0.9647002218576133,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "4f8ba3390df5",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:09:27+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "8e5b1d65a74303841bb080d206478ff7ab9f1ee0",
+  "instrument": "META",
+  "metrics": {
+    "cagr": 0.2662824454965016,
+    "max_drawdown": -0.10872140406729525,
+    "n_bars": 2476,
+    "n_trades": 85,
+    "sharpe": 1.3229074359290467,
+    "sortino": 0.9934547801074777,
+    "total_return": 0.42884521296344835,
+    "turnover_per_year": 56.23182552504039,
+    "win_rate": 0.5116279069767442
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 trend-hourly sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 14, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-trend-hourly/adx_filtered_sma__META.json)",
+  "params": {
+    "adx_min": 20.0,
+    "fast": 10,
+    "slow": 200
+  },
+  "run_id": "20260713T040927736343Z-4f8ba3390df5",
+  "schema_version": 1,
+  "strategy": "adx_filtered_sma",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}
