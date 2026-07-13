@@ -1331,3 +1331,85 @@ def r3_trend_hourly_total_configs() -> int:
     R1/R2 and the earlier Round-3 lanes)."""
     return (sum(r3_trend_hourly_variants_per_family().values())
             * len(R3_TREND_HOURLY_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 15: HOURLY-MATRIX COMPLETION — remaining four families ×
+# HOURLY bars (lane: r3-hourly-completion × all-8 × hourly — ORDER 012
+# night-run, post-holdout DEV-ONLY, promotion closed; lands AFTER the
+# Round-3 synthesis of slices 1-8, extending the round)
+# ---------------------------------------------------------------------------
+# TIMEFRAME expansion, not a strategy expansion — the COMPLETION of the
+# Round-3 hourly matrix started by slice 5 (r3-meanrev-hourly: the four
+# mean-reversion families) and slice 14 (r3-trend-hourly: the four classic
+# trend/momentum families): NO new strategy code — the four remaining
+# Round-3 single-instrument families (cci_reversion from slice 4,
+# bollinger_breakout and atr_trailing from slice 6, ichimoku_trend from
+# slice 8) are re-swept on hourly bars over the frozen 8-ticker universe
+# (committed hourly caches, dev rail 2023-08-10 → 2025-01-08). After this
+# slice every Round-3 single-instrument family has both a daily and an
+# hourly lane. Parameter-scaling convention follows the three prior hourly
+# lanes (p1-trend-hourly, r3-meanrev-hourly, r3-trend-hourly) exactly:
+# grids stay BAR-denominated — the same lookback numbers mean hours-to-days
+# instead of days-to-weeks (cci period 20 is ~3 sessions; the atr_trailing
+# turtle entry channel 55 is ~8.5 sessions; the Hosoda 9/26/52 spans
+# ~1.4/4/8 sessions with the senkou displacement 26 staying frozen in
+# BARS) — and each family's declared Round-3 12-variant daily grid is
+# reused VERBATIM by DELEGATING to the source lane's generator (the
+# slice-13/14 convention: byte-identical grids by construction, so the
+# slice-5 subset-of-the-published-daily-axes relation degenerates to
+# equality; both pinned by tests). No new parameter values are introduced,
+# so every hourly variant has a daily twin already in the burden ledger.
+# The frozen non-swept parameters stay frozen (ichimoku senkou
+# displacement 26; bollinger_breakout's middle-band exit semantic;
+# atr_trailing's chandelier exit form), and the slice-6 note carries over
+# verbatim: bollinger_breakout and atr_trailing are pure threshold
+# families with no hysteresis band or on/off gate, so the committed
+# control-arm convention is not applicable; cci_reversion and
+# ichimoku_trend inherit their slice-4/8 committed-grid decisions
+# unchanged. Kept bounded on purpose: every extra variant raises the
+# multiple-testing burden on any winner.
+
+_R3_HOURLY_COMPLETION_SOURCES: dict[str, Callable[[str], list[dict]]] = {
+    "cci_reversion": r3_aroon_cci_variants,
+    "bollinger_breakout": r3_breakout_variants,
+    "atr_trailing": r3_breakout_variants,
+    "ichimoku_trend": r3_trix_ichimoku_variants,
+}
+
+R3_HOURLY_COMPLETION_FAMILIES = tuple(_R3_HOURLY_COMPLETION_SOURCES)
+
+# The full 8-ticker universe (config.UNIVERSE order) — hourly caches are
+# committed for all 8 (data/hourly/), as in the p1-trend-hourly,
+# r3-meanrev-hourly and r3-trend-hourly lanes.
+R3_HOURLY_COMPLETION_INSTRUMENTS = ("AAPL", "MSFT", "NVDA", "GOOGL",
+                                    "AMZN", "META", "GLD", "SLV")
+
+
+def r3_hourly_completion_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-15 ``family`` —
+    the family's declared Round-3 daily grid, VERBATIM (delegated to the
+    source lane's generator, so the grids cannot drift apart; on hourly
+    bars the same numbers are bar-denominated per the p1-trend-hourly
+    convention)."""
+    try:
+        source = _R3_HOURLY_COMPLETION_SOURCES[family]
+    except KeyError:
+        raise ValueError(
+            f"unknown R3 hourly-completion family {family!r}") from None
+    return source(family)
+
+
+def r3_hourly_completion_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-15 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_hourly_completion_variants(fam))
+            for fam in R3_HOURLY_COMPLETION_FAMILIES}
+
+
+def r3_hourly_completion_total_configs() -> int:
+    """Total registered Round-3 slice-15 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes)."""
+    return (sum(r3_hourly_completion_variants_per_family().values())
+            * len(R3_HOURLY_COMPLETION_INSTRUMENTS))

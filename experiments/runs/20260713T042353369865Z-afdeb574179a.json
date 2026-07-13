@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.29438417184440935,
+    "max_drawdown": -0.22752014737711135,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.0537931964448592,
+    "sortino": 1.0644793070114111,
+    "total_return": 0.47704820339228293,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "afdeb574179a",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:23:53+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "99919414581d2075ba580979617591dac74972e5",
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.12869019235200185,
+    "max_drawdown": -0.1732083378529098,
+    "n_bars": 2476,
+    "n_trades": 230,
+    "sharpe": 0.7417266708015633,
+    "sortino": 0.5566378388522752,
+    "total_return": 0.20080356443835545,
+    "turnover_per_year": 152.156704361874,
+    "win_rate": 0.43478260869565216
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 hourly-completion sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 15, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-hourly-completion/bollinger_breakout__GOOGL.json)",
+  "params": {
+    "num_std": 1.0,
+    "period": 10
+  },
+  "run_id": "20260713T042353369865Z-afdeb574179a",
+  "schema_version": 1,
+  "strategy": "bollinger_breakout",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}

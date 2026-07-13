@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 1.1848430526782217,
+    "max_drawdown": -0.34215233426589897,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.9493204747433084,
+    "sortino": 1.928590389640925,
+    "total_return": 2.2588733042509337,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "db20d696ac84",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:23:50+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "99919414581d2075ba580979617591dac74972e5",
+  "instrument": "NVDA",
+  "metrics": {
+    "cagr": 0.3459492746188768,
+    "max_drawdown": -0.21796737028914803,
+    "n_bars": 2476,
+    "n_trades": 83,
+    "sharpe": 1.2052697213305135,
+    "sortino": 0.808305200998244,
+    "total_return": 0.5668943297516207,
+    "turnover_per_year": 54.908723747980616,
+    "win_rate": 0.7619047619047619
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 hourly-completion sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 15, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-hourly-completion/cci_reversion__NVDA.json)",
+  "params": {
+    "buy_below": -100,
+    "period": 20,
+    "sell_above": 100
+  },
+  "run_id": "20260713T042350179359Z-db20d696ac84",
+  "schema_version": 1,
+  "strategy": "cci_reversion",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}

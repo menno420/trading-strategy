@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.19018014817087803,
+    "max_drawdown": -0.1750377211554467,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 0.9563838736789603,
+    "sortino": 0.9205291292483438,
+    "total_return": 0.3010564005585086,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "2f0ffbf4d231",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T04:23:47+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "99919414581d2075ba580979617591dac74972e5",
+  "instrument": "MSFT",
+  "metrics": {
+    "cagr": 0.1406480970099948,
+    "max_drawdown": -0.12131426115397448,
+    "n_bars": 2476,
+    "n_trades": 131,
+    "sharpe": 1.0190721485204468,
+    "sortino": 0.6738365654322255,
+    "total_return": 0.22008602297571,
+    "turnover_per_year": 86.66316639741518,
+    "win_rate": 0.7878787878787878
+  },
+  "n_bars": 2476,
+  "notes": "Round 3 hourly-completion sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 15, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-hourly-completion/cci_reversion__MSFT.json)",
+  "params": {
+    "buy_below": -100,
+    "period": 14,
+    "sell_above": 100
+  },
+  "run_id": "20260713T042347435494Z-2f0ffbf4d231",
+  "schema_version": 1,
+  "strategy": "cci_reversion",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}
