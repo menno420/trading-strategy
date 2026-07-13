@@ -69,7 +69,10 @@ by the coordinator.)
   1,752 registered configs, honest aggregate **0 PROMOTED / 41 KEEP-dev /
   125 KILL of 166 lanes** (max t 1.04 vs the 2.64 Bonferroni bar; nothing
   is a finding). Synthesis with full KEEP table and caveats:
-  [research-round-3-results.md](research-round-3-results.md).
+  [research-round-3-results.md](research-round-3-results.md). Round-4
+  follow-up: six new idea classes pre-registered (hypotheses + kill
+  criteria before any run) in
+  [research-round-4-plan.md](research-round-4-plan.md).
 - Auto-merge enabler LANDED (PR #65, merged 2026-07-12T08:18:48Z,
   `bf885f0` — was branch `claude/install-auto-merge-enabler`): the
   substrate-kit enabler at `.github/workflows/auto-merge-enabler.yml`
