@@ -1,0 +1,554 @@
+{
+  "committees": [
+    {
+      "beats_benchmark": true,
+      "beats_best_member": true,
+      "benchmark_oos_sharpe": 0.9629342541555703,
+      "best_member": "aroon_trend@r3-aroon-cci",
+      "best_member_sharpe": 1.1321373853930108,
+      "committee_oos_sharpe": 1.1452887554199804,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__AAPL__daily.json",
+      "instrument": "AAPL",
+      "member_count": 3,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-aroon-cci/aroon_trend__AAPL.json",
+          "strategy": "aroon_trend",
+          "sweep": "r3-aroon-cci"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-breakout/bollinger_breakout__AAPL.json",
+          "strategy": "bollinger_breakout",
+          "sweep": "r3-breakout"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trix-ichimoku/trix_momentum__AAPL.json",
+          "strategy": "trix_momentum",
+          "sweep": "r3-trix-ichimoku"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "tstat": 0.5759066389839742,
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": true,
+      "benchmark_oos_sharpe": 1.570211425462568,
+      "best_member": "stochastic_reversion@r3-meanrev-hourly",
+      "best_member_sharpe": 2.157186008936453,
+      "committee_oos_sharpe": 2.4353962790562145,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__AAPL__hourly.json",
+      "instrument": "AAPL",
+      "member_count": 2,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/rsi_mean_reversion__AAPL.json",
+          "strategy": "rsi_mean_reversion",
+          "sweep": "r3-meanrev-hourly"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__AAPL.json",
+          "strategy": "stochastic_reversion",
+          "sweep": "r3-meanrev-hourly"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KEEP",
+      "timeframe": "hourly",
+      "tstat": 0.7581313309617164,
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": false,
+      "benchmark_oos_sharpe": 0.6151550755004092,
+      "best_member": "rsi_mean_reversion@r3-meanrev-hourly",
+      "best_member_sharpe": 1.1878085362547803,
+      "committee_oos_sharpe": 1.0897341702738923,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__AMZN__hourly.json",
+      "instrument": "AMZN",
+      "member_count": 3,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/bollinger_reversion__AMZN.json",
+          "strategy": "bollinger_reversion",
+          "sweep": "r3-meanrev-hourly"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/rsi_mean_reversion__AMZN.json",
+          "strategy": "rsi_mean_reversion",
+          "sweep": "r3-meanrev-hourly"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/williams_r_reversion__AMZN.json",
+          "strategy": "williams_r_reversion",
+          "sweep": "r3-meanrev-hourly"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KILL",
+      "timeframe": "hourly",
+      "tstat": 0.4161579809364497,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": false,
+      "benchmark_oos_sharpe": 0.8211061068266703,
+      "best_member": "bollinger_breakout@r3-btc-coverage",
+      "best_member_sharpe": 1.2575201323867047,
+      "committee_oos_sharpe": 1.1645529843657727,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__BTC-USD__daily.json",
+      "instrument": "BTC-USD",
+      "member_count": 5,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-btc-coverage/atr_trailing__BTC-USD.json",
+          "strategy": "atr_trailing",
+          "sweep": "r3-btc-coverage"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-btc-coverage/bollinger_breakout__BTC-USD.json",
+          "strategy": "bollinger_breakout",
+          "sweep": "r3-btc-coverage"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-btc-coverage/ichimoku_trend__BTC-USD.json",
+          "strategy": "ichimoku_trend",
+          "sweep": "r3-btc-coverage"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-btc-coverage/roc_momentum__BTC-USD.json",
+          "strategy": "roc_momentum",
+          "sweep": "r3-btc-coverage"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-btc-coverage/trix_momentum__BTC-USD.json",
+          "strategy": "trix_momentum",
+          "sweep": "r3-btc-coverage"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KILL",
+      "timeframe": "daily",
+      "tstat": 1.0846161041254936,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": true,
+      "benchmark_oos_sharpe": 1.0097986887117099,
+      "best_member": "rsi_mean_reversion@r3-meanrev-hourly",
+      "best_member_sharpe": 1.8282745516510737,
+      "committee_oos_sharpe": 1.9530751179946733,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__GOOGL__hourly.json",
+      "instrument": "GOOGL",
+      "member_count": 3,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-hourly-completion/ichimoku_trend__GOOGL.json",
+          "strategy": "ichimoku_trend",
+          "sweep": "r3-hourly-completion"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/rsi_mean_reversion__GOOGL.json",
+          "strategy": "rsi_mean_reversion",
+          "sweep": "r3-meanrev-hourly"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__GOOGL.json",
+          "strategy": "stochastic_reversion",
+          "sweep": "r3-meanrev-hourly"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KEEP",
+      "timeframe": "hourly",
+      "tstat": 0.8268269272153357,
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": true,
+      "benchmark_oos_sharpe": 0.644703682157047,
+      "best_member": "rsi_mean_reversion@r3-new-tickers",
+      "best_member_sharpe": 0.7468659507439254,
+      "committee_oos_sharpe": 0.762951716902661,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__JPM__daily.json",
+      "instrument": "JPM",
+      "member_count": 2,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-new-tickers/rsi_mean_reversion__JPM.json",
+          "strategy": "rsi_mean_reversion",
+          "sweep": "r3-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-new-tickers/williams_r_reversion__JPM.json",
+          "strategy": "williams_r_reversion",
+          "sweep": "r3-meanrev-new-tickers"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "tstat": 0.3737173682812655,
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": false,
+      "benchmark_oos_sharpe": 0.6534658611523465,
+      "best_member": "ichimoku_trend@r3-trix-ichimoku",
+      "best_member_sharpe": 0.9934293933081809,
+      "committee_oos_sharpe": 0.8879541432291201,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__META__daily.json",
+      "instrument": "META",
+      "member_count": 6,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-roc-adx/adx_filtered_sma__META.json",
+          "strategy": "adx_filtered_sma",
+          "sweep": "r3-roc-adx"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-aroon-cci/aroon_trend__META.json",
+          "strategy": "aroon_trend",
+          "sweep": "r3-aroon-cci"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-breakout/atr_trailing__META.json",
+          "strategy": "atr_trailing",
+          "sweep": "r3-breakout"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__META.json",
+          "strategy": "ichimoku_trend",
+          "sweep": "r3-trix-ichimoku"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-roc-adx/roc_momentum__META.json",
+          "strategy": "roc_momentum",
+          "sweep": "r3-roc-adx"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trix-ichimoku/trix_momentum__META.json",
+          "strategy": "trix_momentum",
+          "sweep": "r3-trix-ichimoku"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KILL",
+      "timeframe": "daily",
+      "tstat": 0.6627148412317784,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": false,
+      "benchmark_oos_sharpe": 0.49397799449244817,
+      "best_member": "stochastic_reversion@r3-meanrev-hourly",
+      "best_member_sharpe": 1.5290958634343552,
+      "committee_oos_sharpe": 1.40602305082707,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__META__hourly.json",
+      "instrument": "META",
+      "member_count": 6,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-hourly-completion/bollinger_breakout__META.json",
+          "strategy": "bollinger_breakout",
+          "sweep": "r3-hourly-completion"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/bollinger_reversion__META.json",
+          "strategy": "bollinger_reversion",
+          "sweep": "r3-meanrev-hourly"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-hourly-completion/cci_reversion__META.json",
+          "strategy": "cci_reversion",
+          "sweep": "r3-hourly-completion"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-hourly-completion/ichimoku_trend__META.json",
+          "strategy": "ichimoku_trend",
+          "sweep": "r3-hourly-completion"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__META.json",
+          "strategy": "stochastic_reversion",
+          "sweep": "r3-meanrev-hourly"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/williams_r_reversion__META.json",
+          "strategy": "williams_r_reversion",
+          "sweep": "r3-meanrev-hourly"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KILL",
+      "timeframe": "hourly",
+      "tstat": 0.7996751851902312,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": false,
+      "benchmark_oos_sharpe": 0.14788562026680196,
+      "best_member": "bollinger_reversion@r3-meanrev-hourly",
+      "best_member_sharpe": 0.8455855951283592,
+      "committee_oos_sharpe": 0.6209791927052837,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__MSFT__hourly.json",
+      "instrument": "MSFT",
+      "member_count": 3,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/bollinger_reversion__MSFT.json",
+          "strategy": "bollinger_reversion",
+          "sweep": "r3-meanrev-hourly"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trend-hourly/trix_momentum__MSFT.json",
+          "strategy": "trix_momentum",
+          "sweep": "r3-trend-hourly"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-hourly/williams_r_reversion__MSFT.json",
+          "strategy": "williams_r_reversion",
+          "sweep": "r3-meanrev-hourly"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KILL",
+      "timeframe": "hourly",
+      "tstat": 0.41490609318766425,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": false,
+      "benchmark_oos_sharpe": 0.16965504212254662,
+      "best_member": "williams_r_reversion@r3-stoch-willr",
+      "best_member_sharpe": 0.4995655939280414,
+      "committee_oos_sharpe": 0.4061477119070489,
+      "deduped_out": [],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__SLV__daily.json",
+      "instrument": "SLV",
+      "member_count": 3,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-aroon-cci/cci_reversion__SLV.json",
+          "strategy": "cci_reversion",
+          "sweep": "r3-aroon-cci"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trix-ichimoku/trix_momentum__SLV.json",
+          "strategy": "trix_momentum",
+          "sweep": "r3-trix-ichimoku"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-stoch-willr/williams_r_reversion__SLV.json",
+          "strategy": "williams_r_reversion",
+          "sweep": "r3-stoch-willr"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KILL",
+      "timeframe": "daily",
+      "tstat": 0.7477331323371564,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": false,
+      "benchmark_oos_sharpe": 0.1962113994495629,
+      "best_member": "ema_crossover@r3-trend-new-tickers",
+      "best_member_sharpe": 0.482387358927847,
+      "committee_oos_sharpe": 0.40779795963257515,
+      "deduped_out": [
+        {
+          "source_file": "experiments/sweeps/r3-trend-new-tickers/donchian__TLT.json",
+          "strategy": "donchian",
+          "sweep": "r3-trend-new-tickers"
+        }
+      ],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__TLT__daily.json",
+      "instrument": "TLT",
+      "member_count": 9,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-aroon-cci/aroon_trend__TLT.json",
+          "strategy": "aroon_trend",
+          "sweep": "r3-aroon-cci"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-new-tickers/donchian__TLT.json",
+          "strategy": "donchian",
+          "sweep": "r3-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+          "strategy": "ema_crossover",
+          "sweep": "r3-trend-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__TLT.json",
+          "strategy": "ichimoku_trend",
+          "sweep": "r3-trix-ichimoku"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-meanrev-new-tickers/pullback__TLT.json",
+          "strategy": "pullback",
+          "sweep": "r3-meanrev-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-new-tickers/sma_crossover__TLT.json",
+          "strategy": "sma_crossover",
+          "sweep": "r3-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trend-new-tickers/supertrend_flip__TLT.json",
+          "strategy": "supertrend_flip",
+          "sweep": "r3-trend-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trix-ichimoku/trix_momentum__TLT.json",
+          "strategy": "trix_momentum",
+          "sweep": "r3-trix-ichimoku"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-gated-new-tickers/vol_filtered_trend__TLT.json",
+          "strategy": "vol_filtered_trend",
+          "sweep": "r3-gated-new-tickers"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KILL",
+      "timeframe": "daily",
+      "tstat": 0.6689850928415326,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": true,
+      "beats_best_member": true,
+      "benchmark_oos_sharpe": 0.2940549506913933,
+      "best_member": "donchian@r3-trend-new-tickers",
+      "best_member_sharpe": 0.3821070167866765,
+      "committee_oos_sharpe": 0.3824406657138296,
+      "deduped_out": [
+        {
+          "source_file": "experiments/sweeps/r3-trend-new-tickers/donchian__XOM.json",
+          "strategy": "donchian",
+          "sweep": "r3-trend-new-tickers"
+        }
+      ],
+      "detail_file": "experiments/sweeps/r4-ensemble/committee__XOM__daily.json",
+      "instrument": "XOM",
+      "member_count": 6,
+      "members": [
+        {
+          "source_file": "experiments/sweeps/r3-new-tickers/donchian__XOM.json",
+          "strategy": "donchian",
+          "sweep": "r3-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__XOM.json",
+          "strategy": "ema_crossover",
+          "sweep": "r3-trend-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-gated-new-tickers/keltner_breakout__XOM.json",
+          "strategy": "keltner_breakout",
+          "sweep": "r3-gated-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-gated-new-tickers/macd_supertrend__XOM.json",
+          "strategy": "macd_supertrend",
+          "sweep": "r3-gated-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-new-tickers/sma_crossover__XOM.json",
+          "strategy": "sma_crossover",
+          "sweep": "r3-new-tickers"
+        },
+        {
+          "source_file": "experiments/sweeps/r3-gated-new-tickers/vol_filtered_trend__XOM.json",
+          "strategy": "vol_filtered_trend",
+          "sweep": "r3-gated-new-tickers"
+        }
+      ],
+      "min_tstat": 2.638257273476751,
+      "status": "GRADED",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "tstat": 0.2794596254258499,
+      "verdict": "KEEP (dev-candidate only)"
+    }
+  ],
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "counts": {
+    "beats_benchmark": 12,
+    "beats_best_member": 5,
+    "committees": 12,
+    "graded": 12,
+    "keep": 5,
+    "keep_universe": 58,
+    "kill": 7,
+    "kill_sig": 0,
+    "skipped": 0
+  },
+  "created_utc": "2026-07-13T10:29:19.830711+00:00",
+  "fidelity_guard": "every member's baseline replay reproduced its committed stitched OOS Sharpe within 1e-08; any irreproducible member skips its whole committee with the verbatim reason",
+  "git_sha": "90a5f17b11c1f570ce4f4e749713ea44125217f3",
+  "grouping": "instrument x timeframe with >= 2 KEEP-dev lanes; committees never mix timeframes; one member per family (performance-blind dedup; best-member comparison uses the full group superset)",
+  "keep_universe": "the 58 new_verdict==KEEP lanes of experiments/sweeps/r4-killsig-regrade/summary.json (R4-A, PR #100)",
+  "ledger_decision": "ledgered (deliberate): one row per committee, strategy 'committee_equal_weight', variants_tried=1 \u2014 a committee is a genuinely new composite run, unlike the R4-B frozen replay (report-only); experiments/index.jsonl rebuilt",
+  "ledger_files": [
+    "experiments/runs/20260713T102915943304Z-c772a87c8fad.json",
+    "experiments/runs/20260713T102916068728Z-c736be3dd053.json",
+    "experiments/runs/20260713T102916220358Z-7b41b5126a29.json",
+    "experiments/runs/20260713T102916658069Z-b361ffedaab6.json",
+    "experiments/runs/20260713T102916835431Z-21476a06332f.json",
+    "experiments/runs/20260713T102917037433Z-4fb95a827179.json",
+    "experiments/runs/20260713T102917525860Z-bc6d9270cf26.json",
+    "experiments/runs/20260713T102917902980Z-9bf243babd10.json",
+    "experiments/runs/20260713T102918053745Z-5625bc755063.json",
+    "experiments/runs/20260713T102918535297Z-233a91732607.json",
+    "experiments/runs/20260713T102919315826Z-f9415d8ad656.json",
+    "experiments/runs/20260713T102919791741Z-1ccc1bfc2dd0.json"
+  ],
+  "no_research": "members frozen at their committed walk-forward per-split params; the equal-weight mean is the only new object; no selection pass anywhere",
+  "order": "ORDER 012 (generative rung)",
+  "post_holdout_dev_only": "holdout SPENT, promotion CLOSED; every KEEP is a dev-candidate only, never a finding",
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-C \u2014 Ensemble / committee of survivors",
+  "rule": "per committee: KEEP (dev-candidate only) iff stitched OOS Sharpe > best single member AND > same-window same-cost B&H AND > 0; otherwise KILL (KILL-SIG at t <= -min_tstat(12) via classify_verdict); t informational only at the round-standard K=12",
+  "runtime_seconds": 4.2,
+  "schema_version": 1,
+  "slice": "r4-ensemble"
+}

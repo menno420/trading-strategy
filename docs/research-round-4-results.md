@@ -244,3 +244,90 @@ bar — the classic data-mined calendar "edge" does not survive its own K.
 No lane, combo, or day is a finding or a dev-candidate. The holdout is
 SPENT, promotion is CLOSED, and any OOS claim about anything in this
 slice remains OWNER-GATED on post-2026 data.
+
+## R4-C — survivor committees (2026-07-13)
+
+**Headline: of 12 equal-weight committees (every instrument×timeframe
+group with ≥2 KEEP-dev lanes on the 58-lane KEEP surface), 5 KEEP /
+7 KILL / 0 KILL-SIG under the pre-registered rule. All 12 committees beat
+their same-window same-cost B&H benchmark; the whole verdict therefore
+turned on the interesting half of the rule — only 5 of 12 beat their best
+single member. Best informational t anywhere: 1.085 (BTC-USD daily) vs
+the K=12 bar of 2.638 — the pre-registered hypothesis ("diversification
+raises Sharpe modestly, but no committee clears t ≥ 2.64") holds
+exactly.**
+
+- **Method** (pre-registered, plan § R4-C): per instrument with ≥2
+  KEEP-dev families, an equal-weight signal committee — position = mean
+  of member positions (`trading_lab.ensemble.committee_positions`) — vs
+  (a) the best single member and (b) B&H, same rail, costs
+  (5 bps + 1 bp), and walk-forward windows (1008/252/252) as the
+  members. Members FROZEN at their committed walk-forward per-split
+  params (frozen-replay precedent PR #101); the R4-B fidelity guard
+  replayed every member at baseline first and all 51 reproduced their
+  committed stitched OOS Sharpe within 1e-8 — 0 committees skipped.
+  KEEP iff the committee beats BOTH comparators (and > 0); t
+  informational at the round-standard K=12 (each committee is one
+  pre-declared config, but no smaller K was registered and the bar is
+  never lowered); `classify_verdict` applied, so KILL-SIG was possible
+  (none occurred). Runner: `scripts/run_r4_ensemble_sweep.py`.
+- **Adopted conventions** (plan silent; declared in the grid commit
+  BEFORE the run, pinned by tests): grouping is **instrument ×
+  timeframe** — averaging daily and hourly positions is not meaningful,
+  so committees never mix timeframes; and **one member per family** —
+  the duplicate round-3 coverage (TLT and XOM `donchian`, each KEEP in
+  two sweeps) deduped by a performance-blind lexicographic tiebreak,
+  with the best-member comparison taken over ALL the group's KEEP lanes
+  (superset incl. the deduped-out duplicates — it can only raise the
+  bar). The engine needed no extension: `run_backtest` natively supports
+  fractional positions in [-1, 1] with costs on |Δheld| (pinned by new
+  tests).
+- **Result — the diversification story, read honestly**: the committee
+  premium over the best member concentrates in SMALL, closely-matched
+  committees — the five KEEPs are AAPL daily (1.145 vs 1.132, 3
+  members), AAPL hourly (2.435 vs 2.157, 2), GOOGL hourly (1.953 vs
+  1.828, 3), JPM daily (0.763 vs 0.747, 2), XOM daily (0.382 vs 0.382,
+  6). Every 5-, 6- and 9-member committee on a group with one clearly
+  best lane KILLed: averaging many mediocre survivors dilutes toward the
+  group mean (META hourly 1.406 vs best 1.529; BTC-USD 1.165 vs 1.258;
+  MSFT hourly 0.621 vs 0.846). And the KEEPs deserve suspicion, not
+  celebration: with 12 tries, a handful of small committees edging past
+  their best member by 0.01–0.28 Sharpe is exactly what selection noise
+  looks like — the XOM "KEEP" wins by 0.0003 Sharpe against the
+  deduped-out duplicate donchian lane, i.e. a coin-flip margin. The
+  honest summary is the pre-registered one: modest, non-significant
+  improvement (mean committee-minus-best-member delta is −0.03; even
+  the best t is 2.4× below the bar). Nothing here reopens promotion;
+  no committee is a finding.
+- **All 12 beating B&H is inherited, not new**: the members were
+  selected as benchmark-beaters (that is what KEEP-dev means), so
+  their average beating the same benchmark mostly restates round-3
+  selection — the committee-vs-best-member leg is the only part of this
+  slice that asked a genuinely new question, and it came back 5/12 with
+  thin margins.
+- **Artifacts**: 12 per-committee JSONs (member roster with frozen
+  per-split params, replay checks, best-member superset comparison,
+  K=12 informational grade) + rollup in
+  [`experiments/sweeps/r4-ensemble/`](../experiments/sweeps/r4-ensemble/).
+  LEDGER DECISION (deliberate, splitting the R4-B/R4-F precedents):
+  ledgered — a committee is a genuinely NEW composite run with a return
+  stream no existing row describes (unlike R4-B's frozen replay,
+  report-only), so 12 rows, strategy `committee_equal_weight`,
+  `variants_tried=1` (the literal count — no search inside a committee),
+  stitched-OOS-metrics caveat in the notes; `experiments/index.jsonl`
+  rebuilt. Runtime ~4 s.
+- **Burden ledger**: 12 new registered configs (one per committee);
+  program cumulative 4223 → **4235**.
+
+### Counts
+
+| Committees | KEEP | KILL | KILL-SIG | beat best member | beat B&H only |
+|---|---|---|---|---|---|
+| 12 | 5 | 7 | 0 | 5 | 7 |
+
+Best committee t: **1.085** (BTC-USD daily, a KILL — it lost to its best
+member) vs bar **2.638**. KEEPs by margin over best member: AAPL hourly
++0.278, GOOGL hourly +0.125, JPM daily +0.016, AAPL daily +0.013, XOM
+daily +0.0003. The 5 KEEPs are dev-candidates only; the holdout is SPENT,
+promotion is CLOSED, and any OOS claim about any committee remains
+OWNER-GATED on post-2026 data.

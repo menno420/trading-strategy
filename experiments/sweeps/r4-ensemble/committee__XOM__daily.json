@@ -1,0 +1,884 @@
+{
+  "beats_benchmark": true,
+  "beats_best_member": true,
+  "benchmark_oos_sharpe": 0.2940549506913933,
+  "best_member": {
+    "note": "best committed stitched OOS Sharpe over ALL the group's KEEP lanes (superset incl. deduped-out duplicates \u2014 can only raise the bar)",
+    "oos_sharpe": 0.3821070167866765,
+    "source_file": "experiments/sweeps/r3-trend-new-tickers/donchian__XOM.json",
+    "strategy": "donchian",
+    "sweep": "r3-trend-new-tickers"
+  },
+  "committee": {
+    "dedup": "one member per family; performance-blind lexicographic (sweep, source_file) tiebreak; deduped-out lanes still count in the best-member comparison",
+    "deduped_out": [
+      {
+        "source_file": "experiments/sweeps/r3-trend-new-tickers/donchian__XOM.json",
+        "strategy": "donchian",
+        "sweep": "r3-trend-new-tickers"
+      }
+    ],
+    "grouping": "instrument x timeframe \u2014 committees never mix timeframes (adopted convention, plan silent; declared in the grid commit)",
+    "member_count": 6,
+    "members": [
+      {
+        "committed_oos_sharpe": 0.3221131719349445,
+        "per_split_params": [
+          {
+            "params": {
+              "entry": 55,
+              "exit": 10
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "entry": 20,
+              "exit": 10
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "entry": 20,
+              "exit": 10
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 10
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 10
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "entry": 20,
+              "exit": 10
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "entry": 40,
+              "exit": 10
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "entry": 20,
+              "exit": 10
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "entry": 20,
+              "exit": 20
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "entry": 20,
+              "exit": 20
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.3221131719349445,
+        "source_file": "experiments/sweeps/r3-new-tickers/donchian__XOM.json",
+        "strategy": "donchian",
+        "sweep": "r3-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.32936737100714053,
+        "per_split_params": [
+          {
+            "params": {
+              "fast": 10,
+              "slow": 150
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 200
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 200
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 200
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 200
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 50
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 150
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "fast": 30,
+              "slow": 150
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.32936737100714053,
+        "source_file": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__XOM.json",
+        "strategy": "ema_crossover",
+        "sweep": "r3-trend-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.33736767067543066,
+        "per_split_params": [
+          {
+            "params": {
+              "m": 2.5,
+              "n": 20
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "m": 2.5,
+              "n": 20
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "m": 2.5,
+              "n": 20
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "m": 1.5,
+              "n": 50
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "m": 1.5,
+              "n": 50
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "m": 2.0,
+              "n": 20
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "m": 2.0,
+              "n": 50
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "m": 2.0,
+              "n": 50
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "m": 2.0,
+              "n": 50
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "m": 1.5,
+              "n": 50
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.33736767067543066,
+        "source_file": "experiments/sweeps/r3-gated-new-tickers/keltner_breakout__XOM.json",
+        "strategy": "keltner_breakout",
+        "sweep": "r3-gated-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.3192652280348188,
+        "per_split_params": [
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 3.0,
+              "st_period": 10
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 3.0,
+              "st_period": 10
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 3.0,
+              "st_period": 10
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 200,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 100,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 200,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 4.0,
+              "st_period": 10
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 200,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 2.0,
+              "st_period": 10
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 200,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 2.0,
+              "st_period": 10
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "ema_len": 200,
+              "macd_fast": 12,
+              "macd_signal": 9,
+              "macd_slow": 26,
+              "st_mult": 2.0,
+              "st_period": 14
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.3192652280348188,
+        "source_file": "experiments/sweeps/r3-gated-new-tickers/macd_supertrend__XOM.json",
+        "strategy": "macd_supertrend",
+        "sweep": "r3-gated-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.347024399236424,
+        "per_split_params": [
+          {
+            "params": {
+              "fast": 10,
+              "slow": 100
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 200
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 100
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 200
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 200
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.347024399236424,
+        "source_file": "experiments/sweeps/r3-new-tickers/sma_crossover__XOM.json",
+        "strategy": "sma_crossover",
+        "sweep": "r3-new-tickers"
+      },
+      {
+        "committed_oos_sharpe": 0.29841298738686567,
+        "per_split_params": [
+          {
+            "params": {
+              "fast": 10,
+              "slow": 100,
+              "vol_filter": false
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "fast": 20,
+              "slow": 200,
+              "vol_filter": false
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 50,
+              "vol_filter": true
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 100,
+              "vol_filter": true
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 100,
+              "vol_filter": true
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 100,
+              "vol_filter": true
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 200,
+              "vol_filter": true
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 200,
+              "vol_filter": true
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 200,
+              "vol_filter": true
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "fast": 10,
+              "slow": 200,
+              "vol_filter": false
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.29841298738686567,
+        "source_file": "experiments/sweeps/r3-gated-new-tickers/vol_filtered_trend__XOM.json",
+        "strategy": "vol_filtered_trend",
+        "sweep": "r3-gated-new-tickers"
+      }
+    ],
+    "weighting": "equal (position = mean of member positions)"
+  },
+  "committee_oos_sharpe": 0.3824406657138296,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:29:19+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "committee_equal_weight",
+  "fidelity_guard": {
+    "all_members_reproduced": true,
+    "rule": "every member's baseline replay must reproduce its committed stitched OOS Sharpe within 1e-08"
+  },
+  "git_sha": "90a5f17b11c1f570ce4f4e749713ea44125217f3",
+  "instrument": "XOM",
+  "kill_criterion": "KEEP (dev-candidate only) iff committee stitched OOS Sharpe > best single member AND > same-window same-cost B&H AND > 0; ties/ambiguity KILL",
+  "ledger": "ledgered: one row per committee, strategy 'committee_equal_weight', variants_tried=1 \u2014 a committee is a genuinely new composite run (unlike the R4-B replay, which was report-only)",
+  "ledger_file": "experiments/runs/20260713T102919791741Z-1ccc1bfc2dd0.json",
+  "member_oos_sharpes": {
+    "donchian@r3-new-tickers": 0.3221131719349445,
+    "ema_crossover@r3-trend-new-tickers": 0.32936737100714053,
+    "keltner_breakout@r3-gated-new-tickers": 0.33736767067543066,
+    "macd_supertrend@r3-gated-new-tickers": 0.3192652280348188,
+    "sma_crossover@r3-new-tickers": 0.347024399236424,
+    "vol_filtered_trend@r3-gated-new-tickers": 0.29841298738686567
+  },
+  "n_bars": 3779,
+  "no_research": "frozen replay of each member's committed walk-forward per-split params on the same test windows; the committee (the mean) is the only new object \u2014 no search of any kind",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-C \u2014 Ensemble / committee of survivors",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "ORDER 007 bar at the round-standard K=12 \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding); the committee is one pre-declared config but the bar is never lowered",
+    "sharpe_delta": 0.0883857150224363,
+    "sharpe_se": 0.3162736473569347,
+    "timeframe": "daily",
+    "tstat": 0.2794596254258499,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "sweep": "r4-ensemble",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "verdict": "KEEP (dev-candidate only)",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.04395306698445256,
+      "max_drawdown": -0.6111953832320864,
+      "n_bars": 2520,
+      "n_trades": 1,
+      "sharpe": 0.2940549506913933,
+      "sortino": 0.2924781190450775,
+      "total_return": 0.5374809564023533,
+      "turnover_per_year": 0.1,
+      "win_rate": 1.0
+    },
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.04495021980067415,
+      "max_drawdown": -0.21510705041100353,
+      "n_bars": 2520,
+      "sharpe": 0.3824406657138296,
+      "sortino": 0.3150235710310925,
+      "total_return": 0.5522297991724889
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": -0.6087097810799811
+      },
+      {
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": -0.8315923979937928
+      },
+      {
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.3248318756831708
+      },
+      {
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.13189984065266222
+      },
+      {
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -1.083671997465102
+      },
+      {
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": -0.5144557156993048
+      },
+      {
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.5919401396150725
+      },
+      {
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 1.5551849925528702
+      },
+      {
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": 1.2596012916645452
+      },
+      {
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": -0.49992932889632424
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008
+  }
+}

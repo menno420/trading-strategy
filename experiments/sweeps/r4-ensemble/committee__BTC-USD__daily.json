@@ -1,0 +1,747 @@
+{
+  "beats_benchmark": true,
+  "beats_best_member": false,
+  "benchmark_oos_sharpe": 0.8211061068266703,
+  "best_member": {
+    "note": "best committed stitched OOS Sharpe over ALL the group's KEEP lanes (superset incl. deduped-out duplicates \u2014 can only raise the bar)",
+    "oos_sharpe": 1.2575201323867047,
+    "source_file": "experiments/sweeps/r3-btc-coverage/bollinger_breakout__BTC-USD.json",
+    "strategy": "bollinger_breakout",
+    "sweep": "r3-btc-coverage"
+  },
+  "committee": {
+    "dedup": "one member per family; performance-blind lexicographic (sweep, source_file) tiebreak; deduped-out lanes still count in the best-member comparison",
+    "deduped_out": [],
+    "grouping": "instrument x timeframe \u2014 committees never mix timeframes (adopted convention, plan silent; declared in the grid commit)",
+    "member_count": 5,
+    "members": [
+      {
+        "committed_oos_sharpe": 0.9012033203040553,
+        "per_split_params": [
+          {
+            "params": {
+              "atr_period": 22,
+              "entry_lookback": 55,
+              "k": 3.0
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 2.0
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 2.0
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 22,
+              "entry_lookback": 20,
+              "k": 3.0
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 2.0
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 3.0
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 14,
+              "entry_lookback": 20,
+              "k": 4.0
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 22,
+              "entry_lookback": 20,
+              "k": 4.0
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 22,
+              "entry_lookback": 20,
+              "k": 4.0
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "atr_period": 22,
+              "entry_lookback": 20,
+              "k": 4.0
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.9012033203040553,
+        "source_file": "experiments/sweeps/r3-btc-coverage/atr_trailing__BTC-USD.json",
+        "strategy": "atr_trailing",
+        "sweep": "r3-btc-coverage"
+      },
+      {
+        "committed_oos_sharpe": 1.2575201323867047,
+        "per_split_params": [
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 10
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 10
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.5,
+              "period": 20
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.5,
+              "period": 20
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.5,
+              "period": 20
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 50
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 50
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.0,
+              "period": 50
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.5,
+              "period": 50
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "num_std": 1.5,
+              "period": 10
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 1.2575201323867047,
+        "source_file": "experiments/sweeps/r3-btc-coverage/bollinger_breakout__BTC-USD.json",
+        "strategy": "bollinger_breakout",
+        "sweep": "r3-btc-coverage"
+      },
+      {
+        "committed_oos_sharpe": 1.0201909987517535,
+        "per_split_params": [
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 7
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "kijun": 22,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 52,
+              "tenkan": 12
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 52,
+              "tenkan": 12
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "kijun": 26,
+              "senkou_b": 44,
+              "tenkan": 12
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 1.0201909987517535,
+        "source_file": "experiments/sweeps/r3-btc-coverage/ichimoku_trend__BTC-USD.json",
+        "strategy": "ichimoku_trend",
+        "sweep": "r3-btc-coverage"
+      },
+      {
+        "committed_oos_sharpe": 0.9126294269330945,
+        "per_split_params": [
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "lookback": 252
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": -0.05,
+              "lookback": 126
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.05,
+              "exit": 0.0,
+              "lookback": 63
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.05,
+              "exit": 0.0,
+              "lookback": 63
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.05,
+              "exit": 0.0,
+              "lookback": 63
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.05,
+              "exit": 0.0,
+              "lookback": 126
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "lookback": 63
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "lookback": 63
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "lookback": 63
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "entry": 0.0,
+              "exit": 0.0,
+              "lookback": 63
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 0.9126294269330945,
+        "source_file": "experiments/sweeps/r3-btc-coverage/roc_momentum__BTC-USD.json",
+        "strategy": "roc_momentum",
+        "sweep": "r3-btc-coverage"
+      },
+      {
+        "committed_oos_sharpe": 1.02399213513437,
+        "per_split_params": [
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 5
+            },
+            "test": [
+              1008,
+              1260
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 5
+            },
+            "test": [
+              1260,
+              1512
+            ]
+          },
+          {
+            "params": {
+              "period": 12,
+              "signal_period": 9
+            },
+            "test": [
+              1512,
+              1764
+            ]
+          },
+          {
+            "params": {
+              "period": 12,
+              "signal_period": 9
+            },
+            "test": [
+              1764,
+              2016
+            ]
+          },
+          {
+            "params": {
+              "period": 12,
+              "signal_period": 9
+            },
+            "test": [
+              2016,
+              2268
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 5
+            },
+            "test": [
+              2268,
+              2520
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 5
+            },
+            "test": [
+              2520,
+              2772
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 5
+            },
+            "test": [
+              2772,
+              3024
+            ]
+          },
+          {
+            "params": {
+              "period": 15,
+              "signal_period": 0
+            },
+            "test": [
+              3024,
+              3276
+            ]
+          },
+          {
+            "params": {
+              "period": 21,
+              "signal_period": 0
+            },
+            "test": [
+              3276,
+              3528
+            ]
+          }
+        ],
+        "replay_matches_committed": true,
+        "replayed_oos_sharpe": 1.02399213513437,
+        "source_file": "experiments/sweeps/r3-btc-coverage/trix_momentum__BTC-USD.json",
+        "strategy": "trix_momentum",
+        "sweep": "r3-btc-coverage"
+      }
+    ],
+    "weighting": "equal (position = mean of member positions)"
+  },
+  "committee_oos_sharpe": 1.1645529843657727,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:29:16+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "committee_equal_weight",
+  "fidelity_guard": {
+    "all_members_reproduced": true,
+    "rule": "every member's baseline replay must reproduce its committed stitched OOS Sharpe within 1e-08"
+  },
+  "git_sha": "90a5f17b11c1f570ce4f4e749713ea44125217f3",
+  "instrument": "BTC-USD",
+  "kill_criterion": "KEEP (dev-candidate only) iff committee stitched OOS Sharpe > best single member AND > same-window same-cost B&H AND > 0; ties/ambiguity KILL",
+  "ledger": "ledgered: one row per committee, strategy 'committee_equal_weight', variants_tried=1 \u2014 a committee is a genuinely new composite run (unlike the R4-B replay, which was report-only)",
+  "ledger_file": "experiments/runs/20260713T102916658069Z-b361ffedaab6.json",
+  "member_oos_sharpes": {
+    "atr_trailing@r3-btc-coverage": 0.9012033203040553,
+    "bollinger_breakout@r3-btc-coverage": 1.2575201323867047,
+    "ichimoku_trend@r3-btc-coverage": 1.0201909987517535,
+    "roc_momentum@r3-btc-coverage": 0.9126294269330945,
+    "trix_momentum@r3-btc-coverage": 1.02399213513437
+  },
+  "n_bars": 3767,
+  "no_research": "frozen replay of each member's committed walk-forward per-split params on the same test windows; the committee (the mean) is the only new object \u2014 no search of any kind",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-C \u2014 Ensemble / committee of survivors",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "ORDER 007 bar at the round-standard K=12 \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding); the committee is one pre-declared config but the bar is never lowered",
+    "sharpe_delta": 0.3434468775391024,
+    "sharpe_se": 0.31665293944350703,
+    "timeframe": "daily",
+    "tstat": 1.0846161041254936,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "sweep": "r4-ensemble",
+  "sweep_verdict": "KILL",
+  "timeframe": "daily",
+  "verdict": "KILL",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.36743600498851925,
+      "max_drawdown": -0.8338309836709148,
+      "n_bars": 2520,
+      "n_trades": 1,
+      "sharpe": 0.8211061068266703,
+      "sortino": 0.8489780782450211,
+      "total_return": 21.859677973211678,
+      "turnover_per_year": 0.1,
+      "win_rate": 1.0
+    },
+    "n_splits": 10,
+    "oos_end": "2024-05-14 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.4259940940500908,
+      "max_drawdown": -0.5288141947370522,
+      "n_bars": 2520,
+      "sharpe": 1.1645529843657727,
+      "sortino": 1.2338276133399448,
+      "total_return": 33.767804608654416
+    },
+    "oos_start": "2017-06-21 00:00:00",
+    "per_split": [
+      {
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 2.3622727796763416
+      },
+      {
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": -0.8170040014736314
+      },
+      {
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 1.8187936019696973
+      },
+      {
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": -0.0040407066576200945
+      },
+      {
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 2.303508115790262
+      },
+      {
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 1.757280595205086
+      },
+      {
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": -0.16580893944573175
+      },
+      {
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": -1.9289464872864357
+      },
+      {
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": 0.9741592521273768
+      },
+      {
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 1.942426984510652
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.01796970417993271,
+    "max_drawdown": -0.5018548631774138,
+    "n_bars": 2520,
+    "n_trades": 1,
+    "sharpe": 0.1962113994495629,
+    "sortino": 0.1964380205539646,
+    "total_return": 0.19494669235317086,
+    "turnover_per_year": 0.1,
+    "win_rate": 1.0
+  },
+  "config_hash": "f9415d8ad656",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:29:19+00:00",
+  "data_end": "2024-01-09 00:00:00",
+  "data_start": "2014-01-06 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "90a5f17b11c1f570ce4f4e749713ea44125217f3",
+  "instrument": "TLT",
+  "metrics": {
+    "cagr": 0.03179396889382757,
+    "max_drawdown": -0.17237812717135492,
+    "n_bars": 2520,
+    "n_trades": 588,
+    "sharpe": 0.40779795963257515,
+    "sortino": 0.3782623024918609,
+    "total_return": 0.3675079185590897,
+    "turnover_per_year": 8.5,
+    "win_rate": 0.5414364640883977
+  },
+  "n_bars": 2520,
+  "notes": "R4-C survivor committee (docs/research-round-4-plan.md \u00a7 R4-C; post-holdout DEV-ONLY, promotion closed). Stitched walk-forward OOS composite of frozen KEEP-dev members (position = mean of member positions); metrics are over the stitched OOS window, not a single-window run. Informational t graded at the round-standard K=12 in the sweep JSON (bar never lowered).",
+  "params": {
+    "members": [
+      "aroon_trend@r3-aroon-cci",
+      "donchian@r3-new-tickers",
+      "ema_crossover@r3-trend-new-tickers",
+      "ichimoku_trend@r3-trix-ichimoku",
+      "pullback@r3-meanrev-new-tickers",
+      "sma_crossover@r3-new-tickers",
+      "supertrend_flip@r3-trend-new-tickers",
+      "trix_momentum@r3-trix-ichimoku",
+      "vol_filtered_trend@r3-gated-new-tickers"
+    ],
+    "min_members": 2,
+    "weighting": "equal"
+  },
+  "run_id": "20260713T102919315826Z-f9415d8ad656",
+  "schema_version": 1,
+  "strategy": "committee_equal_weight",
+  "timeframe": "daily",
+  "variants_tried": 1
+}
