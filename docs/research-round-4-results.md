@@ -416,3 +416,160 @@ BEFORE the sweep ran. Runner: `scripts/run_r4_regime_sweep.py`.
 Best conditional t: **0.07** (TLT) vs bar **2.690**. Holdout SPENT,
 promotion CLOSED; nothing here is a finding, and the KILLs are the
 result.
+
+## R4-E — cross-asset exposure gate (2026-07-13)
+
+**Slice**: `r4-crossasset` — bond/commodity momentum as an exposure gate
+on equity trend lanes, vs a MANDATORY ungated control arm, on SPY and
+QQQ × daily. Pre-registered in
+[research-round-4-plan.md](research-round-4-plan.md) § R4-E; grids and
+the new `crossasset_gate` strategy (the program's first strategy that
+consumes a SECOND instrument's series) committed in the pre-declaration
+commit BEFORE the sweep ran. Runner:
+`scripts/run_r4_crossasset_sweep.py`.
+
+- **Headline**: the pre-registered null holds, and harder than R4-D's —
+  **2 lanes, 0 KEEP / 2 KILL / 0 KILL-SIG**, and the gated arm lost to
+  its own ungated control on **BOTH** lanes (`control_arm_delta` SPY
+  **−0.302**, QQQ **−0.635**; mean −0.468) as well as to same-window
+  same-cost B&H on both. Best informational t **−1.91** (SPY) vs the
+  K=13 bar **2.665** — negative on both lanes, though neither crosses
+  the mirrored −2.665 KILL-SIG bar.
+- **Design**: gated arm = the frozen equity trend component
+  (`ema_crossover` 20/100, the committed PR #90 grid point — the same
+  freeze PR #104 used) exposed only while the gate asset's trailing
+  momentum is positive; gate asset {TLT, XOM, GLD} × momentum lookback
+  {21, 63, 126, 252} bars = 12 gated variants + 1 ungated control
+  (K = 13, bar min_tstat(13) ≈ 2.665 — RAISED above the round-standard
+  2.638 by counting the control arm, the PR #104 precedent; the bar is
+  never lowered). Gate momentum is computed on the gate asset's own
+  calendar and aligned onto the equity index by strictly-backward ffill
+  — the gate value applied at equity bar t uses gate-asset data ≤ t
+  ONLY (no lookahead, pinned by tests), with the fill at t+1 open per
+  house convention. Control arm = the identical component, no gate
+  (never loads gate data; invariance pinned by tests). Costs
+  5 bps + 1 bp, walk-forward 1008/252/252, splits asserted identical
+  across arms. Pre-registered rule (same as R4-D): KILL iff gated
+  stitched OOS Sharpe ≤ the ungated control's; KEEP additionally
+  requires beating B&H.
+
+### control_arm_delta (gated − ungated control stitched OOS Sharpe)
+
+| Instrument | Gated | Control | `control_arm_delta` | B&H | verdict | t (bar 2.665) |
+|---|---|---|---|---|---|---|
+| SPY | 0.158 | 0.460 | **−0.302** | 0.761 | KILL | −1.91 |
+| QQQ | 0.197 | 0.832 | **−0.635** | 0.871 | KILL | −2.13 |
+
+- **The honest reading**: the classic story — bond momentum warns equity
+  trend — subtracted value everywhere it was tried, at every horizon and
+  with every gate asset offered. The mechanism is visible in the
+  per-split picks: the gated walk-forward churned through 5 (SPY) and 8
+  (QQQ) distinct variants over 10 splits, and its in-sample favourite
+  was the XOM gate (11/20 split picks), NOT the TLT gate the hypothesis
+  named (5/20) — while the full-dev-period in-sample winner was
+  different again (GLD 126 on both lanes). Three different answers to
+  "which gate asset matters" from the same data is what noise looks
+  like; the stable, selection-free 1-variant control beat the searched
+  gate by 0.3–0.6 Sharpe. This is also the round's cleanest gate result:
+  where PR #92 lost 6/6 and R4-D split 3/3, the cross-asset gate lost
+  0/2 with the largest deltas of the three conditioning slices.
+- **Nulls first-class**: this closes the round's conditioning arc — vol
+  gate (PR #92), trend-strength switch (PR #104), cross-asset gate
+  (this slice) — three axes, one measurement convention
+  (machine-readable `control_arm_delta`), zero candidates produced by
+  conditioning anywhere.
+- **Artifacts**: 2 per-lane JSONs (both arms' full walk-forward blocks +
+  `control_arm_delta`) + rollup in
+  [`experiments/sweeps/r4-crossasset/`](../experiments/sweeps/r4-crossasset/).
+  Ledger: one row per lane — the GATED arm's top full-dev-period variant
+  (round-3 convention, PR #104 precedent; post-hoc in-sample selection,
+  flagged in the notes), `variants_tried = K = 13`; the control arm's
+  numbers live in the sweep JSONs; `experiments/index.jsonl` rebuilt.
+  Runtime ~2 s.
+- **Burden ledger**: 26 new registered configs (13 × 2); program
+  cumulative 4319 → **4345**.
+
+### Counts
+
+| Lanes | KEEP | KILL | KILL-SIG | gated beat control | beat B&H |
+|---|---|---|---|---|---|
+| 2 | 0 | 2 | 0 | 0 | 0 |
+
+Best gated t: **−1.91** (SPY) vs bar **2.665**. Holdout SPENT, promotion
+CLOSED; nothing here is a finding, and the KILLs are the result.
+
+## Round 4 — closing tally (2026-07-13)
+
+All six pre-registered Round-4 slices have now landed (PRs #100–#105,
+against the plan merged before any outcome existed). One-line verdicts:
+
+| Slice | PR | One-line verdict |
+|---|---|---|
+| R4-A KILL-SIG re-grade | #100 | 302 r3 summaries re-graded non-destructively: **4 KILL-SIG** (significantly harmful), 238 noise-level KILL, 58 KEEP unchanged, 2 ungradeable — hypothesis ("1–3 exist") confirmed in kind, missed by one in count |
+| R4-B cost-sensitivity | #101 | **42/58** r3 KEEPs survive 2× costs (keep dev-candidate status), **25/58** survive 4×; hourly lanes die at twice the daily rate; best stressed t 1.315 — hypothesis ("most flip") NOT confirmed |
+| R4-C survivor committees | #103 | **5/12** committees beat their best member (all 12 beat B&H, inherited); max t **1.09** vs 2.638 — the registered "modest, non-significant improvement" holds exactly |
+| R4-D regime-conditional | #104 | **Null holds: 0/6 KEEP**; conditional beat its control 3/6 (mean delta −0.067), every control-beater lost to B&H; best t 0.07 vs 2.690 |
+| R4-F day-of-week seasonality | #102 | **Null holds: 0/75** combos clear the honestly-counted K=75 bar (3.209); best t 0.317; 30 exposure-artifact KILL-SIGs |
+| R4-E cross-asset gate | #105 | **Null holds: 0/2 KEEP**; the ungated control beat the gate on BOTH lanes (deltas SPY −0.302, QQQ −0.635); best t −1.91 vs 2.665 |
+
+- **Cumulative burden**: Round 4 registered **197 new configs** (75
+  R4-F + 12 R4-C + 84 R4-D + 26 R4-E; R4-A and R4-B registered zero —
+  re-grades of committed artifacts), taking the program cumulative from
+  4148 to **4345**. Every slice counted its control variants into K
+  where it had them; no K was ever counted down and no bar was ever
+  lowered (the round's bars: 2.638 at K=12, 2.665 at K=13, 2.690 at
+  K=14, 3.209 at K=75).
+- **0 promoted — promotion remains CLOSED, holdout SPENT.** No Round-4
+  verdict promoted anything, nothing here is a finding, and genuine OOS
+  validation of any dev-candidate remains OWNER-GATED behind a new
+  pre-registered protocol on post-2026 data.
+- **What the round actually established**: (1) the grading vocabulary
+  now distinguishes noise from significant harm (KILL-SIG), and
+  significant harm is rare where exposure is comparable (4/302) but
+  easily minted where it is not (30/75 in R4-F — an exposure artifact
+  to fix in reporting, not in grading); (2) the surviving dev-candidate
+  list is now cost-stressed and 28% shorter (58 → 42); (3) composition
+  helps only in small, closely-matched committees and never
+  significantly; (4) **conditioning of every kind tested — volatility
+  (PR #92), trend strength (R4-D), cross-asset momentum (R4-E) —
+  subtracted value against its own unconditioned control**; the control
+  arm discipline (machine-readable `control_arm_delta`) is the round's
+  most reusable methodological asset.
+
+### What round 5 should look at (synthesized from the six slices' session ideas)
+
+1. **Selection-fair control arms / story-pinned configs** (r4-regime +
+   r4-crossasset cards): both conditioning nulls compare a searched arm
+   (12 variants) against a near-fixed control (1–2), so
+   `control_arm_delta` mixes "conditioning hurts" with "bigger grids
+   overfit their train windows"; and where a hypothesis NAMES a config
+   (R4-E named TLT momentum), the named config's selection-free
+   walk-forward should be reported alongside the searched arm.
+   Cardinality-matched controls + a fixed-config row would separate
+   selection variance from signal at near-zero cost.
+2. **Replay pin** (r4-cost-sensitivity card): a standing test that
+   re-derives N committed lanes' stitched OOS Sharpes from their frozen
+   `per_split` blocks and fails on drift — R4-B/R4-C proved the
+   1e-8-fidelity replay works; pin it before it rots.
+3. **Prose-tally reconciliation** (r4-killsig card): recompute every
+   round-level aggregate cited in the round docs from the committed
+   summary JSONs and fail on mismatch (the "~312 vs 302" drift, caught
+   live, was harmless — the same drift in a KEEP count would not be).
+4. **Pairwise committee frontier** (r4-ensemble card): all 2-member
+   committees within each qualifying group, K counted at the full pair
+   count — separates "two complementary signals help" from "averaging
+   many mediocre ones dilutes".
+5. **Exposure-ratio column** (r4-seasonality card): record
+   strategy/benchmark average-|held| per lane (and optionally an
+   exposure-matched secondary benchmark) so KILL-SIG keeps meaning
+   "harmful timing" rather than "structurally under-invested".
+6. **Deferred infra, still open** (plan § deferred): the round-scope
+   manifest (`ROUNDS.json`) and sweep-runner extraction (the r3/r4
+   runners are now ~15 near-identical copies) — both non-gating, both
+   cheap, both would have made items 2–3 cheaper this round.
+
+Round 4 is closed. Six slices, six honest answers, zero findings — the
+generative rung did its job: the cheap idea classes adjacent to the
+round-3 surface are now measured, and the measurement says the edge is
+not there. Anything further on this surface needs either new data
+(OWNER-GATED) or a genuinely different idea class, not more variants.
