@@ -67,7 +67,14 @@ Families:
   lane r4-seasonality × 15 daily tickers): weekday_long (pure calendar
   rule — long only on bars signalled on one chosen weekday, the lab's
   first seasonality family; K counted honestly at 5 weekdays × 15
-  tickers = 75, bar min_tstat(75) ≈ 3.21).
+  tickers = 75, bar min_tstat(75) ≈ 3.21); slice R4-D (lane r4-regime ×
+  the six slice-3 tickers × daily): regime_switch (trend-strength
+  tercile regime switch — trend component in the strong-trend bucket,
+  flat/reversion component in the weak bucket, middle tercile holds;
+  metric ADX or |200d SMA slope|; ``regime_condition=False`` is the
+  MANDATORY unconditional control arm — the same components, no gate —
+  per the plan's control-arm discipline, motivated by PR #92's 6/6
+  control-beats-gate result).
 
 Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
 closes (one column per instrument) and return a target-weight DataFrame
@@ -82,10 +89,10 @@ from . import (adx_filtered_sma, aroon_trend, atr_trailing,
                bollinger_breakout, bollinger_reversion, buy_and_hold,
                cci_reversion, donchian, ema_crossover, ichimoku_trend,
                keltner_breakout, macd, macd_supertrend, pullback,
-               roc_momentum, rsi_mean_reversion, sma_crossover,
-               stochastic_reversion, supertrend_flip, trix_momentum,
-               vol_filtered_trend, weekday_long, williams_r_reversion,
-               xsec_momentum, xsec_reversal)
+               regime_switch, roc_momentum, rsi_mean_reversion,
+               sma_crossover, stochastic_reversion, supertrend_flip,
+               trix_momentum, vol_filtered_trend, weekday_long,
+               williams_r_reversion, xsec_momentum, xsec_reversal)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -111,6 +118,7 @@ STRATEGIES = {
     "trix_momentum": trix_momentum.generate,
     "ichimoku_trend": ichimoku_trend.generate,
     "weekday_long": weekday_long.generate,
+    "regime_switch": regime_switch.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -143,6 +151,11 @@ DEFAULT_PARAMS = {
     "ichimoku_trend": {"tenkan": 9, "kijun": 26, "senkou_b": 52,
                        "displacement": 26},
     "weekday_long": {"weekday": 0},
+    "regime_switch": {"metric": "adx", "rank_window": 252,
+                      "weak_family": "reversion", "regime_condition": True,
+                      "trend_fast": 20, "trend_slow": 100,
+                      "rsi_period": 2, "rsi_oversold": 20,
+                      "rsi_overbought": 60},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -235,6 +248,13 @@ R3_HOURLY_COMPLETION_FAMILY = ["cci_reversion", "bollinger_breakout",
 # tickers), bar min_tstat(75) ≈ 3.21 — never lowered.
 R4_SEASONALITY_FAMILY = ["weekday_long"]
 
+# Round 4 slice R4-D (docs/research-round-4-plan.md § R4-D, ORDER 012,
+# post-holdout dev-only): the single trend-strength regime-switch family
+# swept in the r4-regime × six-slice-3-tickers × daily lane, WITH its
+# mandatory unconditional control arm (regime_condition=False) committed
+# in the same grid.
+R4_REGIME_FAMILY = ["regime_switch"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
     "xsec_reversal": xsec_reversal.generate_weights,
@@ -249,6 +269,7 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "R3_BREAKOUT_FAMILY", "R3_XSEC_EXPANDED_FAMILY",
            "R3_TRIX_ICHIMOKU_FAMILY", "R3_TREND_HOURLY_FAMILY",
            "R3_HOURLY_COMPLETION_FAMILY", "R4_SEASONALITY_FAMILY",
+           "R4_REGIME_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
@@ -256,4 +277,5 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "williams_r_reversion", "roc_momentum", "adx_filtered_sma",
            "aroon_trend", "cci_reversion", "bollinger_breakout",
            "atr_trailing", "trix_momentum", "ichimoku_trend",
-           "weekday_long", "xsec_momentum", "xsec_reversal"]
+           "weekday_long", "regime_switch", "xsec_momentum",
+           "xsec_reversal"]

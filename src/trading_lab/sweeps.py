@@ -1520,3 +1520,113 @@ R4_ENSEMBLE_EXPECTED_KEEPS = 58
 # Ledger strategy name for committee rows (one row per committee,
 # variants_tried=1 — each committee is one pre-declared config).
 R4_ENSEMBLE_STRATEGY_NAME = "committee_equal_weight"
+
+
+# ---------------------------------------------------------------------------
+# Round 4 slice R4-D: REGIME-CONDITIONAL ALLOCATION with MANDATORY control
+# arm (lane: r4-regime × the six slice-3 tickers × daily —
+# docs/research-round-4-plan.md § R4-D, ORDER 012 night-run, post-holdout
+# DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# Round 3's only regime conditioner was the vol gate, and PR #92 found its
+# vol_filter=False control arm beat the gated arm on ALL SIX instruments.
+# R4-D tests a different conditioning axis — TREND STRENGTH — with the
+# control-arm discipline now mandatory: per instrument, a CONDITIONAL arm
+# (trading_lab.strategies.regime_switch with regime_condition=True: trend
+# component in the strong-trend tercile bucket, flat or reversion component
+# in the weak bucket, middle tercile holds the previous bucket) is
+# walk-forwarded over the 12-variant grid below, and an UNCONDITIONAL
+# CONTROL arm (regime_condition=False: the SAME components, no gate —
+# weak_family="flat" collapses to the ungated trend component,
+# weak_family="reversion" to the equal-weight mean of both components) is
+# walk-forwarded over its 2-variant grid on the identical rail, costs and
+# windows. Pre-registered kill criterion: KILL iff conditional stitched
+# OOS Sharpe <= the control's; a KEEP additionally requires beating
+# same-window same-cost B&H. A machine-readable `control_arm_delta`
+# (conditional minus control stitched OOS Sharpe) is recorded per lane.
+#
+# The conditional grid sweeps ONLY the regime axes (both plan-named
+# metrics, tercile-rank window, weak-bucket family); the component
+# parameters are FROZEN at grid points already committed on these
+# instruments (NO new parameter territory): ema_crossover (20, 100) from
+# the r3-trend-new-tickers grid (PR #90) and rsi_mean_reversion (2, 20,
+# 60) from the r3-meanrev-new-tickers grid (PR #91). Tercile boundaries
+# (1/3, 2/3), the ADX period (14), and the SMA-slope construction
+# (200-bar SMA, 21-bar horizon) are FIXED here, in the grid commit, per
+# the plan, and are NOT swept. The control variants deliberately omit
+# `metric`/`rank_window`: the control arm never computes the metric
+# (invariance pinned by tests) — the two arms differ ONLY in the
+# condition.
+#
+# Significance K: 14 = 12 conditional + 2 control variants per lane — the
+# honest count of every registered config this lane tries. The plan
+# registers "~12 variants per lane, standard K=12"; counting the control
+# arm RAISES the bar (min_tstat(14) ~ 2.690 > min_tstat(12) ~ 2.638) — K
+# is never counted down, the bar is never lowered. Informational only:
+# promotion is CLOSED. Instruments: the six slice-3 tickers verbatim —
+# the same surface PR #92's vol-gate result was measured on, where both
+# component families exist as committed variants.
+
+_R4_REGIME_AXES: dict[str, list] = {
+    "metric": ["adx", "sma_slope"],
+    "rank_window": [126, 252, 504],
+    "weak_family": ["flat", "reversion"],
+}
+
+R4_REGIME_FAMILIES = ("regime_switch",)
+R4_REGIME_STRATEGY_NAME = "regime_switch"
+
+# The six slice-3 instruments, reused verbatim (same tuple object — the
+# identity is the point: this slice answers PR #92 on ITS surface).
+R4_REGIME_INSTRUMENTS = R3_NEW_TICKERS_INSTRUMENTS
+
+# Component parameters, FROZEN (committed r3 grid points; never swept).
+R4_REGIME_COMPONENT_PARAMS: dict = {
+    "trend_fast": 20, "trend_slow": 100,          # ema_crossover (PR #90)
+    "rsi_period": 2, "rsi_oversold": 20,          # rsi_mean_reversion
+    "rsi_overbought": 60,                         # (PR #91)
+}
+
+# Registered significance K per lane: EVERY config this lane tries —
+# 12 conditional + 2 control. min_tstat(14) ~ 2.690 >= the round-standard
+# 2.638; the bar only ever rises.
+R4_REGIME_K = 14
+
+
+def r4_regime_conditional_variants() -> list[dict]:
+    """The 12 CONDITIONAL-arm parameter dicts (regime_condition=True):
+    the cartesian product of the registered regime axes, with the frozen
+    component parameters baked in, in deterministic order."""
+    keys = list(_R4_REGIME_AXES)
+    return [dict(zip(keys, vals), regime_condition=True,
+                 **R4_REGIME_COMPONENT_PARAMS)
+            for vals in product(*(_R4_REGIME_AXES[k] for k in keys))]
+
+
+def r4_regime_control_variants() -> list[dict]:
+    """The 2 UNCONDITIONAL control-arm parameter dicts
+    (regime_condition=False): one per weak_family, same frozen
+    components. `metric`/`rank_window` are deliberately omitted — the
+    control arm never computes the metric (the 12 conditional variants
+    collapse to these 2 distinct allocations when the condition is
+    removed)."""
+    return [dict(weak_family=weak, regime_condition=False,
+                 **R4_REGIME_COMPONENT_PARAMS)
+            for weak in _R4_REGIME_AXES["weak_family"]]
+
+
+def r4_regime_variants_per_arm() -> dict[str, int]:
+    """Round-4 slice R4-D variant counts by arm (multiple-testing
+    bookkeeping)."""
+    return {"conditional": len(r4_regime_conditional_variants()),
+            "control": len(r4_regime_control_variants())}
+
+
+def r4_regime_total_configs() -> int:
+    """Total registered Round-4 slice R4-D configs: (conditional +
+    control) variants × instruments = 14 × 6 = 84 (each instrument × grid
+    point counts as one config, as in Rounds 2-3; the per-instrument B&H
+    baselines already sit on the ledger from slice 3 and are not searched
+    configurations)."""
+    return (sum(r4_regime_variants_per_arm().values())
+            * len(R4_REGIME_INSTRUMENTS))

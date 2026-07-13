@@ -1435,3 +1435,91 @@ class TestR4EnsembleRegistration:
         from trading_lab.strategies import STRATEGIES
         assert sweeps.R4_ENSEMBLE_STRATEGY_NAME == "committee_equal_weight"
         assert sweeps.R4_ENSEMBLE_STRATEGY_NAME not in STRATEGIES
+
+
+class TestR4RegimeGrid:
+    """R4-D regime-conditional allocation — grid + constants pinned BEFORE
+    the sweep runs (docs/research-round-4-plan.md § R4-D)."""
+
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R4_REGIME_FAMILY
+        assert set(sweeps.R4_REGIME_FAMILIES) == set(R4_REGIME_FAMILY)
+        assert sweeps.R4_REGIME_STRATEGY_NAME in STRATEGIES
+
+    def test_registered_counts(self):
+        # Pre-registered R4-D accounting: 12 conditional + 2 control
+        # variants per lane x 6 instruments = 84 registered configs.
+        assert sweeps.r4_regime_variants_per_arm() == {"conditional": 12,
+                                                       "control": 2}
+        assert sweeps.r4_regime_total_configs() == 84
+        assert len(sweeps.R4_REGIME_INSTRUMENTS) == 6
+
+    def test_instruments_are_the_pr83_surface(self):
+        # The six slice-3 tickers VERBATIM (same tuple object) — the
+        # surface PR #92's vol-gate control-arm result was measured on.
+        assert sweeps.R4_REGIME_INSTRUMENTS is sweeps.R3_NEW_TICKERS_INSTRUMENTS
+        assert sweeps.R4_REGIME_INSTRUMENTS == ("SPY", "QQQ", "TSLA",
+                                                "JPM", "XOM", "TLT")
+
+    def test_k_counts_every_config_and_bar_never_lowered(self):
+        # K = 14 counts EVERY registered config this lane tries (12
+        # conditional + 2 control); the bar RISES above the round-standard
+        # 2.638 — K is never counted down.
+        from trading_lab import promotion
+        assert sweeps.R4_REGIME_K == 14
+        assert sweeps.R4_REGIME_K == sum(
+            sweeps.r4_regime_variants_per_arm().values())
+        assert (promotion.min_tstat(sweeps.R4_REGIME_K)
+                > promotion.min_tstat(12))
+        assert round(promotion.min_tstat(sweeps.R4_REGIME_K), 3) == 2.690
+
+    def test_conditional_variants_shape(self):
+        variants = sweeps.r4_regime_conditional_variants()
+        assert len(variants) == 12
+        # deterministic and unique
+        assert variants == sweeps.r4_regime_conditional_variants()
+        assert len({tuple(sorted(v.items())) for v in variants}) == 12
+        for v in variants:
+            assert v["regime_condition"] is True
+            assert v["metric"] in ("adx", "sma_slope")
+            assert v["rank_window"] in (126, 252, 504)
+            assert v["weak_family"] in ("flat", "reversion")
+            # frozen components baked into every variant
+            for key, val in sweeps.R4_REGIME_COMPONENT_PARAMS.items():
+                assert v[key] == val
+
+    def test_control_variants_are_the_conditionless_collapse(self):
+        controls = sweeps.r4_regime_control_variants()
+        assert len(controls) == 2
+        for v in controls:
+            assert v["regime_condition"] is False
+            # the control arm never computes the metric — the regime axes
+            # are deliberately absent
+            assert "metric" not in v and "rank_window" not in v
+            for key, val in sweeps.R4_REGIME_COMPONENT_PARAMS.items():
+                assert v[key] == val
+        # same weak-family coverage as the conditional arm
+        assert ({v["weak_family"] for v in controls}
+                == {v["weak_family"]
+                    for v in sweeps.r4_regime_conditional_variants()})
+
+    def test_component_params_are_committed_r3_grid_points(self):
+        # NO new parameter territory: the frozen components are grid
+        # points of the committed round-3 sweeps on THESE instruments.
+        comp = sweeps.R4_REGIME_COMPONENT_PARAMS
+        ema_point = {"fast": comp["trend_fast"], "slow": comp["trend_slow"]}
+        assert ema_point in sweeps.r3_trend_new_tickers_variants(
+            "ema_crossover")
+        rsi_point = {"period": comp["rsi_period"],
+                     "oversold": comp["rsi_oversold"],
+                     "overbought": comp["rsi_overbought"]}
+        assert rsi_point in sweeps.r3_meanrev_new_tickers_variants(
+            "rsi_mean_reversion")
+
+    def test_all_variants_runnable(self, random_walk):
+        strategy = STRATEGIES[sweeps.R4_REGIME_STRATEGY_NAME]
+        for params in (sweeps.r4_regime_conditional_variants()
+                       + sweeps.r4_regime_control_variants()):
+            pos = strategy(random_walk, **params)
+            assert not pos.isna().any()
+            assert ((pos >= 0.0) & (pos <= 1.0)).all()
