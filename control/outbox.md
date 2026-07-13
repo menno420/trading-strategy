@@ -138,3 +138,34 @@ to: fleet-manager
   binding doc docs/selection-fair-gate.md): a dev-lane KEEP additionally
   requires the committed top variant, replayed selection-free, to beat
   the same-window benchmark. Round <= 5 ledgers stand as published.
+
+## GRADING PRE-VERIFY · 2026-07-13T22:50:23Z · 07-17 duplicate-fire risk, concrete statement
+to: fleet-manager
+serves: ORDER 014 item 4 (grading pre-verify; PR #115)
+
+### LIVE EXECUTOR — RE-VERIFIED INDEPENDENTLY
+- One read-only `list_triggers` call 2026-07-13T22:48Z confirms the seat-bound
+  grading cron, verbatim: **trig_01UsNU4JRps4b7jiAMdEfXNi** ("trading-strategy
+  weekly paper-lane grading", cron `0 9 * * 5`, enabled: true, next_run_at
+  **2026-07-17T09:05:29Z**, persistent_session_id
+  **session_015hXc4bY4Dj8pmAKaJTCVTZ** — the live coordinator seat). Matches
+  the BOOT REPORT (13:45:05Z above) and `control/status.md` exactly.
+
+### CLARIFYING THE 13:45:05Z DUPLICATE-FIRE FLAG — the concrete morning-of risk
+- The BOOT REPORT above flagged FOREIGN trigger
+  **trig_01YXNmgqYeYQ1LuepsLmbNCG** (send_later, fires **2026-07-17T09:00Z**,
+  "WEEKLY GRADING PASS", target non-seat session_01NwvvbgUVSdQvY8eYwtuEoo) as
+  "a potential DUPLICATE grading fire" but did not state the consequence.
+  Stating it concretely: **if that foreign session is alive on Friday, a
+  duplicate grading fire at 09:00Z could double-write the graded ledger** —
+  two grading passes running ~5 minutes apart could both read
+  `experiments/paper/ledger.md` as ungraded and race their write-backs/PRs.
+  The grader's idempotency (rows already carrying `verdict:` are never
+  touched) protects sequential re-runs, NOT two concurrent passes that each
+  see the pre-grade ledger.
+- Mitigating facts, for calibration: this Friday's expected result is FLAT
+  (warm-up; a FLAT pass writes nothing — dry-run verified 2026-07-13, PR
+  #115), and the foreign session's environment may be dead. The risk is
+  therefore low this week but structural for every graded week after warm-up.
+- Action: none taken on the trigger itself — foreign, not ours to touch.
+  Re-requesting manager disposition (delete or confirm-dead) before Friday.
