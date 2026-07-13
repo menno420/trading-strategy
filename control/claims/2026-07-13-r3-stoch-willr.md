@@ -1,1 +1,0 @@
-- `claude/r3-stoch-willr` · **R3 stochastic+Williams%R mean-reversion sweep** — two new long/flat reversion strategies (stochastic %K/%D, Williams %R) + dev-only sweep over the 8-ticker universe, daily · src/trading_lab/strategies/, tests/, scripts/, experiments/ · 2026-07-13
