@@ -1,0 +1,61 @@
+{
+  "arms": "gated: 12 variants (gate_asset {TLT, XOM, GLD} x gate_lookback {21, 63, 126, 252}, long only while the gate asset's trailing momentum > 0, gate rule and warm-up convention fixed in the grid commit, equity component frozen at the committed r3 point ema_crossover 20/100); control: the 1-variant gateless collapse (the same component ungated), identical costs and windows; gate alignment strictly backward (gate data <= t only)",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "counts": {
+    "gated_beats_benchmark": 0,
+    "gated_beats_control": 0,
+    "keep": 0,
+    "kill": 2,
+    "kill_sig": 0,
+    "lanes": 2
+  },
+  "created_utc": "2026-07-13T11:11:29.660278+00:00",
+  "git_sha": "040f65d67edae1eb628a6af669b2e96719149fa2",
+  "lanes": [
+    {
+      "beats_benchmark": false,
+      "beats_control": false,
+      "benchmark_oos_sharpe": 0.7609406160043444,
+      "control_arm_delta": -0.3019659149240732,
+      "control_oos_sharpe": 0.46000958810440656,
+      "detail_file": "experiments/sweeps/r4-crossasset/crossasset_gate__SPY.json",
+      "gated_oos_sharpe": 0.15804367318033338,
+      "instrument": "SPY",
+      "min_tstat": 2.665285106024977,
+      "sweep_verdict": "KILL",
+      "tstat": -1.9064802925070499,
+      "verdict": "KILL"
+    },
+    {
+      "beats_benchmark": false,
+      "beats_control": false,
+      "benchmark_oos_sharpe": 0.8711014436622375,
+      "control_arm_delta": -0.634652578595473,
+      "control_oos_sharpe": 0.8315554351639212,
+      "detail_file": "experiments/sweeps/r4-crossasset/crossasset_gate__QQQ.json",
+      "gated_oos_sharpe": 0.1969028565684482,
+      "instrument": "QQQ",
+      "min_tstat": 2.665285106024977,
+      "sweep_verdict": "KILL",
+      "tstat": -2.131921131912799,
+      "verdict": "KILL"
+    }
+  ],
+  "ledger_decision": "ledgered: one row per lane \u2014 the GATED arm's top full-dev-period variant, round-3 convention (new strategy = new runs; PR #104 precedent); variants_tried = K = 13; the control arm's numbers live in the per-lane sweep JSONs; experiments/index.jsonl rebuilt",
+  "ledger_files": [
+    "experiments/runs/20260713T111128594408Z-46ca8e00b115.json",
+    "experiments/runs/20260713T111129589927Z-24d91f30c160.json"
+  ],
+  "motivation": "round 3 committed TLT/XOM/GLD but only as standalone lanes; cross-asset momentum as an equity exposure gate is the one untested idea class, tested against the round's informed prior (PR #92 control beat gate 6/6; PR #104 split 3/3, zero candidates)",
+  "order": "ORDER 012 (generative rung)",
+  "post_holdout_dev_only": "holdout SPENT, promotion CLOSED; every KEEP is a dev-candidate only, never a finding",
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-E \u2014 Cross-asset lead-lag filter (with ungated control arm)",
+  "program_variants_tried": 4345,
+  "rule": "per lane: KILL iff gated stitched OOS Sharpe <= the ungated control's (pre-registered primary criterion, control_arm_delta recorded machine-readably); KEEP additionally requires beating same-window same-cost B&H and > 0; KILL-SIG at t <= -min_tstat(13) via classify_verdict; t informational only at K=13 (bar ~2.665, raised above the round-standard 2.638 \u2014 never lowered)",
+  "runtime_seconds": 2.2,
+  "schema_version": 1,
+  "slice": "r4-crossasset"
+}
