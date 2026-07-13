@@ -1,0 +1,1 @@
+- `claude/r4-crossasset` · **R4-E cross-asset gate** — TLT/XOM/GLD momentum gating SPY/QQQ trend lanes + control · src/trading_lab/, scripts/, experiments/, tests/, docs/ · 2026-07-13
