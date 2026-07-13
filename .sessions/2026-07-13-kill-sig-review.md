@@ -1,6 +1,6 @@
 # 2026-07-13 — KILL-SIG verdict-class proposal (PR #91 card 💡): independent review + disposition
 
-> **Status:** `in-progress` — coordinator-assigned review of the KILL-SIG
+> **Status:** `complete` — coordinator-assigned review of the KILL-SIG
 > verdict-class proposal left as the 💡 on the PR #91 session card
 > (`.sessions/2026-07-13-r3-meanrev-new-tickers.md`). Deliverable is the
 > review verdict + disposition recorded here; everything was read at
@@ -217,10 +217,15 @@ directly).
 - 2026-07-13T13:58Z — independent verification at HEAD: regrade re-run
   reproduces 58/238/4/2 (provenance fields only diff; restored
   byte-identical); `pytest tests/test_promotion.py -q` → 32 passed.
-- 2026-07-13T14:0xZ — branch `claude/kill-sig-review-2026-07-13`;
-  born-red FIRST commit = this card (`in-progress`) + claim
+- 2026-07-13T14:02Z — branch `claude/kill-sig-review-2026-07-13`;
+  born-red FIRST commit `b04950a` = this card (`in-progress`) + claim
   `control/claims/2026-07-13-kill-sig-review.md`, pushed before anything
-  else.
+  else. Pre-flip `bootstrap.py check --strict` red ONLY on the designed
+  born-red gate.
+- 2026-07-13T14:05Z — no implementation commit exists, deliberately: the
+  ACCEPT ratifies already-merged work (Finding 0), so the review verdict
+  IS the deliverable. Flip + claim-delete folded into this final commit;
+  `bootstrap.py check --strict` green before push.
 
 ## Previous-session review
 
