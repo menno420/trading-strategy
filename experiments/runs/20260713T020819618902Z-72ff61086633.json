@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.45441141455618816,
+    "max_drawdown": -0.7496779844224901,
+    "n_bars": 3657,
+    "n_trades": 1,
+    "sharpe": 0.9279233460305005,
+    "sortino": 0.9834322968050291,
+    "total_return": 228.5631794612482,
+    "turnover_per_year": 0.06890894175553733,
+    "win_rate": 1.0
+  },
+  "config_hash": "72ff61086633",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T02:08:19+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-06-29 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "e3dae2151a1d5ff666421f88fbc6ad33a6e853d5",
+  "instrument": "TSLA",
+  "metrics": {
+    "cagr": 0.31857847699940134,
+    "max_drawdown": -0.3986093438098274,
+    "n_bars": 3657,
+    "n_trades": 130,
+    "sharpe": 0.9516584218214793,
+    "sortino": 0.7081941631405538,
+    "total_return": 54.330752896094694,
+    "turnover_per_year": 8.958162428219852,
+    "win_rate": 0.4307692307692308
+  },
+  "n_bars": 3657,
+  "notes": "Round 3 breakout sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-breakout/atr_trailing__TSLA.json)",
+  "params": {
+    "atr_period": 22,
+    "entry_lookback": 20,
+    "k": 2.0
+  },
+  "run_id": "20260713T020819618902Z-72ff61086633",
+  "schema_version": 1,
+  "strategy": "atr_trailing",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

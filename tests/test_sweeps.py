@@ -563,3 +563,68 @@ class TestR3MeanrevHourlyGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_meanrev_hourly_variants("bollinger_reversion")
                 == sweeps.r3_meanrev_hourly_variants("bollinger_reversion"))
+
+
+class TestR3BreakoutGrid:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R3_BREAKOUT_FAMILY
+        assert set(sweeps.R3_BREAKOUT_FAMILIES) == set(R3_BREAKOUT_FAMILY)
+        for fam in sweeps.R3_BREAKOUT_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-breakout sweep files must match these. 12 variants per
+        # family over the 12-ticker mixed set = 288 registered configs.
+        counts = sweeps.r3_breakout_variants_per_family()
+        assert counts == {"bollinger_breakout": 12, "atr_trailing": 12}
+        assert len(sweeps.R3_BREAKOUT_INSTRUMENTS) == 12
+        assert sweeps.r3_breakout_total_configs() == 288
+
+    def test_instruments_universe_plus_four_new(self):
+        # The mixed set reuses the slice-4 (r3-aroon-cci) 12-ticker set
+        # verbatim: the frozen 8-ticker universe (config.UNIVERSE order)
+        # followed by four of the slice-3 new instruments —
+        # config.UNIVERSE itself stays frozen at 8.
+        from trading_lab import config
+        assert sweeps.R3_BREAKOUT_INSTRUMENTS == sweeps.R3_AROON_CCI_INSTRUMENTS
+        assert sweeps.R3_BREAKOUT_INSTRUMENTS[:8] == tuple(config.UNIVERSE)
+        assert sweeps.R3_BREAKOUT_INSTRUMENTS[8:] == ("SPY", "QQQ", "TSLA",
+                                                      "TLT")
+        assert len(config.UNIVERSE) == 8
+
+    def test_band_axis_reuses_the_reversion_z_entry_axis(self):
+        # Declared reuse: num_std values are the daily bollinger_reversion
+        # z_entry axis verbatim, so every band width already sits in the
+        # multiple-testing burden ledger under the mirror-image thesis.
+        breakout_widths = {p["num_std"]
+                           for p in sweeps.r3_breakout_variants(
+                               "bollinger_breakout")}
+        reversion_entries = {p["z_entry"]
+                             for p in sweeps.mean_reversion_variants(
+                                 "bollinger_reversion")}
+        assert breakout_widths == reversion_entries
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # Pure threshold grids — the slice-2/4 committed-control-arm
+        # convention is not applicable (no hysteresis band, no on/off gate).
+        for params in sweeps.r3_breakout_variants("bollinger_breakout"):
+            assert set(params) == {"period", "num_std"}
+            assert params["num_std"] > 0
+        for params in sweeps.r3_breakout_variants("atr_trailing"):
+            assert set(params) == {"entry_lookback", "atr_period", "k"}
+            assert params["k"] > 0
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_BREAKOUT_FAMILIES:
+            for params in sweeps.r3_breakout_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_breakout_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_breakout_variants("atr_trailing")
+                == sweeps.r3_breakout_variants("atr_trailing"))
