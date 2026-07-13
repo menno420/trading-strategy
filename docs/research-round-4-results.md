@@ -331,3 +331,88 @@ member) vs bar **2.638**. KEEPs by margin over best member: AAPL hourly
 daily +0.0003. The 5 KEEPs are dev-candidates only; the holdout is SPENT,
 promotion is CLOSED, and any OOS claim about any committee remains
 OWNER-GATED on post-2026 data.
+
+## R4-D — regime-conditional allocation (2026-07-13)
+
+**Slice**: `r4-regime` — trend-strength regime switching vs a MANDATORY
+unconditional control arm, on the six PR #83 tickers (SPY, QQQ, TSLA,
+JPM, XOM, TLT) × daily. Pre-registered in
+[research-round-4-plan.md](research-round-4-plan.md) § R4-D; grids and
+the new `regime_switch` strategy committed in the pre-declaration commit
+BEFORE the sweep ran. Runner: `scripts/run_r4_regime_sweep.py`.
+
+- **Headline**: the pre-registered null holds — **6 lanes, 0 KEEP /
+  6 KILL / 0 KILL-SIG**. The conditional arm beat its unconditional
+  control on only **3/6** lanes (mean `control_arm_delta` **−0.067**
+  Sharpe), and every lane that beat its control still lost to
+  same-window same-cost B&H. Best informational t **0.07** (TLT) vs the
+  K=14 bar **2.690** — not remotely close.
+- **Design**: conditional arm = trend component (`ema_crossover` 20/100,
+  the committed PR #90 grid point) in the strong-trend tercile bucket,
+  flat or reversion component (`rsi_mean_reversion` 2/20/60, the
+  committed PR #91 point) in the weak bucket, middle tercile holds;
+  trend strength measured by Wilder ADX(14) or |200d SMA slope| (both
+  plan-named metrics swept as declared variants), trailing-rank tercile
+  boundaries 1/3 and 2/3 fixed in the grid commit; 12 conditional + 2
+  control variants per lane (K = 14, bar min_tstat(14) ≈ 2.690 — RAISED
+  above the round-standard 2.638 by counting the control arm; the bar
+  is never lowered). Control arm = the SAME components with the
+  condition removed (`flat` → the ungated trend component, exactly the
+  vol-gate control structure; `reversion` → the equal-weight component
+  mean, the R4-C committee convention), identical costs (5 bps + 1 bp)
+  and walk-forward windows (1008/252/252, splits asserted identical).
+  Pre-registered rule: KILL iff conditional stitched OOS Sharpe ≤ the
+  control's; KEEP additionally requires beating B&H.
+
+### control_arm_delta (conditional − control stitched OOS Sharpe)
+
+| Instrument | Conditional | Control | `control_arm_delta` | B&H | verdict | t (bar 2.690) |
+|---|---|---|---|---|---|---|
+| SPY | 0.403 | 0.382 | **+0.021** | 0.761 | KILL | −1.13 |
+| QQQ | 0.693 | 0.792 | **−0.099** | 0.871 | KILL | −0.56 |
+| TSLA | 0.644 | 0.476 | **+0.168** | 0.760 | KILL | −0.37 |
+| JPM | 0.439 | 0.403 | **+0.036** | 0.645 | KILL | −0.65 |
+| XOM | −0.080 | 0.373 | **−0.453** | 0.294 | KILL | −1.18 |
+| TLT | 0.219 | 0.293 | **−0.074** | 0.196 | KILL | +0.07 |
+
+- **The honest reading**: the PR #92 lesson ("the control beat the gate
+  6/6") does NOT repeat verbatim on the trend-strength axis — it softens
+  to a 3/3 coin flip with small positive deltas (+0.02 to +0.17) where
+  the condition wins and one large negative (−0.45, XOM) where it
+  loses — but the conclusion is the same: **conditioning never produced
+  a candidate**. The only lane that beat B&H (TLT, 0.219 vs 0.196) lost
+  to its own control (0.293), which is precisely the failure mode the
+  mandatory control arm exists to catch: without it, TLT would have
+  looked like a weak KEEP. Conversely the three lanes that beat their
+  control all lost to B&H by wide margins. The per-split parameter
+  picks tell the mechanism: the conditional walk-forward churns through
+  its 12 variants (5–8 distinct picks over 10 splits per lane — no
+  stable regime configuration exists in-sample), while the 2-variant
+  control is comparatively stable; the conditioning axis mostly adds
+  selection variance, not signal.
+- **Nulls first-class**: this is the second regime-conditioning idea
+  class tested (vol gate PR #92, trend strength here) and the second to
+  die against its own unconditioned components. The cheap
+  regime-conditioning space on this surface now has two honest nulls
+  measured the same way (machine-readable `control_arm_delta` in every
+  lane JSON); R4-E's lead-lag gate (its ungated control mandated by the
+  same rule) remains the open conditioning slice.
+- **Artifacts**: 6 per-lane JSONs (both arms' full walk-forward blocks +
+  `control_arm_delta`) + rollup in
+  [`experiments/sweeps/r4-regime/`](../experiments/sweeps/r4-regime/).
+  Ledger: one row per lane — the CONDITIONAL arm's top full-dev-period
+  variant (round-3 convention; post-hoc in-sample selection, flagged in
+  the notes), `variants_tried = K = 14`; the control arm's numbers live
+  in the sweep JSONs; `experiments/index.jsonl` rebuilt. Runtime ~21 s.
+- **Burden ledger**: 84 new registered configs (14 × 6); program
+  cumulative 4235 → **4319**.
+
+### Counts
+
+| Lanes | KEEP | KILL | KILL-SIG | conditional beat control | beat B&H |
+|---|---|---|---|---|---|
+| 6 | 0 | 6 | 0 | 3 | 1 |
+
+Best conditional t: **0.07** (TLT) vs bar **2.690**. Holdout SPENT,
+promotion CLOSED; nothing here is a finding, and the KILLs are the
+result.
