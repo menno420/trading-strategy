@@ -63,6 +63,11 @@ Families:
   full cloud break below OR tenkan < kijun, hysteresis in between; spans
   displaced forward the standard 26 bars using only past data — the lab's
   first multi-component indicator system).
+* Round 4 (post-holdout dev-only, docs/research-round-4-plan.md § R4-F,
+  lane r4-seasonality × 15 daily tickers): weekday_long (pure calendar
+  rule — long only on bars signalled on one chosen weekday, the lab's
+  first seasonality family; K counted honestly at 5 weekdays × 15
+  tickers = 75, bar min_tstat(75) ≈ 3.21).
 
 Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
 closes (one column per instrument) and return a target-weight DataFrame
@@ -79,8 +84,8 @@ from . import (adx_filtered_sma, aroon_trend, atr_trailing,
                keltner_breakout, macd, macd_supertrend, pullback,
                roc_momentum, rsi_mean_reversion, sma_crossover,
                stochastic_reversion, supertrend_flip, trix_momentum,
-               vol_filtered_trend, williams_r_reversion, xsec_momentum,
-               xsec_reversal)
+               vol_filtered_trend, weekday_long, williams_r_reversion,
+               xsec_momentum, xsec_reversal)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -105,6 +110,7 @@ STRATEGIES = {
     "atr_trailing": atr_trailing.generate,
     "trix_momentum": trix_momentum.generate,
     "ichimoku_trend": ichimoku_trend.generate,
+    "weekday_long": weekday_long.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -136,6 +142,7 @@ DEFAULT_PARAMS = {
     "trix_momentum": {"period": 15, "signal_period": 9},
     "ichimoku_trend": {"tenkan": 9, "kijun": 26, "senkou_b": 52,
                        "displacement": 26},
+    "weekday_long": {"weekday": 0},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -222,6 +229,12 @@ R3_TREND_HOURLY_FAMILY = ["roc_momentum", "adx_filtered_sma",
 R3_HOURLY_COMPLETION_FAMILY = ["cci_reversion", "bollinger_breakout",
                                "atr_trailing", "ichimoku_trend"]
 
+# Round 4 slice R4-F (docs/research-round-4-plan.md § R4-F, ORDER 012,
+# post-holdout dev-only): the single calendar family swept in the
+# r4-seasonality × 15-daily-ticker × daily lane. K = 75 (5 weekdays × 15
+# tickers), bar min_tstat(75) ≈ 3.21 — never lowered.
+R4_SEASONALITY_FAMILY = ["weekday_long"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
     "xsec_reversal": xsec_reversal.generate_weights,
@@ -235,7 +248,7 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "R3_AROON_CCI_FAMILY", "R3_MEANREV_HOURLY_FAMILY",
            "R3_BREAKOUT_FAMILY", "R3_XSEC_EXPANDED_FAMILY",
            "R3_TRIX_ICHIMOKU_FAMILY", "R3_TREND_HOURLY_FAMILY",
-           "R3_HOURLY_COMPLETION_FAMILY",
+           "R3_HOURLY_COMPLETION_FAMILY", "R4_SEASONALITY_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
@@ -243,4 +256,4 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "williams_r_reversion", "roc_momentum", "adx_filtered_sma",
            "aroon_trend", "cci_reversion", "bollinger_breakout",
            "atr_trailing", "trix_momentum", "ichimoku_trend",
-           "xsec_momentum", "xsec_reversal"]
+           "weekday_long", "xsec_momentum", "xsec_reversal"]

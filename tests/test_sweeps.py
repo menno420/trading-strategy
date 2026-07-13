@@ -1339,3 +1339,68 @@ class TestR3HourlyCompletionGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_hourly_completion_variants("ichimoku_trend")
                 == sweeps.r3_hourly_completion_variants("ichimoku_trend"))
+
+
+class TestR4SeasonalityGrid:
+    def test_family_matches_strategy_registry(self):
+        from trading_lab.strategies import R4_SEASONALITY_FAMILY
+        assert set(sweeps.R4_SEASONALITY_FAMILIES) == set(R4_SEASONALITY_FAMILY)
+        for fam in sweeps.R4_SEASONALITY_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Pre-registered R4-F accounting (docs/research-round-4-plan.md):
+        # 5 weekday variants × 15 tickers = 75 registered configs, and for
+        # THIS slice the registered significance K is the SAME number —
+        # every day×ticker combo counts toward the bar.
+        assert sweeps.r4_seasonality_variants_per_family() == \
+            {"weekday_long": 5}
+        assert len(sweeps.R4_SEASONALITY_INSTRUMENTS) == 15
+        assert sweeps.r4_seasonality_total_configs() == 75
+        assert sweeps.R4_SEASONALITY_K == 75
+        assert sweeps.R4_SEASONALITY_K == sweeps.r4_seasonality_total_configs()
+
+    def test_bar_rises_with_k_and_is_never_lowered(self):
+        # min_tstat(75) ≈ 3.21 — strictly ABOVE the standard K=12 bar
+        # (~2.64). The plan forbids counting K down.
+        from trading_lab import promotion
+        bar75 = promotion.min_tstat(sweeps.R4_SEASONALITY_K)
+        assert bar75 > promotion.min_tstat(12)
+        assert round(bar75, 2) == 3.21
+
+    def test_instruments_are_the_full_committed_daily_surface(self):
+        # All 15 committed daily caches — the frozen 8-ticker universe +
+        # the six slice-3 instruments + BTC-USD — so no post-hoc instrument
+        # selection is possible. Sorted, unique, no additions.
+        from trading_lab import config
+        instruments = sweeps.R4_SEASONALITY_INSTRUMENTS
+        assert len(set(instruments)) == len(instruments)
+        assert list(instruments) == sorted(instruments)
+        assert set(config.UNIVERSE) <= set(instruments)
+        assert set(sweeps.R3_NEW_TICKERS_INSTRUMENTS) <= set(instruments)
+        assert "BTC-USD" in instruments
+        assert set(instruments) == (set(config.UNIVERSE)
+                                    | set(sweeps.R3_NEW_TICKERS_INSTRUMENTS)
+                                    | {"BTC-USD"})
+
+    def test_grid_is_exactly_the_five_weekdays(self):
+        # Single axis, no parameter search inside a combo; weekend days
+        # (5/6, BTC-only) are NOT registered — K stays 75.
+        variants = sweeps.r4_seasonality_variants("weekday_long")
+        assert variants == [{"weekday": d} for d in range(5)]
+        for params in variants:
+            assert set(params) == {"weekday"}
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R4_SEASONALITY_FAMILIES:
+            for params in sweeps.r4_seasonality_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r4_seasonality_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r4_seasonality_variants("weekday_long")
+                == sweeps.r4_seasonality_variants("weekday_long"))

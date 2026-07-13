@@ -1,0 +1,45 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.18277329617606042,
+    "max_drawdown": -0.435371916777587,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.7546852072703625,
+    "sortino": 0.7683881733429755,
+    "total_return": 11.394624375794688,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "883765b731e7",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T10:10:32+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "13970716db7abf5416e6b737c82dbe7b7f648a74",
+  "instrument": "GOOGL",
+  "metrics": {
+    "cagr": 0.04866170113779544,
+    "max_drawdown": -0.32467438584716557,
+    "n_bars": 3779,
+    "n_trades": 1518,
+    "sharpe": 0.4724899186692625,
+    "sortino": 0.3890263271183145,
+    "total_return": 1.0391502201366327,
+    "turnover_per_year": 101.22677957131516,
+    "win_rate": 0.5638998682476943
+  },
+  "n_bars": 3779,
+  "notes": "Round 4 R4-F day-of-week seasonality sweep (post-holdout DEV-ONLY, promotion closed \u2014 pre-registered docs/research-round-4-plan.md \u00a7 R4-F, ORDER 012): top full-dev-period variant of 5 tried (post-hoc selection \u2014 in-sample; REGISTERED significance K = 75 across all day\u00d7ticker combos, bar min_tstat(75) \u2248 3.21; the walk-forward OOS number lives in experiments/sweeps/r4-seasonality/weekday_long__GOOGL.json)",
+  "params": {
+    "weekday": 4
+  },
+  "run_id": "20260713T101032629657Z-883765b731e7",
+  "schema_version": 1,
+  "strategy": "weekday_long",
+  "timeframe": "daily",
+  "variants_tried": 5
+}

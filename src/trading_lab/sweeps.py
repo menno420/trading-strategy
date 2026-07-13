@@ -1413,3 +1413,66 @@ def r3_hourly_completion_total_configs() -> int:
     R1/R2 and the earlier Round-3 lanes)."""
     return (sum(r3_hourly_completion_variants_per_family().values())
             * len(R3_HOURLY_COMPLETION_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 4 slice R4-F: DAY-OF-WEEK SEASONALITY (lane: r4-seasonality ×
+# 15 committed daily tickers × daily — docs/research-round-4-plan.md § R4-F,
+# ORDER 012 night-run, post-holdout DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# The program's first *calendar* hypothesis and a classic multiple-testing
+# trap — pre-registered as the stress test of the round's correction
+# discipline. One family (weekday_long), one axis (which weekday, pandas
+# dayofweek 0=Mon .. 4=Fri), NO parameter search inside a combo. K counts
+# ALL day×ticker combos tested: 5 weekdays × 15 tickers = 75, so the
+# Bonferroni bar RISES to min_tstat(75) ≈ 3.21 (vs 2.64 at K=12) — K is
+# never counted down, the bar is never lowered. Any multi-day subsets, if
+# ever swept, must be ADDED to K in a grid commit before running (none are
+# registered here). Pre-registered hypothesis: null after correction.
+# BTC-USD's committed daily cache contains weekend bars (dayofweek 5/6);
+# those days are NOT part of the registered grid — the five registered
+# variants simply stay flat on them and K stays 75.
+
+_R4_SEASONALITY_AXES: dict[str, dict[str, list]] = {
+    "weekday_long": {"weekday": [0, 1, 2, 3, 4]},
+}
+
+R4_SEASONALITY_FAMILIES = tuple(_R4_SEASONALITY_AXES)
+
+# Every committed daily cache (the frozen 8-ticker universe + the six
+# slice-3 instruments + BTC-USD) — the full committed daily surface, so
+# no post-hoc instrument selection is possible.
+R4_SEASONALITY_INSTRUMENTS = ("AAPL", "AMZN", "BTC-USD", "GLD", "GOOGL",
+                              "JPM", "META", "MSFT", "NVDA", "QQQ", "SLV",
+                              "SPY", "TLT", "TSLA", "XOM")
+
+# The REGISTERED significance K for this slice: every day×ticker combo.
+R4_SEASONALITY_K = 75
+
+
+def r4_seasonality_variants(family: str = "weekday_long") -> list[dict]:
+    """All parameter dicts for the Round-4 slice R4-F ``family`` (the five
+    single-weekday variants), in deterministic order."""
+    try:
+        axes = _R4_SEASONALITY_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R4 seasonality family {family!r}") from None
+    keys = list(axes)
+    return [dict(zip(keys, vals))
+            for vals in product(*(axes[k] for k in keys))]
+
+
+def r4_seasonality_variants_per_family() -> dict[str, int]:
+    """Round-4 slice R4-F variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r4_seasonality_variants(fam))
+            for fam in R4_SEASONALITY_FAMILIES}
+
+
+def r4_seasonality_total_configs() -> int:
+    """Total registered Round-4 slice R4-F configs: variants × instruments
+    = 5 × 15 = 75 — and for THIS slice the registered significance K is
+    the same number (``R4_SEASONALITY_K``): every day×ticker combo counts
+    toward the bar, per the pre-registered plan."""
+    return (sum(r4_seasonality_variants_per_family().values())
+            * len(R4_SEASONALITY_INSTRUMENTS))
