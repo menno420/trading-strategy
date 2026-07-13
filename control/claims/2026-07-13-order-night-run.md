@@ -1,3 +1,1 @@
-branch: claude/order-night-run
-scope: append owner night-run ORDER 012 to control/inbox.md
-date: 2026-07-13
+- `claude/order-night-run` · **append owner night-run ORDER 012 to control/inbox.md** — land the owner's 2026-07-13 night-run DIRECT ORDER verbatim via the control fast lane · control/inbox.md, control/claims/ · 2026-07-13

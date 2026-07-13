@@ -133,6 +133,11 @@ why: verified 2026-07-12: #64 OPEN, #65 OPEN; the grading trigger (trig_015aNMg5
 done-when: #64/#65 terminal; the 2026-07-17 pass has a verified executor (ids in status) or is executed and graded.
 
 ## ORDER 012 · 2026-07-13T00:46:37Z · status: new
+priority: P0
+do: execute the owner's 2026-07-13 night-run DIRECT ORDER, relayed byte-exact below (top-precedence owner turn).
+why: owner direct order landed verbatim via the control-only fast lane; its Q-0271/Q-0273/Q-0274 rules govern tonight.
+done-when: the verbatim order below is on main and executed through the night; morning tally posted by ~06:00Z per its MORNING clause.
+
 DIRECT ORDER — VENTURE LAB (owner, 2026-07-13, night run). Land this verbatim in your inbox
 (top-precedence owner turn), then execute all night.
 
