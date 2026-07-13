@@ -1177,3 +1177,78 @@ def r3_gated_new_tickers_total_configs() -> int:
     configurations."""
     return (sum(r3_gated_new_tickers_variants_per_family().values())
             * len(R3_GATED_NEW_TICKERS_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 13: ROUND-3 FAMILIES × BTC-USD coverage (lane:
+# r3-btc-coverage × BTC-USD × daily — ORDER 012 night-run, post-holdout
+# DEV-ONLY, promotion closed; lands AFTER the Round-3 synthesis of slices
+# 1-8, extending the round)
+# ---------------------------------------------------------------------------
+# The BTC-USD counterpart of slices 10-12: the committed BTC-USD daily
+# cache (P1 video lane; dev rail ends 2025-01-08) has only ever been swept
+# by the video-lane families (supertrend_flip, macd_supertrend, the
+# dual-EMA control), the R2 §3b keltner_breakout arm and the P4 transfer
+# spot checks — the TEN single-instrument families Round 3 added have
+# NEVER run on it. This slice completes that coverage. NO new strategy
+# code and NO new parameter territory: each family's declared Round-3
+# 12-variant grid is reused VERBATIM by DELEGATING to the source lane's
+# generator (byte-identical grids by construction; equality pinned by
+# tests). The cross-sectional family (xsec_momentum) is out of scope —
+# it is a basket strategy, not a single-instrument one, and its expanded
+# lane (slice 9) deliberately EXCLUDES BTC-USD over the calendar-mixing
+# problem (crypto trades 7 days/week; see R3_XSEC_EXPANDED notes).
+# BTC-USD stays lane-local (config.UNIVERSE frozen); the committed cache
+# is reused, nothing fetched. Annualization follows the P1 video-lane
+# convention: PERIODS_PER_YEAR["daily"] = 252 although BTC trades ~365
+# days/year, so annualized Sharpe/CAGR are UNDERSTATED by a constant
+# factor for strategy and benchmark alike — same-window comparisons vs
+# B&H are unaffected; flagged, not patched (the constant is lab-wide).
+
+_R3_BTC_COVERAGE_SOURCES: dict[str, Callable[[str], list[dict]]] = {
+    "stochastic_reversion": r3_stoch_willr_variants,
+    "williams_r_reversion": r3_stoch_willr_variants,
+    "roc_momentum": r3_roc_adx_variants,
+    "adx_filtered_sma": r3_roc_adx_variants,
+    "aroon_trend": r3_aroon_cci_variants,
+    "cci_reversion": r3_aroon_cci_variants,
+    "bollinger_breakout": r3_breakout_variants,
+    "atr_trailing": r3_breakout_variants,
+    "trix_momentum": r3_trix_ichimoku_variants,
+    "ichimoku_trend": r3_trix_ichimoku_variants,
+}
+
+R3_BTC_COVERAGE_FAMILIES = tuple(_R3_BTC_COVERAGE_SOURCES)
+
+# BTC-USD only — the point of the slice is coverage of THAT instrument.
+R3_BTC_COVERAGE_INSTRUMENTS = ("BTC-USD",)
+
+
+def r3_btc_coverage_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-13 ``family`` —
+    the family's declared Round-3 grid, VERBATIM (delegated to the source
+    lane's generator, so the grids cannot drift apart)."""
+    try:
+        source = _R3_BTC_COVERAGE_SOURCES[family]
+    except KeyError:
+        raise ValueError(
+            f"unknown R3 btc-coverage family {family!r}") from None
+    return source(family)
+
+
+def r3_btc_coverage_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-13 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_btc_coverage_variants(fam))
+            for fam in R3_BTC_COVERAGE_FAMILIES}
+
+
+def r3_btc_coverage_total_configs() -> int:
+    """Total registered Round-3 slice-13 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes). BTC-USD has no buy-and-hold
+    ledger row yet (the video lane predates the slice-3 baseline
+    convention), so the slice records exactly ONE — a benchmark, not a
+    searched configuration."""
+    return (sum(r3_btc_coverage_variants_per_family().values())
+            * len(R3_BTC_COVERAGE_INSTRUMENTS))

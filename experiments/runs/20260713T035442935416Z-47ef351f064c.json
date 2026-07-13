@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.42908207843060886,
+    "max_drawdown": -0.833830983670915,
+    "n_bars": 3767,
+    "n_trades": 1,
+    "sharpe": 0.9120554396024015,
+    "sortino": 0.923949627079613,
+    "total_return": 206.90197400349632,
+    "turnover_per_year": 0.06689673480222989,
+    "win_rate": 1.0
+  },
+  "config_hash": "47ef351f064c",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T03:54:42+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "bbc76101b5ce137249a4799128410398ffcd9bfd",
+  "instrument": "BTC-USD",
+  "metrics": {
+    "cagr": 0.531661461812734,
+    "max_drawdown": -0.6399060183703593,
+    "n_bars": 3767,
+    "n_trades": 57,
+    "sharpe": 1.172790011054986,
+    "sortino": 0.9468308490490784,
+    "total_return": 584.9893587020921,
+    "turnover_per_year": 3.813113883727104,
+    "win_rate": 0.4827586206896552
+  },
+  "n_bars": 3767,
+  "notes": "Round 3 btc-coverage sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 13, extends R3 after the slices-1-8 synthesis): first ever roc_momentum run on BTC-USD; top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-btc-coverage/roc_momentum__BTC-USD.json)",
+  "params": {
+    "entry": 0.05,
+    "exit": 0.0,
+    "lookback": 126
+  },
+  "run_id": "20260713T035442935416Z-47ef351f064c",
+  "schema_version": 1,
+  "strategy": "roc_momentum",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

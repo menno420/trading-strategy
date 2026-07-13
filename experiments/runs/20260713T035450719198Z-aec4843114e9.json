@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.42908207843060886,
+    "max_drawdown": -0.833830983670915,
+    "n_bars": 3767,
+    "n_trades": 1,
+    "sharpe": 0.9120554396024015,
+    "sortino": 0.923949627079613,
+    "total_return": 206.90197400349632,
+    "turnover_per_year": 0.06689673480222989,
+    "win_rate": 1.0
+  },
+  "config_hash": "aec4843114e9",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T03:54:50+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "bbc76101b5ce137249a4799128410398ffcd9bfd",
+  "instrument": "BTC-USD",
+  "metrics": {
+    "cagr": 0.4645343489135312,
+    "max_drawdown": -0.4752754935866004,
+    "n_bars": 3767,
+    "n_trades": 116,
+    "sharpe": 1.1998958758121403,
+    "sortino": 0.8828785285072117,
+    "total_return": 298.8785737926628,
+    "turnover_per_year": 7.760021237058668,
+    "win_rate": 0.46551724137931033
+  },
+  "n_bars": 3767,
+  "notes": "Round 3 btc-coverage sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 13, extends R3 after the slices-1-8 synthesis): first ever ichimoku_trend run on BTC-USD; top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-btc-coverage/ichimoku_trend__BTC-USD.json)",
+  "params": {
+    "kijun": 26,
+    "senkou_b": 44,
+    "tenkan": 7
+  },
+  "run_id": "20260713T035450719198Z-aec4843114e9",
+  "schema_version": 1,
+  "strategy": "ichimoku_trend",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
