@@ -1,0 +1,136 @@
+{
+  "burden": {
+    "new_registered_configs": 0
+  },
+  "counts": {
+    "graded": 5,
+    "keep": 5,
+    "kill": 0,
+    "kill_sig": 0,
+    "positive_selection_gap": 3,
+    "skipped": 0,
+    "target_lanes": 5
+  },
+  "created_utc": "2026-07-13T14:31:37.584958+00:00",
+  "fidelity_guard": "every graded lane's searched replay reproduced its committed stitched OOS Sharpe within 1e-08",
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "lanes": [
+    {
+      "benchmark_stitched_sharpe": 0.8211061068266703,
+      "detail_file": "experiments/sweeps/r5-selection-fair/r3-btc-coverage__bollinger_breakout__BTC-USD__daily.json",
+      "fixed_config": {
+        "num_std": 1.0,
+        "period": 10
+      },
+      "fixed_stitched_sharpe": 1.0720887548765206,
+      "instrument": "BTC-USD",
+      "lane_id": "r3-btc-coverage__bollinger_breakout__BTC-USD__daily",
+      "searched_stitched_sharpe": 1.2575201323867047,
+      "selection_gap": 0.18543137751018413,
+      "source_file": "experiments/sweeps/r3-btc-coverage/bollinger_breakout__BTC-USD.json",
+      "status": "GRADED",
+      "strategy": "bollinger_breakout",
+      "sweep": "r3-btc-coverage",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "tstat": 0.7927733741558138,
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "benchmark_stitched_sharpe": 0.16965504212254662,
+      "detail_file": "experiments/sweeps/r5-selection-fair/r3-stoch-willr__williams_r_reversion__SLV__daily.json",
+      "fixed_config": {
+        "buy_below": -90,
+        "period": 21,
+        "sell_above": -30
+      },
+      "fixed_stitched_sharpe": 0.8127399617448643,
+      "instrument": "SLV",
+      "lane_id": "r3-stoch-willr__williams_r_reversion__SLV__daily",
+      "searched_stitched_sharpe": 0.4995655939280414,
+      "selection_gap": -0.3131743678168229,
+      "source_file": "experiments/sweeps/r3-stoch-willr/williams_r_reversion__SLV.json",
+      "status": "GRADED",
+      "strategy": "williams_r_reversion",
+      "sweep": "r3-stoch-willr",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "tstat": 2.03228174899841,
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "benchmark_stitched_sharpe": 0.6534658611523465,
+      "detail_file": "experiments/sweeps/r5-selection-fair/r3-trix-ichimoku__ichimoku_trend__META__daily.json",
+      "fixed_config": {
+        "kijun": 26,
+        "senkou_b": 44,
+        "tenkan": 7
+      },
+      "fixed_stitched_sharpe": 0.9835273892166354,
+      "instrument": "META",
+      "lane_id": "r3-trix-ichimoku__ichimoku_trend__META__daily",
+      "searched_stitched_sharpe": 0.9934293933081809,
+      "selection_gap": 0.009902004091545513,
+      "source_file": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__META.json",
+      "status": "GRADED",
+      "strategy": "ichimoku_trend",
+      "sweep": "r3-trix-ichimoku",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "tstat": 0.9326603813156197,
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "benchmark_stitched_sharpe": 0.49397799449244817,
+      "detail_file": "experiments/sweeps/r5-selection-fair/r3-meanrev-hourly__stochastic_reversion__META__hourly.json",
+      "fixed_config": {
+        "buy_below": 10,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "fixed_stitched_sharpe": 1.92514917424039,
+      "instrument": "META",
+      "lane_id": "r3-meanrev-hourly__stochastic_reversion__META__hourly",
+      "searched_stitched_sharpe": 1.5290958634343552,
+      "selection_gap": -0.3960533108060347,
+      "source_file": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__META.json",
+      "status": "GRADED",
+      "strategy": "stochastic_reversion",
+      "sweep": "r3-meanrev-hourly",
+      "sweep_verdict": "KEEP",
+      "timeframe": "hourly",
+      "tstat": 1.2545107351991787,
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "benchmark_stitched_sharpe": 0.1962113994495629,
+      "detail_file": "experiments/sweeps/r5-selection-fair/r3-trend-new-tickers__ema_crossover__TLT__daily.json",
+      "fixed_config": {
+        "fast": 30,
+        "slow": 50
+      },
+      "fixed_stitched_sharpe": 0.46847162477681525,
+      "instrument": "TLT",
+      "lane_id": "r3-trend-new-tickers__ema_crossover__TLT__daily",
+      "searched_stitched_sharpe": 0.482387358927847,
+      "selection_gap": 0.013915734151031756,
+      "source_file": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+      "status": "GRADED",
+      "strategy": "ema_crossover",
+      "sweep": "r3-trend-new-tickers",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "tstat": 0.8607750374280136,
+      "verdict": "KEEP (dev-candidate only)"
+    }
+  ],
+  "ledger_decision": "report-only, NOT ledgered (R4-B precedent); experiments/index.jsonl untouched",
+  "post_holdout_dev_only": "holdout SPENT, promotion CLOSED; every KEEP is a dev-candidate only, never a finding",
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-D \u2014 Selection-fair fixed-config replay",
+  "rule": "per lane: KEEP iff the fixed-config (committed top full-period variant) selection-free replay beats same-window B&H on stitched OOS Sharpe; else DEMOTED to KILL; selection_gap informational",
+  "runtime_cap_seconds": 300,
+  "runtime_seconds": 0.5,
+  "schema_version": 1,
+  "slice": "r5-selection-fair",
+  "target_set": "the FROZEN top-5 KEEP-dev lanes of the plan (trading_lab.sweeps.R5A_TARGET_LANES)"
+}

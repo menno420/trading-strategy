@@ -1,0 +1,164 @@
+{
+  "benchmark_stitched_sharpe": 0.1962113994495629,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:37+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "decision_rule": "KEEP dev-candidate status iff the fixed-config replay's stitched OOS Sharpe beats same-window B&H; else DEMOTED to KILL (edge exists only through in-window re-selection)",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "ema_crossover",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_searched_oos_sharpe": 0.482387358927847,
+    "tolerance": 1e-08
+  },
+  "fixed_config": {
+    "fast": 30,
+    "slow": 50
+  },
+  "fixed_per_split": [
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        1008,
+        1260
+      ],
+      "test_sharpe": 2.169766762162974
+    },
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        1260,
+        1512
+      ],
+      "test_sharpe": -0.7994958790834555
+    },
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        1512,
+        1764
+      ],
+      "test_sharpe": 0.8810482167684921
+    },
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        1764,
+        2016
+      ],
+      "test_sharpe": 0.46678361564947046
+    },
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        2016,
+        2268
+      ],
+      "test_sharpe": 0.02422468295775533
+    },
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        2268,
+        2520
+      ],
+      "test_sharpe": 1.278939317921872
+    },
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        2520,
+        2772
+      ],
+      "test_sharpe": 0.8993642714547818
+    },
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        2772,
+        3024
+      ],
+      "test_sharpe": -0.31264866465072794
+    },
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        3024,
+        3276
+      ],
+      "test_sharpe": -0.38363394169950155
+    },
+    {
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "test": [
+        3276,
+        3528
+      ],
+      "test_sharpe": -0.29148881261327925
+    }
+  ],
+  "fixed_stitched_sharpe": 0.46847162477681525,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "TLT",
+  "lane_id": "r3-trend-new-tickers__ema_crossover__TLT__daily",
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): the fixed config is the lane's already-ledgered committed top variant; experiments/index.jsonl untouched",
+  "n_bars": 3779,
+  "no_research": "selection-free replay of the lane's committed top full-period variant over the identical positional test windows \u2014 one fixed config, no training pick, 0 new registered configs",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-D \u2014 Selection-fair fixed-config replay",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "informational t at the lane's committed K \u2014 promotion is CLOSED post-holdout",
+    "sharpe_delta": 0.27226022532725236,
+    "sharpe_se": 0.3162966088570167,
+    "timeframe": "daily",
+    "tstat": 0.8607750374280136,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "searched_stitched_sharpe": 0.482387358927847,
+  "selection_gap": 0.013915734151031756,
+  "selection_gap_note": "searched_stitched_sharpe - fixed_stitched_sharpe; informational only \u2014 no registered threshold",
+  "source_lane": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+  "sweep": "r5-selection-fair",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "verdict": "KEEP (dev-candidate only)"
+}
