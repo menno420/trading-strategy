@@ -361,3 +361,67 @@ class TestR3RocAdxGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_roc_adx_variants("roc_momentum")
                 == sweeps.r3_roc_adx_variants("roc_momentum"))
+
+
+class TestR3NewTickersGrid:
+    def test_families_are_existing_registered_strategies(self):
+        # Slice 3 expands the instrument surface, not the strategy library:
+        # every family must already exist in the registry.
+        for fam in sweeps.R3_NEW_TICKERS_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-new-tickers sweep files must match these. 6 variants
+        # per family × 3 families × 6 new instruments = 108 registered
+        # configs.
+        counts = sweeps.r3_new_tickers_variants_per_family()
+        assert counts == {"donchian": 6, "sma_crossover": 6,
+                          "rsi_mean_reversion": 6}
+        assert len(sweeps.R3_NEW_TICKERS_INSTRUMENTS) == 6
+        assert sweeps.r3_new_tickers_total_configs() == 108
+
+    def test_instruments_disjoint_from_frozen_universe(self):
+        # config.UNIVERSE is frozen (other sweeps depend on it); the new
+        # instruments are lane-local and must not overlap it.
+        from trading_lab import config
+        assert not (set(sweeps.R3_NEW_TICKERS_INSTRUMENTS)
+                    & set(config.UNIVERSE))
+        assert sweeps.R3_NEW_TICKERS_INSTRUMENTS == ("SPY", "QQQ", "TSLA",
+                                                     "JPM", "XOM", "TLT")
+
+    def test_grids_are_subsets_of_published_family_axes(self):
+        # Each slice-3 grid point must be a valid point of the family's
+        # existing published grid (P1 trend / P1 mean-reversion axes) —
+        # no new parameter territory is opened by this slice.
+        for params in sweeps.r3_new_tickers_variants("donchian"):
+            assert params in sweeps.variants("donchian")
+        for params in sweeps.r3_new_tickers_variants("sma_crossover"):
+            assert params in sweeps.variants("sma_crossover")
+        for params in sweeps.r3_new_tickers_variants("rsi_mean_reversion"):
+            assert params in sweeps.mean_reversion_variants("rsi_mean_reversion")
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        for params in sweeps.r3_new_tickers_variants("donchian"):
+            assert params["exit"] <= params["entry"]
+            assert set(params) == {"entry", "exit"}
+        for params in sweeps.r3_new_tickers_variants("sma_crossover"):
+            assert params["fast"] < params["slow"]
+            assert set(params) == {"fast", "slow"}
+        for params in sweeps.r3_new_tickers_variants("rsi_mean_reversion"):
+            assert params["oversold"] < params["overbought"]
+            assert set(params) == {"period", "oversold", "overbought"}
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_NEW_TICKERS_FAMILIES:
+            for params in sweeps.r3_new_tickers_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_new_tickers_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_new_tickers_variants("donchian")
+                == sweeps.r3_new_tickers_variants("donchian"))

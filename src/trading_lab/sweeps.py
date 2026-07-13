@@ -463,3 +463,73 @@ def r3_roc_adx_total_configs() -> int:
     R1/R2 and the r3-stoch-willr lane)."""
     return (sum(r3_roc_adx_variants_per_family().values())
             * len(R3_ROC_ADX_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 3: NEW TICKERS (lane: r3-new-tickers × 6 new instruments
+# × daily — ORDER 012 night-run, post-holdout DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# This slice expands the INSTRUMENT surface, not the strategy library: three
+# existing, already-tested families with small pre-declared sub-grids of
+# their published axes, run over six instruments the lab has never touched —
+# SPY (broad market), QQQ (large-cap growth), TSLA (mega-cap not in the
+# universe), JPM (financials), XOM (energy), TLT (long-duration rates) —
+# chosen to diversify the tech-heavy 8-ticker universe. The instruments are
+# deliberately NOT added to config.UNIVERSE (frozen; other sweeps depend on
+# it) — they are lane-local here. Caches were fetched via the sanctioned
+# trading_lab.data.fetch_ohlcv path only. Grids declared here BEFORE the
+# sweep ran; each is a subset of the family's existing published axes
+# (donchian: turtle 20/55 anchor; sma_crossover: the Round-2 R1 axes;
+# rsi_mean_reversion: Wilder 14 / Connors short-horizon anchors). Kept
+# bounded on purpose: every extra variant raises the multiple-testing
+# burden on any winner.
+
+_R3_NEW_TICKERS_AXES: dict[str, dict[str, list]] = {
+    "donchian": {"entry": [20, 40, 55], "exit": [10, 20]},
+    "sma_crossover": {"fast": [10, 20], "slow": [50, 100, 200]},
+    "rsi_mean_reversion": {"period": [2, 5, 14],
+                           "oversold": [30],
+                           "overbought": [60, 70]},
+}
+
+_R3_NEW_TICKERS_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "donchian": lambda p: p["exit"] <= p["entry"],
+    "sma_crossover": lambda p: p["fast"] < p["slow"],
+    "rsi_mean_reversion": lambda p: p["oversold"] < p["overbought"],
+}
+
+R3_NEW_TICKERS_FAMILIES = tuple(_R3_NEW_TICKERS_AXES)
+
+# The six NEW instruments (all fetch probes succeeded 2026-07-13; zero
+# data-unavailable rows). Deliberately disjoint from config.UNIVERSE.
+R3_NEW_TICKERS_INSTRUMENTS = ("SPY", "QQQ", "TSLA", "JPM", "XOM", "TLT")
+
+
+def r3_new_tickers_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-3 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_NEW_TICKERS_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R3 new-tickers family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_NEW_TICKERS_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_new_tickers_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-3 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_new_tickers_variants(fam))
+            for fam in R3_NEW_TICKERS_FAMILIES}
+
+
+def r3_new_tickers_total_configs() -> int:
+    """Total registered Round-3 slice-3 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes). The per-instrument buy-and-hold
+    baseline is the benchmark, not a searched configuration, and is not
+    counted."""
+    return (sum(r3_new_tickers_variants_per_family().values())
+            * len(R3_NEW_TICKERS_INSTRUMENTS))

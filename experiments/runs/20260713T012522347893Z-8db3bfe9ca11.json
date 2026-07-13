@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.45441141455618816,
+    "max_drawdown": -0.7496779844224901,
+    "n_bars": 3657,
+    "n_trades": 1,
+    "sharpe": 0.9279233460305005,
+    "sortino": 0.9834322968050291,
+    "total_return": 228.5631794612482,
+    "turnover_per_year": 0.06890894175553733,
+    "win_rate": 1.0
+  },
+  "config_hash": "8db3bfe9ca11",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T01:25:22+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-06-29 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "0be66f10c4a64f6b55e5c1579a70850e74d5b026",
+  "instrument": "TSLA",
+  "metrics": {
+    "cagr": 0.18723622791929517,
+    "max_drawdown": -0.5599230989969264,
+    "n_bars": 3657,
+    "n_trades": 44,
+    "sharpe": 0.7493755231516411,
+    "sortino": 0.39344205940928023,
+    "total_return": 11.069127713310774,
+    "turnover_per_year": 3.031993437243642,
+    "win_rate": 0.8636363636363636
+  },
+  "n_bars": 3657,
+  "notes": "Round 3 new-tickers sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run): top full-dev-period variant of 6 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-new-tickers/rsi_mean_reversion__TSLA.json)",
+  "params": {
+    "overbought": 60,
+    "oversold": 30,
+    "period": 14
+  },
+  "run_id": "20260713T012522347893Z-8db3bfe9ca11",
+  "schema_version": 1,
+  "strategy": "rsi_mean_reversion",
+  "timeframe": "daily",
+  "variants_tried": 6
+}
