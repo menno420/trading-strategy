@@ -1,0 +1,70 @@
+{
+  "bootstrap": {
+    "block_length_bars": 21,
+    "method": "paired moving-block bootstrap: identical resampled block indices applied to strategy and benchmark per-bar returns",
+    "n_oos_bars": 2016,
+    "n_resamples": 1000,
+    "rng": "numpy.random.default_rng(20260713) per lane"
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:36+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2012-05-18 00:00:00",
+  "decision_rule": "DEMOTED to KILL iff P(delta<=0) >= 0.6; ESCALATE-TO-OWNER (owner-gated proposal doc, verdict unchanged KEEP-dev) iff P(delta<=0) <= 0.1; otherwise KEEP-dev unchanged",
+  "escalate_to_owner": false,
+  "family": "ichimoku_trend",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_oos_sharpe": 0.9934293933081809,
+    "tolerance": 1e-08
+  },
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "META",
+  "lane_id": "r3-trix-ichimoku__ichimoku_trend__META__daily",
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): 0 new registered configs; experiments/index.jsonl untouched",
+  "n_bars": 3180,
+  "no_research": "resampling of the fidelity-guarded frozen replay's paired stitched OOS return series \u2014 no new bars, no selection pass, 0 new registered configs",
+  "p_delta_le_0": 0.116,
+  "point_estimates": {
+    "min_tstat": 2.638257273476751,
+    "sharpe_delta": 0.3399635321558344,
+    "tstat": 0.9606220201099536
+  },
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-C \u2014 Moving-block bootstrap of the Sharpe-delta t",
+  "schema_version": 1,
+  "sharpe_delta_distribution": {
+    "mean": 0.3331926757861783,
+    "percentiles": {
+      "2.5": -0.21684075727355318,
+      "25.0": 0.14918218392074586,
+      "5.0": -0.13050875674585108,
+      "50.0": 0.3269924345264843,
+      "75.0": 0.533552769041721,
+      "95.0": 0.8013284797324677,
+      "97.5": 0.8986702750723433
+    },
+    "std": 0.28092833819160123
+  },
+  "source_lane": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__META.json",
+  "sweep": "r5-bootstrap",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "tstat_distribution": {
+    "mean": 0.9412862352249335,
+    "percentiles": {
+      "2.5": -0.6128960017618242,
+      "25.0": 0.42171186064765864,
+      "5.0": -0.36890929091084523,
+      "50.0": 0.9245246412264475,
+      "75.0": 1.5071749305775393,
+      "95.0": 2.2616367718899837,
+      "97.5": 2.538997020250102
+    },
+    "std": 0.7935435195458904
+  },
+  "verdict": "KEEP (dev-candidate only)"
+}
