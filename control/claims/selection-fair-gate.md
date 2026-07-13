@@ -1,1 +1,0 @@
-- `claude/selection-fair-gate` · **selection-fair standing gate** — R5-D replay gate for round-6+ dev verdicts · src/trading_lab/selection_gate.py, docs, tests · 2026-07-13
