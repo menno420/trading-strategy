@@ -1,0 +1,191 @@
+{
+  "burden": {
+    "program_cumulative_after": 4359,
+    "program_cumulative_before": 4345,
+    "round5_new_registered_configs": 14
+  },
+  "counts": {
+    "escalate_to_owner": 1,
+    "keep_dev": 4,
+    "kill": 1,
+    "target_lanes": 5
+  },
+  "created_utc": "2026-07-13T14:33:31.678261+00:00",
+  "escalate_proposal": "docs/proposals/r5c-btc-bollinger-breakout-oos-proposal.md",
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "lanes": [
+    {
+      "escalate_to_owner": true,
+      "instrument": "BTC-USD",
+      "killed_by": [],
+      "lane_id": "r3-btc-coverage__bollinger_breakout__BTC-USD__daily",
+      "round5_verdict": "KEEP (dev-candidate only)",
+      "slices": {
+        "R5-A": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-B": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-C": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-D": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        }
+      },
+      "strategy": "bollinger_breakout",
+      "sweep": "r3-btc-coverage",
+      "timeframe": "daily"
+    },
+    {
+      "escalate_to_owner": false,
+      "instrument": "SLV",
+      "killed_by": [],
+      "lane_id": "r3-stoch-willr__williams_r_reversion__SLV__daily",
+      "round5_verdict": "KEEP (dev-candidate only)",
+      "slices": {
+        "R5-A": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-B": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-C": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-D": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        }
+      },
+      "strategy": "williams_r_reversion",
+      "sweep": "r3-stoch-willr",
+      "timeframe": "daily"
+    },
+    {
+      "escalate_to_owner": false,
+      "instrument": "META",
+      "killed_by": [],
+      "lane_id": "r3-trix-ichimoku__ichimoku_trend__META__daily",
+      "round5_verdict": "KEEP (dev-candidate only)",
+      "slices": {
+        "R5-A": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-B": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-C": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-D": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        }
+      },
+      "strategy": "ichimoku_trend",
+      "sweep": "r3-trix-ichimoku",
+      "timeframe": "daily"
+    },
+    {
+      "escalate_to_owner": false,
+      "instrument": "META",
+      "killed_by": [
+        "R5-B"
+      ],
+      "lane_id": "r3-meanrev-hourly__stochastic_reversion__META__hourly",
+      "round5_verdict": "KILL",
+      "slices": {
+        "R5-A": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-B": {
+          "status": "GRADED",
+          "sweep_verdict": "KILL",
+          "verdict": "KILL"
+        },
+        "R5-C": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-D": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        }
+      },
+      "strategy": "stochastic_reversion",
+      "sweep": "r3-meanrev-hourly",
+      "timeframe": "hourly"
+    },
+    {
+      "escalate_to_owner": false,
+      "instrument": "TLT",
+      "killed_by": [],
+      "lane_id": "r3-trend-new-tickers__ema_crossover__TLT__daily",
+      "round5_verdict": "KEEP (dev-candidate only)",
+      "slices": {
+        "R5-A": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-B": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-C": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        },
+        "R5-D": {
+          "status": "GRADED",
+          "sweep_verdict": "KEEP",
+          "verdict": "KEEP (dev-candidate only)"
+        }
+      },
+      "strategy": "ema_crossover",
+      "sweep": "r3-trend-new-tickers",
+      "timeframe": "daily"
+    }
+  ],
+  "post_holdout_dev_only": "holdout SPENT, promotion CLOSED; a Round-5 KEEP is a dev-candidate only, never a finding; a Round-5 KILL is a demotion of a round-3 dev-candidate",
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 Round-level aggregation",
+  "rule": "KEEP-dev iff KEEP under ALL FOUR of R5-A/B/C/D; any single demotion is a KILL recorded with the killing slice(s); the R5-C escalate branch changes no verdict",
+  "schema_version": 1,
+  "slice": "r5-rollup",
+  "slice_summaries": {
+    "R5-A": "experiments/sweeps/r5-neighborhood/summary.json",
+    "R5-B": "experiments/sweeps/r5-split-stability/summary.json",
+    "R5-C": "experiments/sweeps/r5-bootstrap/summary.json",
+    "R5-D": "experiments/sweeps/r5-selection-fair/summary.json"
+  }
+}

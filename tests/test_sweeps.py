@@ -1609,3 +1609,132 @@ class TestR4CrossassetGrid:
             pos = strategy(random_walk, **params)
             assert not pos.isna().any()
             assert ((pos >= 0.0) & (pos <= 1.0)).all()
+
+
+class TestR5ANeighborGrids:
+    """R5-A parameter-neighborhood probes — pre-declared BEFORE the slice
+    runs (docs/research-round-5-plan.md § R5-A). Neighbors are selection-free
+    PROBES of the frozen top-5 KEEP-dev lanes, never entrants."""
+
+    # The plan's frozen target set, verbatim (no swap-ins, no re-ranking).
+    PLAN_TOP5 = [
+        ("r3-btc-coverage", "bollinger_breakout", "BTC-USD", "daily",
+         {"period": 10, "num_std": 1.0}),
+        ("r3-stoch-willr", "williams_r_reversion", "SLV", "daily",
+         {"period": 21, "buy_below": -90, "sell_above": -30}),
+        ("r3-trix-ichimoku", "ichimoku_trend", "META", "daily",
+         {"tenkan": 7, "kijun": 26, "senkou_b": 44}),
+        ("r3-meanrev-hourly", "stochastic_reversion", "META", "hourly",
+         {"k_period": 14, "buy_below": 10, "sell_above": 80}),
+        ("r3-trend-new-tickers", "ema_crossover", "TLT", "daily",
+         {"fast": 30, "slow": 50}),
+    ]
+
+    def test_target_lanes_are_the_frozen_plan_top5(self):
+        assert len(sweeps.R5A_TARGET_LANES) == 5
+        got = [(l["sweep"], l["family"], l["instrument"], l["timeframe"],
+                l["top_variant"]) for l in sweeps.R5A_TARGET_LANES]
+        assert got == self.PLAN_TOP5
+
+    def test_source_files_exist_and_families_registered(self):
+        from trading_lab import config
+        for lane in sweeps.R5A_TARGET_LANES:
+            assert (config.REPO_ROOT / lane["source_file"]).exists(), \
+                lane["source_file"]
+            assert lane["family"] in STRATEGIES
+
+    def test_top_variant_is_a_committed_grid_point(self):
+        # Every top variant sits on its SOURCE lane's declared Round-3 grid
+        # — the neighborhood is defined on that grid, no new territory.
+        source_variants = {
+            "r3-btc-coverage__bollinger_breakout__BTC-USD__daily":
+                sweeps.r3_breakout_variants("bollinger_breakout"),
+            "r3-stoch-willr__williams_r_reversion__SLV__daily":
+                sweeps.r3_stoch_willr_variants("williams_r_reversion"),
+            "r3-trix-ichimoku__ichimoku_trend__META__daily":
+                sweeps.r3_trix_ichimoku_variants("ichimoku_trend"),
+            "r3-meanrev-hourly__stochastic_reversion__META__hourly":
+                sweeps.r3_meanrev_hourly_variants("stochastic_reversion"),
+            "r3-trend-new-tickers__ema_crossover__TLT__daily":
+                sweeps.r3_trend_new_tickers_variants("ema_crossover"),
+        }
+        for lane in sweeps.R5A_TARGET_LANES:
+            assert lane["top_variant"] in source_variants[lane["lane_id"]]
+
+    def test_neighbors_are_grid_points_too(self):
+        # A ±1-step single-parameter perturbation that satisfies the family
+        # constraint is by construction a point of the same committed grid.
+        source_variants = {
+            "r3-btc-coverage__bollinger_breakout__BTC-USD__daily":
+                sweeps.r3_breakout_variants("bollinger_breakout"),
+            "r3-stoch-willr__williams_r_reversion__SLV__daily":
+                sweeps.r3_stoch_willr_variants("williams_r_reversion"),
+            "r3-trix-ichimoku__ichimoku_trend__META__daily":
+                sweeps.r3_trix_ichimoku_variants("ichimoku_trend"),
+            "r3-meanrev-hourly__stochastic_reversion__META__hourly":
+                sweeps.r3_meanrev_hourly_variants("stochastic_reversion"),
+            "r3-trend-new-tickers__ema_crossover__TLT__daily":
+                sweeps.r3_trend_new_tickers_variants("ema_crossover"),
+        }
+        for lane in sweeps.R5A_TARGET_LANES:
+            for nb in sweeps.r5a_neighbors(lane["lane_id"]):
+                assert nb in source_variants[lane["lane_id"]], \
+                    (lane["lane_id"], nb)
+
+    def test_neighbors_are_single_param_one_step_perturbations(self):
+        for lane in sweeps.R5A_TARGET_LANES:
+            top = lane["top_variant"]
+            axes = sweeps._R5A_SOURCE_AXES[lane["lane_id"]]
+            for nb in sweeps.r5a_neighbors(lane["lane_id"]):
+                changed = [k for k in top if nb[k] != top[k]]
+                assert len(changed) == 1, (lane["lane_id"], nb)
+                key = changed[0]
+                values = axes[key]
+                assert abs(values.index(nb[key])
+                           - values.index(top[key])) == 1
+
+    def test_neighbor_counts_bounded_and_stable(self):
+        # Registered burden: the actual clipped neighborhood is 14 configs
+        # (2+4+3+3+2), inside the plan's <= 8 per lane / <= 40 total bound.
+        counts = sweeps.r5a_neighbors_per_lane()
+        assert counts == {
+            "r3-btc-coverage__bollinger_breakout__BTC-USD__daily": 2,
+            "r3-stoch-willr__williams_r_reversion__SLV__daily": 4,
+            "r3-trix-ichimoku__ichimoku_trend__META__daily": 3,
+            "r3-meanrev-hourly__stochastic_reversion__META__hourly": 3,
+            "r3-trend-new-tickers__ema_crossover__TLT__daily": 2,
+        }
+        for n in counts.values():
+            assert 1 <= n <= sweeps.R5A_MAX_NEIGHBORS_PER_LANE
+        assert sweeps.r5a_total_configs() == 14
+        assert sweeps.r5a_total_configs() <= 40
+
+    def test_no_neighbor_is_the_top_variant_and_all_unique(self):
+        for lane in sweeps.R5A_TARGET_LANES:
+            nbs = sweeps.r5a_neighbors(lane["lane_id"])
+            assert lane["top_variant"] not in nbs
+            assert len({tuple(sorted(nb.items())) for nb in nbs}) == len(nbs)
+
+    def test_neighbors_respect_family_constraints(self):
+        for lane in sweeps.R5A_TARGET_LANES:
+            keep = sweeps._R5A_SOURCE_CONSTRAINTS[lane["lane_id"]]
+            for nb in sweeps.r5a_neighbors(lane["lane_id"]):
+                assert keep(nb)
+
+    def test_every_neighbor_runs(self, random_walk):
+        for lane in sweeps.R5A_TARGET_LANES:
+            fn = STRATEGIES[lane["family"]]
+            for nb in sweeps.r5a_neighbors(lane["lane_id"]):
+                pos = fn(random_walk, **nb)
+                assert not pos.isna().any()
+
+    def test_unknown_lane_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r5a_neighbors("r3-astrology__tea_leaves__SPY__daily")
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r5a_lane("nope")
+
+    def test_deterministic_order(self):
+        for lane in sweeps.R5A_TARGET_LANES:
+            assert (sweeps.r5a_neighbors(lane["lane_id"])
+                    == sweeps.r5a_neighbors(lane["lane_id"]))

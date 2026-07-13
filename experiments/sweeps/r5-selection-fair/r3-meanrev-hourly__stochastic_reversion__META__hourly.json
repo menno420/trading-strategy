@@ -1,0 +1,115 @@
+{
+  "benchmark_stitched_sharpe": 0.49397799449244817,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:37+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "decision_rule": "KEEP dev-candidate status iff the fixed-config replay's stitched OOS Sharpe beats same-window B&H; else DEMOTED to KILL (edge exists only through in-window re-selection)",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "stochastic_reversion",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_searched_oos_sharpe": 1.5290958634343552,
+    "tolerance": 1e-08
+  },
+  "fixed_config": {
+    "buy_below": 10,
+    "k_period": 14,
+    "sell_above": 80
+  },
+  "fixed_per_split": [
+    {
+      "params": {
+        "buy_below": 10,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "test": [
+        1008,
+        1260
+      ],
+      "test_sharpe": 2.271887314496445
+    },
+    {
+      "params": {
+        "buy_below": 10,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "test": [
+        1260,
+        1512
+      ],
+      "test_sharpe": 4.2119815988523195
+    },
+    {
+      "params": {
+        "buy_below": 10,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "test": [
+        1512,
+        1764
+      ],
+      "test_sharpe": 0.4198964847632941
+    },
+    {
+      "params": {
+        "buy_below": 10,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "test": [
+        1764,
+        2016
+      ],
+      "test_sharpe": 2.0675523141338505
+    },
+    {
+      "params": {
+        "buy_below": 10,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "test": [
+        2016,
+        2268
+      ],
+      "test_sharpe": 3.2823488236065788
+    }
+  ],
+  "fixed_stitched_sharpe": 1.92514917424039,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "META",
+  "lane_id": "r3-meanrev-hourly__stochastic_reversion__META__hourly",
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): the fixed config is the lane's already-ledgered committed top variant; experiments/index.jsonl untouched",
+  "n_bars": 2476,
+  "no_research": "selection-free replay of the lane's committed top full-period variant over the identical positional test windows \u2014 one fixed config, no training pick, 0 new registered configs",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-D \u2014 Selection-fair fixed-config replay",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 1260,
+    "note": "informational t at the lane's committed K \u2014 promotion is CLOSED post-holdout",
+    "sharpe_delta": 1.4311711797479418,
+    "sharpe_se": 1.140820193555948,
+    "timeframe": "hourly",
+    "tstat": 1.2545107351991787,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "searched_stitched_sharpe": 1.5290958634343552,
+  "selection_gap": -0.3960533108060347,
+  "selection_gap_note": "searched_stitched_sharpe - fixed_stitched_sharpe; informational only \u2014 no registered threshold",
+  "source_lane": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__META.json",
+  "sweep": "r5-selection-fair",
+  "sweep_verdict": "KEEP",
+  "timeframe": "hourly",
+  "verdict": "KEEP (dev-candidate only)"
+}

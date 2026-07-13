@@ -1,0 +1,70 @@
+{
+  "bootstrap": {
+    "block_length_bars": 63,
+    "method": "paired moving-block bootstrap: identical resampled block indices applied to strategy and benchmark per-bar returns",
+    "n_oos_bars": 1260,
+    "n_resamples": 1000,
+    "rng": "numpy.random.default_rng(20260713) per lane"
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:36+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "decision_rule": "DEMOTED to KILL iff P(delta<=0) >= 0.6; ESCALATE-TO-OWNER (owner-gated proposal doc, verdict unchanged KEEP-dev) iff P(delta<=0) <= 0.1; otherwise KEEP-dev unchanged",
+  "escalate_to_owner": false,
+  "family": "stochastic_reversion",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_oos_sharpe": 1.5290958634343552,
+    "tolerance": 1e-08
+  },
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "META",
+  "lane_id": "r3-meanrev-hourly__stochastic_reversion__META__hourly",
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): 0 new registered configs; experiments/index.jsonl untouched",
+  "n_bars": 2476,
+  "no_research": "resampling of the fidelity-guarded frozen replay's paired stitched OOS return series \u2014 no new bars, no selection pass, 0 new registered configs",
+  "p_delta_le_0": 0.247,
+  "point_estimates": {
+    "min_tstat": 2.638257273476751,
+    "sharpe_delta": 1.035117868941907,
+    "tstat": 0.9075346245827585
+  },
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-C \u2014 Moving-block bootstrap of the Sharpe-delta t",
+  "schema_version": 1,
+  "sharpe_delta_distribution": {
+    "mean": 0.7956825587806879,
+    "percentiles": {
+      "2.5": -1.5530673379630184,
+      "25.0": 0.018087782438382383,
+      "5.0": -1.0752966271735083,
+      "50.0": 0.8094227692122978,
+      "75.0": 1.5891786099491139,
+      "95.0": 2.5274919891686056,
+      "97.5": 2.9131757593240257
+    },
+    "std": 1.126869238004172
+  },
+  "source_lane": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__META.json",
+  "sweep": "r5-bootstrap",
+  "sweep_verdict": "KEEP",
+  "timeframe": "hourly",
+  "tstat_distribution": {
+    "mean": 0.6972671905512068,
+    "percentiles": {
+      "2.5": -1.3620511041653593,
+      "25.0": 0.015854485641990147,
+      "5.0": -0.9429249533774529,
+      "50.0": 0.70953740681673,
+      "75.0": 1.3925387781038459,
+      "95.0": 2.2134284064043026,
+      "97.5": 2.5525495488425354
+    },
+    "std": 0.9875729639445912
+  },
+  "verdict": "KEEP (dev-candidate only)"
+}

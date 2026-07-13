@@ -1,0 +1,203 @@
+{
+  "best_split_removed": 6,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:35+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2012-05-18 00:00:00",
+  "decision_rule": "KEEP dev-candidate status iff the stitched OOS Sharpe delta vs B&H remains > 0 after removing the lane's single best test split (argmin leave-one-out delta); else DEMOTED to KILL (single-window luck)",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "ichimoku_trend",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_oos_sharpe": 0.9934293933081809,
+    "tolerance": 1e-08
+  },
+  "full_stitched_delta": 0.3399635321558344,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "META",
+  "lane_id": "r3-trix-ichimoku__ichimoku_trend__META__daily",
+  "leave_one_out": [
+    {
+      "left_out_split": 0,
+      "stitched_delta": 0.3872738463909514
+    },
+    {
+      "left_out_split": 1,
+      "stitched_delta": 0.37602854521130513
+    },
+    {
+      "left_out_split": 2,
+      "stitched_delta": 0.35486547126910684
+    },
+    {
+      "left_out_split": 3,
+      "stitched_delta": 0.30373525268385293
+    },
+    {
+      "left_out_split": 4,
+      "stitched_delta": 0.5531967914881906
+    },
+    {
+      "left_out_split": 5,
+      "stitched_delta": 0.15766003839275244
+    },
+    {
+      "left_out_split": 6,
+      "stitched_delta": 0.15248754624396266
+    },
+    {
+      "left_out_split": 7,
+      "stitched_delta": 0.4113265867360358
+    }
+  ],
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): 0 new registered configs \u2014 pure replay/re-aggregation of committed choices; experiments/index.jsonl untouched",
+  "n_bars": 3180,
+  "n_splits": 8,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params on the identical positional test windows, then pure re-aggregation \u2014 no selection pass, 0 new registered configs",
+  "per_split": [
+    {
+      "benchmark_sharpe": 1.4118473824011928,
+      "delta": -0.4038663767795616,
+      "params": {
+        "kijun": 26,
+        "senkou_b": 44,
+        "tenkan": 7
+      },
+      "split": 0,
+      "strategy_sharpe": 1.0079810056216312,
+      "test": [
+        1008,
+        1260
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.9137537594810343,
+      "delta": -0.03812696356388445,
+      "params": {
+        "kijun": 26,
+        "senkou_b": 44,
+        "tenkan": 7
+      },
+      "split": 1,
+      "strategy_sharpe": 0.8756267959171499,
+      "test": [
+        1260,
+        1512
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.20611265980671054,
+      "delta": 0.3058648044126637,
+      "params": {
+        "kijun": 22,
+        "senkou_b": 44,
+        "tenkan": 12
+      },
+      "split": 2,
+      "strategy_sharpe": 0.5119774642193743,
+      "test": [
+        1512,
+        1764
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.9340870524045533,
+      "delta": 0.6586934869521714,
+      "params": {
+        "kijun": 26,
+        "senkou_b": 44,
+        "tenkan": 12
+      },
+      "split": 3,
+      "strategy_sharpe": 1.5927805393567247,
+      "test": [
+        1764,
+        2016
+      ]
+    },
+    {
+      "benchmark_sharpe": 1.0269098429262749,
+      "delta": -0.9049405563197718,
+      "params": {
+        "kijun": 26,
+        "senkou_b": 44,
+        "tenkan": 12
+      },
+      "split": 4,
+      "strategy_sharpe": 0.12196928660650308,
+      "test": [
+        2016,
+        2268
+      ]
+    },
+    {
+      "benchmark_sharpe": -1.0103887658091057,
+      "delta": 0.6091295169725324,
+      "params": {
+        "kijun": 26,
+        "senkou_b": 44,
+        "tenkan": 12
+      },
+      "split": 5,
+      "strategy_sharpe": -0.4012592488365733,
+      "test": [
+        2268,
+        2520
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.899368543874399,
+      "delta": 1.2997363567158258,
+      "params": {
+        "kijun": 26,
+        "senkou_b": 44,
+        "tenkan": 12
+      },
+      "split": 6,
+      "strategy_sharpe": 2.199104900590225,
+      "test": [
+        2520,
+        2772
+      ]
+    },
+    {
+      "benchmark_sharpe": 1.8550613296124063,
+      "delta": -0.28353319415310674,
+      "params": {
+        "kijun": 22,
+        "senkou_b": 44,
+        "tenkan": 7
+      },
+      "split": 7,
+      "strategy_sharpe": 1.5715281354592996,
+      "test": [
+        2772,
+        3024
+      ]
+    }
+  ],
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-B \u2014 Time-split stability / leave-one-split-out",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2016,
+    "note": "informational t at the lane's committed K \u2014 promotion is CLOSED post-holdout",
+    "sharpe_delta": 0.3399635321558344,
+    "sharpe_se": 0.3538993746124224,
+    "timeframe": "daily",
+    "tstat": 0.9606220201099536,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__META.json",
+  "sweep": "r5-split-stability",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "verdict": "KEEP (dev-candidate only)",
+  "worst_case_loo_delta": 0.15248754624396266
+}

@@ -1738,3 +1738,145 @@ def r4_crossasset_total_configs() -> int:
     configurations)."""
     return (sum(r4_crossasset_variants_per_arm().values())
             * len(R4_CROSSASSET_INSTRUMENTS))
+
+
+# ---------------------------------------------------------------------------
+# Round 5 slice R5-A: PARAMETER-NEIGHBORHOOD STABILITY probes (lane set: the
+# FROZEN top-5 KEEP-dev lanes of docs/research-round-5-plan.md — post-holdout
+# DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# Round 5 registers NO new searches: these are the ±1-grid-step neighbors of
+# each target lane's committed top full-period variant, declared here BEFORE
+# the slice runs per the pre-registration (docs/research-round-5-plan.md
+# § R5-A). One parameter perturbed at a time, both directions, along the
+# SOURCE lane's own declared axis lists (no new parameter territory — every
+# neighbor is a grid point of the family's committed Round-3 grid), clipped
+# to the axis ends and filtered by the family's declared constraint. The
+# target-lane table is the plan's frozen top-5 verbatim (baseline t order,
+# from experiments/sweeps/r4-cost-sensitivity/summary.json and the r3
+# per-lane JSONs it points at): no swap-ins, no extensions, no re-ranking.
+# Neighbors are PROBES, not entrants — each is replayed SELECTION-FREE over
+# the lane's exact committed walk-forward test windows and can never become
+# a candidate itself (that would be selection on outcome). Burden: every
+# neighbor is counted as a new registered config (5 lanes × ≤ 8 = ≤ 40
+# registered; the actual clipped count is 14 — program cumulative
+# 4345 → 4359). Kept bounded on purpose: every extra variant raises the
+# multiple-testing burden on any winner.
+
+R5A_MAX_NEIGHBORS_PER_LANE = 8
+
+# The frozen Round-5 target set (plan § "The Round-5 target set"), verbatim.
+R5A_TARGET_LANES: tuple[dict, ...] = (
+    {"lane_id": "r3-btc-coverage__bollinger_breakout__BTC-USD__daily",
+     "sweep": "r3-btc-coverage", "family": "bollinger_breakout",
+     "instrument": "BTC-USD", "timeframe": "daily",
+     "source_file": ("experiments/sweeps/r3-btc-coverage/"
+                     "bollinger_breakout__BTC-USD.json"),
+     "top_variant": {"period": 10, "num_std": 1.0}},
+    {"lane_id": "r3-stoch-willr__williams_r_reversion__SLV__daily",
+     "sweep": "r3-stoch-willr", "family": "williams_r_reversion",
+     "instrument": "SLV", "timeframe": "daily",
+     "source_file": ("experiments/sweeps/r3-stoch-willr/"
+                     "williams_r_reversion__SLV.json"),
+     "top_variant": {"period": 21, "buy_below": -90, "sell_above": -30}},
+    {"lane_id": "r3-trix-ichimoku__ichimoku_trend__META__daily",
+     "sweep": "r3-trix-ichimoku", "family": "ichimoku_trend",
+     "instrument": "META", "timeframe": "daily",
+     "source_file": ("experiments/sweeps/r3-trix-ichimoku/"
+                     "ichimoku_trend__META.json"),
+     "top_variant": {"tenkan": 7, "kijun": 26, "senkou_b": 44}},
+    {"lane_id": "r3-meanrev-hourly__stochastic_reversion__META__hourly",
+     "sweep": "r3-meanrev-hourly", "family": "stochastic_reversion",
+     "instrument": "META", "timeframe": "hourly",
+     "source_file": ("experiments/sweeps/r3-meanrev-hourly/"
+                     "stochastic_reversion__META.json"),
+     "top_variant": {"k_period": 14, "buy_below": 10, "sell_above": 80}},
+    {"lane_id": "r3-trend-new-tickers__ema_crossover__TLT__daily",
+     "sweep": "r3-trend-new-tickers", "family": "ema_crossover",
+     "instrument": "TLT", "timeframe": "daily",
+     "source_file": ("experiments/sweeps/r3-trend-new-tickers/"
+                     "ema_crossover__TLT.json"),
+     "top_variant": {"fast": 30, "slow": 50}},
+)
+
+# Each lane's neighbor axes are the SOURCE lane's own declared axis dicts,
+# referenced (not copied) so the neighborhood can never drift from the
+# committed grid.
+_R5A_SOURCE_AXES: dict[str, dict[str, list]] = {
+    "r3-btc-coverage__bollinger_breakout__BTC-USD__daily":
+        _R3_BREAKOUT_AXES["bollinger_breakout"],
+    "r3-stoch-willr__williams_r_reversion__SLV__daily":
+        _R3_STOCH_WILLR_AXES["williams_r_reversion"],
+    "r3-trix-ichimoku__ichimoku_trend__META__daily":
+        _R3_TRIX_ICHIMOKU_AXES["ichimoku_trend"],
+    "r3-meanrev-hourly__stochastic_reversion__META__hourly":
+        _R3_MEANREV_HOURLY_AXES["stochastic_reversion"],
+    "r3-trend-new-tickers__ema_crossover__TLT__daily":
+        _R3_TREND_NEW_TICKERS_AXES["ema_crossover"],
+}
+
+_R5A_SOURCE_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "r3-btc-coverage__bollinger_breakout__BTC-USD__daily":
+        _R3_BREAKOUT_CONSTRAINTS["bollinger_breakout"],
+    "r3-stoch-willr__williams_r_reversion__SLV__daily":
+        _R3_STOCH_WILLR_CONSTRAINTS["williams_r_reversion"],
+    "r3-trix-ichimoku__ichimoku_trend__META__daily":
+        _R3_TRIX_ICHIMOKU_CONSTRAINTS["ichimoku_trend"],
+    "r3-meanrev-hourly__stochastic_reversion__META__hourly":
+        _R3_MEANREV_HOURLY_CONSTRAINTS["stochastic_reversion"],
+    "r3-trend-new-tickers__ema_crossover__TLT__daily":
+        _R3_TREND_NEW_TICKERS_CONSTRAINTS["ema_crossover"],
+}
+
+
+def r5a_lane(lane_id: str) -> dict:
+    """The frozen target-lane row for ``lane_id``."""
+    for lane in R5A_TARGET_LANES:
+        if lane["lane_id"] == lane_id:
+            return lane
+    raise ValueError(f"unknown R5-A target lane {lane_id!r}")
+
+
+def r5a_neighbors(lane_id: str) -> list[dict]:
+    """The ±1-grid-step neighbors of ``lane_id``'s committed top
+    full-period variant: one parameter perturbed at a time, both
+    directions, along the source lane's declared axis list, clipped to the
+    axis ends and constraint-filtered. Deterministic order (axis
+    declaration order; step -1 before +1). Probes, not entrants."""
+    lane = r5a_lane(lane_id)
+    axes = _R5A_SOURCE_AXES[lane_id]
+    keep = _R5A_SOURCE_CONSTRAINTS[lane_id]
+    top = lane["top_variant"]
+    if set(top) != set(axes):
+        raise ValueError(f"top variant keys {sorted(top)} do not match the "
+                         f"source axes {sorted(axes)} for {lane_id!r}")
+    out: list[dict] = []
+    for key, values in axes.items():
+        idx = values.index(top[key])  # ValueError if not a grid point
+        for step in (-1, +1):
+            j = idx + step
+            if not 0 <= j < len(values):
+                continue  # clipped at the axis end
+            cand = dict(top)
+            cand[key] = values[j]
+            if keep(cand):
+                out.append(cand)
+    if len(out) > R5A_MAX_NEIGHBORS_PER_LANE:
+        raise ValueError(f"{lane_id!r} produced {len(out)} neighbors, "
+                         f"above the registered cap "
+                         f"{R5A_MAX_NEIGHBORS_PER_LANE}")
+    return out
+
+
+def r5a_neighbors_per_lane() -> dict[str, int]:
+    """Round-5 slice R5-A neighbor counts by lane (multiple-testing
+    bookkeeping)."""
+    return {lane["lane_id"]: len(r5a_neighbors(lane["lane_id"]))
+            for lane in R5A_TARGET_LANES}
+
+
+def r5a_total_configs() -> int:
+    """Total registered Round-5 slice R5-A configs: every replayed
+    neighbor counts as one new registered config (conservative — the
+    burden only ever rises), per the pre-registration's ≤ 40 bound."""
+    return sum(r5a_neighbors_per_lane().values())

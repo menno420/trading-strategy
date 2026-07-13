@@ -1,0 +1,231 @@
+{
+  "best_split_removed": 5,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:35+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "decision_rule": "KEEP dev-candidate status iff the stitched OOS Sharpe delta vs B&H remains > 0 after removing the lane's single best test split (argmin leave-one-out delta); else DEMOTED to KILL (single-window luck)",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "bollinger_breakout",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_oos_sharpe": 1.2575201323867047,
+    "tolerance": 1e-08
+  },
+  "full_stitched_delta": 0.4364140255600344,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "BTC-USD",
+  "lane_id": "r3-btc-coverage__bollinger_breakout__BTC-USD__daily",
+  "leave_one_out": [
+    {
+      "left_out_split": 0,
+      "stitched_delta": 0.4564138950602942
+    },
+    {
+      "left_out_split": 1,
+      "stitched_delta": 0.3803569940874495
+    },
+    {
+      "left_out_split": 2,
+      "stitched_delta": 0.41544261522566495
+    },
+    {
+      "left_out_split": 3,
+      "stitched_delta": 0.3934740993550493
+    },
+    {
+      "left_out_split": 4,
+      "stitched_delta": 0.5026423546382304
+    },
+    {
+      "left_out_split": 5,
+      "stitched_delta": 0.3257966075872686
+    },
+    {
+      "left_out_split": 6,
+      "stitched_delta": 0.503086755755965
+    },
+    {
+      "left_out_split": 7,
+      "stitched_delta": 0.3644350171178439
+    },
+    {
+      "left_out_split": 8,
+      "stitched_delta": 0.46072695196635904
+    },
+    {
+      "left_out_split": 9,
+      "stitched_delta": 0.5445039212674858
+    }
+  ],
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): 0 new registered configs \u2014 pure replay/re-aggregation of committed choices; experiments/index.jsonl untouched",
+  "n_bars": 3767,
+  "n_splits": 10,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params on the identical positional test windows, then pure re-aggregation \u2014 no selection pass, 0 new registered configs",
+  "per_split": [
+    {
+      "benchmark_sharpe": 1.9207301461360995,
+      "delta": 0.39198009285974766,
+      "params": {
+        "num_std": 1.0,
+        "period": 10
+      },
+      "split": 0,
+      "strategy_sharpe": 2.312710238995847,
+      "test": [
+        1008,
+        1260
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.7088622686255808,
+      "delta": 0.9343720095613688,
+      "params": {
+        "num_std": 1.0,
+        "period": 10
+      },
+      "split": 1,
+      "strategy_sharpe": 0.22550974093578804,
+      "test": [
+        1260,
+        1512
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.9038685096702102,
+      "delta": 0.6126478891527021,
+      "params": {
+        "num_std": 1.5,
+        "period": 20
+      },
+      "split": 2,
+      "strategy_sharpe": 1.5165163988229122,
+      "test": [
+        1512,
+        1764
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.1696200847675578,
+      "delta": 0.4247601197551479,
+      "params": {
+        "num_std": 1.5,
+        "period": 20
+      },
+      "split": 3,
+      "strategy_sharpe": 0.2551400349875901,
+      "test": [
+        1764,
+        2016
+      ]
+    },
+    {
+      "benchmark_sharpe": 2.4497790945775,
+      "delta": -0.5590243281573457,
+      "params": {
+        "num_std": 1.5,
+        "period": 20
+      },
+      "split": 4,
+      "strategy_sharpe": 1.8907547664201543,
+      "test": [
+        2016,
+        2268
+      ]
+    },
+    {
+      "benchmark_sharpe": 1.5873207604523845,
+      "delta": 1.0563778594513276,
+      "params": {
+        "num_std": 1.0,
+        "period": 50
+      },
+      "split": 5,
+      "strategy_sharpe": 2.643698619903712,
+      "test": [
+        2268,
+        2520
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.09773384661083052,
+      "delta": -0.3244959482971265,
+      "params": {
+        "num_std": 1.0,
+        "period": 50
+      },
+      "split": 6,
+      "strategy_sharpe": -0.22676210168629599,
+      "test": [
+        2520,
+        2772
+      ]
+    },
+    {
+      "benchmark_sharpe": -1.4460279908726004,
+      "delta": 0.09677080771828628,
+      "params": {
+        "num_std": 1.0,
+        "period": 50
+      },
+      "split": 7,
+      "strategy_sharpe": -1.349257183154314,
+      "test": [
+        2772,
+        3024
+      ]
+    },
+    {
+      "benchmark_sharpe": 1.3439859973745332,
+      "delta": 0.019487584236051125,
+      "params": {
+        "num_std": 1.5,
+        "period": 50
+      },
+      "split": 8,
+      "strategy_sharpe": 1.3634735816105843,
+      "test": [
+        3024,
+        3276
+      ]
+    },
+    {
+      "benchmark_sharpe": 2.2709152003588344,
+      "delta": -0.9945976077120533,
+      "params": {
+        "num_std": 1.5,
+        "period": 10
+      },
+      "split": 9,
+      "strategy_sharpe": 1.2763175926467811,
+      "test": [
+        3276,
+        3528
+      ]
+    }
+  ],
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-B \u2014 Time-split stability / leave-one-split-out",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "informational t at the lane's committed K \u2014 promotion is CLOSED post-holdout",
+    "sharpe_delta": 0.4364140255600344,
+    "sharpe_se": 0.3167234776368505,
+    "timeframe": "daily",
+    "tstat": 1.3779023544961797,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-btc-coverage/bollinger_breakout__BTC-USD.json",
+  "sweep": "r5-split-stability",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "verdict": "KEEP (dev-candidate only)",
+  "worst_case_loo_delta": 0.3257966075872686
+}

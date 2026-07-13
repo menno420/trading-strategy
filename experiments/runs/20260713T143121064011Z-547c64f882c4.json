@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.010050242656933106,
+    "max_drawdown": -0.4648419318149152,
+    "n_bars": 2520,
+    "n_trades": 1,
+    "sharpe": 0.16965504212254662,
+    "sortino": 0.1651171976197501,
+    "total_return": 0.10517174497368686,
+    "turnover_per_year": 0.1,
+    "win_rate": 1.0
+  },
+  "config_hash": "547c64f882c4",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:21+00:00",
+  "data_end": "2024-01-09 00:00:00",
+  "data_start": "2014-01-06 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "SLV",
+  "metrics": {
+    "cagr": 0.07539692652701846,
+    "max_drawdown": -0.35917459213472325,
+    "n_bars": 2520,
+    "n_trades": 115,
+    "sharpe": 0.5657660795942258,
+    "sortino": 0.3288434226434191,
+    "total_return": 1.0686542479259469,
+    "turnover_per_year": 11.7,
+    "win_rate": 0.7796610169491526
+  },
+  "n_bars": 2520,
+  "notes": "R5-A parameter-neighborhood PROBE (docs/research-round-5-plan.md \u00a7 R5-A; post-holdout DEV-ONLY, promotion closed). Selection-free stitched walk-forward OOS replay of a pre-declared +/-1-step neighbor of the committed top variant of r3-stoch-willr__williams_r_reversion__SLV__daily \u2014 a probe, NEVER an entrant or candidate; metrics are over the stitched OOS window, not a single-window run.",
+  "params": {
+    "buy_below": -80,
+    "period": 21,
+    "sell_above": -30
+  },
+  "run_id": "20260713T143121064011Z-547c64f882c4",
+  "schema_version": 1,
+  "strategy": "williams_r_reversion",
+  "timeframe": "daily",
+  "variants_tried": 1
+}

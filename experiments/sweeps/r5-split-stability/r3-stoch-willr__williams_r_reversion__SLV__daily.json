@@ -1,0 +1,241 @@
+{
+  "best_split_removed": 9,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:35+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "decision_rule": "KEEP dev-candidate status iff the stitched OOS Sharpe delta vs B&H remains > 0 after removing the lane's single best test split (argmin leave-one-out delta); else DEMOTED to KILL (single-window luck)",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "williams_r_reversion",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_oos_sharpe": 0.4995655939280414,
+    "tolerance": 1e-08
+  },
+  "full_stitched_delta": 0.3299105518054948,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "SLV",
+  "lane_id": "r3-stoch-willr__williams_r_reversion__SLV__daily",
+  "leave_one_out": [
+    {
+      "left_out_split": 0,
+      "stitched_delta": 0.40443180314158056
+    },
+    {
+      "left_out_split": 1,
+      "stitched_delta": 0.18035396431304343
+    },
+    {
+      "left_out_split": 2,
+      "stitched_delta": 0.3186643514306581
+    },
+    {
+      "left_out_split": 3,
+      "stitched_delta": 0.2636171532590716
+    },
+    {
+      "left_out_split": 4,
+      "stitched_delta": 0.36667919422068007
+    },
+    {
+      "left_out_split": 5,
+      "stitched_delta": 0.4127643497669258
+    },
+    {
+      "left_out_split": 6,
+      "stitched_delta": 0.583989630136414
+    },
+    {
+      "left_out_split": 7,
+      "stitched_delta": 0.31765333739953244
+    },
+    {
+      "left_out_split": 8,
+      "stitched_delta": 0.31681941064544594
+    },
+    {
+      "left_out_split": 9,
+      "stitched_delta": 0.16599648583431167
+    }
+  ],
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): 0 new registered configs \u2014 pure replay/re-aggregation of committed choices; experiments/index.jsonl untouched",
+  "n_bars": 3779,
+  "n_splits": 10,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params on the identical positional test windows, then pure re-aggregation \u2014 no selection pass, 0 new registered configs",
+  "per_split": [
+    {
+      "benchmark_sharpe": -0.796226677139701,
+      "delta": -0.17869362791924215,
+      "params": {
+        "buy_below": -90,
+        "period": 28,
+        "sell_above": -20
+      },
+      "split": 0,
+      "strategy_sharpe": -0.9749203050589431,
+      "test": [
+        1008,
+        1260
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.5309153699734241,
+      "delta": 1.6902439865811185,
+      "params": {
+        "buy_below": -80,
+        "period": 28,
+        "sell_above": -20
+      },
+      "split": 1,
+      "strategy_sharpe": 1.1593286166076944,
+      "test": [
+        1260,
+        1512
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.7608881008375962,
+      "delta": 0.5814637067779033,
+      "params": {
+        "buy_below": -80,
+        "period": 28,
+        "sell_above": -20
+      },
+      "split": 2,
+      "strategy_sharpe": 1.3423518076154994,
+      "test": [
+        1512,
+        1764
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.24737789810378083,
+      "delta": 1.229681437925216,
+      "params": {
+        "buy_below": -80,
+        "period": 28,
+        "sell_above": -20
+      },
+      "split": 3,
+      "strategy_sharpe": 1.4770593360289967,
+      "test": [
+        1764,
+        2016
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.5866733373155145,
+      "delta": -0.004060112076873623,
+      "params": {
+        "buy_below": -80,
+        "period": 28,
+        "sell_above": -30
+      },
+      "split": 4,
+      "strategy_sharpe": -0.5907334493923881,
+      "test": [
+        2016,
+        2268
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.9797581304884069,
+      "delta": -0.7940429337152191,
+      "params": {
+        "buy_below": -80,
+        "period": 28,
+        "sell_above": -30
+      },
+      "split": 5,
+      "strategy_sharpe": 0.18571519677318785,
+      "test": [
+        2268,
+        2520
+      ]
+    },
+    {
+      "benchmark_sharpe": 1.1209643879910582,
+      "delta": -0.8579155128922855,
+      "params": {
+        "buy_below": -80,
+        "period": 21,
+        "sell_above": -20
+      },
+      "split": 6,
+      "strategy_sharpe": 0.26304887509877267,
+      "test": [
+        2520,
+        2772
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.6169027083936756,
+      "delta": 0.3922663246236774,
+      "params": {
+        "buy_below": -90,
+        "period": 28,
+        "sell_above": -30
+      },
+      "split": 7,
+      "strategy_sharpe": -0.22463638376999814,
+      "test": [
+        2772,
+        3024
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.4038546869777907,
+      "delta": 0.4260638721355917,
+      "params": {
+        "buy_below": -90,
+        "period": 21,
+        "sell_above": -30
+      },
+      "split": 8,
+      "strategy_sharpe": 0.8299185591133824,
+      "test": [
+        3024,
+        3276
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.03018108271379236,
+      "delta": 2.2791597476378973,
+      "params": {
+        "buy_below": -90,
+        "period": 21,
+        "sell_above": -30
+      },
+      "split": 9,
+      "strategy_sharpe": 2.248978664924105,
+      "test": [
+        3276,
+        3528
+      ]
+    }
+  ],
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-B \u2014 Time-split stability / leave-one-split-out",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "informational t at the lane's committed K \u2014 promotion is CLOSED post-holdout",
+    "sharpe_delta": 0.3299105518054948,
+    "sharpe_se": 0.3163060496107598,
+    "timeframe": "daily",
+    "tstat": 1.0430105659106945,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-stoch-willr/williams_r_reversion__SLV.json",
+  "sweep": "r5-split-stability",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "verdict": "KEEP (dev-candidate only)",
+  "worst_case_loo_delta": 0.16599648583431167
+}

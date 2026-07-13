@@ -1,0 +1,70 @@
+{
+  "bootstrap": {
+    "block_length_bars": 21,
+    "method": "paired moving-block bootstrap: identical resampled block indices applied to strategy and benchmark per-bar returns",
+    "n_oos_bars": 2520,
+    "n_resamples": 1000,
+    "rng": "numpy.random.default_rng(20260713) per lane"
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:36+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "decision_rule": "DEMOTED to KILL iff P(delta<=0) >= 0.6; ESCALATE-TO-OWNER (owner-gated proposal doc, verdict unchanged KEEP-dev) iff P(delta<=0) <= 0.1; otherwise KEEP-dev unchanged",
+  "escalate_to_owner": false,
+  "family": "ema_crossover",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_oos_sharpe": 0.482387358927847,
+    "tolerance": 1e-08
+  },
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "TLT",
+  "lane_id": "r3-trend-new-tickers__ema_crossover__TLT__daily",
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): 0 new registered configs; experiments/index.jsonl untouched",
+  "n_bars": 3779,
+  "no_research": "resampling of the fidelity-guarded frozen replay's paired stitched OOS return series \u2014 no new bars, no selection pass, 0 new registered configs",
+  "p_delta_le_0": 0.107,
+  "point_estimates": {
+    "min_tstat": 2.638257273476751,
+    "sharpe_delta": 0.2861759594782841,
+    "tstat": 0.9047590033363885
+  },
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-C \u2014 Moving-block bootstrap of the Sharpe-delta t",
+  "schema_version": 1,
+  "sharpe_delta_distribution": {
+    "mean": 0.30469610608692005,
+    "percentiles": {
+      "2.5": -0.14843253872542747,
+      "25.0": 0.14827346730633567,
+      "5.0": -0.08020515187276674,
+      "50.0": 0.3055858992739102,
+      "75.0": 0.46620792287182844,
+      "95.0": 0.6765610158838716,
+      "97.5": 0.7575545950819166
+    },
+    "std": 0.235275510676909
+  },
+  "source_lane": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+  "sweep": "r5-bootstrap",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "tstat_distribution": {
+    "mean": 0.9631864994570466,
+    "percentiles": {
+      "2.5": -0.46935639923380806,
+      "25.0": 0.4688058946380474,
+      "5.0": -0.25362903605300535,
+      "50.0": 0.9661354233526905,
+      "75.0": 1.4740497648605184,
+      "95.0": 2.138572234350485,
+      "97.5": 2.394983657310801
+    },
+    "std": 0.7437083507601195
+  },
+  "verdict": "KEEP (dev-candidate only)"
+}

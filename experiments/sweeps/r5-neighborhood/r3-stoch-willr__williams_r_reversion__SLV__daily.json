@@ -1,0 +1,388 @@
+{
+  "baseline": {
+    "benchmark_oos_sharpe": 0.16965504212254662,
+    "costs": {
+      "commission_bps": 1.0,
+      "slippage_bps": 5.0
+    },
+    "oos_sharpe": 0.4995655939280414,
+    "replay_check": {
+      "matches_recorded": true,
+      "replayed_oos_sharpe": 0.4995655939280414,
+      "tolerance": 1e-08
+    },
+    "tstat": 1.0430105659106945,
+    "verdict": "KEEP (dev-candidate only)"
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:21+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "decision_rule": "KEEP dev-candidate status iff >= 50% of replayed neighbors beat same-window B&H stitched OOS Sharpe; else DEMOTED to KILL (knife-edge). KILL-SIG iff a KILLed lane's worst neighbor t <= -min_tstat(K=12) \u2014 the mirrored bar, never lowered.",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "williams_r_reversion",
+  "frac_beat_bh": 1.0,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "SLV",
+  "lane_id": "r3-stoch-willr__williams_r_reversion__SLV__daily",
+  "ledger": "LEDGERED (deliberate, R4-C precedent): each neighbor replay is a genuinely new run with a return stream no existing row describes; one row per neighbor, variants_tried=1, probe caveat in the notes",
+  "n_bars": 3779,
+  "n_beat_bh": 4,
+  "n_neighbors": 4,
+  "neighbors": [
+    {
+      "beats_bh": true,
+      "benchmark_oos_sharpe": 0.16965504212254662,
+      "min_tstat": 2.638257273476751,
+      "oos_sharpe": 0.4431344166428268,
+      "params": {
+        "buy_below": -90,
+        "period": 14,
+        "sell_above": -30
+      },
+      "per_split": [
+        {
+          "test": [
+            1008,
+            1260
+          ],
+          "test_sharpe": -1.2590347283267318
+        },
+        {
+          "test": [
+            1260,
+            1512
+          ],
+          "test_sharpe": -0.14702938773642849
+        },
+        {
+          "test": [
+            1512,
+            1764
+          ],
+          "test_sharpe": 1.7626669104482013
+        },
+        {
+          "test": [
+            1764,
+            2016
+          ],
+          "test_sharpe": -0.10395711116944481
+        },
+        {
+          "test": [
+            2016,
+            2268
+          ],
+          "test_sharpe": -1.2456367513769222
+        },
+        {
+          "test": [
+            2268,
+            2520
+          ],
+          "test_sharpe": 0.7225016532353294
+        },
+        {
+          "test": [
+            2520,
+            2772
+          ],
+          "test_sharpe": 2.06706340502055
+        },
+        {
+          "test": [
+            2772,
+            3024
+          ],
+          "test_sharpe": -0.21172110354546644
+        },
+        {
+          "test": [
+            3024,
+            3276
+          ],
+          "test_sharpe": 0.8441041488551585
+        },
+        {
+          "test": [
+            3276,
+            3528
+          ],
+          "test_sharpe": 1.9058401671565157
+        }
+      ],
+      "tstat": 0.864649290954141
+    },
+    {
+      "beats_bh": true,
+      "benchmark_oos_sharpe": 0.16965504212254662,
+      "min_tstat": 2.638257273476751,
+      "oos_sharpe": 0.6369240108320148,
+      "params": {
+        "buy_below": -90,
+        "period": 28,
+        "sell_above": -30
+      },
+      "per_split": [
+        {
+          "test": [
+            1008,
+            1260
+          ],
+          "test_sharpe": -0.998932713234196
+        },
+        {
+          "test": [
+            1260,
+            1512
+          ],
+          "test_sharpe": -0.3149306622633265
+        },
+        {
+          "test": [
+            1512,
+            1764
+          ],
+          "test_sharpe": 1.2501502523627848
+        },
+        {
+          "test": [
+            1764,
+            2016
+          ],
+          "test_sharpe": 1.6969622128406
+        },
+        {
+          "test": [
+            2016,
+            2268
+          ],
+          "test_sharpe": -0.4441511825355461
+        },
+        {
+          "test": [
+            2268,
+            2520
+          ],
+          "test_sharpe": 0.30311084381659487
+        },
+        {
+          "test": [
+            2520,
+            2772
+          ],
+          "test_sharpe": 2.3085639899198585
+        },
+        {
+          "test": [
+            2772,
+            3024
+          ],
+          "test_sharpe": -0.22463638376999814
+        },
+        {
+          "test": [
+            3024,
+            3276
+          ],
+          "test_sharpe": 0.9552380845842707
+        },
+        {
+          "test": [
+            3276,
+            3528
+          ],
+          "test_sharpe": 1.6357371953293058
+        }
+      ],
+      "tstat": 1.477039902096469
+    },
+    {
+      "beats_bh": true,
+      "benchmark_oos_sharpe": 0.16965504212254662,
+      "min_tstat": 2.638257273476751,
+      "oos_sharpe": 0.5657660795942258,
+      "params": {
+        "buy_below": -80,
+        "period": 21,
+        "sell_above": -30
+      },
+      "per_split": [
+        {
+          "test": [
+            1008,
+            1260
+          ],
+          "test_sharpe": -0.8204252430510873
+        },
+        {
+          "test": [
+            1260,
+            1512
+          ],
+          "test_sharpe": 0.21588771245693955
+        },
+        {
+          "test": [
+            1512,
+            1764
+          ],
+          "test_sharpe": 3.310050739173855
+        },
+        {
+          "test": [
+            1764,
+            2016
+          ],
+          "test_sharpe": 1.8872386149393976
+        },
+        {
+          "test": [
+            2016,
+            2268
+          ],
+          "test_sharpe": -1.0257990289125691
+        },
+        {
+          "test": [
+            2268,
+            2520
+          ],
+          "test_sharpe": 0.1168202617214216
+        },
+        {
+          "test": [
+            2520,
+            2772
+          ],
+          "test_sharpe": 0.26304887509877267
+        },
+        {
+          "test": [
+            2772,
+            3024
+          ],
+          "test_sharpe": 0.8592089747039995
+        },
+        {
+          "test": [
+            3024,
+            3276
+          ],
+          "test_sharpe": 0.8539296603702444
+        },
+        {
+          "test": [
+            3276,
+            3528
+          ],
+          "test_sharpe": 1.3146840181609356
+        }
+      ],
+      "tstat": 1.2522155057603015
+    },
+    {
+      "beats_bh": true,
+      "benchmark_oos_sharpe": 0.16965504212254662,
+      "min_tstat": 2.638257273476751,
+      "oos_sharpe": 0.6944107228219895,
+      "params": {
+        "buy_below": -90,
+        "period": 21,
+        "sell_above": -20
+      },
+      "per_split": [
+        {
+          "test": [
+            1008,
+            1260
+          ],
+          "test_sharpe": -0.36743824474199466
+        },
+        {
+          "test": [
+            1260,
+            1512
+          ],
+          "test_sharpe": 0.16664116328081388
+        },
+        {
+          "test": [
+            1512,
+            1764
+          ],
+          "test_sharpe": 1.9296569649583677
+        },
+        {
+          "test": [
+            1764,
+            2016
+          ],
+          "test_sharpe": 1.2358849578831148
+        },
+        {
+          "test": [
+            2016,
+            2268
+          ],
+          "test_sharpe": -0.5112963739814451
+        },
+        {
+          "test": [
+            2268,
+            2520
+          ],
+          "test_sharpe": 0.3775513228525199
+        },
+        {
+          "test": [
+            2520,
+            2772
+          ],
+          "test_sharpe": 1.99058696463773
+        },
+        {
+          "test": [
+            2772,
+            3024
+          ],
+          "test_sharpe": 0.023191977973219036
+        },
+        {
+          "test": [
+            3024,
+            3276
+          ],
+          "test_sharpe": 0.6801571698290162
+        },
+        {
+          "test": [
+            3276,
+            3528
+          ],
+          "test_sharpe": 2.0439870081605767
+        }
+      ],
+      "tstat": 1.6586299017418156
+    }
+  ],
+  "no_research": "selection-free fixed-config replays of pre-declared +/-1-step neighbors over the lane's exact committed walk-forward test windows \u2014 no training pick, no selection on outcome; neighbors are probes, not entrants",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-A \u2014 Parameter-neighborhood stability",
+  "promotion_grade_note": "neighbor t-stats graded at the lane's committed K = 12 (bar 2.638257) \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout",
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-stoch-willr/williams_r_reversion__SLV.json",
+  "sweep": "r5-neighborhood",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "top_variant": {
+    "buy_below": -90,
+    "period": 21,
+    "sell_above": -30
+  },
+  "verdict": "KEEP (dev-candidate only)"
+}

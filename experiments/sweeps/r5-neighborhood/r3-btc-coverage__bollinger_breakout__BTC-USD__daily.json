@@ -1,0 +1,217 @@
+{
+  "baseline": {
+    "benchmark_oos_sharpe": 0.8211061068266703,
+    "costs": {
+      "commission_bps": 1.0,
+      "slippage_bps": 5.0
+    },
+    "oos_sharpe": 1.2575201323867047,
+    "replay_check": {
+      "matches_recorded": true,
+      "replayed_oos_sharpe": 1.2575201323867047,
+      "tolerance": 1e-08
+    },
+    "tstat": 1.3779023544961797,
+    "verdict": "KEEP (dev-candidate only)"
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:20+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "decision_rule": "KEEP dev-candidate status iff >= 50% of replayed neighbors beat same-window B&H stitched OOS Sharpe; else DEMOTED to KILL (knife-edge). KILL-SIG iff a KILLed lane's worst neighbor t <= -min_tstat(K=12) \u2014 the mirrored bar, never lowered.",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "bollinger_breakout",
+  "frac_beat_bh": 1.0,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "BTC-USD",
+  "lane_id": "r3-btc-coverage__bollinger_breakout__BTC-USD__daily",
+  "ledger": "LEDGERED (deliberate, R4-C precedent): each neighbor replay is a genuinely new run with a return stream no existing row describes; one row per neighbor, variants_tried=1, probe caveat in the notes",
+  "n_bars": 3767,
+  "n_beat_bh": 2,
+  "n_neighbors": 2,
+  "neighbors": [
+    {
+      "beats_bh": true,
+      "benchmark_oos_sharpe": 0.8211061068266703,
+      "min_tstat": 2.638257273476751,
+      "oos_sharpe": 1.0879094769515691,
+      "params": {
+        "num_std": 1.0,
+        "period": 20
+      },
+      "per_split": [
+        {
+          "test": [
+            1008,
+            1260
+          ],
+          "test_sharpe": 2.5516393763547978
+        },
+        {
+          "test": [
+            1260,
+            1512
+          ],
+          "test_sharpe": 0.4958210466552681
+        },
+        {
+          "test": [
+            1512,
+            1764
+          ],
+          "test_sharpe": 1.5374998185257833
+        },
+        {
+          "test": [
+            1764,
+            2016
+          ],
+          "test_sharpe": -0.19599139114875147
+        },
+        {
+          "test": [
+            2016,
+            2268
+          ],
+          "test_sharpe": 1.8778360629345678
+        },
+        {
+          "test": [
+            2268,
+            2520
+          ],
+          "test_sharpe": 1.6466089625354916
+        },
+        {
+          "test": [
+            2520,
+            2772
+          ],
+          "test_sharpe": -0.4812129790967432
+        },
+        {
+          "test": [
+            2772,
+            3024
+          ],
+          "test_sharpe": -1.9051528295972628
+        },
+        {
+          "test": [
+            3024,
+            3276
+          ],
+          "test_sharpe": 1.4532551400107856
+        },
+        {
+          "test": [
+            3276,
+            3528
+          ],
+          "test_sharpe": 1.5740403750619527
+        }
+      ],
+      "tstat": 0.8427174373422351
+    },
+    {
+      "beats_bh": true,
+      "benchmark_oos_sharpe": 0.8211061068266703,
+      "min_tstat": 2.638257273476751,
+      "oos_sharpe": 1.02369223828404,
+      "params": {
+        "num_std": 1.5,
+        "period": 10
+      },
+      "per_split": [
+        {
+          "test": [
+            1008,
+            1260
+          ],
+          "test_sharpe": 2.113995256399308
+        },
+        {
+          "test": [
+            1260,
+            1512
+          ],
+          "test_sharpe": 0.010050212223501682
+        },
+        {
+          "test": [
+            1512,
+            1764
+          ],
+          "test_sharpe": 1.187476143816417
+        },
+        {
+          "test": [
+            1764,
+            2016
+          ],
+          "test_sharpe": 0.21497427670931432
+        },
+        {
+          "test": [
+            2016,
+            2268
+          ],
+          "test_sharpe": 1.4787921668168362
+        },
+        {
+          "test": [
+            2268,
+            2520
+          ],
+          "test_sharpe": 2.231473071556824
+        },
+        {
+          "test": [
+            2520,
+            2772
+          ],
+          "test_sharpe": -0.051168222366339666
+        },
+        {
+          "test": [
+            2772,
+            3024
+          ],
+          "test_sharpe": -2.088422520387407
+        },
+        {
+          "test": [
+            3024,
+            3276
+          ],
+          "test_sharpe": 1.4431179512135957
+        },
+        {
+          "test": [
+            3276,
+            3528
+          ],
+          "test_sharpe": 1.2763175926467811
+        }
+      ],
+      "tstat": 0.6399686134749256
+    }
+  ],
+  "no_research": "selection-free fixed-config replays of pre-declared +/-1-step neighbors over the lane's exact committed walk-forward test windows \u2014 no training pick, no selection on outcome; neighbors are probes, not entrants",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-A \u2014 Parameter-neighborhood stability",
+  "promotion_grade_note": "neighbor t-stats graded at the lane's committed K = 12 (bar 2.638257) \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout",
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-btc-coverage/bollinger_breakout__BTC-USD.json",
+  "sweep": "r5-neighborhood",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "top_variant": {
+    "num_std": 1.0,
+    "period": 10
+  },
+  "verdict": "KEEP (dev-candidate only)"
+}

@@ -1,0 +1,121 @@
+{
+  "bootstrap": {
+    "block_length_bars": {
+      "daily": 21,
+      "hourly": 63
+    },
+    "n_resamples": 1000,
+    "rng_seed": 20260713
+  },
+  "burden": {
+    "new_registered_configs": 0
+  },
+  "counts": {
+    "escalate": 1,
+    "graded": 5,
+    "keep": 5,
+    "kill": 0,
+    "kill_sig": 0,
+    "skipped": 0,
+    "target_lanes": 5
+  },
+  "created_utc": "2026-07-13T14:31:36.699141+00:00",
+  "fidelity_guard": "every graded lane's baseline replay reproduced its committed stitched OOS Sharpe within 1e-08",
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "lanes": [
+    {
+      "bootstrap_t_p95": 2.671404195873444,
+      "detail_file": "experiments/sweeps/r5-bootstrap/r3-btc-coverage__bollinger_breakout__BTC-USD__daily.json",
+      "escalate_to_owner": true,
+      "instrument": "BTC-USD",
+      "lane_id": "r3-btc-coverage__bollinger_breakout__BTC-USD__daily",
+      "p_delta_le_0": 0.042,
+      "point_sharpe_delta": 0.4364140255600344,
+      "point_tstat": 1.3779023544961797,
+      "source_file": "experiments/sweeps/r3-btc-coverage/bollinger_breakout__BTC-USD.json",
+      "status": "GRADED",
+      "strategy": "bollinger_breakout",
+      "sweep": "r3-btc-coverage",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "bootstrap_t_p95": 2.5588675847418076,
+      "detail_file": "experiments/sweeps/r5-bootstrap/r3-stoch-willr__williams_r_reversion__SLV__daily.json",
+      "escalate_to_owner": false,
+      "instrument": "SLV",
+      "lane_id": "r3-stoch-willr__williams_r_reversion__SLV__daily",
+      "p_delta_le_0": 0.133,
+      "point_sharpe_delta": 0.3299105518054948,
+      "point_tstat": 1.0430105659106945,
+      "source_file": "experiments/sweeps/r3-stoch-willr/williams_r_reversion__SLV.json",
+      "status": "GRADED",
+      "strategy": "williams_r_reversion",
+      "sweep": "r3-stoch-willr",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "bootstrap_t_p95": 2.2616367718899837,
+      "detail_file": "experiments/sweeps/r5-bootstrap/r3-trix-ichimoku__ichimoku_trend__META__daily.json",
+      "escalate_to_owner": false,
+      "instrument": "META",
+      "lane_id": "r3-trix-ichimoku__ichimoku_trend__META__daily",
+      "p_delta_le_0": 0.116,
+      "point_sharpe_delta": 0.3399635321558344,
+      "point_tstat": 0.9606220201099536,
+      "source_file": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__META.json",
+      "status": "GRADED",
+      "strategy": "ichimoku_trend",
+      "sweep": "r3-trix-ichimoku",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "bootstrap_t_p95": 2.2134284064043026,
+      "detail_file": "experiments/sweeps/r5-bootstrap/r3-meanrev-hourly__stochastic_reversion__META__hourly.json",
+      "escalate_to_owner": false,
+      "instrument": "META",
+      "lane_id": "r3-meanrev-hourly__stochastic_reversion__META__hourly",
+      "p_delta_le_0": 0.247,
+      "point_sharpe_delta": 1.035117868941907,
+      "point_tstat": 0.9075346245827585,
+      "source_file": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__META.json",
+      "status": "GRADED",
+      "strategy": "stochastic_reversion",
+      "sweep": "r3-meanrev-hourly",
+      "sweep_verdict": "KEEP",
+      "timeframe": "hourly",
+      "verdict": "KEEP (dev-candidate only)"
+    },
+    {
+      "bootstrap_t_p95": 2.138572234350485,
+      "detail_file": "experiments/sweeps/r5-bootstrap/r3-trend-new-tickers__ema_crossover__TLT__daily.json",
+      "escalate_to_owner": false,
+      "instrument": "TLT",
+      "lane_id": "r3-trend-new-tickers__ema_crossover__TLT__daily",
+      "p_delta_le_0": 0.107,
+      "point_sharpe_delta": 0.2861759594782841,
+      "point_tstat": 0.9047590033363885,
+      "source_file": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+      "status": "GRADED",
+      "strategy": "ema_crossover",
+      "sweep": "r3-trend-new-tickers",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "verdict": "KEEP (dev-candidate only)"
+    }
+  ],
+  "ledger_decision": "report-only, NOT ledgered (R4-B precedent); experiments/index.jsonl untouched",
+  "post_holdout_dev_only": "holdout SPENT, promotion CLOSED; every KEEP is a dev-candidate only, never a finding",
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-C \u2014 Moving-block bootstrap of the Sharpe-delta t",
+  "rule": "per lane on P(delta<=0): KILL iff >= 0.6; escalate-to-owner iff <= 0.1 (verdict stays KEEP-dev, proposal doc only); else KEEP-dev",
+  "runtime_cap_seconds": 600,
+  "runtime_seconds": 0.6,
+  "schema_version": 1,
+  "slice": "r5-bootstrap",
+  "target_set": "the FROZEN top-5 KEEP-dev lanes of the plan (trading_lab.sweeps.R5A_TARGET_LANES)"
+}

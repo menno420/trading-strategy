@@ -27,6 +27,17 @@ to the coordinator seat, grading executor LIVE. This supersedes the old
 cutover replaced the ender-session-bound triggers with coordinator-seat
 bindings — full disposition in `control/status.md`.)
 
+- Research Round 5 (branch `claude/round-5-research`, PR #110): all four
+  pre-registered slices RAN 2026-07-13 against
+  [research-round-5-plan.md](research-round-5-plan.md) (committed before
+  any outcome existed) — headline **4 KEEP-dev / 1 KILL of the top 5**
+  (META hourly `stochastic_reversion` demoted as single-window luck by
+  R5-B; 0 KILL-SIG; 1 escalate-to-owner proposal for BTC-USD
+  `bollinger_breakout` from R5-C, verdict unchanged; 14 new registered
+  configs, program cumulative 4345 → 4359; 0 promoted, promotion stays
+  CLOSED). Full results:
+  [research-round-5-results.md](research-round-5-results.md); merge
+  close-out pending.
 - Paper lane (post-holdout standing mission): the pre-registered
   forward paper-trading protocol for the surviving RULE-PASS candidate
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,

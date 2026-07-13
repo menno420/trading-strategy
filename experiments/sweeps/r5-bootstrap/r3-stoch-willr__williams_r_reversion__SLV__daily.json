@@ -1,0 +1,70 @@
+{
+  "bootstrap": {
+    "block_length_bars": 21,
+    "method": "paired moving-block bootstrap: identical resampled block indices applied to strategy and benchmark per-bar returns",
+    "n_oos_bars": 2520,
+    "n_resamples": 1000,
+    "rng": "numpy.random.default_rng(20260713) per lane"
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:36+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "decision_rule": "DEMOTED to KILL iff P(delta<=0) >= 0.6; ESCALATE-TO-OWNER (owner-gated proposal doc, verdict unchanged KEEP-dev) iff P(delta<=0) <= 0.1; otherwise KEEP-dev unchanged",
+  "escalate_to_owner": false,
+  "family": "williams_r_reversion",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_oos_sharpe": 0.4995655939280414,
+    "tolerance": 1e-08
+  },
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "SLV",
+  "lane_id": "r3-stoch-willr__williams_r_reversion__SLV__daily",
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): 0 new registered configs; experiments/index.jsonl untouched",
+  "n_bars": 3779,
+  "no_research": "resampling of the fidelity-guarded frozen replay's paired stitched OOS return series \u2014 no new bars, no selection pass, 0 new registered configs",
+  "p_delta_le_0": 0.133,
+  "point_estimates": {
+    "min_tstat": 2.638257273476751,
+    "sharpe_delta": 0.3299105518054948,
+    "tstat": 1.0430105659106945
+  },
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-C \u2014 Moving-block bootstrap of the Sharpe-delta t",
+  "schema_version": 1,
+  "sharpe_delta_distribution": {
+    "mean": 0.33648975791667546,
+    "percentiles": {
+      "2.5": -0.2548286849153848,
+      "25.0": 0.12940884708571612,
+      "5.0": -0.17195272414199098,
+      "50.0": 0.3360518169791207,
+      "75.0": 0.5468910932077391,
+      "95.0": 0.8093345837935946,
+      "97.5": 0.9021166743005883
+    },
+    "std": 0.3014368262438084
+  },
+  "source_lane": "experiments/sweeps/r3-stoch-willr/williams_r_reversion__SLV.json",
+  "sweep": "r5-bootstrap",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "tstat_distribution": {
+    "mean": 1.0635392686329528,
+    "percentiles": {
+      "2.5": -0.805837426187087,
+      "25.0": 0.4091430099527098,
+      "5.0": -0.5434056576044924,
+      "50.0": 1.062500567211445,
+      "75.0": 1.728696567921263,
+      "95.0": 2.5588675847418076,
+      "97.5": 2.850619428217608
+    },
+    "std": 0.9526501541097742
+  },
+  "verdict": "KEEP (dev-candidate only)"
+}
