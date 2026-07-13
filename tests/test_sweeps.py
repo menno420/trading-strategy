@@ -853,3 +853,105 @@ class TestR3TrendNewTickersGrid:
     def test_deterministic_order(self):
         assert (sweeps.r3_trend_new_tickers_variants("supertrend_flip")
                 == sweeps.r3_trend_new_tickers_variants("supertrend_flip"))
+
+
+class TestR3MeanrevNewTickersGrid:
+    def test_families_are_existing_registered_strategies(self):
+        # Slice 11 completes the mean-reversion coverage of the slice-3
+        # instruments with NO new strategy code: every family must already
+        # exist in the registry.
+        for fam in sweeps.R3_MEANREV_NEW_TICKERS_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-meanrev-new-tickers sweep files must match these. 12
+        # variants per family × 5 families × 6 instruments = 360 registered
+        # configs.
+        counts = sweeps.r3_meanrev_new_tickers_variants_per_family()
+        assert counts == {"rsi_mean_reversion": 12,
+                          "bollinger_reversion": 12,
+                          "pullback": 12,
+                          "stochastic_reversion": 12,
+                          "williams_r_reversion": 12}
+        assert len(sweeps.R3_MEANREV_NEW_TICKERS_INSTRUMENTS) == 6
+        assert sweeps.r3_meanrev_new_tickers_total_configs() == 360
+
+    def test_instruments_are_exactly_the_slice3_set(self):
+        # The lane reuses the slice-3 instruments (and caches) verbatim, and
+        # they stay disjoint from the frozen universe.
+        from trading_lab import config
+        assert (sweeps.R3_MEANREV_NEW_TICKERS_INSTRUMENTS
+                == sweeps.R3_NEW_TICKERS_INSTRUMENTS)
+        assert not (set(sweeps.R3_MEANREV_NEW_TICKERS_INSTRUMENTS)
+                    & set(config.UNIVERSE))
+
+    def test_grids_are_subsets_of_published_family_axes(self):
+        # Each slice-11 grid point must be a valid point of the family's
+        # existing published grid (P1 mean-reversion axes; the
+        # r3-stoch-willr axes) — no new parameter territory is opened.
+        for fam in ("rsi_mean_reversion", "bollinger_reversion", "pullback"):
+            published = sweeps.mean_reversion_variants(fam)
+            for params in sweeps.r3_meanrev_new_tickers_variants(fam):
+                assert params in published
+        for fam in ("stochastic_reversion", "williams_r_reversion"):
+            # The r3-stoch-willr grids are already exactly 12 — reused
+            # VERBATIM (the superset relation degenerates to equality).
+            assert (sweeps.r3_meanrev_new_tickers_variants(fam)
+                    == sweeps.r3_stoch_willr_variants(fam))
+
+    def test_rsi_grid_disjoint_from_slice3_probe(self):
+        # Slice 3 already registered a 6-point rsi_mean_reversion probe on
+        # these instruments (oversold frozen at 30); this slice must not
+        # register any of those points a second time (slice 10's donchian
+        # precedent).
+        probe = sweeps.r3_new_tickers_variants("rsi_mean_reversion")
+        for params in sweeps.r3_meanrev_new_tickers_variants(
+                "rsi_mean_reversion"):
+            assert params not in probe
+
+    def test_pullback_grid_includes_unfiltered_control_arm(self):
+        # Slice-2/4 card convention: a gated grid must commit its neutral
+        # arm — trend_len=0 disables the long-term trend filter, and every
+        # (entry_lookback, exit_len) pair must carry it.
+        variants = sweeps.r3_meanrev_new_tickers_variants("pullback")
+        for entry in (3, 5):
+            for exit_len in (5, 10):
+                assert {"entry_lookback": entry, "exit_len": exit_len,
+                        "trend_len": 0} in variants
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # The stochastic d_period smoothing (3) stays frozen at the
+        # strategy default and is NOT swept (as in r3-stoch-willr).
+        for params in sweeps.r3_meanrev_new_tickers_variants(
+                "rsi_mean_reversion"):
+            assert params["oversold"] < params["overbought"]
+            assert set(params) == {"period", "oversold", "overbought"}
+        for params in sweeps.r3_meanrev_new_tickers_variants(
+                "bollinger_reversion"):
+            assert params["z_exit"] > -params["z_entry"]
+            assert set(params) == {"lookback", "z_entry", "z_exit"}
+        for params in sweeps.r3_meanrev_new_tickers_variants("pullback"):
+            assert set(params) == {"entry_lookback", "exit_len", "trend_len"}
+        for params in sweeps.r3_meanrev_new_tickers_variants(
+                "stochastic_reversion"):
+            assert params["buy_below"] < params["sell_above"]
+            assert set(params) == {"k_period", "buy_below", "sell_above"}
+        for params in sweeps.r3_meanrev_new_tickers_variants(
+                "williams_r_reversion"):
+            assert params["buy_below"] < params["sell_above"]
+            assert set(params) == {"period", "buy_below", "sell_above"}
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_MEANREV_NEW_TICKERS_FAMILIES:
+            for params in sweeps.r3_meanrev_new_tickers_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_meanrev_new_tickers_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_meanrev_new_tickers_variants("pullback")
+                == sweeps.r3_meanrev_new_tickers_variants("pullback"))

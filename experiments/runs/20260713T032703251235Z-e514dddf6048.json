@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.06899245598055503,
+    "max_drawdown": -0.6111953832320853,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.3906832284981404,
+    "sortino": 0.3859772608614487,
+    "total_return": 1.7195974573756638,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "e514dddf6048",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T03:27:03+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "7b5f3bd612f40f086ad3071c43dfdda5e67febe5",
+  "instrument": "XOM",
+  "metrics": {
+    "cagr": 0.03499716114003637,
+    "max_drawdown": -0.4578542009257557,
+    "n_bars": 3779,
+    "n_trades": 512,
+    "sharpe": 0.29167383418276754,
+    "sortino": 0.2094189296587174,
+    "total_return": 0.6750512387234822,
+    "turnover_per_year": 34.142365705213024,
+    "win_rate": 0.65234375
+  },
+  "n_bars": 3779,
+  "notes": "Round 3 meanrev-new-tickers sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 012 night-run, slice 11, extends R3 after the slices-1-8 synthesis): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number lives in experiments/sweeps/r3-meanrev-new-tickers/rsi_mean_reversion__XOM.json)",
+  "params": {
+    "overbought": 70,
+    "oversold": 20,
+    "period": 2
+  },
+  "run_id": "20260713T032703251235Z-e514dddf6048",
+  "schema_version": 1,
+  "strategy": "rsi_mean_reversion",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
