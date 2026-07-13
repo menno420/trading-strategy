@@ -1,0 +1,146 @@
+{
+  "baseline": {
+    "benchmark_oos_sharpe": 0.49397799449244817,
+    "costs": {
+      "commission_bps": 1.0,
+      "slippage_bps": 5.0
+    },
+    "oos_sharpe": 0.6248966631165285,
+    "replay_check": {
+      "matches_recorded": true,
+      "replayed_oos_sharpe": 0.6248966631165285,
+      "tolerance": 1e-08
+    },
+    "tstat": 0.11481642539759065,
+    "verdict": "KEEP (dev-candidate only)"
+  },
+  "cost_multiplier": 4,
+  "cost_tier": "4x",
+  "costs": {
+    "commission_bps": 4.0,
+    "slippage_bps": 20.0
+  },
+  "created_utc": "2026-07-13T09:52:01+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "bollinger_reversion",
+  "git_sha": "fcb2e2e0820a04c486341e802e10c5a3c551d676",
+  "instrument": "META",
+  "kill_criterion": "KILL at this tier iff stitched OOS Sharpe <= same-window same-cost B&H Sharpe or <= 0; ties/ambiguity KILL",
+  "ledger": "report-only sweep, NOT ledgered \u2014 no new config was searched (frozen replay of committed choices); ledgering would duplicate the r3 top-variant rows at different costs",
+  "n_bars": 2476,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params \u2014 the train-window grid selection was NOT re-run at stressed costs (pre-registered: stressing costs must not become a second selection pass); trades identical across tiers, only execution costs differ",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-B \u2014 Execution-cost sensitivity re-grade of round-3 KEEPs",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 1260,
+    "note": "ORDER 007 bar at the lane's own recorded K \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": -0.5460907156367907,
+    "sharpe_se": 1.1401760237366152,
+    "timeframe": "hourly",
+    "tstat": -0.47895298994897967,
+    "variants_tried": 12,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-meanrev-hourly/bollinger_reversion__META.json",
+  "source_sweep": "r3-meanrev-hourly",
+  "sweep": "r4-cost-sensitivity",
+  "sweep_verdict": "KILL",
+  "timeframe": "hourly",
+  "variants_tried": 12,
+  "verdict": "KILL",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.11564678005936724,
+      "max_drawdown": -0.2038390834598428,
+      "n_bars": 1260,
+      "n_trades": 1,
+      "sharpe": 0.48743867667676455,
+      "sortino": 0.4516231047213311,
+      "total_return": 0.0878249428110085,
+      "turnover_per_year": 1.2999999999999998,
+      "win_rate": 1.0
+    },
+    "n_splits": 5,
+    "oos_end": "2024-11-22 14:30:00",
+    "oos_metrics": {
+      "cagr": -0.024728032777285303,
+      "max_drawdown": -0.13389207422604088,
+      "n_bars": 1260,
+      "sharpe": -0.05865203896002613,
+      "sortino": -0.035785827976724506,
+      "total_return": -0.019076394964395615
+    },
+    "oos_start": "2024-03-07 18:30:00",
+    "per_split": [
+      {
+        "params": {
+          "lookback": 20,
+          "z_entry": 1.5,
+          "z_exit": 0.5
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": -0.06158245110155283
+      },
+      {
+        "params": {
+          "lookback": 20,
+          "z_entry": 1.5,
+          "z_exit": 0.5
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 1.9698639890460226
+      },
+      {
+        "params": {
+          "lookback": 20,
+          "z_entry": 1.5,
+          "z_exit": 0.5
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": -1.3800712454920496
+      },
+      {
+        "params": {
+          "lookback": 30,
+          "z_entry": 1.5,
+          "z_exit": 0.5
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 1.0854850496554347
+      },
+      {
+        "params": {
+          "lookback": 30,
+          "z_entry": 2.0,
+          "z_exit": 0.5
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -1.0986754335570632
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 60
+  }
+}

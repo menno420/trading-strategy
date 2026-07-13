@@ -1,0 +1,206 @@
+{
+  "baseline": {
+    "benchmark_oos_sharpe": 0.1962113994495629,
+    "costs": {
+      "commission_bps": 1.0,
+      "slippage_bps": 5.0
+    },
+    "oos_sharpe": 0.47241324779522303,
+    "replay_check": {
+      "matches_recorded": true,
+      "replayed_oos_sharpe": 0.47241324779522303,
+      "tolerance": 1e-08
+    },
+    "tstat": 0.8732336195299014,
+    "verdict": "KEEP (dev-candidate only)"
+  },
+  "cost_multiplier": 4,
+  "cost_tier": "4x",
+  "costs": {
+    "commission_bps": 4.0,
+    "slippage_bps": 20.0
+  },
+  "created_utc": "2026-07-13T09:52:02+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "pullback",
+  "git_sha": "fcb2e2e0820a04c486341e802e10c5a3c551d676",
+  "instrument": "TLT",
+  "kill_criterion": "KILL at this tier iff stitched OOS Sharpe <= same-window same-cost B&H Sharpe or <= 0; ties/ambiguity KILL",
+  "ledger": "report-only sweep, NOT ledgered \u2014 no new config was searched (frozen replay of committed choices); ledgering would duplicate the r3 top-variant rows at different costs",
+  "n_bars": 3779,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params \u2014 the train-window grid selection was NOT re-run at stressed costs (pre-registered: stressing costs must not become a second selection pass); trades identical across tiers, only execution costs differ",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-B \u2014 Execution-cost sensitivity re-grade of round-3 KEEPs",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "ORDER 007 bar at the lane's own recorded K \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": -0.5324675253983662,
+    "sharpe_se": 0.31626350462564895,
+    "timeframe": "daily",
+    "tstat": -1.6836198853504487,
+    "variants_tried": 12,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-meanrev-new-tickers/pullback__TLT.json",
+  "source_sweep": "r3-meanrev-new-tickers",
+  "sweep": "r4-cost-sensitivity",
+  "sweep_verdict": "KILL",
+  "timeframe": "daily",
+  "variants_tried": 12,
+  "verdict": "KILL",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.017785547298420745,
+      "max_drawdown": -0.5018548631774142,
+      "n_bars": 2520,
+      "n_trades": 1,
+      "sharpe": 0.1949383195310933,
+      "sortino": 0.19515437648780132,
+      "total_return": 0.19278672042081468,
+      "turnover_per_year": 0.1,
+      "win_rate": 1.0
+    },
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": -0.02434405233489978,
+      "max_drawdown": -0.27532053332495654,
+      "n_bars": 2520,
+      "sharpe": -0.33752920586727286,
+      "sortino": -0.2123890642016286,
+      "total_return": -0.2184316504785213
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "params": {
+          "entry_lookback": 5,
+          "exit_len": 10,
+          "trend_len": 0
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.9272871491681233
+      },
+      {
+        "params": {
+          "entry_lookback": 5,
+          "exit_len": 10,
+          "trend_len": 0
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": -0.4959997093367598
+      },
+      {
+        "params": {
+          "entry_lookback": 3,
+          "exit_len": 10,
+          "trend_len": 0
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": -0.7136380406148441
+      },
+      {
+        "params": {
+          "entry_lookback": 5,
+          "exit_len": 10,
+          "trend_len": 200
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.2805444556103593
+      },
+      {
+        "params": {
+          "entry_lookback": 5,
+          "exit_len": 10,
+          "trend_len": 0
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -1.29826557624837
+      },
+      {
+        "params": {
+          "entry_lookback": 5,
+          "exit_len": 10,
+          "trend_len": 200
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": -0.7981153453522378
+      },
+      {
+        "params": {
+          "entry_lookback": 5,
+          "exit_len": 10,
+          "trend_len": 200
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.5164923547156954
+      },
+      {
+        "params": {
+          "entry_lookback": 5,
+          "exit_len": 10,
+          "trend_len": 0
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": -1.2063252939645925
+      },
+      {
+        "params": {
+          "entry_lookback": 5,
+          "exit_len": 10,
+          "trend_len": 200
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -0.15114910629615078
+      },
+      {
+        "params": {
+          "entry_lookback": 5,
+          "exit_len": 10,
+          "trend_len": 200
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": -0.2457625742508805
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 120
+  }
+}

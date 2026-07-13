@@ -1,0 +1,182 @@
+{
+  "baseline": {
+    "benchmark_oos_sharpe": 0.6534658611523465,
+    "costs": {
+      "commission_bps": 1.0,
+      "slippage_bps": 5.0
+    },
+    "oos_sharpe": 0.6997870461120332,
+    "replay_check": {
+      "matches_recorded": true,
+      "replayed_oos_sharpe": 0.6997870461120332,
+      "tolerance": 1e-08
+    },
+    "tstat": 0.1309524927004454,
+    "verdict": "KEEP (dev-candidate only)"
+  },
+  "cost_multiplier": 2,
+  "cost_tier": "2x",
+  "costs": {
+    "commission_bps": 2.0,
+    "slippage_bps": 10.0
+  },
+  "created_utc": "2026-07-13T09:52:03+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2012-05-18 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "adx_filtered_sma",
+  "git_sha": "fcb2e2e0820a04c486341e802e10c5a3c551d676",
+  "instrument": "META",
+  "kill_criterion": "KILL at this tier iff stitched OOS Sharpe <= same-window same-cost B&H Sharpe or <= 0; ties/ambiguity KILL",
+  "ledger": "report-only sweep, NOT ledgered \u2014 no new config was searched (frozen replay of committed choices); ledgering would duplicate the r3 top-variant rows at different costs",
+  "n_bars": 3180,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params \u2014 the train-window grid selection was NOT re-run at stressed costs (pre-registered: stressing costs must not become a second selection pass); trades identical across tiers, only execution costs differ",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-B \u2014 Execution-cost sensitivity re-grade of round-3 KEEPs",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2016,
+    "note": "ORDER 007 bar at the lane's own recorded K \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": 0.025507951626703607,
+    "sharpe_se": 0.35371496023256277,
+    "timeframe": "daily",
+    "tstat": 0.07211442685356728,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-roc-adx/adx_filtered_sma__META.json",
+  "source_sweep": "r3-roc-adx",
+  "sweep": "r4-cost-sensitivity",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "variants_tried": 12,
+  "verdict": "KEEP (dev-candidate only)",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.19337641293010432,
+      "max_drawdown": -0.7639908308825447,
+      "n_bars": 2016,
+      "n_trades": 1,
+      "sharpe": 0.6532770719618287,
+      "sortino": 0.6362954932124975,
+      "total_return": 3.113576688211718,
+      "turnover_per_year": 0.125,
+      "win_rate": 1.0
+    },
+    "n_splits": 8,
+    "oos_end": "2024-05-24 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.12460421020589973,
+      "max_drawdown": -0.23725900998211646,
+      "n_bars": 2016,
+      "sharpe": 0.6787850235885323,
+      "sortino": 0.44616824076297407,
+      "total_return": 1.5585719858926907
+    },
+    "oos_start": "2016-05-23 00:00:00",
+    "per_split": [
+      {
+        "params": {
+          "adx_min": 25.0,
+          "fast": 10,
+          "slow": 200
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 1.0592865737163562
+      },
+      {
+        "params": {
+          "adx_min": 25.0,
+          "fast": 20,
+          "slow": 50
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 0.4318606906393043
+      },
+      {
+        "params": {
+          "adx_min": 25.0,
+          "fast": 20,
+          "slow": 50
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": -0.412801395060925
+      },
+      {
+        "params": {
+          "adx_min": 20.0,
+          "fast": 10,
+          "slow": 200
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.9766090272610658
+      },
+      {
+        "params": {
+          "adx_min": 20.0,
+          "fast": 20,
+          "slow": 50
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.6624832610380306
+      },
+      {
+        "params": {
+          "adx_min": 20.0,
+          "fast": 10,
+          "slow": 200
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": -0.6870497011596007
+      },
+      {
+        "params": {
+          "adx_min": 20.0,
+          "fast": 10,
+          "slow": 200
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 1.4898012429220475
+      },
+      {
+        "params": {
+          "adx_min": 25.0,
+          "fast": 20,
+          "slow": 50
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 1.6401414924146938
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 96
+  }
+}

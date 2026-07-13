@@ -1,0 +1,196 @@
+{
+  "baseline": {
+    "benchmark_oos_sharpe": 0.2940549506913933,
+    "costs": {
+      "commission_bps": 1.0,
+      "slippage_bps": 5.0
+    },
+    "oos_sharpe": 0.33736767067543066,
+    "replay_check": {
+      "matches_recorded": true,
+      "replayed_oos_sharpe": 0.33736767067543066,
+      "tolerance": 1e-08
+    },
+    "tstat": 0.13695138400084106,
+    "verdict": "KEEP (dev-candidate only)"
+  },
+  "cost_multiplier": 2,
+  "cost_tier": "2x",
+  "costs": {
+    "commission_bps": 2.0,
+    "slippage_bps": 10.0
+  },
+  "created_utc": "2026-07-13T09:52:00+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "keltner_breakout",
+  "git_sha": "fcb2e2e0820a04c486341e802e10c5a3c551d676",
+  "instrument": "XOM",
+  "kill_criterion": "KILL at this tier iff stitched OOS Sharpe <= same-window same-cost B&H Sharpe or <= 0; ties/ambiguity KILL",
+  "ledger": "report-only sweep, NOT ledgered \u2014 no new config was searched (frozen replay of committed choices); ledgering would duplicate the r3 top-variant rows at different costs",
+  "n_bars": 3779,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params \u2014 the train-window grid selection was NOT re-run at stressed costs (pre-registered: stressing costs must not become a second selection pass); trades identical across tiers, only execution costs differ",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-B \u2014 Execution-cost sensitivity re-grade of round-3 KEEPs",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.3939797998185104,
+    "n_periods": 2520,
+    "note": "ORDER 007 bar at the lane's own recorded K \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": 0.023771264235327383,
+    "sharpe_se": 0.31625941241672784,
+    "timeframe": "daily",
+    "tstat": 0.07516381584875813,
+    "variants_tried": 6,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-gated-new-tickers/keltner_breakout__XOM.json",
+  "source_sweep": "r3-gated-new-tickers",
+  "sweep": "r4-cost-sensitivity",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "variants_tried": 6,
+  "verdict": "KEEP (dev-candidate only)",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.04389135498704855,
+      "max_drawdown": -0.611195383232086,
+      "n_bars": 2520,
+      "n_trades": 1,
+      "sharpe": 0.2938454049690662,
+      "sortino": 0.2922664680788612,
+      "total_return": 0.5365723352364853,
+      "turnover_per_year": 0.1,
+      "win_rate": 1.0
+    },
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.039287233018696854,
+      "max_drawdown": -0.29045489539930813,
+      "n_bars": 2520,
+      "sharpe": 0.3176166692043936,
+      "sortino": 0.17696733400114228,
+      "total_return": 0.47013061891817753
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "params": {
+          "m": 2.5,
+          "n": 20
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": -0.49128488208506665
+      },
+      {
+        "params": {
+          "m": 2.5,
+          "n": 20
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 0.32214445884332066
+      },
+      {
+        "params": {
+          "m": 2.5,
+          "n": 20
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": -0.6050371108580189
+      },
+      {
+        "params": {
+          "m": 1.5,
+          "n": 50
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.05118989865741667
+      },
+      {
+        "params": {
+          "m": 1.5,
+          "n": 50
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -1.0700414601491015
+      },
+      {
+        "params": {
+          "m": 2.0,
+          "n": 20
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": -0.28879908613337435
+      },
+      {
+        "params": {
+          "m": 2.0,
+          "n": 50
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.49001892376559564
+      },
+      {
+        "params": {
+          "m": 2.0,
+          "n": 50
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 1.398563845052185
+      },
+      {
+        "params": {
+          "m": 2.0,
+          "n": 50
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": 0.8993744187093017
+      },
+      {
+        "params": {
+          "m": 1.5,
+          "n": 50
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": -0.47649477867766293
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 60
+  }
+}

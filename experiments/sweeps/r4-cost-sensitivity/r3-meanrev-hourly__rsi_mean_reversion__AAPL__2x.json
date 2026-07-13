@@ -1,0 +1,146 @@
+{
+  "baseline": {
+    "benchmark_oos_sharpe": 1.570211425462568,
+    "costs": {
+      "commission_bps": 1.0,
+      "slippage_bps": 5.0
+    },
+    "oos_sharpe": 1.7875669498759743,
+    "replay_check": {
+      "matches_recorded": true,
+      "replayed_oos_sharpe": 1.7875669498759743,
+      "tolerance": 1e-08
+    },
+    "tstat": 0.19054050220383006,
+    "verdict": "KEEP (dev-candidate only)"
+  },
+  "cost_multiplier": 2,
+  "cost_tier": "2x",
+  "costs": {
+    "commission_bps": 2.0,
+    "slippage_bps": 10.0
+  },
+  "created_utc": "2026-07-13T09:52:01+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "rsi_mean_reversion",
+  "git_sha": "fcb2e2e0820a04c486341e802e10c5a3c551d676",
+  "instrument": "AAPL",
+  "kill_criterion": "KILL at this tier iff stitched OOS Sharpe <= same-window same-cost B&H Sharpe or <= 0; ties/ambiguity KILL",
+  "ledger": "report-only sweep, NOT ledgered \u2014 no new config was searched (frozen replay of committed choices); ledgering would duplicate the r3 top-variant rows at different costs",
+  "n_bars": 2476,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params \u2014 the train-window grid selection was NOT re-run at stressed costs (pre-registered: stressing costs must not become a second selection pass); trades identical across tiers, only execution costs differ",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-B \u2014 Execution-cost sensitivity re-grade of round-3 KEEPs",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 1260,
+    "note": "ORDER 007 bar at the lane's own recorded K \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": -0.2985601183769446,
+    "sharpe_se": 1.140455491466401,
+    "timeframe": "hourly",
+    "tstat": -0.2617902413649262,
+    "variants_tried": 12,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-meanrev-hourly/rsi_mean_reversion__AAPL.json",
+  "source_sweep": "r3-meanrev-hourly",
+  "sweep": "r4-cost-sensitivity",
+  "sweep_verdict": "KILL",
+  "timeframe": "hourly",
+  "variants_tried": 12,
+  "verdict": "KILL",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.4720203518882877,
+      "max_drawdown": -0.15867619737436123,
+      "n_bars": 1260,
+      "n_trades": 1,
+      "sharpe": 1.5672581123825087,
+      "sortino": 1.5576897822496365,
+      "total_return": 0.34637014459392423,
+      "turnover_per_year": 1.2999999999999998,
+      "win_rate": 1.0
+    },
+    "n_splits": 5,
+    "oos_end": "2024-11-22 14:30:00",
+    "oos_metrics": {
+      "cagr": 0.1693541327385284,
+      "max_drawdown": -0.0635460187856739,
+      "n_bars": 1260,
+      "sharpe": 1.268697994005564,
+      "sortino": 0.7179887261743146,
+      "total_return": 0.127888571329567
+    },
+    "oos_start": "2024-03-07 18:30:00",
+    "per_split": [
+      {
+        "params": {
+          "overbought": 60,
+          "oversold": 20,
+          "period": 14
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "overbought": 60,
+          "oversold": 20,
+          "period": 14
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "overbought": 70,
+          "oversold": 20,
+          "period": 2
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 3.269432215051469
+      },
+      {
+        "params": {
+          "overbought": 70,
+          "oversold": 20,
+          "period": 2
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.519762425336033
+      },
+      {
+        "params": {
+          "overbought": 70,
+          "oversold": 30,
+          "period": 5
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.5634741257034857
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 60
+  }
+}
