@@ -80,6 +80,21 @@ Families:
   the momentum sign of a DIFFERENT instrument's close series, TLT/XOM/GLD,
   aligned onto the equity index lookahead-free; ``gated=False`` is the
   MANDATORY ungated control arm — the same component, no gate).
+* Round 6 (post-holdout dev-only, docs/research-round-6-plan.md, ORDER 014
+  items 1+3 — first round under the selection-fair standing gate [D-0002]),
+  slice R6-A (lane r6-volume × 15 daily tickers): obv_trend (long while
+  on-balance volume is above its own trailing SMA — the lab's first
+  VOLUME-based family; ``price_confirm=False`` is the pure-OBV
+  within-family control arm), mfi_reversion (Money Flow Index oversold
+  cross-up reversion — the volume-weighted sibling of the RSI /
+  stochastic / Williams %R / CCI oscillator families); slice R6-B (lane
+  r6-gap × 12-ticker mixed equity/ETF set, BTC-USD deliberately excluded —
+  a 24/7 market has no overnight gap): overnight_gap (the lab's first
+  family whose SIGNAL reads the open column — trailing-ATR-normalized
+  overnight gap, ``mode="fade"`` / ``mode="follow"`` are the two committed
+  mirror theses); slice R6-C (lane r6-volume-hourly × all-8 × hourly): NO
+  new strategies — the two R6-A volume families re-swept on hourly bars
+  (timeframe expansion, the slice-5/14/15 precedent).
 
 Portfolio strategies (``PORTFOLIO_STRATEGIES``) take a panel of aligned
 closes (one column per instrument) and return a target-weight DataFrame
@@ -94,7 +109,8 @@ from . import (adx_filtered_sma, aroon_trend, atr_trailing,
                bollinger_breakout, bollinger_reversion, buy_and_hold,
                cci_reversion, crossasset_gate, donchian, ema_crossover,
                ichimoku_trend, keltner_breakout, macd, macd_supertrend,
-               pullback, regime_switch, roc_momentum, rsi_mean_reversion,
+               mfi_reversion, obv_trend, overnight_gap, pullback,
+               regime_switch, roc_momentum, rsi_mean_reversion,
                sma_crossover, stochastic_reversion, supertrend_flip,
                trix_momentum, vol_filtered_trend, weekday_long,
                williams_r_reversion, xsec_momentum, xsec_reversal)
@@ -125,6 +141,9 @@ STRATEGIES = {
     "weekday_long": weekday_long.generate,
     "regime_switch": regime_switch.generate,
     "crossasset_gate": crossasset_gate.generate,
+    "obv_trend": obv_trend.generate,
+    "mfi_reversion": mfi_reversion.generate,
+    "overnight_gap": overnight_gap.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -164,6 +183,10 @@ DEFAULT_PARAMS = {
                       "rsi_overbought": 60},
     "crossasset_gate": {"gate_asset": "TLT", "gate_lookback": 126,
                         "gated": True, "trend_fast": 20, "trend_slow": 100},
+    "obv_trend": {"window": 50, "price_confirm": False},
+    "mfi_reversion": {"period": 14, "buy_below": 20, "sell_above": 80},
+    "overnight_gap": {"gap_atr": 1.0, "hold": 3, "mode": "fade",
+                      "atr_period": 14},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -269,6 +292,23 @@ R4_REGIME_FAMILY = ["regime_switch"]
 # control arm (gated=False) committed in the same grid.
 R4_CROSSASSET_FAMILY = ["crossasset_gate"]
 
+# Round 6 slice R6-A (docs/research-round-6-plan.md § R6-A, ORDER 014,
+# post-holdout dev-only, selection-fair gate [D-0002] applies): the two
+# NEW volume-based families swept in the r6-volume × 15-daily-ticker ×
+# daily lane.
+R6_VOLUME_FAMILY = ["obv_trend", "mfi_reversion"]
+
+# Round 6 slice R6-B (docs/research-round-6-plan.md § R6-B): the single
+# NEW overnight-gap family swept in the r6-gap × 12-ticker mixed
+# equity/ETF set (BTC-USD excluded — no overnight session) × daily lane.
+R6_GAP_FAMILY = ["overnight_gap"]
+
+# Round 6 slice R6-C (docs/research-round-6-plan.md § R6-C): the two R6-A
+# volume families re-swept on HOURLY bars in the r6-volume-hourly ×
+# all-8-tickers × hourly lane (timeframe expansion — no new strategy
+# code; the Round-3 slice-5/14/15 precedent).
+R6_VOLUME_HOURLY_FAMILY = ["obv_trend", "mfi_reversion"]
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
     "xsec_reversal": xsec_reversal.generate_weights,
@@ -284,6 +324,7 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "R3_TRIX_ICHIMOKU_FAMILY", "R3_TREND_HOURLY_FAMILY",
            "R3_HOURLY_COMPLETION_FAMILY", "R4_SEASONALITY_FAMILY",
            "R4_REGIME_FAMILY", "R4_CROSSASSET_FAMILY",
+           "R6_VOLUME_FAMILY", "R6_GAP_FAMILY", "R6_VOLUME_HOURLY_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
@@ -292,4 +333,5 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "aroon_trend", "cci_reversion", "bollinger_breakout",
            "atr_trailing", "trix_momentum", "ichimoku_trend",
            "weekday_long", "regime_switch", "crossasset_gate",
+           "obv_trend", "mfi_reversion", "overnight_gap",
            "xsec_momentum", "xsec_reversal"]

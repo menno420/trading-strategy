@@ -1738,3 +1738,156 @@ class TestR5ANeighborGrids:
         for lane in sweeps.R5A_TARGET_LANES:
             assert (sweeps.r5a_neighbors(lane["lane_id"])
                     == sweeps.r5a_neighbors(lane["lane_id"]))
+
+
+class TestR6VolumeGrids:
+    """Round-6 slice R6-A pre-declaration pins (docs/research-round-6-plan.md
+    § R6-A): the grids are committed BEFORE the sweep runs and these pins
+    freeze them."""
+
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R6_VOLUME_FAMILY
+        assert set(sweeps.R6_VOLUME_FAMILIES) == set(R6_VOLUME_FAMILY)
+        for fam in sweeps.R6_VOLUME_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_registered_counts(self):
+        # Multiple-testing discipline: the counts reported in the plan and
+        # in any Round-6 lane JSON must match these.
+        assert sweeps.r6_volume_variants_per_family() == \
+            {"obv_trend": 12, "mfi_reversion": 12}
+        assert sweeps.r6_volume_total_configs() == 360
+
+    def test_k_is_round_standard_and_bar_never_lowered(self):
+        # Per-lane informational K = 12 variants per family grid, exactly
+        # the rounds-2-5 standard; min_tstat(12) ~ 2.64, never lowered.
+        from trading_lab import promotion
+        assert sweeps.R6_VOLUME_K == 12
+        assert all(n == sweeps.R6_VOLUME_K
+                   for n in sweeps.r6_volume_variants_per_family().values())
+        assert round(promotion.min_tstat(sweeps.R6_VOLUME_K), 2) == 2.64
+
+    def test_instruments_are_the_committed_r4f_surface_verbatim(self):
+        # Same tuple OBJECT as the R4-F seasonality surface — all 15
+        # committed daily caches, no new caches, nothing fetched, and no
+        # post-hoc instrument selection possible.
+        assert sweeps.R6_VOLUME_INSTRUMENTS is sweeps.R4_SEASONALITY_INSTRUMENTS
+        assert len(sweeps.R6_VOLUME_INSTRUMENTS) == 15
+
+    def test_constraints_filtered(self):
+        for p in sweeps.r6_volume_variants("mfi_reversion"):
+            assert 0 < p["buy_below"] < p["sell_above"] < 100
+        for p in sweeps.r6_volume_variants("obv_trend"):
+            assert p["window"] >= 2
+
+    def test_obv_pure_control_arm_committed_for_every_window(self):
+        # price_confirm=False (the pure-OBV within-family control) exists
+        # for every window in the SAME grid — no post-hoc arm selection.
+        variants = sweeps.r6_volume_variants("obv_trend")
+        for w in {p["window"] for p in variants}:
+            assert {"window": w, "price_confirm": False} in variants
+            assert {"window": w, "price_confirm": True} in variants
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R6_VOLUME_FAMILIES:
+            for params in sweeps.r6_volume_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+                assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r6_volume_variants("astrology")
+
+    def test_deterministic_order(self):
+        for fam in sweeps.R6_VOLUME_FAMILIES:
+            assert (sweeps.r6_volume_variants(fam)
+                    == sweeps.r6_volume_variants(fam))
+
+
+class TestR6GapGrid:
+    """Round-6 slice R6-B pre-declaration pins (docs/research-round-6-plan.md
+    § R6-B)."""
+
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R6_GAP_FAMILY
+        assert set(sweeps.R6_GAP_FAMILIES) == set(R6_GAP_FAMILY)
+        for fam in sweeps.R6_GAP_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_registered_counts(self):
+        from trading_lab import promotion
+        assert sweeps.r6_gap_variants_per_family() == {"overnight_gap": 12}
+        assert sweeps.r6_gap_total_configs() == 144
+        assert sweeps.R6_GAP_K == 12
+        assert round(promotion.min_tstat(sweeps.R6_GAP_K), 2) == 2.64
+
+    def test_instruments_are_the_committed_slice8_set_verbatim_no_btc(self):
+        # Same tuple OBJECT as the slice-8 12-ticker mixed set; BTC-USD is
+        # deliberately excluded — a 24/7 market has no overnight gap.
+        assert sweeps.R6_GAP_INSTRUMENTS is sweeps.R3_TRIX_ICHIMOKU_INSTRUMENTS
+        assert len(sweeps.R6_GAP_INSTRUMENTS) == 12
+        assert "BTC-USD" not in sweeps.R6_GAP_INSTRUMENTS
+
+    def test_both_mirror_theses_committed_in_the_same_grid(self):
+        # fade and follow each cover the full gap_atr x hold sub-grid, so
+        # neither thesis can be cherry-picked after outcomes.
+        variants = sweeps.r6_gap_variants("overnight_gap")
+        fade = [p for p in variants if p["mode"] == "fade"]
+        follow = [p for p in variants if p["mode"] == "follow"]
+        assert len(fade) == len(follow) == 6
+        strip = lambda p: {k: v for k, v in p.items() if k != "mode"}
+        assert [strip(p) for p in fade] == [strip(p) for p in follow]
+
+    def test_atr_period_is_frozen_not_swept(self):
+        # atr_period stays at the lab-standard default 14 and is NOT a
+        # grid axis (it would quadruple the burden for a nuisance param).
+        from trading_lab.strategies import DEFAULT_PARAMS
+        for p in sweeps.r6_gap_variants("overnight_gap"):
+            assert set(p) == {"mode", "gap_atr", "hold"}
+        assert DEFAULT_PARAMS["overnight_gap"]["atr_period"] == 14
+
+    def test_every_variant_runs(self, random_walk):
+        for params in sweeps.r6_gap_variants("overnight_gap"):
+            pos = STRATEGIES["overnight_gap"](random_walk, **params)
+            assert not pos.isna().any()
+            assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r6_gap_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r6_gap_variants("overnight_gap")
+                == sweeps.r6_gap_variants("overnight_gap"))
+
+
+class TestR6VolumeHourlyGrid:
+    """Round-6 slice R6-C pre-declaration pins (docs/research-round-6-plan.md
+    § R6-C): timeframe expansion of R6-A — grid identity is the point."""
+
+    def test_families_and_grids_identical_to_r6a(self):
+        assert sweeps.R6_VOLUME_HOURLY_FAMILIES is sweeps.R6_VOLUME_FAMILIES
+        for fam in sweeps.R6_VOLUME_HOURLY_FAMILIES:
+            assert (sweeps.r6_volume_hourly_variants(fam)
+                    == sweeps.r6_volume_variants(fam))
+
+    def test_registered_counts(self):
+        from trading_lab import promotion
+        assert sweeps.r6_volume_hourly_variants_per_family() == \
+            {"obv_trend": 12, "mfi_reversion": 12}
+        assert sweeps.r6_volume_hourly_total_configs() == 192
+        assert sweeps.R6_VOLUME_HOURLY_K == 12
+        assert round(promotion.min_tstat(sweeps.R6_VOLUME_HOURLY_K), 2) == 2.64
+
+    def test_instruments_are_the_committed_hourly_surface_verbatim(self):
+        # Same tuple OBJECT as the r3-trend-hourly 8-ticker surface — the
+        # complete committed data/hourly/ cache set, nothing fetched.
+        assert (sweeps.R6_VOLUME_HOURLY_INSTRUMENTS
+                is sweeps.R3_TREND_HOURLY_INSTRUMENTS)
+        assert len(sweeps.R6_VOLUME_HOURLY_INSTRUMENTS) == 8
+
+    def test_round_total_configs(self):
+        # The plan's burden ledger: 360 + 144 + 192 = 696 new registered
+        # configs; program cumulative 4359 -> 5055.
+        assert sweeps.r6_total_configs() == 696
