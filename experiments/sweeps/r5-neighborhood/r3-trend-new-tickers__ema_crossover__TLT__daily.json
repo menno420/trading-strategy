@@ -1,0 +1,217 @@
+{
+  "baseline": {
+    "benchmark_oos_sharpe": 0.1962113994495629,
+    "costs": {
+      "commission_bps": 1.0,
+      "slippage_bps": 5.0
+    },
+    "oos_sharpe": 0.482387358927847,
+    "replay_check": {
+      "matches_recorded": true,
+      "replayed_oos_sharpe": 0.482387358927847,
+      "tolerance": 1e-08
+    },
+    "tstat": 0.9047590033363885,
+    "verdict": "KEEP (dev-candidate only)"
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:21+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "decision_rule": "KEEP dev-candidate status iff >= 50% of replayed neighbors beat same-window B&H stitched OOS Sharpe; else DEMOTED to KILL (knife-edge). KILL-SIG iff a KILLed lane's worst neighbor t <= -min_tstat(K=12) \u2014 the mirrored bar, never lowered.",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "ema_crossover",
+  "frac_beat_bh": 1.0,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "TLT",
+  "lane_id": "r3-trend-new-tickers__ema_crossover__TLT__daily",
+  "ledger": "LEDGERED (deliberate, R4-C precedent): each neighbor replay is a genuinely new run with a return stream no existing row describes; one row per neighbor, variants_tried=1, probe caveat in the notes",
+  "n_bars": 3779,
+  "n_beat_bh": 2,
+  "n_neighbors": 2,
+  "neighbors": [
+    {
+      "beats_bh": true,
+      "benchmark_oos_sharpe": 0.1962113994495629,
+      "min_tstat": 2.638257273476751,
+      "oos_sharpe": 0.418534237760659,
+      "params": {
+        "fast": 20,
+        "slow": 50
+      },
+      "per_split": [
+        {
+          "test": [
+            1008,
+            1260
+          ],
+          "test_sharpe": 2.2044647983174017
+        },
+        {
+          "test": [
+            1260,
+            1512
+          ],
+          "test_sharpe": -1.1820893687481597
+        },
+        {
+          "test": [
+            1512,
+            1764
+          ],
+          "test_sharpe": 1.06071253275776
+        },
+        {
+          "test": [
+            1764,
+            2016
+          ],
+          "test_sharpe": 0.5717114552503509
+        },
+        {
+          "test": [
+            2016,
+            2268
+          ],
+          "test_sharpe": -0.586007947007976
+        },
+        {
+          "test": [
+            2268,
+            2520
+          ],
+          "test_sharpe": 1.2893341592541927
+        },
+        {
+          "test": [
+            2520,
+            2772
+          ],
+          "test_sharpe": 0.6639055398096216
+        },
+        {
+          "test": [
+            2772,
+            3024
+          ],
+          "test_sharpe": -0.27228349271979807
+        },
+        {
+          "test": [
+            3024,
+            3276
+          ],
+          "test_sharpe": -0.32037787238106774
+        },
+        {
+          "test": [
+            3276,
+            3528
+          ],
+          "test_sharpe": 0.062489785880807884
+        }
+      ],
+      "tstat": 0.7029244008802854
+    },
+    {
+      "beats_bh": true,
+      "benchmark_oos_sharpe": 0.1962113994495629,
+      "min_tstat": 2.638257273476751,
+      "oos_sharpe": 0.32943521969011585,
+      "params": {
+        "fast": 30,
+        "slow": 100
+      },
+      "per_split": [
+        {
+          "test": [
+            1008,
+            1260
+          ],
+          "test_sharpe": 2.0440640445852694
+        },
+        {
+          "test": [
+            1260,
+            1512
+          ],
+          "test_sharpe": -1.1679088204150896
+        },
+        {
+          "test": [
+            1512,
+            1764
+          ],
+          "test_sharpe": 0.8860300593220858
+        },
+        {
+          "test": [
+            1764,
+            2016
+          ],
+          "test_sharpe": 0.27224074500305256
+        },
+        {
+          "test": [
+            2016,
+            2268
+          ],
+          "test_sharpe": -0.5629138783329454
+        },
+        {
+          "test": [
+            2268,
+            2520
+          ],
+          "test_sharpe": 1.3813829627939826
+        },
+        {
+          "test": [
+            2520,
+            2772
+          ],
+          "test_sharpe": 0.988594987260573
+        },
+        {
+          "test": [
+            2772,
+            3024
+          ],
+          "test_sharpe": -0.5479459585648858
+        },
+        {
+          "test": [
+            3024,
+            3276
+          ],
+          "test_sharpe": 0.27224082879707606
+        },
+        {
+          "test": [
+            3276,
+            3528
+          ],
+          "test_sharpe": -1.6458303398010758
+        }
+      ],
+      "tstat": 0.4212453590888226
+    }
+  ],
+  "no_research": "selection-free fixed-config replays of pre-declared +/-1-step neighbors over the lane's exact committed walk-forward test windows \u2014 no training pick, no selection on outcome; neighbors are probes, not entrants",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-A \u2014 Parameter-neighborhood stability",
+  "promotion_grade_note": "neighbor t-stats graded at the lane's committed K = 12 (bar 2.638257) \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout",
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+  "sweep": "r5-neighborhood",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "top_variant": {
+    "fast": 30,
+    "slow": 50
+  },
+  "verdict": "KEEP (dev-candidate only)"
+}

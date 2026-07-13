@@ -1,0 +1,224 @@
+{
+  "burden": {
+    "new_registered_configs": 14,
+    "program_cumulative_after": 4359,
+    "program_cumulative_before": 4345
+  },
+  "counts": {
+    "graded": 5,
+    "keep": 5,
+    "kill": 0,
+    "kill_sig": 0,
+    "neighbors_replayed": 14,
+    "skipped": 0,
+    "target_lanes": 5
+  },
+  "created_utc": "2026-07-13T14:31:21.909131+00:00",
+  "fidelity_guard": "every graded lane's baseline replay reproduced its committed stitched OOS Sharpe within 1e-08; irreproducible lanes recorded SKIPPED with the verbatim reason",
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "lanes": [
+    {
+      "baseline": {
+        "benchmark_oos_sharpe": 0.8211061068266703,
+        "costs": {
+          "commission_bps": 1.0,
+          "slippage_bps": 5.0
+        },
+        "oos_sharpe": 1.2575201323867047,
+        "replay_check": {
+          "matches_recorded": true,
+          "replayed_oos_sharpe": 1.2575201323867047,
+          "tolerance": 1e-08
+        },
+        "tstat": 1.3779023544961797,
+        "verdict": "KEEP (dev-candidate only)"
+      },
+      "detail_file": "experiments/sweeps/r5-neighborhood/r3-btc-coverage__bollinger_breakout__BTC-USD__daily.json",
+      "frac_beat_bh": 1.0,
+      "instrument": "BTC-USD",
+      "lane_id": "r3-btc-coverage__bollinger_breakout__BTC-USD__daily",
+      "n_beat_bh": 2,
+      "n_neighbors": 2,
+      "source_file": "experiments/sweeps/r3-btc-coverage/bollinger_breakout__BTC-USD.json",
+      "status": "GRADED",
+      "strategy": "bollinger_breakout",
+      "sweep": "r3-btc-coverage",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "top_variant": {
+        "num_std": 1.0,
+        "period": 10
+      },
+      "verdict": "KEEP (dev-candidate only)",
+      "worst_neighbor_tstat": 0.6399686134749256
+    },
+    {
+      "baseline": {
+        "benchmark_oos_sharpe": 0.16965504212254662,
+        "costs": {
+          "commission_bps": 1.0,
+          "slippage_bps": 5.0
+        },
+        "oos_sharpe": 0.4995655939280414,
+        "replay_check": {
+          "matches_recorded": true,
+          "replayed_oos_sharpe": 0.4995655939280414,
+          "tolerance": 1e-08
+        },
+        "tstat": 1.0430105659106945,
+        "verdict": "KEEP (dev-candidate only)"
+      },
+      "detail_file": "experiments/sweeps/r5-neighborhood/r3-stoch-willr__williams_r_reversion__SLV__daily.json",
+      "frac_beat_bh": 1.0,
+      "instrument": "SLV",
+      "lane_id": "r3-stoch-willr__williams_r_reversion__SLV__daily",
+      "n_beat_bh": 4,
+      "n_neighbors": 4,
+      "source_file": "experiments/sweeps/r3-stoch-willr/williams_r_reversion__SLV.json",
+      "status": "GRADED",
+      "strategy": "williams_r_reversion",
+      "sweep": "r3-stoch-willr",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "top_variant": {
+        "buy_below": -90,
+        "period": 21,
+        "sell_above": -30
+      },
+      "verdict": "KEEP (dev-candidate only)",
+      "worst_neighbor_tstat": 0.864649290954141
+    },
+    {
+      "baseline": {
+        "benchmark_oos_sharpe": 0.6534658611523465,
+        "costs": {
+          "commission_bps": 1.0,
+          "slippage_bps": 5.0
+        },
+        "oos_sharpe": 0.9934293933081809,
+        "replay_check": {
+          "matches_recorded": true,
+          "replayed_oos_sharpe": 0.9934293933081809,
+          "tolerance": 1e-08
+        },
+        "tstat": 0.9606220201099536,
+        "verdict": "KEEP (dev-candidate only)"
+      },
+      "detail_file": "experiments/sweeps/r5-neighborhood/r3-trix-ichimoku__ichimoku_trend__META__daily.json",
+      "frac_beat_bh": 1.0,
+      "instrument": "META",
+      "lane_id": "r3-trix-ichimoku__ichimoku_trend__META__daily",
+      "n_beat_bh": 3,
+      "n_neighbors": 3,
+      "source_file": "experiments/sweeps/r3-trix-ichimoku/ichimoku_trend__META.json",
+      "status": "GRADED",
+      "strategy": "ichimoku_trend",
+      "sweep": "r3-trix-ichimoku",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "top_variant": {
+        "kijun": 26,
+        "senkou_b": 44,
+        "tenkan": 7
+      },
+      "verdict": "KEEP (dev-candidate only)",
+      "worst_neighbor_tstat": 0.729389204863838
+    },
+    {
+      "baseline": {
+        "benchmark_oos_sharpe": 0.49397799449244817,
+        "costs": {
+          "commission_bps": 1.0,
+          "slippage_bps": 5.0
+        },
+        "oos_sharpe": 1.5290958634343552,
+        "replay_check": {
+          "matches_recorded": true,
+          "replayed_oos_sharpe": 1.5290958634343552,
+          "tolerance": 1e-08
+        },
+        "tstat": 0.9075346245827585,
+        "verdict": "KEEP (dev-candidate only)"
+      },
+      "detail_file": "experiments/sweeps/r5-neighborhood/r3-meanrev-hourly__stochastic_reversion__META__hourly.json",
+      "frac_beat_bh": 1.0,
+      "instrument": "META",
+      "lane_id": "r3-meanrev-hourly__stochastic_reversion__META__hourly",
+      "n_beat_bh": 3,
+      "n_neighbors": 3,
+      "source_file": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__META.json",
+      "status": "GRADED",
+      "strategy": "stochastic_reversion",
+      "sweep": "r3-meanrev-hourly",
+      "sweep_verdict": "KEEP",
+      "timeframe": "hourly",
+      "top_variant": {
+        "buy_below": 10,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "verdict": "KEEP (dev-candidate only)",
+      "worst_neighbor_tstat": 0.1879377184565238
+    },
+    {
+      "baseline": {
+        "benchmark_oos_sharpe": 0.1962113994495629,
+        "costs": {
+          "commission_bps": 1.0,
+          "slippage_bps": 5.0
+        },
+        "oos_sharpe": 0.482387358927847,
+        "replay_check": {
+          "matches_recorded": true,
+          "replayed_oos_sharpe": 0.482387358927847,
+          "tolerance": 1e-08
+        },
+        "tstat": 0.9047590033363885,
+        "verdict": "KEEP (dev-candidate only)"
+      },
+      "detail_file": "experiments/sweeps/r5-neighborhood/r3-trend-new-tickers__ema_crossover__TLT__daily.json",
+      "frac_beat_bh": 1.0,
+      "instrument": "TLT",
+      "lane_id": "r3-trend-new-tickers__ema_crossover__TLT__daily",
+      "n_beat_bh": 2,
+      "n_neighbors": 2,
+      "source_file": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+      "status": "GRADED",
+      "strategy": "ema_crossover",
+      "sweep": "r3-trend-new-tickers",
+      "sweep_verdict": "KEEP",
+      "timeframe": "daily",
+      "top_variant": {
+        "fast": 30,
+        "slow": 50
+      },
+      "verdict": "KEEP (dev-candidate only)",
+      "worst_neighbor_tstat": 0.4212453590888226
+    }
+  ],
+  "ledger_decision": "LEDGERED (R4-C precedent): genuinely-new neighbor replays, one row each, variants_tried=1, probe caveat in notes; experiments/index.jsonl rebuilt",
+  "ledger_files": [
+    "experiments/runs/20260713T143120658902Z-10eb0fa75130.json",
+    "experiments/runs/20260713T143120756163Z-1f3a57367ba4.json",
+    "experiments/runs/20260713T143120916545Z-57fcad235d14.json",
+    "experiments/runs/20260713T143120982232Z-ec0d50c6fc17.json",
+    "experiments/runs/20260713T143121064011Z-547c64f882c4.json",
+    "experiments/runs/20260713T143121155053Z-0c5b6574fa4d.json",
+    "experiments/runs/20260713T143121366090Z-cf9b4c9a7d4c.json",
+    "experiments/runs/20260713T143121454216Z-eeb7174ca5d8.json",
+    "experiments/runs/20260713T143121552367Z-e730dcee80d1.json",
+    "experiments/runs/20260713T143121646665Z-608065ed4d54.json",
+    "experiments/runs/20260713T143121686590Z-b35235bec053.json",
+    "experiments/runs/20260713T143121726439Z-3083bb1072f6.json",
+    "experiments/runs/20260713T143121824839Z-aba56f67d861.json",
+    "experiments/runs/20260713T143121865745Z-a1a7594b953b.json"
+  ],
+  "post_holdout_dev_only": "holdout SPENT, promotion CLOSED; every KEEP is a dev-candidate only, never a finding",
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-A \u2014 Parameter-neighborhood stability",
+  "rule": "per lane: KEEP iff >= 50% of pre-declared +/-1-step neighbors beat same-window B&H stitched OOS Sharpe in a selection-free replay; else DEMOTED to KILL (knife-edge); KILL-SIG at the mirrored K=12 bar via classify_verdict",
+  "runtime_cap_seconds": 600,
+  "runtime_seconds": 1.4,
+  "schema_version": 1,
+  "slice": "r5-neighborhood",
+  "target_set": "the FROZEN top-5 KEEP-dev lanes of the plan (trading_lab.sweeps.R5A_TARGET_LANES) \u2014 no swap-ins, no re-ranking"
+}

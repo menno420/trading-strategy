@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.36743600498851925,
+    "max_drawdown": -0.8338309836709148,
+    "n_bars": 2520,
+    "n_trades": 1,
+    "sharpe": 0.8211061068266703,
+    "sortino": 0.8489780782450211,
+    "total_return": 21.859677973211678,
+    "turnover_per_year": 0.1,
+    "win_rate": 1.0
+  },
+  "config_hash": "10eb0fa75130",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:20+00:00",
+  "data_end": "2024-05-14 00:00:00",
+  "data_start": "2017-06-21 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "BTC-USD",
+  "metrics": {
+    "cagr": 0.41447806651949604,
+    "max_drawdown": -0.6303709905270456,
+    "n_bars": 2520,
+    "n_trades": 161,
+    "sharpe": 1.0879094769515691,
+    "sortino": 0.8834464891636349,
+    "total_return": 31.059900854274296,
+    "turnover_per_year": 16.4,
+    "win_rate": 0.3780487804878049
+  },
+  "n_bars": 2520,
+  "notes": "R5-A parameter-neighborhood PROBE (docs/research-round-5-plan.md \u00a7 R5-A; post-holdout DEV-ONLY, promotion closed). Selection-free stitched walk-forward OOS replay of a pre-declared +/-1-step neighbor of the committed top variant of r3-btc-coverage__bollinger_breakout__BTC-USD__daily \u2014 a probe, NEVER an entrant or candidate; metrics are over the stitched OOS window, not a single-window run.",
+  "params": {
+    "num_std": 1.0,
+    "period": 20
+  },
+  "run_id": "20260713T143120658902Z-10eb0fa75130",
+  "schema_version": 1,
+  "strategy": "bollinger_breakout",
+  "timeframe": "daily",
+  "variants_tried": 1
+}
