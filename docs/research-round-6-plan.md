@@ -9,7 +9,8 @@
 > (`trading_lab.promotion.min_tstat`, ~2.64 at K=12) — no bar-lowering
 > anywhere in this round; K only ever rises with variants actually tried.
 > **Round 6 is the FIRST round under the selection-fair standing gate**
-> (PR #111, `d498018`, decision [D-0002]): no Round-6 KEEP-dev verdict
+> (PR #111, `d498018`; the decision is stamped in its home doc,
+> [selection-fair-gate.md](selection-fair-gate.md)): no Round-6 KEEP-dev verdict
 > exists until `run_selection_gate`/`apply_gate` has passed it.
 
 ## Provenance and scope
@@ -46,8 +47,9 @@ requiring a data fetch (blocked by the committed-caches rail).
 
 ## The two new standing rules (effective this round, folded into the rails)
 
-1. **Selection-fair gate on every KEEP** ([D-0002], PR #111 `d498018`,
-   binding doc [selection-fair-gate.md](selection-fair-gate.md)): every
+1. **Selection-fair gate on every KEEP** (PR #111 `d498018`; binding doc
+   [selection-fair-gate.md](selection-fair-gate.md), which stamps the
+   decision-ledger entry): every
    Round-6+ runner that mints a would-be KEEP-dev verdict MUST run
    `trading_lab.selection_gate.run_selection_gate` on the lane (fidelity
    guard armed with the lane's own recorded searched Sharpe) and fold the
@@ -55,7 +57,8 @@ requiring a data fetch (blocked by the committed-caches rail).
    result block is recorded in the lane JSON. A lane whose searched edge
    does not survive the selection-free fixed-config replay is KILLed the
    day it is minted. A runner that mints KEEP-dev without a
-   `selection_gate` block in its lane JSON violates [D-0002].
+   `selection_gate` block in its lane JSON violates the gate decision
+   ([selection-fair-gate.md](selection-fair-gate.md)).
 2. **R5-D fixed-config row in every searched-arm comparison** (ORDER 014
    item 3; [research-round-5-results.md](research-round-5-results.md)
    closing tally item 4: "future rounds comparing searched arms should

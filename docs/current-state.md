@@ -34,7 +34,8 @@ bindings — full disposition in `control/status.md`.)
   `mfi_reversion`; overnight-gap family `overnight_gap`) plus the hourly
   volume expansion; 696 new registered configs (program cumulative 4359 →
   5055), 58 lanes, per-lane K=12, bar unchanged. First round under the
-  selection-fair standing gate ([D-0002], PR #111) with the R5-D
+  selection-fair standing gate ([selection-fair-gate.md](selection-fair-gate.md),
+  PR #111) with the R5-D
   fixed-config row folded in as a standing rule. Execution is the
   separately claimed `claude/round-6-run` slice (ORDER 014 item 2) —
   plan-before-outcome.
