@@ -17,52 +17,35 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 ## In flight
 
 (Verify against live source control — this section is a dated snapshot.
-Live state as of 2026-07-12: **0 open PRs, 0 active claims**, main @
-`0cbc22c` (PR #76 ender close-out). Paper lane FLAT/WATCH — sole ledger
+Live state as of 2026-07-13T13:42Z, MCP-verified: **0 open PRs** beyond
+this refresh's own PR #108, **0 active claims** beyond its own, main @
+`83e736c` (PR #107 ender close-out). Paper lane FLAT/WATCH — sole ledger
 record `paper-0001` WATCH; holdout SPENT. First weekly grading pass due
-2026-07-17T09:06Z — trigger `trig_015aNMg5ncoSE2Roe4MKjQnr`, rebind owned
-by the coordinator.)
+2026-07-17T09:05Z — business cron `trig_01UsNU4JRps4b7jiAMdEfXNi`, bound
+to the coordinator seat, grading executor LIVE. This supersedes the old
+`trig_015aNMg5ncoSE2Roe4MKjQnr` reference: the 2026-07-13 trigger
+cutover replaced the ender-session-bound triggers with coordinator-seat
+bindings — full disposition in `control/status.md`.)
 
-- MTF Bollinger mean-reversion (branch `claude/bollinger-mtf-dev`, DEV-ONLY /
-  ILLUSTRATIVE, promotion CLOSED): a dev-window test of the owner's
-  multi-timeframe Bollinger idea (lower-TF band touch gated by higher-TF band
-  position). Verdict is a clean NULL — the conditioning probabilities do not
-  separate (Test A runs opposite the hypothesis; Test B success Δ = −0.056,
-  wrong sign), and all 12 pre-declared trading configs are KILLED (every OOS
-  Sharpe delta vs buy-and-hold negative, net of costs). No FINDING/PROMOTED,
-  holdout untouched. Research note
-  [research/bollinger-mtf-dev-2026-07-12.md](research/bollinger-mtf-dev-2026-07-12.md);
-  owner-gated preregistration draft for any future minute-data OOS run
-  [proposals/bollinger-mtf-preregistration-draft.md](proposals/bollinger-mtf-preregistration-draft.md);
-  reusable causal helper `src/trading_lab/mtf.py` (tests `tests/test_mtf.py`),
-  scripts `scripts/mtf_conditioning_study.py` + `scripts/mtf_bollinger_grid.py`.
-- Position-sizing vet (branch `claude/position-sizing-vet`, DEV-ONLY /
-  ILLUSTRATIVE): a research note vetting the owner's small-account sizing
-  idea (80% vs 40% fractional vs fixed stake) with fractional-Kelly math
-  and a self-contained synthetic Monte Carlo (no market data, no holdout,
-  no OOS/FINDING claim) —
-  [research/position-sizing-vet-2026-07-12.md](research/position-sizing-vet-2026-07-12.md),
-  script `scripts/position_sizing_mc.py`. Honest verdict: sizing scales
-  edge and drag but never creates edge, and our own holdout shows no
-  positive net edge (0/13 cleared the bar), so the base case is a
-  compounding loss; points live-€ decisions to the frozen paper lane.
 - Paper lane (post-holdout standing mission): the pre-registered
   forward paper-trading protocol for the surviving RULE-PASS candidate
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
   committed before any trade outcome is observable. No real money, ever.
-- Paper-lane grading job (branch `paper-lane/grading`): the protocol
-  §6–§7 weekly grader — `trading_lab.paper.grade_ledger` plus the thin
-  `scripts/grade_paper.py` entry — parses
-  [../experiments/paper/ledger.md](../experiments/paper/ledger.md),
-  grades closed windows net of costs vs cycle-window B&H
-  (BEAT/MISS/FLAT; ties and late commits are MISS, against the
-  strategy), appends verdicts idempotently, leaves WATCH/ENTRY rows
-  untouched, and reads market data ONLY via the paper-lane rail.
+- Nothing else is in flight: the previously listed dev branches all
+  landed — MTF Bollinger (PR #71), position-sizing vet (PR #69),
+  paper-lane grading job (PR #43) — see "Recently shipped" below.
 
 ## Recently shipped (newest first)
 
 (Merged work only, newest first.)
 
+- Research Round 4 CLOSED + day close-out (PRs #98–#107, 2026-07-13):
+  6 pre-registered experiment classes (KILL-SIG verdict re-grade,
+  seasonality, cost sensitivity, survivor committees, regime-conditional
+  allocation, cross-asset gating) ran to verdict — **0 promoted**;
+  closing tally in [research-round-4-results.md](research-round-4-results.md).
+  Day closed with a claims prune (PR #106) and the session-ender
+  heartbeat (PR #107, main `83e736c`).
 - Research Round 3 backtest-surface expansion (PRs #81–#88, 2026-07-13,
   ORDER 012 night run): 8 dev-only slices — 11 new strategy families, 6 new
   ticker caches, first hourly mean-reversion sweep, xsec lane on XSEC-14 —
@@ -77,6 +60,21 @@ by the coordinator.)
   [research-round-4-results.md](research-round-4-results.md) (R4-A KILL-SIG
   re-grade: 4 significantly-harmful lanes among the 302 committed r3
   summaries, r3 files byte-untouched).
+- MTF Bollinger mean-reversion LANDED (PR #71, 2026-07-12, DEV-ONLY /
+  ILLUSTRATIVE, promotion CLOSED): clean NULL on the owner's
+  multi-timeframe Bollinger idea — conditioning probabilities do not
+  separate, all 12 pre-declared configs KILLED. Research note
+  [research/bollinger-mtf-dev-2026-07-12.md](research/bollinger-mtf-dev-2026-07-12.md);
+  owner-gated preregistration draft
+  [proposals/bollinger-mtf-preregistration-draft.md](proposals/bollinger-mtf-preregistration-draft.md);
+  reusable causal helper `src/trading_lab/mtf.py`.
+- Position-sizing vet LANDED (PR #69, 2026-07-12, DEV-ONLY /
+  ILLUSTRATIVE): fractional-Kelly math + synthetic Monte Carlo on the
+  owner's small-account sizing idea — sizing scales edge but never
+  creates it; base case with no positive net edge is a compounding
+  loss. Note
+  [research/position-sizing-vet-2026-07-12.md](research/position-sizing-vet-2026-07-12.md),
+  script `scripts/position_sizing_mc.py`.
 - Auto-merge enabler LANDED (PR #65, merged 2026-07-12T08:18:48Z,
   `bf885f0` — was branch `claude/install-auto-merge-enabler`): the
   substrate-kit enabler at `.github/workflows/auto-merge-enabler.yml`
@@ -100,6 +98,14 @@ by the coordinator.)
   owner-gated proposal on post-2026 data. Full tables:
   [research-round-2-results.md](research-round-2-results.md); summary
   appended to [final-report.md](final-report.md). 165 → 223 tests.
+- Paper-lane grading job LANDED (PR #43, 2026-07-10): the protocol
+  §6–§7 weekly grader — `trading_lab.paper.grade_ledger` plus the thin
+  `scripts/grade_paper.py` entry — parses
+  [../experiments/paper/ledger.md](../experiments/paper/ledger.md),
+  grades closed windows net of costs vs cycle-window B&H (BEAT/MISS/FLAT;
+  ties and late commits are MISS, against the strategy), appends verdicts
+  idempotently, leaves WATCH/ENTRY rows untouched, and reads market data
+  ONLY via the paper-lane rail.
 - Paper-lane loader rail + ledger (PR #42, 2026-07-10): the protocol's
   §3/§9-A2 rail `trading_lab.data.load_paper_ohlcv` — serves ONLY bars
   ≥ `PAPER_LANE_START = 2026-07-11`, no unlock parameter, holdout rail

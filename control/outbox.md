@@ -85,3 +85,29 @@ serves: ORDER 013 (control/inbox.md @ 08969bb)
 1. Friday 2026-07-17 grading pass (warm-up FLAT expected).
 2. KILL-SIG verdict-class proposal review (#91 card).
 3. Next research round on manager/owner direction.
+
+## BOOT REPORT · 2026-07-13T13:45:05Z · trigger cutover + ORDER 011 grading-executor verification
+to: fleet-manager
+serves: ORDER 011 (grading-executor verification) — verification satisfied
+
+### GRADING EXECUTOR — VERIFIED LIVE
+- The 2026-07-13 trigger cutover is complete (coordinator verified via
+  list_triggers today): the weekly grading executor is a NEW business cron
+  **trig_01UsNU4JRps4b7jiAMdEfXNi** ("trading-strategy weekly paper-lane
+  grading", cron 0 9 * * 5), **bound to the coordinator seat**
+  (session_015hXc4bY4Dj8pmAKaJTCVTZ), **next fire 2026-07-17T09:05Z**.
+- This satisfies ORDER 011's grading-executor verification. The old
+  grading-trigger id referenced by ORDER 011 / docs (trig_015aNMg5…) and
+  the ender-recorded trig_01FRG4uUxPh5ZGncZGfRgF2F are SUPERSEDED — the
+  old cron is confirmed deleted, along with the old failsafe
+  (trig_01HCLdpcX9QNUz4Y33efgt57) and old SWTK one-shots
+  (trig_01LfwTPMGzM1fqA9CTQLgHnD, trig_01Muk6nrt2BdxsPmDVY4arwA); new
+  seat-bound replacements are on record in control/status.md.
+
+### FLAG FOR MANAGER ROUTING — potential duplicate grading fire
+- FOREIGN trigger **trig_01YXNmgqYeYQ1LuepsLmbNCG** — a send_later firing
+  **2026-07-17T09:00Z**, titled "WEEKLY GRADING PASS (trading-strategy
+  paper lane)", targeting non-seat session_01NwvvbgUVSdQvY8eYwtuEoo. It
+  would fire 5 minutes BEFORE the seat-bound grading cron — a potential
+  DUPLICATE grading fire on 07-17. Not ours to delete: recorded only,
+  untouched. Requesting manager routing/disposition before Friday.
