@@ -20,7 +20,7 @@ pacemaker: chain live on coordinator seat (~15-min send_later links)
 rails: paper lane intact · RESEARCH-ONLY unchanged · holdout SPENT and untouched · no exchange-write code
 next_baton_1: Friday 2026-07-17 grading pass — FLAT expected (warm-up), executor live on coordinator seat
 next_baton_2: OWNER-QUEUE click-runs pending owner
-pointer_venture_retro: docs/retros/2026-07-13-coordinator-session.md (venture-lab repo)
+pointer_venture_retro: docs/retro/2026-07-13-coordinator-session.md (venture-lab repo)
 pointer_r3_results: docs/research-round-3-results.md (this repo)
 pointer_r4_results: docs/research-round-4-results.md (this repo)
 ⚑ needs-owner: none (owner-queue click-runs remain pending owner action, previously flagged)
