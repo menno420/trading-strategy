@@ -1,0 +1,206 @@
+{
+  "baseline": {
+    "benchmark_oos_sharpe": 0.400368197906297,
+    "costs": {
+      "commission_bps": 1.0,
+      "slippage_bps": 5.0
+    },
+    "oos_sharpe": 0.5515431051410361,
+    "replay_check": {
+      "matches_recorded": true,
+      "replayed_oos_sharpe": 0.5515431051410361,
+      "tolerance": 1e-08
+    },
+    "tstat": 0.4779128265153234,
+    "verdict": "KEEP (dev-candidate only)"
+  },
+  "cost_multiplier": 2,
+  "cost_tier": "2x",
+  "costs": {
+    "commission_bps": 2.0,
+    "slippage_bps": 10.0
+  },
+  "created_utc": "2026-07-13T09:52:04+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "williams_r_reversion",
+  "git_sha": "fcb2e2e0820a04c486341e802e10c5a3c551d676",
+  "instrument": "GLD",
+  "kill_criterion": "KILL at this tier iff stitched OOS Sharpe <= same-window same-cost B&H Sharpe or <= 0; ties/ambiguity KILL",
+  "ledger": "report-only sweep, NOT ledgered \u2014 no new config was searched (frozen replay of committed choices); ledgering would duplicate the r3 top-variant rows at different costs",
+  "n_bars": 3779,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params \u2014 the train-window grid selection was NOT re-run at stressed costs (pre-registered: stressing costs must not become a second selection pass); trades identical across tiers, only execution costs differ",
+  "order": "ORDER 012 night-run (control/inbox.md)",
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-4-plan.md \u00a7 R4-B \u2014 Execution-cost sensitivity re-grade of round-3 KEEPs",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "ORDER 007 bar at the lane's own recorded K \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+    "sharpe_delta": 0.07303215270412416,
+    "sharpe_se": 0.31629793526177297,
+    "timeframe": "daily",
+    "tstat": 0.23089671022885955,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-stoch-willr/williams_r_reversion__GLD.json",
+  "source_sweep": "r3-stoch-willr",
+  "sweep": "r4-cost-sensitivity",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "variants_tried": 12,
+  "verdict": "KEEP (dev-candidate only)",
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.0471046369767385,
+      "max_drawdown": -0.24506281205445513,
+      "n_bars": 2520,
+      "n_trades": 1,
+      "sharpe": 0.39993149107632925,
+      "sortino": 0.3969103426695774,
+      "total_return": 0.5845313208949352,
+      "turnover_per_year": 0.1,
+      "win_rate": 1.0
+    },
+    "n_splits": 10,
+    "oos_end": "2024-01-09 00:00:00",
+    "oos_metrics": {
+      "cagr": 0.03260138582857075,
+      "max_drawdown": -0.11041252621063657,
+      "n_bars": 2520,
+      "sharpe": 0.4729636437804534,
+      "sortino": 0.2994599249219009,
+      "total_return": 0.378246936024244
+    },
+    "oos_start": "2014-01-06 00:00:00",
+    "per_split": [
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 14,
+          "sell_above": -30
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.07303983583082546
+      },
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 21,
+          "sell_above": -30
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 0.047095920915682626
+      },
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 21,
+          "sell_above": -30
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 1.029316205725264
+      },
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 21,
+          "sell_above": -30
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 1.2824365576139123
+      },
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 21,
+          "sell_above": -30
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -0.13157582279839866
+      },
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 21,
+          "sell_above": -30
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 0.8860559861041388
+      },
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 21,
+          "sell_above": -30
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 1.8084170145240723
+      },
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 21,
+          "sell_above": -30
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 0.08046287303981231
+      },
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 21,
+          "sell_above": -30
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -0.5203870013804536
+      },
+      {
+        "params": {
+          "buy_below": -90,
+          "period": 21,
+          "sell_above": -30
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 0.5987303282004544
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008,
+    "variants_tried": 120
+  }
+}
