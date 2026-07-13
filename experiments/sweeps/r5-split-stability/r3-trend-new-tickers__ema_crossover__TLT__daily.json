@@ -1,0 +1,231 @@
+{
+  "best_split_removed": 8,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:35+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "decision_rule": "KEEP dev-candidate status iff the stitched OOS Sharpe delta vs B&H remains > 0 after removing the lane's single best test split (argmin leave-one-out delta); else DEMOTED to KILL (single-window luck)",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "ema_crossover",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_oos_sharpe": 0.482387358927847,
+    "tolerance": 1e-08
+  },
+  "full_stitched_delta": 0.2861759594782841,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "TLT",
+  "lane_id": "r3-trend-new-tickers__ema_crossover__TLT__daily",
+  "leave_one_out": [
+    {
+      "left_out_split": 0,
+      "stitched_delta": 0.29236987351597976
+    },
+    {
+      "left_out_split": 1,
+      "stitched_delta": 0.38650126784831534
+    },
+    {
+      "left_out_split": 2,
+      "stitched_delta": 0.2357556803326966
+    },
+    {
+      "left_out_split": 3,
+      "stitched_delta": 0.352290112165074
+    },
+    {
+      "left_out_split": 4,
+      "stitched_delta": 0.2998822558825103
+    },
+    {
+      "left_out_split": 5,
+      "stitched_delta": 0.30219798073447646
+    },
+    {
+      "left_out_split": 6,
+      "stitched_delta": 0.2876651498695789
+    },
+    {
+      "left_out_split": 7,
+      "stitched_delta": 0.31590899992557553
+    },
+    {
+      "left_out_split": 8,
+      "stitched_delta": 0.09108147231605651
+    },
+    {
+      "left_out_split": 9,
+      "stitched_delta": 0.2764759639588179
+    }
+  ],
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): 0 new registered configs \u2014 pure replay/re-aggregation of committed choices; experiments/index.jsonl untouched",
+  "n_bars": 3779,
+  "n_splits": 10,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params on the identical positional test windows, then pure re-aggregation \u2014 no selection pass, 0 new registered configs",
+  "per_split": [
+    {
+      "benchmark_sharpe": 2.4813388750355827,
+      "delta": -0.31157211287260855,
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "split": 0,
+      "strategy_sharpe": 2.169766762162974,
+      "test": [
+        1008,
+        1260
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.22053028943219705,
+      "delta": -0.5789655896512584,
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "split": 1,
+      "strategy_sharpe": -0.7994958790834555,
+      "test": [
+        1260,
+        1512
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.13025767204300048,
+      "delta": 0.7507905447254917,
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "split": 2,
+      "strategy_sharpe": 0.8810482167684921,
+      "test": [
+        1512,
+        1764
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.7827806990003232,
+      "delta": -0.6095252059007193,
+      "params": {
+        "fast": 20,
+        "slow": 100
+      },
+      "split": 3,
+      "strategy_sharpe": 0.1732554930996039,
+      "test": [
+        1764,
+        2016
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.031081494481611557,
+      "delta": 0.05530617743936689,
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "split": 4,
+      "strategy_sharpe": 0.02422468295775533,
+      "test": [
+        2016,
+        2268
+      ]
+    },
+    {
+      "benchmark_sharpe": 1.3732890676763352,
+      "delta": -0.0943497497544632,
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "split": 5,
+      "strategy_sharpe": 1.278939317921872,
+      "test": [
+        2268,
+        2520
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.623547031511104,
+      "delta": 0.2758172399436778,
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "split": 6,
+      "strategy_sharpe": 0.8993642714547818,
+      "test": [
+        2520,
+        2772
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.3070215370628678,
+      "delta": -0.005627127587860159,
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "split": 7,
+      "strategy_sharpe": -0.31264866465072794,
+      "test": [
+        2772,
+        3024
+      ]
+    },
+    {
+      "benchmark_sharpe": -1.4765082486050158,
+      "delta": 1.0928743069055142,
+      "params": {
+        "fast": 30,
+        "slow": 50
+      },
+      "split": 8,
+      "strategy_sharpe": -0.38363394169950155,
+      "test": [
+        3024,
+        3276
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.17023489171253386,
+      "delta": 0.2532898866711704,
+      "params": {
+        "fast": 10,
+        "slow": 50
+      },
+      "split": 9,
+      "strategy_sharpe": 0.08305499495863657,
+      "test": [
+        3276,
+        3528
+      ]
+    }
+  ],
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-B \u2014 Time-split stability / leave-one-split-out",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 2520,
+    "note": "informational t at the lane's committed K \u2014 promotion is CLOSED post-holdout",
+    "sharpe_delta": 0.2861759594782841,
+    "sharpe_se": 0.3163007590120484,
+    "timeframe": "daily",
+    "tstat": 0.9047590033363885,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-trend-new-tickers/ema_crossover__TLT.json",
+  "sweep": "r5-split-stability",
+  "sweep_verdict": "KEEP",
+  "timeframe": "daily",
+  "verdict": "KEEP (dev-candidate only)",
+  "worst_case_loo_delta": 0.09108147231605651
+}

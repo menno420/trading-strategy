@@ -1,0 +1,146 @@
+{
+  "best_split_removed": 0,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-13T14:31:35+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "decision_rule": "KEEP dev-candidate status iff the stitched OOS Sharpe delta vs B&H remains > 0 after removing the lane's single best test split (argmin leave-one-out delta); else DEMOTED to KILL (single-window luck)",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "stochastic_reversion",
+  "fidelity_guard": {
+    "matches_recorded": true,
+    "replayed_oos_sharpe": 1.5290958634343552,
+    "tolerance": 1e-08
+  },
+  "full_stitched_delta": 1.035117868941907,
+  "git_sha": "e662d76ce81a0c1001ae1d8daf1289943f6aeb7f",
+  "instrument": "META",
+  "lane_id": "r3-meanrev-hourly__stochastic_reversion__META__hourly",
+  "leave_one_out": [
+    {
+      "left_out_split": 0,
+      "stitched_delta": -0.16437531203451705
+    },
+    {
+      "left_out_split": 1,
+      "stitched_delta": 1.3217891783565225
+    },
+    {
+      "left_out_split": 2,
+      "stitched_delta": 1.5918868718834844
+    },
+    {
+      "left_out_split": 3,
+      "stitched_delta": 1.3215806122674325
+    },
+    {
+      "left_out_split": 4,
+      "stitched_delta": 0.9798688426469793
+    }
+  ],
+  "ledger": "report-only slice, NOT ledgered (R4-B precedent): 0 new registered configs \u2014 pure replay/re-aggregation of committed choices; experiments/index.jsonl untouched",
+  "n_bars": 2476,
+  "n_splits": 5,
+  "no_research": "frozen replay of the lane's committed walk-forward per-split params on the identical positional test windows, then pure re-aggregation \u2014 no selection pass, 0 new registered configs",
+  "per_split": [
+    {
+      "benchmark_sharpe": -1.8307753839112832,
+      "delta": 4.049212150040322,
+      "params": {
+        "buy_below": 20,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "split": 0,
+      "strategy_sharpe": 2.2184367661290385,
+      "test": [
+        1008,
+        1260
+      ]
+    },
+    {
+      "benchmark_sharpe": 3.8741679854005477,
+      "delta": 0.33781361345177174,
+      "params": {
+        "buy_below": 10,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "split": 1,
+      "strategy_sharpe": 4.2119815988523195,
+      "test": [
+        1260,
+        1512
+      ]
+    },
+    {
+      "benchmark_sharpe": 0.9044769141985296,
+      "delta": -0.4845804294352355,
+      "params": {
+        "buy_below": 10,
+        "k_period": 14,
+        "sell_above": 80
+      },
+      "split": 2,
+      "strategy_sharpe": 0.4198964847632941,
+      "test": [
+        1512,
+        1764
+      ]
+    },
+    {
+      "benchmark_sharpe": 2.6310881828795956,
+      "delta": -0.9676187027229708,
+      "params": {
+        "buy_below": 20,
+        "k_period": 21,
+        "sell_above": 70
+      },
+      "split": 3,
+      "strategy_sharpe": 1.6634694801566248,
+      "test": [
+        1764,
+        2016
+      ]
+    },
+    {
+      "benchmark_sharpe": -0.6310883500309371,
+      "delta": 1.548308724087917,
+      "params": {
+        "buy_below": 20,
+        "k_period": 21,
+        "sell_above": 70
+      },
+      "split": 4,
+      "strategy_sharpe": 0.9172203740569799,
+      "test": [
+        2016,
+        2268
+      ]
+    }
+  ],
+  "post_holdout_dev_only": true,
+  "preregistered_in": "docs/research-round-5-plan.md \u00a7 R5-B \u2014 Time-split stability / leave-one-split-out",
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.638257273476751,
+    "n_periods": 1260,
+    "note": "informational t at the lane's committed K \u2014 promotion is CLOSED post-holdout",
+    "sharpe_delta": 1.035117868941907,
+    "sharpe_se": 1.140582233342122,
+    "timeframe": "hourly",
+    "tstat": 0.9075346245827585,
+    "variants_tried": 12,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "source_lane": "experiments/sweeps/r3-meanrev-hourly/stochastic_reversion__META.json",
+  "sweep": "r5-split-stability",
+  "sweep_verdict": "KILL",
+  "timeframe": "hourly",
+  "verdict": "KILL",
+  "worst_case_loo_delta": -0.16437531203451705
+}
