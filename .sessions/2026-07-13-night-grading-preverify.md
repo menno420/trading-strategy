@@ -1,8 +1,37 @@
 # 2026-07-13 — Night grading pre-verify (ORDER 014 items 4+5)
 
-> **Status:** `in-progress`
+> **Status:** `complete` — 2026-07-17 grading pass pre-verified: LIVE
+> executor CONFIRMED via a read-only `list_triggers` call
+> (trig_01UsNU4JRps4b7jiAMdEfXNi · `0 9 * * 5` · next fire
+> 2026-07-17T09:05:29Z · bound to coordinator seat
+> session_015hXc4bY4Dj8pmAKaJTCVTZ); the foreign duplicate-fire risk got
+> its concrete statement appended to `control/outbox.md` (the trigger
+> itself untouched); and `scripts/grade_paper.py` dry-ran CLEAN against
+> the FLAT ledger (exit 0, exact §7 FLAT/warm-up shape, zero writes) —
+> no defect, no code change. Claim deleted in this same commit.
 
 📊 Model: Claude Fable 5 · night-grading-preverify lane (coordinator-dispatched worker) · start 2026-07-13T22:46Z
+
+💡 **Session idea (deduped against recent cards — distinct from the
+selection-fair-gate card's `reason_class` taxonomy, the round-5 card's
+standing-gate idea, and the kill-sig-review card's verdict-grammar
+unification):** protocol §6–§7 say a review week with no closed window
+"is recorded FLAT" and FLAT "counts in weeks-reviewed" — but
+`grade_ledger` writes NOTHING on a FLAT pass (verified in this session's
+dry run: `changed: false`, zero writes), so the `m weeks reviewed, of
+which f FLAT` denominator exists nowhere machine-readable; it depends on
+the Friday session hand-appending a FLAT record, and a forgotten week is
+silently dropped from the denominator. Make the grading job itself
+append an idempotent, dated per-pass REVIEW record (one per calendar
+week, FLAT or graded) so the §7 aggregate line is computable from the
+ledger alone — and, as a free side effect, a duplicate 09:00Z/09:05Z
+pass becomes self-evident in the ledger (two same-week review records)
+instead of invisible. Anchors: `grade_ledger` + `main` in
+`src/trading_lab/paper.py` (the `flat_review` flag is already computed,
+just never persisted); test target: a same-week idempotency fixture in
+`tests/test_paper.py`. Write-grammar change to the ledger → needs a
+one-line protocol-compatible convention note, not a semantics change:
+BEAT/MISS/FLAT meanings stay byte-identical.
 
 ⚑ Scope (claimed): ORDER 014 items 4+5 ONLY — pre-verify the 2026-07-17
 grading pass (LIVE executor + FOREIGN duplicate-fire flag) and dry-run
@@ -88,4 +117,57 @@ was not touched, modified, or deleted.
 
 ## Previous-session review
 
-(completed at close-out)
+⟲ The two most recent landings before this branch cut are **PR #112**
+(heartbeat + outbox 2026-07-13T16, `499876f`) and **PR #114** (ORDER 014
+ack + round-6 claims, `d929972` — the exact commit this branch is cut
+from); both verified via GitHub MCP. #112's heartbeat claims held up
+under independent re-verification: its `grading_executor:` line
+(trigger id, cron, next fire, seat binding) matches the live
+`list_triggers` record field for field, and #114 did exactly what it
+said — a 4-line, 3-file, control-only diff that acked ORDER 014 and
+queued items 4+5 "to a parallel slice" (this session is that slice),
+enabler-merged in 23 seconds. One honest gap found in #112's work: its
+outbox ROUND-5 REPORT did not carry forward the 13:45:05Z BOOT REPORT's
+duplicate-fire flag, which is likely why ORDER 014's dispatch mis-points
+at the 16:26:35Z entry as the flag's location — this session's outbox
+append records the correct pointer and the concrete risk.
+
+## Close-out
+
+**Done:** on branch `claude/night-grading-preverify` (PR #115) —
+
+1. Item 4a: grading executor independently CONFIRMED via one read-only
+   `list_triggers` call (verbatim record in the deliverable section);
+   matches coordinator attestation + `control/status.md`.
+2. Item 4b: concrete duplicate-fire risk statement appended to
+   `control/outbox.md` (GRADING PRE-VERIFY · 2026-07-13T22:50:23Z);
+   foreign trigger `trig_01YXNmgqYeYQ1LuepsLmbNCG` untouched.
+3. Item 5: `python3 scripts/grade_paper.py` dry-run against the FLAT
+   ledger in a throwaway tree copy — exit 0, exact §7 FLAT/warm-up
+   shape, zero writes in both trees; verdict clean, no defect, no code
+   change.
+4. Heartbeat: `night_progress_order014_item4/_item5` lines appended to
+   `control/status.md` (coordinator-authorized under ORDER 014);
+   existing `kit:` line untouched.
+
+**Verify:** `python3 -m pytest -q` → **607 passed in 5.38s** (no code
+changed; suite green as on main). `python3 bootstrap.py check --strict`
+→ pre-flip its only red was the designed born-red hold; green with this
+card complete. Integrity at close: diff vs main touches ONLY
+`control/outbox.md` (one appended entry, no prior entry edited),
+`control/status.md` (two appended night-progress lines), this card, and
+the claim lifecycle (added first commit, deleted this commit). No
+research-round-6 file touched; no `experiments/**` write; holdout never
+read; `load_paper_ohlcv` was the only market-data rail in play and was
+not even invoked (FLAT no-op); no trigger created/modified/deleted; no
+broker/order/exchange code; NO merge action by this session — the
+auto-merge enabler is PR #115's landing path.
+
+**Next (guard recipe):** this card's 💡 — persist the per-pass review
+record (anchor: `grade_ledger`'s `flat_review` flag,
+`src/trading_lab/paper.py`; test target `tests/test_paper.py`
+same-week idempotency fixture). For Friday: the manager still owes
+disposition on the foreign 09:00Z trigger (outbox ask re-raised).
+
+Session end: badge flipped `complete` in this final content commit
+before push.

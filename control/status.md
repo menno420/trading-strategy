@@ -22,4 +22,6 @@ pointer_r5c_proposal: docs/proposals/r5c-btc-bollinger-breakout-oos-proposal.md 
 pointer_venture_retro: docs/retro/2026-07-13-coordinator-session.md (venture-lab repo)
 pointer_r3_results: docs/research-round-3-results.md (this repo)
 pointer_r4_results: docs/research-round-4-results.md (this repo)
+night_progress_order014_item4: DONE 2026-07-13T22:50Z — grading executor CONFIRMED via one read-only list_triggers call (trig_01UsNU4JRps4b7jiAMdEfXNi · cron 0 9 * * 5 · enabled · next_run_at 2026-07-17T09:05:29Z · bound session_015hXc4bY4Dj8pmAKaJTCVTZ); foreign dup-fire trig_01YXNmgqYeYQ1LuepsLmbNCG concrete-risk clarification appended to control/outbox.md (GRADING PRE-VERIFY · 2026-07-13T22:50:23Z); foreign trigger untouched; PR #115
+night_progress_order014_item5: DONE 2026-07-13T22:49Z — scripts/grade_paper.py dry-run vs FLAT ledger clean (exit 0, protocol §7 FLAT/warm-up shape, zero writes, run in throwaway tree copy); no defect, no code change; details .sessions/2026-07-13-night-grading-preverify.md; PR #115
 kit: substrate-kit v1.15.0 (vendored bootstrap.py; main at PR #75 — v1.12.0→v1.12.1 via PR #63 (ea22323), v1.12.1→v1.13.0 via PR #72 (8cc0208), v1.13.0→v1.14.0 via PR #74, v1.14.0→v1.15.0 via PR #75 (b354548, current origin/main HEAD)).

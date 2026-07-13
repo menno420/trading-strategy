@@ -1,1 +1,0 @@
-- `claude/night-grading-preverify` · **grading pre-verify — no research-round files** — ORDER 014 items 4+5: 2026-07-17 grading-pass executor pre-verify + dup-fire flag check + `scripts/grade_paper.py` dry-run vs the FLAT paper ledger · control/outbox.md (append-only), control/status.md, .sessions/ · 2026-07-13
