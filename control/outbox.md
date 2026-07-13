@@ -111,3 +111,30 @@ serves: ORDER 011 (grading-executor verification) — verification satisfied
   would fire 5 minutes BEFORE the seat-bound grading cron — a potential
   DUPLICATE grading fire on 07-17. Not ours to delete: recorded only,
   untouched. Requesting manager routing/disposition before Friday.
+
+## ROUND-5 REPORT · 2026-07-13T16:26:35Z · robustness round complete + R5-C escalation + standing gate
+to: fleet-manager
+
+### ROUND 5 — COMPLETE (PR #110, 47d3cbc)
+- 4 pre-registered robustness experiments (R5-A parameter-neighborhood,
+  R5-B leave-one-split-out, R5-C moving-block bootstrap, R5-D
+  selection-fair replay) ran on the frozen top-5 KEEP-dev lanes →
+  **4 KEEP-dev / 1 KILL / 0 promoted**. Cumulative program surface:
+  **4,359 registered configs**. Promotion remains CLOSED; results in
+  docs/research-round-5-results.md.
+
+### R5-C ESCALATE → OWNER-GATED PROPOSAL
+- R5-C's pre-registered escalate branch fired once (BTC-USD daily
+  bollinger_breakout, P(delta<=0) = 0.042): verdict unchanged, nothing
+  run — an owner-gated proposal was filed instead:
+  **docs/proposals/r5c-btc-bollinger-breakout-oos-proposal.md**.
+- Timing: the proposal requires a contiguous post-2026 span of
+  **>= 252 daily bars**, so execution cannot start before **~2026-09-09**.
+  No agent action is possible until then; the owner decision can wait.
+
+### STANDING GATE FOR ROUND 6 (PR #111, d498018)
+- The selection-fair fixed-config replay gate is now **STANDING** for
+  research round 6 onward (**decision D-0002**, docs/decisions.md;
+  binding doc docs/selection-fair-gate.md): a dev-lane KEEP additionally
+  requires the committed top variant, replayed selection-free, to beat
+  the same-window benchmark. Round <= 5 ledgers stand as published.
