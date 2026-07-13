@@ -1,1 +1,0 @@
-- `claude/r4-cost-sensitivity` · **R4-B cost-sensitivity re-grade** — 58 KEEP-dev lanes at 2×/4× costs · scripts/, experiments/sweeps/r4-cost-sensitivity/, tests/, docs/ · 2026-07-13
