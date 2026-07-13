@@ -27,6 +27,13 @@ to the coordinator seat, grading executor LIVE. This supersedes the old
 cutover replaced the ender-session-bound triggers with coordinator-seat
 bindings — full disposition in `control/status.md`.)
 
+- Research Round 5 (branch `claude/round-5-research`): pre-registered
+  deepening of the top KEEP-dev candidates — parameter-neighborhood,
+  time-split, bootstrap, and selection-fair stability probes of the top
+  5 R4-B 2×-survivors — protocol in
+  [research-round-5-plan.md](research-round-5-plan.md) (committed before
+  any Round-5 outcome exists); results will land in
+  `research-round-5-results.md`.
 - Paper lane (post-holdout standing mission): the pre-registered
   forward paper-trading protocol for the surviving RULE-PASS candidate
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
