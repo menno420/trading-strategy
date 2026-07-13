@@ -839,3 +839,77 @@ def r3_xsec_expanded_total_configs() -> int:
     accounting) — unlike the single-instrument lanes, instruments do NOT
     multiply the count."""
     return sum(r3_xsec_expanded_variants_per_family().values())
+
+
+# ---------------------------------------------------------------------------
+# Round 3 slice 8: TRIX momentum + Ichimoku cloud trend (lane:
+# r3-trix-ichimoku × 12-ticker mixed set × daily — ORDER 012 night-run,
+# post-holdout DEV-ONLY, promotion closed)
+# ---------------------------------------------------------------------------
+# Two classic-indicator families, declared here BEFORE the sweep ran.
+# trix_momentum axes bracket the published TRIX windows (Hutson's 15 plus
+# the faster 9/12 and slower 21 in common charting defaults) crossed with
+# the signal-line smoothing {5, 9} (9 is the MACD-signal convention) AND
+# the zero-line arm: signal_period == 0 replaces the signal line with the
+# constant 0, recovering the classic TRIX zero-line rule — the
+# within-family control arm committed in the grid per the slice-2/4 card
+# convention (derived-trigger grids must include their neutral arm).
+# ichimoku_trend axes bracket the standard Hosoda 9/26/52 (committed in
+# the grid verbatim) with the faster 7/22/44 halves common in shorter-cycle
+# charting, constrained tenkan < kijun < senkou_b; the forward displacement
+# of the senkou spans is frozen at the standard 26 and NOT swept (mirroring
+# the frozen stochastic d_period / ADX period conventions). Kept bounded
+# on purpose: every extra variant raises the multiple-testing burden on
+# any winner.
+
+_R3_TRIX_ICHIMOKU_AXES: dict[str, dict[str, list]] = {
+    "trix_momentum": {"period": [9, 12, 15, 21],
+                      "signal_period": [0, 5, 9]},
+    "ichimoku_trend": {"tenkan": [7, 9, 12],
+                       "kijun": [22, 26],
+                       "senkou_b": [44, 52]},
+}
+
+_R3_TRIX_ICHIMOKU_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "trix_momentum": lambda p: True,
+    "ichimoku_trend": lambda p: p["tenkan"] < p["kijun"] < p["senkou_b"],
+}
+
+R3_TRIX_ICHIMOKU_FAMILIES = tuple(_R3_TRIX_ICHIMOKU_AXES)
+
+# The 12-ticker mixed set of the slice-4/6 lanes, reused verbatim: the full
+# frozen 8-ticker universe (config.UNIVERSE order) PLUS four of the slice-3
+# new instruments (SPY, QQQ, TSLA, TLT). config.UNIVERSE stays frozen; the
+# new instruments remain lane-local, reusing the slice-3 caches.
+R3_TRIX_ICHIMOKU_INSTRUMENTS = ("AAPL", "MSFT", "NVDA", "GOOGL", "AMZN",
+                                "META", "GLD", "SLV",
+                                "SPY", "QQQ", "TSLA", "TLT")
+
+
+def r3_trix_ichimoku_variants(family: str) -> list[dict]:
+    """All valid parameter dicts for a Round-3 slice-8 ``family``,
+    constraint-filtered, in a deterministic order."""
+    try:
+        axes = _R3_TRIX_ICHIMOKU_AXES[family]
+    except KeyError:
+        raise ValueError(
+            f"unknown R3 trix-ichimoku family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys)))
+    keep = _R3_TRIX_ICHIMOKU_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r3_trix_ichimoku_variants_per_family() -> dict[str, int]:
+    """Round-3 slice-8 variant counts by family (multiple-testing
+    bookkeeping)."""
+    return {fam: len(r3_trix_ichimoku_variants(fam))
+            for fam in R3_TRIX_ICHIMOKU_FAMILIES}
+
+
+def r3_trix_ichimoku_total_configs() -> int:
+    """Total registered Round-3 slice-8 configs: variants × instruments
+    (each instrument × grid point counts as one config, as in Round 2
+    R1/R2 and the earlier Round-3 lanes)."""
+    return (sum(r3_trix_ichimoku_variants_per_family().values())
+            * len(R3_TRIX_ICHIMOKU_INSTRUMENTS))

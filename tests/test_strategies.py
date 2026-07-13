@@ -1097,3 +1097,190 @@ class TestXsecReversal:
             bad = closes.copy()
             bad.iloc[3, 0] = np.nan
             generate_weights(bad, N=5, k=1)
+
+
+class TestTrixMomentum:
+    def test_trix_sign_in_geometric_trends(self):
+        # The indicator itself: constant-rate geometric growth drives the
+        # triple-EMA's 1-bar ROC to a positive constant; geometric decay
+        # mirrors it negative.
+        from trading_lab.strategies.trix_momentum import trix
+        up = make_ohlcv(100.0 * 1.02 ** np.arange(150))
+        down = make_ohlcv(100.0 * 0.98 ** np.arange(150))
+        assert (trix(up, 9).iloc[40:] > 0).all()
+        assert (trix(down, 9).iloc[40:] < 0).all()
+
+    def test_signal_arm_long_in_uptrend_flat_in_downtrend(self):
+        # Geometric trends: TRIX converges to its positive (negative)
+        # limit from below (above), so the lagging signal EMA stays on
+        # the correct side and the signal-line rule is long (flat).
+        up = make_ohlcv(100.0 * 1.02 ** np.arange(150))
+        down = make_ohlcv(100.0 * 0.98 ** np.arange(150))
+        pos_up = STRATEGIES["trix_momentum"](up, period=9, signal_period=5)
+        pos_down = STRATEGIES["trix_momentum"](down, period=9,
+                                               signal_period=5)
+        assert (pos_up.iloc[40:] == 1.0).all()
+        assert (pos_down == 0.0).all()
+
+    def test_signal_cross_flips_after_turn(self):
+        # V shape (geometric legs): the down leg keeps TRIX below its
+        # signal line; after the turn TRIX rises up through it -> long by
+        # the end. The inverted V mirrors to flat.
+        v = make_ohlcv(np.concatenate([200.0 * 0.99 ** np.arange(80),
+                                       200.0 * 0.99 ** 79 * 1.015
+                                       ** np.arange(80)]))
+        iv = make_ohlcv(np.concatenate([100.0 * 1.015 ** np.arange(80),
+                                        100.0 * 1.015 ** 79 * 0.99
+                                        ** np.arange(80)]))
+        pos_v = STRATEGIES["trix_momentum"](v, period=9, signal_period=5)
+        pos_iv = STRATEGIES["trix_momentum"](iv, period=9, signal_period=5)
+        assert (pos_v.iloc[120:] == 1.0).all()   # long once the turn is in
+        assert (pos_iv.iloc[120:] == 0.0).all()  # flat once the turn is in
+
+    def test_zero_line_arm_recovers_classic_rule(self):
+        # signal_period == 0 is the committed within-family control arm:
+        # long exactly while TRIX > 0 (after warm-up).
+        from trading_lab.strategies.trix_momentum import trix
+        v = make_ohlcv(np.concatenate([200.0 * 0.99 ** np.arange(80),
+                                       200.0 * 0.99 ** 79 * 1.015
+                                       ** np.arange(80)]))
+        pos = STRATEGIES["trix_momentum"](v, period=9, signal_period=0)
+        warmup = 3 * 9 + 0 + 1
+        expected = (trix(v, 9) > 0).astype(float)
+        assert (pos.iloc[warmup:] == expected.iloc[warmup:]).all()
+        assert (pos.iloc[:warmup] == 0.0).all()
+
+    def test_warmup_flat(self, random_walk):
+        pos = STRATEGIES["trix_momentum"](random_walk, period=15,
+                                          signal_period=9)
+        assert (pos.iloc[:3 * 15 + 9 + 1] == 0.0).all()
+
+    def test_flat_prices_stay_flat(self):
+        # Constant prices give TRIX == 0 == signal line: a boundary tie is
+        # "not above" and resolves flat (against a new entry) on both arms.
+        ohlcv = make_ohlcv(np.full(120, 100.0))
+        assert (STRATEGIES["trix_momentum"](ohlcv, period=9,
+                                            signal_period=5) == 0.0).all()
+        assert (STRATEGIES["trix_momentum"](ohlcv, period=9,
+                                            signal_period=0) == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="period"):
+            STRATEGIES["trix_momentum"](random_walk, period=1)
+        with pytest.raises(ValueError, match="signal_period"):
+            STRATEGIES["trix_momentum"](random_walk, period=9,
+                                        signal_period=-1)
+
+
+class TestIchimokuTrend:
+    def test_cloud_is_displaced_past_data(self):
+        # The cloud value AT bar t must equal the trailing midpoints
+        # computed at bar t - displacement: the forward shift only moves
+        # PAST values forward (no future data anywhere in the spans).
+        from trading_lab.strategies.ichimoku_trend import ichimoku
+        rng = np.random.default_rng(7)
+        close = 100.0 * np.exp(np.cumsum(rng.normal(0.0, 0.02, 200)))
+        ohlcv = make_ohlcv(np.concatenate([[100.0], close[:-1]]), close)
+        ich = ichimoku(ohlcv, tenkan=9, kijun=26, senkou_b=52,
+                       displacement=26)
+        conv = (ohlcv["high"].rolling(9).max()
+                + ohlcv["low"].rolling(9).min()) / 2.0
+        base = (ohlcv["high"].rolling(26).max()
+                + ohlcv["low"].rolling(26).min()) / 2.0
+        raw_b = (ohlcv["high"].rolling(52).max()
+                 + ohlcv["low"].rolling(52).min()) / 2.0
+        for t in (100, 150, 199):
+            assert ich["span_a"].iloc[t] == (conv.iloc[t - 26]
+                                             + base.iloc[t - 26]) / 2.0
+            assert ich["span_b"].iloc[t] == raw_b.iloc[t - 26]
+
+    def test_no_lookahead_signal_unchanged_when_future_truncated(self, random_walk):
+        # EXPLICIT no-lookahead check (beyond the generic default-params
+        # prefix test): for several non-default grids, truncating the
+        # future must leave every earlier position byte-identical — the
+        # displaced cloud at bar t derives from bars <= t only.
+        for params in ({"tenkan": 7, "kijun": 22, "senkou_b": 44},
+                       {"tenkan": 9, "kijun": 26, "senkou_b": 52},
+                       {"tenkan": 12, "kijun": 26, "senkou_b": 52}):
+            full = STRATEGIES["ichimoku_trend"](random_walk, **params)
+            for cut in (120, 200, 260):
+                truncated = STRATEGIES["ichimoku_trend"](
+                    random_walk.iloc[:cut], **params)
+                pd.testing.assert_series_equal(full.iloc[:cut], truncated)
+
+    def test_no_lookahead_signal_unchanged_when_future_rewritten(self, random_walk):
+        # Stronger than truncation: REWRITING the future (a fabricated
+        # crash) must not change any position before the rewrite.
+        crashed = random_walk.copy()
+        crashed.iloc[250:] = crashed.iloc[250:] * 0.5
+        base = STRATEGIES["ichimoku_trend"](random_walk,
+                                            **DEFAULT_PARAMS["ichimoku_trend"])
+        alt = STRATEGIES["ichimoku_trend"](crashed,
+                                           **DEFAULT_PARAMS["ichimoku_trend"])
+        pd.testing.assert_series_equal(base.iloc[:250], alt.iloc[:250])
+
+    def test_long_above_cloud_in_uptrend_flat_in_downtrend(self):
+        # A monotone uptrend keeps the close above the (26-bar-old, hence
+        # lower) cloud and tenkan above kijun -> long after warm-up; the
+        # mirror downtrend keeps tenkan < kijun (exit) throughout -> flat.
+        up = make_ohlcv(np.linspace(100, 300, 200))
+        down = make_ohlcv(np.linspace(300, 100, 200))
+        pos_up = STRATEGIES["ichimoku_trend"](up, tenkan=9, kijun=26,
+                                              senkou_b=52, displacement=26)
+        pos_down = STRATEGIES["ichimoku_trend"](down, tenkan=9, kijun=26,
+                                                senkou_b=52, displacement=26)
+        assert (pos_up.iloc[78:] == 1.0).all()  # first defined bar: iloc 77
+        assert (pos_down == 0.0).all()
+
+    def test_exit_after_trend_reversal(self):
+        # Up 100 bars then down 100 bars: long during the late up leg,
+        # exited (tenkan < kijun, then full cloud break) by the end.
+        prices = np.concatenate([np.linspace(100, 200, 100),
+                                 np.linspace(200, 80, 100)])
+        pos = STRATEGIES["ichimoku_trend"](make_ohlcv(prices), tenkan=9,
+                                           kijun=26, senkou_b=52,
+                                           displacement=26)
+        assert (pos.iloc[80:100] == 1.0).all()  # long once warm-up clears
+        assert (pos.iloc[160:] == 0.0).all()    # flat well into the down leg
+
+    def test_plateau_holds_state_no_exit_fires(self):
+        # Hysteresis: entering during the up leg, then a long plateau —
+        # tenkan/kijun converge to equality (a tie is no trigger) and the
+        # close never falls below the cloud bottom, so the entry state
+        # must persist to the very end.
+        prices = np.concatenate([np.linspace(100, 200, 100),
+                                 np.full(100, 200.0)])
+        pos = STRATEGIES["ichimoku_trend"](make_ohlcv(prices), tenkan=9,
+                                           kijun=26, senkou_b=52,
+                                           displacement=26)
+        assert pos.iloc[90] == 1.0
+        assert (pos.iloc[90:] == 1.0).all()
+
+    def test_warmup_flat(self, random_walk):
+        # Flat until every component is defined: senkou span B needs
+        # senkou_b - 1 bars plus the displacement (77 for 52/26).
+        pos = STRATEGIES["ichimoku_trend"](random_walk,
+                                           **DEFAULT_PARAMS["ichimoku_trend"])
+        assert (pos.iloc[:77] == 0.0).all()
+
+    def test_flat_prices_stay_flat(self):
+        # All-equal prices: close == every span, tenkan == kijun — every
+        # comparison is a boundary tie, no trigger ever fires.
+        ohlcv = make_ohlcv(np.full(200, 100.0))
+        pos = STRATEGIES["ichimoku_trend"](ohlcv, tenkan=9, kijun=26,
+                                           senkou_b=52, displacement=26)
+        assert (pos == 0.0).all()
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="tenkan"):
+            STRATEGIES["ichimoku_trend"](random_walk, tenkan=1, kijun=26,
+                                         senkou_b=52)
+        with pytest.raises(ValueError, match="tenkan"):
+            STRATEGIES["ichimoku_trend"](random_walk, tenkan=26, kijun=9,
+                                         senkou_b=52)
+        with pytest.raises(ValueError, match="senkou_b"):
+            STRATEGIES["ichimoku_trend"](random_walk, tenkan=9, kijun=26,
+                                         senkou_b=26)
+        with pytest.raises(ValueError, match="displacement"):
+            STRATEGIES["ichimoku_trend"](random_walk, tenkan=9, kijun=26,
+                                         senkou_b=52, displacement=0)

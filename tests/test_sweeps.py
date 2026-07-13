@@ -706,3 +706,69 @@ class TestR3XsecExpandedGrid:
         for fam in sweeps.R3_XSEC_EXPANDED_FAMILIES:
             assert (sweeps.r3_xsec_expanded_variants(fam)
                     == sweeps.r3_xsec_expanded_variants(fam))
+
+
+class TestR3TrixIchimokuGrid:
+    def test_families_match_strategy_registry(self):
+        from trading_lab.strategies import R3_TRIX_ICHIMOKU_FAMILY
+        assert (set(sweeps.R3_TRIX_ICHIMOKU_FAMILIES)
+                == set(R3_TRIX_ICHIMOKU_FAMILY))
+        for fam in sweeps.R3_TRIX_ICHIMOKU_FAMILIES:
+            assert fam in STRATEGIES
+
+    def test_counts_bounded_and_stable(self):
+        # Multiple-testing discipline: the counts reported in ledger records
+        # and the r3-trix-ichimoku sweep files must match these. 12 variants
+        # per family over the 12-ticker mixed set = 288 registered configs.
+        counts = sweeps.r3_trix_ichimoku_variants_per_family()
+        assert counts == {"trix_momentum": 12, "ichimoku_trend": 12}
+        assert len(sweeps.R3_TRIX_ICHIMOKU_INSTRUMENTS) == 12
+        assert sweeps.r3_trix_ichimoku_total_configs() == 288
+
+    def test_instruments_universe_plus_four_new(self):
+        # The mixed set reuses the slice-4/6 12-ticker set verbatim: the
+        # frozen 8-ticker universe (config.UNIVERSE order) followed by four
+        # of the slice-3 new instruments — config.UNIVERSE stays frozen at 8.
+        from trading_lab import config
+        assert (sweeps.R3_TRIX_ICHIMOKU_INSTRUMENTS
+                == sweeps.R3_AROON_CCI_INSTRUMENTS)
+        assert sweeps.R3_TRIX_ICHIMOKU_INSTRUMENTS[:8] == tuple(config.UNIVERSE)
+        assert sweeps.R3_TRIX_ICHIMOKU_INSTRUMENTS[8:] == ("SPY", "QQQ",
+                                                           "TSLA", "TLT")
+        assert len(config.UNIVERSE) == 8
+
+    def test_trix_grid_includes_the_zero_line_control_arm(self):
+        # Slice-2/4 card convention: a derived-trigger grid must commit its
+        # neutral arm. signal_period == 0 IS the classic TRIX zero-line
+        # rule, so every period is paired with the zero-line control.
+        variants = sweeps.r3_trix_ichimoku_variants("trix_momentum")
+        for period in (9, 12, 15, 21):
+            assert {"period": period, "signal_period": 0} in variants
+
+    def test_ichimoku_grid_includes_the_classic_9_26_52(self):
+        variants = sweeps.r3_trix_ichimoku_variants("ichimoku_trend")
+        assert {"tenkan": 9, "kijun": 26, "senkou_b": 52} in variants
+
+    def test_constraints_filtered_and_nothing_else_swept(self):
+        # The senkou displacement is frozen at the standard 26 (strategy
+        # default) and must NOT appear as a swept axis.
+        for params in sweeps.r3_trix_ichimoku_variants("trix_momentum"):
+            assert set(params) == {"period", "signal_period"}
+            assert params["signal_period"] >= 0
+        for params in sweeps.r3_trix_ichimoku_variants("ichimoku_trend"):
+            assert set(params) == {"tenkan", "kijun", "senkou_b"}
+            assert params["tenkan"] < params["kijun"] < params["senkou_b"]
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R3_TRIX_ICHIMOKU_FAMILIES:
+            for params in sweeps.r3_trix_ichimoku_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r3_trix_ichimoku_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r3_trix_ichimoku_variants("ichimoku_trend")
+                == sweeps.r3_trix_ichimoku_variants("ichimoku_trend"))
