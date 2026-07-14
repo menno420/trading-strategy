@@ -7,7 +7,7 @@
     "soft_target_sessions": 50
   },
   "graduation_proposed": false,
-  "kit_version": "1.15.0",
+  "kit_version": "1.16.0",
   "last_compaction_session": 0,
   "mode": "active",
   "mode_history": [
@@ -20,12 +20,12 @@
   "open_questions": [],
   "planted_doc_hashes": {
     ".session-journal.md": "e3be90212432e375ff08b317e4f1b7d7d1c12a7ca9291dd80b305ca4e7cb75f9",
-    "CONSTITUTION.md": "2b7bcb9f121047f7d95730eb82721300e39a3f103092a6e3465d0fcf02027a1e",
-    "control/claims/README.md": "ae95b3e582f01bdc64c3e7277828971dd61c3aa89b1566a2fff310d4caa0ce9c",
+    "CONSTITUTION.md": "9a257a3c5ba7c13dae9443c452b2de6632bb11db5a953a838e35bb6bc1d877df",
+    "control/claims/README.md": "6d1972de6bd93032687378cc0225298373e1231ebcc3fb8407f4d67d6336661d",
     "docs/AGENT_ORIENTATION.md": "f4ca40c758b37410acfffed17376e9fde872d1bf2fd18870e2ccb5a3cadc8c19",
     "docs/CAPABILITIES.md": "90fe56ef4d5bc9c1c9de9e3a19b9b30686be595d27a099c0db466f133405007d",
-    "docs/ROUTINES.md": "5bc7be25026ba146f06b6ab50245c42a909cfa76c0a15c53ef50c630e0f124c1",
-    "docs/SKILLS.md": "80d9319579ce414a4643bbd9e3b63dd558b9e60f2deebcd1c3f4809a8c1a0c45",
+    "docs/ROUTINES.md": "37416c4ccc3bf62c46e0cdbf3cd0bba2938bb4b8c1ab0196dd83fa1d2bcea417",
+    "docs/SKILLS.md": "d3fbc525163a85aed6945e98e6f9fc28a1dd9cc2a9dc6d352a44e395f6944d9c",
     "docs/ai-project-workflow.md": "c7bd67f52d1d74f1210f6f5b37fa9692fdce93998a803d5b3cad556df4a94e7b",
     "docs/architecture.md": "22b6e4c738d9603e66c5e753985c69ea4447bc6cd399a4ae0c1c9b5d11abbcec",
     "docs/collaboration-model.md": "caa1310dcef61c0ae7a3fba8459d99a7472a1d556e7b9447f5a4753029e07ed7",
@@ -36,9 +36,10 @@
     "docs/owner-profile.md": "41288c3b12ad65a522e7ee2227cecfa6ff283fbc165d0469c093e1033621d0aa",
     "docs/ownership.md": "e82a54ed71a6420a527d56a0b8b4a8e738b7fdab9646bcbf9fe3204e9d4de537",
     "docs/question-router.md": "9ce7f4d519d43e38526715252b312f59ed5e0a2af01ce62160b81c8bf4357454",
+    "docs/reading-path.md": "669c4b2c61d706fc2384f69d11e20cb8568c1a3826e0166513e377aa7da12edd",
     "docs/repo-navigation-map.md": "f2bfd9036e242f3cbf44c7df45c5123c5c77423e2a2ee811172b5b6623672cce",
     "docs/runtime_contracts.md": "fde57c33db56a838ce760945aeb212a13f59851acb9ca6526dac5d57831538a4",
-    "docs/seat-digest.md": "3513b6c1760a41c2f6f47cbc4e095cbda49beae4b594187dc70fb028a80f03be",
+    "docs/seat-digest.md": "29ba1e58416435d96b67df4630676698b53cb6a59f361f3759f0b433fe9c3aa3",
     "scripts/env-setup.sh": "cd2145129fcba288ff9399ad44146a09017d85813e282c16bcba22340b613a2c"
   },
   "project_id": "9439fc224002",
@@ -71,6 +72,21 @@
       "question_id": "Q-011",
       "source": "user",
       "value": "Adopt-time state: planted docs were unrendered and CI unwired. Fix: answer the interview slots, run bootstrap.py render --live, install .substrate/ci/substrate-gate.yml into .github/workflows/, and engage the session loop (session-start/session-close). Ongoing: whenever check --strict flags drift, fix docs in the same session before closing."
+    },
+    "fleet_dark_repos": {
+      "question_id": "Q-016",
+      "source": "user",
+      "value": "pokemon-mod-lab is the only private/dark sibling \u2014 never read it and never guess about its contents (raw.githubusercontent.com 404s it); every other menno420 fleet sibling is public and readable"
+    },
+    "fleet_siblings": {
+      "question_id": "Q-015",
+      "source": "user",
+      "value": "superbot (hub \u2014 fleet docs, question router, fleet-reading-path), superbot-next (rebuild), websites, superbot-games, superbot-mineverse, gba-homebrew, venture-lab, fleet-manager (manager seat \u2014 control bus, ORDERs, capabilities master), idea-engine (idea backlog), substrate-kit (kit source + releases + adopters registry); each sibling's truth files are its control/status.md heartbeat and docs/current-state.md, with source trees winning over both"
+    },
+    "fleet_status_command": {
+      "question_id": "Q-014",
+      "source": "user",
+      "value": "none yet in this repo \u2014 fleet-wide orientation lives in the superbot hub (clone menno420/superbot and run python3 scripts/fleet_status.py for the per-seat heartbeat table); this repo's own truth is control/status.md"
     },
     "integration_mode": {
       "question_id": "Q-001",
@@ -127,6 +143,9 @@
     "architecture_layers": "filled",
     "doc_roots": "filled",
     "drift_resolution": "filled",
+    "fleet_dark_repos": "filled",
+    "fleet_siblings": "filled",
+    "fleet_status_command": "filled",
     "integration_mode": "filled",
     "mutation_seam": "filled",
     "new_area_ownership": "filled",
