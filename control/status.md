@@ -26,3 +26,4 @@ pointer_r5_results: docs/research-round-5-results.md (this repo)
 pointer_r5c_proposal: docs/proposals/r5c-btc-bollinger-breakout-oos-proposal.md (this repo, owner-gated)
 pointer_venture_retro: docs/retro/2026-07-13-coordinator-session.md (venture-lab repo)
 kit: substrate-kit v1.15.0 (vendored bootstrap.py; main at PR #75 — v1.12.0→v1.12.1 via PR #63 (ea22323), v1.12.1→v1.13.0 via PR #72 (8cc0208), v1.13.0→v1.14.0 via PR #74, v1.14.0→v1.15.0 via PR #75 (b354548, current origin/main HEAD)).
+night-2026-07-14: 2026-07-14T02:00:43Z — rounds-1-6 retrospective drafted at docs/research-program-retrospective.md (PR #120, born-red flip pending)
