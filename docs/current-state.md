@@ -27,6 +27,13 @@ to the coordinator seat, grading executor LIVE. This supersedes the old
 cutover replaced the ender-session-bound triggers with coordinator-seat
 bindings — full disposition in `control/status.md`.)
 
+- EAP close-out (branch `claude/eap-closeout-ts`, ORDER 015): owner
+  walkthrough [eap-closeout-walkthrough-2026-07-14.md](eap-closeout-walkthrough-2026-07-14.md)
+  (what the seat did · verify commands · OWNER ACTIONS · handoff), audit
+  pointer [audits/eap-project-audit-2026-07-14.md](audits/eap-project-audit-2026-07-14.md),
+  and the pre-registered round-7 plan
+  [research-round-7-plan.md](research-round-7-plan.md) (PLAN ONLY —
+  running is a future session's slice). Docs + control only.
 - Rounds 1–6 retrospective (branch `claude/rounds-retrospective`, PR #120): program-wide synthesis in [research-program-retrospective.md](research-program-retrospective.md) — docs only, changes no verdict.
 - Research Round 6 (branch `claude/round-6-plan`, ORDER 014 items 1+3):
   pre-registered plan [research-round-6-plan.md](research-round-6-plan.md)
