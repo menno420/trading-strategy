@@ -1,6 +1,13 @@
 # 2026-07-14 — EAP close-out (ORDER 015): walkthrough + audit pointer + round-7 plan
 
-> **Status:** `in-progress`
+> **Status:** `complete` — ORDER 015 close-out shipped on PR #123: the
+> owner walkthrough (sections A–E, OWNER ACTIONS with recommendations +
+> VERIFY steps), the EAP audit pointer (venture-lab audit pinned
+> `37e3c05`, headline numbers quoted verbatim), the round-7 PRE-REGISTERED
+> PLAN (plan only — nothing run), the ≤40-line outbox close-out carrying
+> the OWNER ACTIONS checklist, and the heartbeat re-stamp with ORDER 015
+> ack lines. Docs + control only; every rail held. Claim deleted in this
+> same commit.
 
 📊 Model: fable-5 · eap-closeout-ts lane (coordinator-dispatched worker, ORDER 015) · start 2026-07-14T10:01Z
 
@@ -114,7 +121,36 @@ trigger writes, NO broker/order/exchange-write code.
   gate red until the deliberate final flip); PR opens READY after the
   content commits, never draft, never self-merged — the auto-merge
   enabler (`bf885f0`, PR #65) is the landing path.
-- (work log continues below as commits land)
+- 2026-07-14T10:02Z — first commit `cb5522d` (this born-red card + claim).
+- 2026-07-14T10:04Z — commit `b8dc723`: audit pointer
+  `docs/audits/eap-project-audit-2026-07-14.md` (badge `audit` line 3;
+  pinned link to the venture-lab audit @ `37e3c05`; §1 headline table,
+  walls + CI state quoted verbatim with section cites).
+- 2026-07-14T10:07Z — commit `2b9add2`: walkthrough
+  `docs/eap-closeout-walkthrough-2026-07-14.md` (badge `reference` line 3;
+  exactly sections A–E) + read-path links in `docs/AGENT_ORIENTATION.md`
+  (planted-doc set, the `5d47091` precedent) and `docs/current-state.md`.
+  Tour commands in §D verified live before writing their expected outputs
+  (unlock grep → run_p5_holdout.py only; broker-lib grep → 0;
+  program_variants_tried → 5055).
+- 2026-07-14T10:08Z — commit `85faf4e`: round-7 plan
+  `docs/research-round-7-plan.md` (badge `binding` line 3; PLAN ONLY,
+  mirrors the round-6 plan structure; grids + tests specified for
+  `trading_lab.sweeps`, 360 configs, 5,055 → 5,415; standing rules:
+  selection-fair gate, R5-D fixed-config row, reason_class rollup).
+- 2026-07-14T10:09Z — commit `c7fcb48`: stamp-check hygiene — the two new
+  docs cite the gate via its home doc instead of the decision token
+  (strict check had flagged a 3-doc citation spread). After this, the
+  strict check's ONLY red was the designed born-red hold, verbatim:
+  "check: HOLD (by design): session card
+  .sessions/2026-07-14-eap-closeout-ts.md declares an in-progress Status".
+- 2026-07-14T10:09Z — branch pushed; **PR #123 opened READY via GitHub MCP
+  `create_pull_request`** (never draft; the auto-merge enabler is the
+  landing path; no self-merge, no auto-merge armed by this session).
+- 2026-07-14T10:11Z — commit `8850cc0`: outbox EAP CLOSE-OUT entry
+  (append-only, ≤40 lines, OWNER ACTIONS checklist included); commit
+  `5217e1c`: heartbeat re-stamp with ORDER 015 ack lines — the last
+  content commit before this flip, per ORDER 015(a)(2).
 
 ## Decisions taken (recorded per ORDER 015)
 
@@ -161,4 +197,39 @@ itself.
 
 ## Close-out
 
-(to be written at flip — see final section below)
+**Done:** on branch `claude/eap-closeout-ts` (PR #123), commits `cb5522d`
+(born-red card + claim) → `b8dc723` (audit pointer) → `2b9add2`
+(walkthrough + read-path links) → `85faf4e` (round-7 plan) → `c7fcb48`
+(stamp hygiene) → `8850cc0` (outbox close-out) → `5217e1c` (heartbeat
+re-stamp) → this flip (card `complete`, claim
+`control/claims/2026-07-14-eap-closeout-ts.md` deleted). Every ORDER 015
+done-when item is served: (a1) audit pointer with verbatim numbers, (a2)
+heartbeat re-stamp + ack lines, (a3) round-7 pre-registered plan, (b)
+walkthrough A–E on this PR + OWNER ACTIONS surfaced in the outbox entry.
+
+**Verify:** `python3 -m pytest -q` → **668 passed** (no code changed —
+identical to the main baseline measured at `0ea6950` before branching).
+`python3 bootstrap.py check --strict` → green with this card complete
+(pre-flip its only red was the designed born-red hold, quoted in the work
+log). Integrity at close: diff vs main touches ONLY the three new docs,
+two read-path link edits (`docs/AGENT_ORIENTATION.md`,
+`docs/current-state.md`), one appended outbox entry, the overwritten
+heartbeat (`control/status.md` — this project is its one writer), this
+card, and the claim lifecycle. `control/inbox.md` byte-untouched; every
+`experiments/**`, `data/**`, `src/**`, `scripts/**`, `tests/**` file
+byte-untouched; holdout never read (SPENT); no sweep/backtest run; no
+fetch; no trigger created/modified/deleted; no broker/order/exchange-write
+code; no exact model ID anywhere (family-level only); NO merge action by
+this session — the auto-merge enabler is PR #123's landing path.
+
+**Next (guard recipe):** this card's 💡 — the derived owner-actions
+surface (anchors: `docs/review-queue.md` bullet grammar, `OWNER-GATED`
+badge lines in `docs/proposals/*.md`, outbox flag entries; generator
+precedent venture-lab `scripts/derive_owner_queue.py`; test target: a new
+`tests/test_owner_actions.py` marker-grammar fixture). For the Friday
+executor: re-verify the grading trigger LIVE at fire time
+(docs/ROUTINES.md — a record is a claim) and watch the foreign 09:00Z
+duplicate (walkthrough §C item 3).
+
+Session end: badge flipped `complete` in this final content commit before
+push.
