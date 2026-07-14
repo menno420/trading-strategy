@@ -1,6 +1,6 @@
 # MTF Bollinger mean-reversion — preregistration draft (OWNER-GATED)
 
-> **Status:** `declined` — **CLOSED, bookkeeping-only (fleet pre-archive sweep,
+> **Status:** `archive` — **CLOSED, bookkeeping-only (fleet pre-archive sweep,
 > 2026-07-14).** Was a FROZEN PREREGISTRATION PROPOSAL (OWNER-GATED /
 > FLAG-ONLY — never self-executing) for a *future* out-of-sample evaluation of
 > the owner's MTF Bollinger idea. The dev-window study
@@ -12,8 +12,8 @@
 > own §9 recommendation to weigh the null against acquisition cost; the frozen
 > protocol below is preserved as reference in case the owner revisits it with
 > genuinely new information, but it is not an active proposal. The badge token
-> is `declined` because the doc taxonomy has no dedicated closed-proposal
-> value; read it as closed/declined.
+> is `archive` — the doc taxonomy's closest fit for a closed/declined,
+> revisitable proposal; read it as closed/declined.
 
 ## 0. Why this is a draft, not a run
 
