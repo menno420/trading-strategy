@@ -27,7 +27,8 @@ places orders. Source: `README.md`, `docs/founding-plan.md`.
 
 - `src/trading_lab/` — data loading (cached OHLCV, holdout-gated), backtest
   engine, ~20 strategy modules, promotion/verdict classification, the new
-  `selection_gate.py` (D-0002), paper-lane grading. 6,527 lines.
+  `selection_gate.py` (the selection-fair standing gate — see `docs/decisions.md`),
+  paper-lane grading. 6,527 lines.
 - `tests/` — 6,217 lines, 646 tests (verified locally, see below).
 - `experiments/sweeps/` — one directory per research round/slice (P1 through
   R6), each holding per-lane JSON + a `summary.json` rollup. `experiments/paper/`
@@ -86,7 +87,7 @@ follow-up (see suggestions).
 
 Generally strong and unusually well cross-referenced for an autonomous repo:
 `docs/current-state.md` (living ledger), `docs/decisions.md` (append-only
-decision log, D-0001/D-0002), `docs/AGENT_ORIENTATION.md` (task router),
+decision log, two entries), `docs/AGENT_ORIENTATION.md` (task router),
 `control/README.md` + `control/claims/README.md` (protocol docs with
 measured rationale, e.g. the claim-layout conflict-rate simulation). Every
 research round has a pre-registered plan doc merged *before* any outcome
