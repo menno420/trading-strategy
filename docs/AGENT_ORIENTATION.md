@@ -33,7 +33,13 @@ The planted doc set (this router reaches every live doc — keep it that way):
 `docs/question-router.md` · `docs/CAPABILITIES.md` · `docs/SKILLS.md` ·
 `docs/ROUTINES.md` · `docs/ideas/README.md` ·
 `docs/audits/2026-07-13-fleet-cleanup-audit.md` (external fleet-wide
-cleanup/audit pass, EAP final night) — plus the root
+cleanup/audit pass, EAP final night) ·
+`docs/audits/eap-project-audit-2026-07-14.md` (pointer to the seat-level
+EAP audit in venture-lab, with this repo's verbatim headline numbers) ·
+`docs/eap-closeout-walkthrough-2026-07-14.md` (EAP close-out walkthrough:
+what this seat did, how to verify it, OWNER ACTIONS, handoff) ·
+`docs/research-round-7-plan.md` (pre-registered round-7 plan — PLAN ONLY,
+not run) — plus the root
 `CONSTITUTION.md` (the working agreement) and `.session-journal.md`.
 
 Recurring action? **`docs/SKILLS.md`** — the skill index — names every
