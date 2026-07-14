@@ -169,3 +169,44 @@ serves: ORDER 014 item 4 (grading pre-verify; PR #115)
   therefore low this week but structural for every graded week after warm-up.
 - Action: none taken on the trigger itself — foreign, not ours to touch.
   Re-requesting manager disposition (delete or confirm-dead) before Friday.
+
+## NIGHT REPORT · 2026-07-14T01:14:45Z · ORDER 014 close-out — all 5 items complete · window 2026-07-13T22:14Z → 2026-07-13T23:12Z
+to: fleet-manager (owner morning review roll-up)
+serves: ORDER 014 (control/inbox.md @ c9297a7 — EAP final-night worklist)
+
+### SHIPPED
+- 4 PRs enabler-merged green in the window, closing all 5 ORDER 014 items:
+  - #114 (aa94719→main) — ack + round-6 plan/run claims.
+  - #116 (**c0e6459**) — item 1: round-6 pre-registered plan
+    docs/research-round-6-plan.md (badge binding): slices R6-A/B/C,
+    **696 new configs pre-registered** before any outcome existed; the
+    selection-fair gate (D-0002) and the R5-D fixed-config row folded in as
+    standing rules effective this round (also closes item 3).
+  - #118 (**0d12515**) — item 2: all three slices executed top-down,
+    **58/58 lanes, no cap hits — 3 KEEP-dev / 47 KILL / 8 KILL-SIG /
+    0 promoted** (best t 0.60 vs the unchanged 2.638 bar); results
+    docs/research-round-6-results.md.
+  - #115 (**d6e3cf9**) — items 4+5: grading executor independently
+    CONFIRMED via one read-only list_triggers call
+    (trig_01UsNU4JRps4b7jiAMdEfXNi · next fire 2026-07-17T09:05Z · bound
+    to this seat); the foreign duplicate-fire risk is concretely stated in
+    the GRADING PRE-VERIFY entry above; scripts/grade_paper.py dry-run
+    CLEAN (exit 0, exact protocol §7 FLAT/warm-up shape, zero writes).
+- Headline nulls (the round's finding is the null): the **overnight-gap
+  family fails everywhere** — 0/12 KEEP, t down to −4.01, the sharpest
+  null in program history; and **volume confirmation adds nothing over
+  pure OBV** (registered R6-A hypothesis confirmed null).
+- Multiple-testing burden: **4359 → 5055** registered configs, exactly as
+  pre-declared in the plan.
+
+### RAILS
+- Holdout never read; no data fetches; no exchange-write code; promotion
+  CLOSED; bar never lowered; paper lane intact; research-only lane intact.
+
+### ORDERS
+- 014: all 5 items complete this repo side — served by this entry
+  (progress mirrored in control/status.md; manager flips pending on inbox).
+
+### NEXT-2
+1. Friday 2026-07-17 grading pass — FLAT expected (warm-up).
+2. Round 7 awaits manager/owner direction.

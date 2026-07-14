@@ -1,31 +1,28 @@
 # trading-lab · status
 seat: venture-lab-coordinator
-session: round-6 run night worker 2026-07-13T23 (ORDER 014 item 2, coordinator-dispatched)
-updated: 2026-07-13T23:09:31Z
-main: c0e6459
-phase: ORDER 014 night worklist — round-6 slices executed (this branch); results doc written
+session: night-close worker 2026-07-14T01 (ORDER 014 close-out heartbeat, coordinator-dispatched)
+updated: 2026-07-14T01:13:55Z
+main: 0d12515
+phase: ORDER 014 COMPLETE — all 5 items landed and merged; night close-out heartbeat
 health: green
-last-shipped: #116 — round-6 pre-registered plan (merged 2026-07-13T22:51Z by the auto-merge enabler)
+last-shipped: #118 — round-6 run, all three pre-registered slices (merged 2026-07-13T23:12Z by the auto-merge enabler)
 blockers: none
-orders: acked=001–014 done=001–013 (manager flips pending on inbox)
-night_progress_order014_item1: DONE — round-6 plan landed via PR #116 (c0e6459): docs/research-round-6-plan.md (badge binding) + r6 grids/tests in trading_lab.sweeps (696 new configs, cumulative 4359→5055)
-night_progress_order014_item2: round-6 slices EXECUTED (branch claude/round-6-run) — all 58 lanes ran top-down (R6-A 25.6s/1200s · R6-B 12.0s/900s · R6-C 7.9s/1200s, no CAP-HIT): 3 KEEP-dev / 47 KILL / 8 KILL-SIG, 0 promoted; gate ran on every lane (17 PASS / 41 FAIL, 0 KEEPs demoted); results docs/research-round-6-results.md
-night_progress_order014_item3: R5-D fixed-config-row convention folded into the round-6 plan as a standing rule (plan § two new standing rules), alongside the selection-fair gate D-0002
-night_progress_order014_items4_5: DONE via parallel slice PR #115 — see night_progress_order014_item4 / _item5 lines below
-landed_today_1: PR #108 boot-refresh (320a1e3) — trigger cutover record + docs refresh
-landed_today_2: PR #109 KILL-SIG ratification (3c628e4) — verdict-class review ACCEPT, no code change
-landed_today_3: PR #110 round 5 (47d3cbc) — 4 KEEP-dev / 1 KILL / 0 promoted; escalate branch fired → owner-gated proposal docs/proposals/r5c-btc-bollinger-breakout-oos-proposal.md
-landed_today_4: PR #111 selection-fair standing gate (d498018) — effective round 6, decision D-0002
+orders: acked=001–014 done=001–013 (014 all items complete this repo side; manager flips pending on inbox)
+order014_close: ALL 5 ITEMS COMPLETE — 4 PRs enabler-merged green: #114 ack · #116 plan (c0e6459) · #118 run (0d12515) · #115 items 4+5 (d6e3cf9)
+order014_item1_plan: DONE via #116 (c0e6459) — docs/research-round-6-plan.md (badge binding) pre-registers R6-A/B/C, 696 new configs; selection-fair gate (D-0002) + R5-D fixed-config row folded in as standing rules effective this round
+order014_item2_run: DONE via #118 (0d12515) — 58/58 lanes ran top-down, no cap hits: 3 KEEP-dev / 47 KILL / 8 KILL-SIG / 0 promoted (best t 0.60 vs 2.638 bar); results docs/research-round-6-results.md
+order014_item3: DONE via #116 — R5-D fixed-config-row convention standing in the round-6 plan alongside the selection-fair gate D-0002
+order014_items4_5: DONE via #115 (d6e3cf9) — grading executor independently CONFIRMED (trig_01UsNU4JRps4b7jiAMdEfXNi · next fire 2026-07-17T09:05Z · this seat); foreign dup-fire risk concretely flagged in control/outbox.md; scripts/grade_paper.py dry-run CLEAN (exit 0, exact protocol §7 FLAT shape)
+headline_null_1: overnight-gap family fails everywhere — 0/12 KEEP, t to −4.01; the sharpest null in program history (docs/research-round-6-results.md)
+headline_null_2: volume confirmation adds nothing over pure OBV — R6-A registered hypothesis confirmed null
+burden: multiple-testing burden 4359 → 5055 registered configs, exactly as pre-declared
 grading_executor: LIVE — trig_01UsNU4JRps4b7jiAMdEfXNi · cron 0 9 * * 5 · next fire 2026-07-17T09:05Z · bound coordinator seat
-rails: holdout SPENT untouched · paper lane intact · research-only intact
-round_6: executed 2026-07-13 — 3 KEEP-dev / 47 KILL / 8 KILL-SIG of 58 lanes, 0 promoted; overnight-gap family the program's sharpest null (7 KILL-SIG); results docs/research-round-6-results.md (branch claude/round-6-run)
-next_baton_1: Friday 2026-07-17 grading pass — FLAT expected (warm-up)
-next_baton_2: round-6 run PR merge close-out; anything further needs new data (OWNER-GATED) or a new idea class
+rails: holdout never read · no fetches · no exchange-write code · promotion CLOSED · bar never lowered · paper lane intact · research-only intact
+next_1: Friday 2026-07-17 grading pass — FLAT expected (warm-up)
+next_2: round 7 awaits manager/owner direction
+pointer_r6_plan: docs/research-round-6-plan.md (this repo)
+pointer_r6_results: docs/research-round-6-results.md (this repo)
 pointer_r5_results: docs/research-round-5-results.md (this repo)
 pointer_r5c_proposal: docs/proposals/r5c-btc-bollinger-breakout-oos-proposal.md (this repo, owner-gated)
 pointer_venture_retro: docs/retro/2026-07-13-coordinator-session.md (venture-lab repo)
-pointer_r3_results: docs/research-round-3-results.md (this repo)
-pointer_r4_results: docs/research-round-4-results.md (this repo)
-night_progress_order014_item4: DONE 2026-07-13T22:50Z — grading executor CONFIRMED via one read-only list_triggers call (trig_01UsNU4JRps4b7jiAMdEfXNi · cron 0 9 * * 5 · enabled · next_run_at 2026-07-17T09:05:29Z · bound session_015hXc4bY4Dj8pmAKaJTCVTZ); foreign dup-fire trig_01YXNmgqYeYQ1LuepsLmbNCG concrete-risk clarification appended to control/outbox.md (GRADING PRE-VERIFY · 2026-07-13T22:50:23Z); foreign trigger untouched; PR #115
-night_progress_order014_item5: DONE 2026-07-13T22:49Z — scripts/grade_paper.py dry-run vs FLAT ledger clean (exit 0, protocol §7 FLAT/warm-up shape, zero writes, run in throwaway tree copy); no defect, no code change; details .sessions/2026-07-13-night-grading-preverify.md; PR #115
 kit: substrate-kit v1.15.0 (vendored bootstrap.py; main at PR #75 — v1.12.0→v1.12.1 via PR #63 (ea22323), v1.12.1→v1.13.0 via PR #72 (8cc0208), v1.13.0→v1.14.0 via PR #74, v1.14.0→v1.15.0 via PR #75 (b354548, current origin/main HEAD)).
