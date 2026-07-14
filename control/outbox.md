@@ -210,3 +210,44 @@ serves: ORDER 014 (control/inbox.md @ c9297a7 — EAP final-night worklist)
 ### NEXT-2
 1. Friday 2026-07-17 grading pass — FLAT expected (warm-up).
 2. Round 7 awaits manager/owner direction.
+
+## EAP CLOSE-OUT · 2026-07-14T10:10:28Z · ORDER 015 — final-day close-out (walkthrough + audit pointer + round-7 plan)
+to: fleet-manager (owner EAP review roll-up)
+serves: ORDER 015 (control/inbox.md @ 0ea6950)
+
+### SHIPPED — one PR, #123 (branch claude/eap-closeout-ts; enabler landing path, no self-merge)
+- docs/eap-closeout-walkthrough-2026-07-14.md — the owner's seat walkthrough, exactly sections
+  A–E: what the seat did (PR-cited) · run/verify commands (exact CI lines) · OWNER ACTIONS ·
+  5-minute verify tour · handoff notes.
+- docs/audits/eap-project-audit-2026-07-14.md — THIN POINTER to the seat-level EAP audit
+  (menno420/venture-lab docs/audits/eap-project-audit-2026-07-14.md, pinned 37e3c05, read in
+  full + verified live via MCP). This repo's verbatim headline numbers: 71 session cards ·
+  130 commits on main · 121 PRs opened · 120 merged · 1 closed-unmerged (#64) · 0 open.
+- docs/research-round-7-plan.md — PRE-REGISTERED PLAN ONLY (running = a future session's
+  slice): §(g) option 2 (cheapest evidence-bearing), 2 new families × 15 daily tickers,
+  360 configs (5,055 → 5,415), selection-fair gate + R5-D row + reason_class rollup standing.
+- Heartbeat re-stamped with ORDER 015 ack lines. Rails held: no sweep, no backtest, no fetch,
+  no holdout read (SPENT), no verdict change, no code change, no trigger writes.
+
+### OWNER ACTIONS (each with deep link + recommendation + VERIFY step in walkthrough §C)
+1. R5-C BTC-USD OOS — letter decision A/B/C (approve / decline / defer). REC: **A**, with
+   execution owner-ORDERed at the earliest valid window (~2026-09-09; impossible before).
+2. Wake-resilience rebind — owner console click at next seat archive/cutover (triggers die at
+   archive; fresh-session cron delivery 0-for-2). REC: **same-day rebind, then verify live**.
+3. Foreign duplicate grading trigger trig_01YXNmgqYeYQ1LuepsLmbNCG (send_later, fires
+   2026-07-17T09:00Z into a non-seat session). REC: **delete or confirm-dead before Friday**.
+4. Review-queue #37 — do the §Holdout-vs-protocol-§5 re-check, then remove the line
+   (docs/review-queue.md's own convention). REC: **10-minute re-check, then delete the line**.
+5. Repo setting "Automatically delete head branches" (56 stale claude/* branches; deletion is
+   403-walled agent-side). REC: **enable on both seat repos, then hand-prune** (audit §6 caveat).
+6. MTF-Bollinger prereg draft — FROZEN behind a clean dev NULL. REC: **close (decline)**.
+
+### PARKED (cited, never scheduled agent-side)
+- R5-C BTC OOS (owner-gated, ~2026-09-09 earliest) · MTF-Bollinger prereg (FROZEN) ·
+  wake-resilience rebind (owner click) · Friday grading (time-gated 2026-07-17T09:05Z —
+  executor LIVE trig_01UsNU4JRps4b7jiAMdEfXNi, dry-run CLEAN, PR #115).
+
+### ORDERS / NEXT
+- 015: served by this PR (walkthrough on main at merge; manager flips pending on inbox).
+- Next: Friday grading pass (FLAT expected) · round-7 run slice available to any future
+  session under the committed plan, or owner picks steady-state (retrospective §(g) opt. 4).
