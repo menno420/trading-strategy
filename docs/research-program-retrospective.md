@@ -153,7 +153,7 @@ t_min(1)=1.645, t_min(5)≈2.33, t_min(12)=2.638 (exact
 2.638257273476751 per-lane in the r6 summary.json files), t_min(13)=2.665,
 t_min(14)=2.690, t_min(75)=3.209, t_min(177)=3.448. The bar "only ever
 rises"; no K was ever counted down
-(docs/research-round-5-results.md@3b7a52e L266–267).
+(docs/research-round-5-results.md@3b7a52e L10, L266–267).
 
 Its role in the zero: the one pre-bar promotion, AAPL donchian, showed
 t = 0.42 vs 1.645 at K=1 (3.448 at honest K=177) and was demoted
@@ -379,7 +379,8 @@ acceptable owner choice."
   NOT claimed" (docs/research-round-6-plan.md@3b7a52e §R6-B L165–168).
 - 239 unscored BTC-USD daily OOS bars (and 208 hourly) — the
   walk-forward tail discard means the freshest dev data was never scored
-  (.sessions/2026-07-13-r3-btc-coverage.md@3b7a52e L23–46).
+  (.sessions/2026-07-13-r3-btc-coverage.md@3b7a52e L23–46;
+  .sessions/2026-07-13-r3-trend-hourly.md@3b7a52e L153).
 - No merged post-r6 KEEP-dev list — no document states the combined
   surviving surface (4 round-5 survivors + 3 round-6 KEEPs).
 - Round 2 significance — no t-stats were computed anywhere in round 2 by
