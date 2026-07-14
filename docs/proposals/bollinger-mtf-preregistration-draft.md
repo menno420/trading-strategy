@@ -1,16 +1,19 @@
 # MTF Bollinger mean-reversion — preregistration draft (OWNER-GATED)
 
-> **Status:** `plan` — **FROZEN PREREGISTRATION PROPOSAL. OWNER-GATED /
-> FLAG-ONLY — never self-executing.** This is a protocol draft for a *future*
-> out-of-sample evaluation of the owner's MTF Bollinger idea. It runs ONLY after
-> an explicit owner ORDER and in a fresh session per §7. No agent may execute it
-> autonomously, fetch data for it, open an account, or place any trade under it.
-> The badge token is `plan` because the doc taxonomy has no `proposal` value;
-> read it as a preregistration proposal. **On the current dev data this idea
-> already returned a NULL** (see
-> [../research/bollinger-mtf-dev-2026-07-12.md](../research/bollinger-mtf-dev-2026-07-12.md)),
-> so the owner should weigh fresh-data cost against expected value before
-> ordering any run.
+> **Status:** `declined` — **CLOSED, bookkeeping-only (fleet pre-archive sweep,
+> 2026-07-14).** Was a FROZEN PREREGISTRATION PROPOSAL (OWNER-GATED /
+> FLAG-ONLY — never self-executing) for a *future* out-of-sample evaluation of
+> the owner's MTF Bollinger idea. The dev-window study
+> ([../research/bollinger-mtf-dev-2026-07-12.md](../research/bollinger-mtf-dev-2026-07-12.md))
+> killed all 12 pre-declared configs (every OOS Sharpe delta vs buy-and-hold
+> negative, net of costs) and found no conditioning separation (Test A opposite
+> the hypothesis; Test B wrong-signed) — a clean null. No owner ORDER ever
+> authorized the out-of-sample run this doc proposes. Declined per this doc's
+> own §9 recommendation to weigh the null against acquisition cost; the frozen
+> protocol below is preserved as reference in case the owner revisits it with
+> genuinely new information, but it is not an active proposal. The badge token
+> is `declined` because the doc taxonomy has no dedicated closed-proposal
+> value; read it as closed/declined.
 
 ## 0. Why this is a draft, not a run
 
