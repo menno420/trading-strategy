@@ -1,1 +1,0 @@
-- `claude/night-close-2026-07-14` · **night-close heartbeat + outbox report** — ORDER 014 close-out: status.md re-stamp + one NIGHT REPORT outbox entry · control/status.md + control/outbox.md · 2026-07-14
