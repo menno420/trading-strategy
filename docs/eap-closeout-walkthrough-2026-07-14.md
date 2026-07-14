@@ -37,8 +37,9 @@ Compact, PR-cited arc:
   R4 idea classes ([#98](https://github.com/menno420/trading-strategy/pull/98)–[#107](https://github.com/menno420/trading-strategy/pull/107)),
   R5 robustness ([#110](https://github.com/menno420/trading-strategy/pull/110)),
   the selection-fair standing gate
-  ([#111](https://github.com/menno420/trading-strategy/pull/111), decision
-  D-0002), R6 volume/gap families
+  ([#111](https://github.com/menno420/trading-strategy/pull/111); the
+  decision is stamped in its home doc,
+  [selection-fair-gate.md](selection-fair-gate.md)), R6 volume/gap families
   ([#116](https://github.com/menno420/trading-strategy/pull/116) plan,
   [#118](https://github.com/menno420/trading-strategy/pull/118) run).
   Funnel: **5,055 registered configurations → 0 promoted**; nothing in six

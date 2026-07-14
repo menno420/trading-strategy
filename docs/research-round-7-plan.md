@@ -68,7 +68,7 @@ same reason round 6 declined them).
 ## The three standing requirements (rails for this round, restated as binding)
 
 1. **Selection-fair gate on every lane** ([selection-fair-gate.md](selection-fair-gate.md),
-   D-0002, PR #111 `d498018`): every Round-7 runner runs
+   which stamps the standing decision; PR #111 `d498018`): every Round-7 runner runs
    `trading_lab.selection_gate.run_selection_gate` (fidelity guard armed
    with the lane's recorded searched Sharpe) and folds the result through
    `apply_gate` BEFORE writing any verdict; the full gate result block is
