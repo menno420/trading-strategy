@@ -1,1 +1,0 @@
-- `claude/kit-upgrade-v1.16.0` · kit upgrade v1.15.0→v1.16.0 (distribution wave) · bootstrap.py + .substrate/** + --apply-docs docs + .sessions/ card · 2026-07-14
