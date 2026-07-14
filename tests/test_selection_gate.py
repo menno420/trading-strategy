@@ -205,6 +205,126 @@ class TestRunSelectionGate:
             result["searched_sharpe"] - result["fixed_sharpe"])
 
 
+class TestReasonClass:
+    """The additive machine-readable taxonomy (docs/selection-fair-gate.md
+    § reason_class): one class per existing outcome path, decisions and all
+    pre-existing fields unchanged."""
+
+    def _gate(self, **overrides):
+        kwargs = dict(ohlcv=alternating_ohlcv(), strategy=parity_strategy,
+                      per_split=PER_SPLIT, top_variant=TOP_VARIANT,
+                      timeframe="daily", costs=COSTS)
+        kwargs.update(overrides)
+        return run_selection_gate(**kwargs)
+
+    def test_pass_class(self):
+        result = self._gate()
+        assert result["gate"] == GATE_PASS
+        assert result["reason_class"] == selection_gate.REASON_PASS
+
+    def test_fail_underperform_class(self):
+        # Fixed arm (phase=0 holds the odd-index bars) earns a small
+        # positive return on held bars while the unheld even bars rally
+        # hard: fixed Sharpe > 0 but loses to B&H — only the
+        # beat-the-benchmark conjunct fails.
+        n = 40
+        rets = np.where(np.arange(n) % 2 == 1, 0.005, 0.04)
+        result = self._gate(ohlcv=ohlcv_from_rets(rets))
+        assert result["gate"] == GATE_FAIL
+        assert result["fixed_sharpe"] > 0
+        assert result["fixed_sharpe"] < result["bench_sharpe"]
+        assert (result["reason_class"]
+                == selection_gate.REASON_FAIL_UNDERPERFORM)
+
+    def test_fail_nonpositive_class_beats_bench(self):
+        # The test_fail_beats_bench_but_negative fixture: fixed > bench
+        # but fixed < 0 — the > 0 conjunct fails.
+        n = 40
+        rets = np.full(n, -0.04)
+        odd = np.arange(1, n, 2)
+        rets[odd] = np.where((odd // 2) % 2 == 0, 0.03, -0.034)
+        result = self._gate(ohlcv=ohlcv_from_rets(rets))
+        assert result["gate"] == GATE_FAIL
+        assert result["fixed_sharpe"] > result["bench_sharpe"]
+        assert result["fixed_sharpe"] < 0
+        assert (result["reason_class"]
+                == selection_gate.REASON_FAIL_NONPOSITIVE)
+
+    def test_fail_nonpositive_takes_precedence_when_both_fail(self):
+        # phase=1 holds exactly the -2% bars: fixed < 0 AND fixed < bench
+        # — NONPOSITIVE wins over UNDERPERFORM by the documented rule.
+        result = self._gate(top_variant={"phase": 1})
+        assert result["gate"] == GATE_FAIL
+        assert result["fixed_sharpe"] < 0
+        assert result["fixed_sharpe"] < result["bench_sharpe"]
+        assert (result["reason_class"]
+                == selection_gate.REASON_FAIL_NONPOSITIVE)
+
+    def test_ungradeable_missing_windows_class(self):
+        for empty in ([], None):
+            result = self._gate(per_split=empty)
+            assert (result["reason_class"]
+                    == selection_gate.REASON_UNGRADEABLE_MISSING_WINDOWS)
+
+    def test_ungradeable_drift_class(self):
+        oob = [{"test": [10, 20], "params": {"phase": 0}},
+               {"test": [20, 50], "params": {"phase": 0}}]
+        result = self._gate(per_split=oob)
+        assert (result["reason_class"]
+                == selection_gate.REASON_UNGRADEABLE_DRIFT)
+
+    def test_ungradeable_noncontiguous_class(self):
+        gapped = [{"test": [10, 20], "params": {"phase": 0}},
+                  {"test": [21, 31], "params": {"phase": 0}}]
+        result = self._gate(per_split=gapped)
+        assert (result["reason_class"]
+                == selection_gate.REASON_UNGRADEABLE_NONCONTIGUOUS)
+
+    def test_ungradeable_fidelity_class(self):
+        result = self._gate(recorded_searched_sharpe=99.0)
+        assert (result["reason_class"]
+                == selection_gate.REASON_UNGRADEABLE_FIDELITY)
+
+    def test_ungradeable_nan_class(self):
+        result = self._gate(strategy=flat_strategy)
+        assert (result["reason_class"]
+                == selection_gate.REASON_UNGRADEABLE_NAN)
+
+    def test_taxonomy_is_closed_and_partitioned(self):
+        # Every class this suite exercises is in REASON_CLASSES; the
+        # ungradeable subset is exactly the UNGRADEABLE_* names.
+        assert selection_gate.UNGRADEABLE_CLASSES < \
+            selection_gate.REASON_CLASSES
+        assert all(c.startswith("UNGRADEABLE_")
+                   for c in selection_gate.UNGRADEABLE_CLASSES)
+        assert len(selection_gate.REASON_CLASSES) == 8
+
+    def test_every_result_carries_reason_class_in_taxonomy(self):
+        results = [
+            self._gate(),                                  # PASS
+            self._gate(top_variant={"phase": 1}),          # rule fail
+            self._gate(per_split=None),                    # missing windows
+            self._gate(recorded_searched_sharpe=99.0),     # fidelity
+            self._gate(strategy=flat_strategy),            # NaN
+        ]
+        for result in results:
+            assert result["reason_class"] in selection_gate.REASON_CLASSES
+            assert ((result["reason_class"] == selection_gate.REASON_PASS)
+                    == (result["gate"] == GATE_PASS))
+            assert ((result["reason_class"]
+                     in selection_gate.UNGRADEABLE_CLASSES)
+                    == ("ungradeable" in result["reason"]))
+
+    def test_backward_compatible_schema_superset(self):
+        # Additive only: every pre-existing key is still present on both
+        # a PASS and an ungradeable FAIL result.
+        legacy_keys = {"gate", "reason", "fixed_sharpe", "bench_sharpe",
+                       "searched_sharpe", "selection_gap", "n_periods",
+                       "fixed_per_split"}
+        for result in (self._gate(), self._gate(per_split=None)):
+            assert legacy_keys <= set(result)
+
+
 class TestApplyGate:
     PASS_RESULT = {"gate": GATE_PASS}
     FAIL_RESULT = {"gate": GATE_FAIL}

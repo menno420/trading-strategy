@@ -33,6 +33,22 @@ Ambiguity resolves AGAINST the strategy (§9):
 * "strictly before the fill bar's open" is bounded at 13:30 UTC on the
   fill date — 09:30 New York in daylight time, the EARLIER of the two
   possible UTC opens, so the stricter bound applies year-round.
+
+Review index (informational, NOT graded evidence): each grading pass also
+maintains ``experiments/paper/reviews.md`` — one record per ISO review
+week, written idempotently (a same-week re-run with unchanged ledger state
+is a byte-identical no-op) — so the protocol §7 aggregate denominator
+(``m weeks reviewed, of which f FLAT``) is computable from the repo alone
+instead of depending on a hand-appended FLAT note. Permission reading of
+the binding protocol: §5 fixes the ledger's row grammar as trade-action
+records and §6 only authorizes appending grades to the ledger — that is
+NOT clear permission for machine-appended supplementary records inside the
+protocol-governed ledger, so the index is a SEPARATE non-ledger artifact.
+It decides nothing: the BEAT/MISS/FLAT grammar, the no-significance-claims
+rule, and every ledger semantic stay defined solely by
+``docs/paper-lane-protocol.md`` and are untouched. A malformed or
+ungradeable pass (``LedgerFormatError``) records nothing — a failed pass
+never counts as a reviewed week.
 """
 
 from __future__ import annotations
@@ -58,6 +74,39 @@ NOTIONAL_USD = 10_000.0
 MARKET_OPEN_UTC = pd.Timedelta(hours=13, minutes=30)
 
 DEFAULT_LEDGER = config.EXPERIMENTS_DIR / "paper" / "ledger.md"
+
+#: Sibling review index maintained by each grading pass (informational,
+#: not graded evidence — see module docstring). One record per ISO week.
+REVIEWS_BASENAME = "reviews.md"
+
+#: Review-record results: FLAT exactly per §7 (no position held and no
+#: window graded in the review week); anything else is REVIEWED.
+REVIEW_FLAT = "FLAT"
+REVIEW_REVIEWED = "REVIEWED"
+
+#: Header written when the review index does not exist yet. An existing
+#: file's header is preserved verbatim — only record blocks are managed.
+REVIEWS_HEADER = """\
+# Paper-lane review index — informational, not graded evidence
+
+> **Status:** `informational`
+>
+> Machine-readable per-pass review index, written idempotently by the
+> protocol §6 grading job (`trading_lab.paper.grade_ledger`, invoked via
+> `scripts/grade_paper.py`): one record per ISO review week, updated in
+> place when the same week's ledger state changes, never duplicated. It
+> exists so the protocol §7 aggregate denominator (`m weeks reviewed, of
+> which f FLAT`) is computable from the repo alone. This file is NOT part
+> of the protocol-governed ledger (`experiments/paper/ledger.md`), is NOT
+> graded evidence, and decides nothing: verdicts, the BEAT/MISS/FLAT
+> grammar, the no-significance-claims rule and all ledger semantics are
+> defined solely by [docs/paper-lane-protocol.md](../../docs/paper-lane-protocol.md)
+> and live solely in the ledger. A week with no grading pass leaves no
+> record here — this index enumerates passes that ran, it cannot invent
+> weeks that were missed (§6: a missed pass delays grading, nothing else).
+
+## Review records (one per ISO week, newest last)
+"""
 
 _FIELD_RE = re.compile(r"^- ([^:]+):\s*(.*)$")
 
@@ -180,6 +229,15 @@ class GradeReport:
     watch: list[str] = field(default_factory=list)            # record ids
     flat_review: bool = False
     changed: bool = False
+    # Review-index fields (additive; informational, not graded evidence).
+    review_week: str = ""                 # ISO week key, e.g. 2026-W29
+    review_result: str = ""               # REVIEW_FLAT | REVIEW_REVIEWED
+    review_path: Path | None = None
+    review_changed: bool = False           # index file written this pass
+    weeks_reviewed: int = 0                # m in the §7 aggregate line
+    flat_weeks: int = 0                    # f in the §7 aggregate line
+    beat_total: int = 0                    # k (all-time, from the ledger)
+    miss_total: int = 0
 
 
 def _fill(bars: pd.DataFrame, intended: str) -> tuple[pd.Timestamp, float] | None:
@@ -268,9 +326,87 @@ def _grade_bullets(g: WindowGrade, pre_grade_status: str, now: str) -> list[str]
     return lines
 
 
+# ---------------------------------------------------------------------------
+# Review index (informational, not graded evidence — module docstring)
+# ---------------------------------------------------------------------------
+
+def _iso_week(stamp: str) -> str | None:
+    """``2026-07-17T09:05:00Z`` → ``2026-W29``; unparseable → None."""
+    try:
+        iso = pd.Timestamp(stamp).isocalendar()
+    except (ValueError, TypeError):
+        return None
+    return f"{int(iso[0])}-W{int(iso[1]):02d}"
+
+
+def _review_block(week: str, result: str, *, graded_this_week: int,
+                  beat_total: int, miss_total: int, closed_total: int,
+                  open_position: bool, watch: int) -> list[str]:
+    """Render one review record. Deterministic in the ledger state and the
+    week key — re-rendering an unchanged week yields identical lines, which
+    is what makes the index write idempotent."""
+    return [
+        f"### review-{week} — {result}",
+        "",
+        f"- id: review-{week}",
+        f"- review_week: {week} (ISO week of the grading pass)",
+        f"- result: {result}",
+        f"- windows_graded_this_week: {graded_this_week}",
+        f"- closed_windows_total: {closed_total}",
+        f"- beat_total: {beat_total}",
+        f"- miss_total: {miss_total}",
+        f"- open_position: {'true' if open_position else 'false'}",
+        f"- watch_records: {watch}",
+        "- note: informational index only — not graded evidence; verdicts "
+        "live solely in ledger.md (protocol §5-§7)",
+    ]
+
+
+def _trim(block: list[str]) -> list[str]:
+    block = list(block)
+    while block and block[-1] == "":
+        block.pop()
+    return block
+
+
+def _update_reviews(reviews_path: Path, week: str,
+                    block: list[str]) -> tuple[bool, int, int]:
+    """Insert or update this week's record in the review index.
+
+    Returns ``(changed, weeks_reviewed, flat_weeks)``. Idempotent: an
+    unchanged week rewrites nothing; a changed same-week state updates the
+    week's record IN PLACE (never a duplicate); other weeks' records are
+    preserved verbatim, as is an existing header.
+    """
+    if reviews_path.exists():
+        old_text = reviews_path.read_text()
+    else:
+        old_text = REVIEWS_HEADER
+    lines = old_text.split("\n")
+    records = parse_records(lines)
+    header = _trim(lines[:records[0].start] if records else lines)
+
+    blocks = [_trim(lines[r.start:r.end]) for r in records]
+    ids = [r.id for r in records]
+    target = f"review-{week}"
+    if target in ids:
+        blocks[ids.index(target)] = _trim(block)
+    else:
+        blocks.append(_trim(block))
+
+    new_text = "\n\n".join(["\n".join(header)]
+                           + ["\n".join(b) for b in blocks]) + "\n"
+    changed = new_text != old_text
+    if changed:
+        reviews_path.write_text(new_text)
+    flats = sum(1 for b in blocks if f"- result: {REVIEW_FLAT}" in b)
+    return changed, len(blocks), flats
+
+
 def grade_ledger(ledger_path: Path | str | None = None, *,
                  data_dir: Path | None = None,
-                 now: str | None = None) -> GradeReport:
+                 now: str | None = None,
+                 reviews_path: Path | str | None = None) -> GradeReport:
     """Grade every closed, ungraded window in the paper ledger.
 
     Idempotent: already-graded records (any record carrying a ``verdict``
@@ -278,6 +414,16 @@ def grade_ledger(ledger_path: Path | str | None = None, *,
     the file is rewritten only when a new grade landed. Market data is
     read only via ``load_paper_ohlcv`` (bars >= PAPER_LANE_START only),
     and only when there is at least one window that needs grading.
+
+    Each successful pass also maintains the sibling review index
+    (``reviews_path``, default ``<ledger dir>/reviews.md``) — one record
+    per ISO review week so the §7 ``m weeks reviewed, of which f FLAT``
+    denominator is machine-readable. The index write is idempotent too:
+    a same-week re-run with unchanged ledger state is a byte-identical
+    no-op, and a changed same-week state updates the week's record in
+    place, never duplicating it. Informational only, not graded evidence
+    (module docstring); ``report.changed`` still refers to the LEDGER
+    alone.
     """
     path = Path(ledger_path) if ledger_path is not None else DEFAULT_LEDGER
     text = path.read_text()
@@ -336,6 +482,37 @@ def grade_ledger(ledger_path: Path | str | None = None, *,
             lines[exit_.bullet_end:exit_.bullet_end] = bullets
         path.write_text("\n".join(lines))
         report.changed = True
+
+    # Review index (informational, not graded evidence): one record per
+    # ISO week, deterministic in the ledger's post-pass state, so a
+    # same-week re-run is a byte-identical no-op (never a duplicate).
+    week = _iso_week(now)
+    prev_graded = [x for (_, x) in pairs if x.graded]  # graded before now
+    prev_verdicts = [x.fields.get("verdict", "").strip()
+                     for x in prev_graded]
+    report.beat_total = (len([g for g in report.graded
+                              if g.verdict == "BEAT"])
+                         + prev_verdicts.count("BEAT"))
+    report.miss_total = (len([g for g in report.graded
+                              if g.verdict == "MISS"])
+                         + prev_verdicts.count("MISS"))
+    graded_this_week = (len(report.graded)
+                        + sum(1 for x in prev_graded
+                              if _iso_week(x.fields.get("graded_at_utc",
+                                                        "")) == week))
+    report.review_result = (REVIEW_FLAT
+                            if not has_open_position and not graded_this_week
+                            else REVIEW_REVIEWED)
+    report.review_week = week
+    block = _review_block(
+        week, report.review_result, graded_this_week=graded_this_week,
+        beat_total=report.beat_total, miss_total=report.miss_total,
+        closed_total=len(report.graded) + len(report.already_graded),
+        open_position=has_open_position, watch=len(report.watch))
+    report.review_path = (Path(reviews_path) if reviews_path is not None
+                          else path.parent / REVIEWS_BASENAME)
+    (report.review_changed, report.weeks_reviewed,
+     report.flat_weeks) = _update_reviews(report.review_path, week, block)
     return report
 
 
@@ -365,6 +542,13 @@ def main() -> int:
           f"windows; {n_closed} closed windows total in ledger "
           f"({len(report.watch)} WATCH, "
           f"{len(report.open_entries) + len(report.pending_fill)} open)")
+    print(f"review index: {report.review_week} {report.review_result} — "
+          f"{report.review_path} "
+          f"({'updated' if report.review_changed else 'unchanged'}; "
+          f"informational, not graded evidence)")
+    print(f"aggregate (§7): {report.beat_total} BEAT of {n_closed} closed "
+          f"windows ({report.weeks_reviewed} weeks reviewed, of which "
+          f"{report.flat_weeks} FLAT)")
     return 0
 
 

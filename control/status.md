@@ -25,4 +25,5 @@ pointer_r6_results: docs/research-round-6-results.md (this repo)
 pointer_r5_results: docs/research-round-5-results.md (this repo)
 pointer_r5c_proposal: docs/proposals/r5c-btc-bollinger-breakout-oos-proposal.md (this repo, owner-gated)
 pointer_venture_retro: docs/retro/2026-07-13-coordinator-session.md (venture-lab repo)
+night_2026-07-14_research_infra: PR #121 (claude/night-research-infra) — two 💡-seeded infra improvements: additive reason_class on selection-gate results (8 classes, UNGRADEABLE_* = infra alarm for rollups; decisions/reasons unchanged; docs/selection-fair-gate.md) + idempotent per-ISO-week review index experiments/paper/reviews.md written by grade_paper.py (§7 weeks-reviewed denominator machine-readable; informational, NOT graded evidence; ledger.md byte-untouched) · tests 646→668 · dry-run twice-run byte-identical · card .sessions/2026-07-14-night-research-infra.md
 kit: substrate-kit v1.15.0 (vendored bootstrap.py; main at PR #75 — v1.12.0→v1.12.1 via PR #63 (ea22323), v1.12.1→v1.13.0 via PR #72 (8cc0208), v1.13.0→v1.14.0 via PR #74, v1.14.0→v1.15.0 via PR #75 (b354548, current origin/main HEAD)).

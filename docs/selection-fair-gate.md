@@ -82,6 +82,34 @@ runner re-litigates it:
    byte-identical. *Stricter where it matters (future grades), honest
    where it must be (published history is history).*
 
+## Machine-readable `reason_class` (additive, 2026-07-14)
+
+Every gate result additionally carries a `reason_class` field — a
+machine-readable classification of the outcome path, one class per
+existing code path (constants in `src/trading_lab/selection_gate.py`,
+full set `REASON_CLASSES`):
+
+| `reason_class`                | Path it classifies                                          |
+| ----------------------------- | ----------------------------------------------------------- |
+| `PASS`                        | gate PASS                                                   |
+| `FAIL_UNDERPERFORM`           | fixed Sharpe > 0 but does not beat same-window B&H (ties included) |
+| `FAIL_NONPOSITIVE`            | fixed Sharpe ≤ 0 (the choice-4 conjunct; takes precedence when the lane also trails the benchmark) |
+| `UNGRADEABLE_MISSING_WINDOWS` | no committed `walk_forward.per_split` (choice 1)            |
+| `UNGRADEABLE_DRIFT`           | committed window does not fit the loaded data — missing data / cache drift (choice 2) |
+| `UNGRADEABLE_NONCONTIGUOUS`   | committed windows not contiguous (choice 3)                 |
+| `UNGRADEABLE_FIDELITY`        | fidelity guard failed at `1e-8` (choice 6)                  |
+| `UNGRADEABLE_NAN`             | fixed or benchmark stitched Sharpe is NaN                   |
+
+**Strictly additive:** the `gate` value, the verbatim `reason` string,
+every other field, and every pass/fail decision are unchanged — an
+`UNGRADEABLE_*` lane still FAILs and still demotes (choice 2). The point
+is the rollup: round-7+ rollups count the `UNGRADEABLE_*` subset
+(`selection_gate.UNGRADEABLE_CLASSES`) as an **infrastructure alarm**
+(irreproducible lanes — page the coordinator), never as evidence about
+the strategies; only `FAIL_UNDERPERFORM` / `FAIL_NONPOSITIVE` are
+strategy evidence. Seed: the 2026-07-13 selection-fair-gate card's 💡
+(`.sessions/2026-07-13-selection-fair-gate.md`).
+
 ## How a round-6 runner calls it
 
 ```python
@@ -91,7 +119,9 @@ from trading_lab.strategies import STRATEGIES
 source = json.loads(Path(lane["source_file"]).read_text())
 # Caller owns the R5-D cache-drift check first: data_start / data_end /
 # n_bars of the loaded ohlcv vs the source JSON. On drift: gate FAIL
-# with the drift reason (choice 2), do not call run_selection_gate.
+# with the drift reason (choice 2; class
+# selection_gate.REASON_UNGRADEABLE_DRIFT), do not call
+# run_selection_gate.
 result = selection_gate.run_selection_gate(
     ohlcv=ohlcv,                                  # dev rail, load_ohlcv
     strategy=STRATEGIES[source["family"]],

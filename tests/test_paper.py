@@ -232,6 +232,157 @@ class TestNotGradeable:
         assert path.read_bytes() == before
 
 
+class TestReviewIndex:
+    """The informational per-pass review index (module docstring; NOT part
+    of the protocol-governed ledger): one record per ISO week, idempotent,
+    making the §7 `m weeks reviewed, of which f FLAT` denominator
+    machine-readable. Ledger semantics stay byte-untouched."""
+
+    def test_flat_pass_writes_flat_record_ledger_untouched(self, tmp_path):
+        path = write_ledger(tmp_path, WATCH_RECORD)
+        before = path.read_bytes()
+        report = grade_ledger(path, data_dir=tmp_path / "no-cache-here",
+                              now="2026-07-17T09:05:00Z")
+        assert path.read_bytes() == before          # ledger untouched
+        assert report.review_week == "2026-W29"
+        assert report.review_result == paper_mod.REVIEW_FLAT
+        assert report.review_changed
+        assert report.weeks_reviewed == 1 and report.flat_weeks == 1
+        reviews = tmp_path / "reviews.md"
+        assert report.review_path == reviews and reviews.exists()
+        text = reviews.read_text()
+        assert "### review-2026-W29 — FLAT" in text
+        assert "- result: FLAT" in text
+        assert "not graded evidence" in text
+        # §7 grammar honored: no significance claims in the records
+        # (the header may NAME the no-significance-claims rule).
+        records_part = text[text.index("### review-"):]
+        assert "t-stat" not in records_part and "p-value" not in records_part \
+            and "significan" not in records_part
+
+    def test_same_week_rerun_is_byte_identical_noop(self, tmp_path):
+        path = write_ledger(tmp_path, WATCH_RECORD)
+        grade_ledger(path, data_dir=tmp_path / "no-cache",
+                     now="2026-07-17T09:05:00Z")
+        reviews = tmp_path / "reviews.md"
+        before = reviews.read_bytes()
+        # the 09:00Z/09:05Z duplicate-fire shape: same week, minutes apart
+        report = grade_ledger(path, data_dir=tmp_path / "no-cache",
+                              now="2026-07-17T09:00:00Z")
+        assert not report.review_changed and not report.changed
+        assert reviews.read_bytes() == before
+        assert reviews.read_text().count("### review-") == 1
+
+    def test_new_week_appends_prior_record_preserved(self, tmp_path):
+        path = write_ledger(tmp_path, WATCH_RECORD)
+        grade_ledger(path, data_dir=tmp_path / "no-cache",
+                     now="2026-07-17T09:05:00Z")
+        report = grade_ledger(path, data_dir=tmp_path / "no-cache",
+                              now="2026-07-24T09:05:00Z")
+        assert report.review_week == "2026-W30" and report.review_changed
+        assert report.weeks_reviewed == 2 and report.flat_weeks == 2
+        text = (tmp_path / "reviews.md").read_text()
+        assert "### review-2026-W29 — FLAT" in text
+        assert "### review-2026-W30 — FLAT" in text
+        assert text.index("review-2026-W29") < text.index("review-2026-W30")
+
+    def test_graded_pass_is_reviewed_not_flat(self, cache, tmp_path):
+        data_dir, lane = cache
+        body = (WATCH_RECORD
+                + trade_record("paper-0002", "ENTRY", lane[3],
+                               _on_time(lane[3]))
+                + trade_record("paper-0003", "EXIT", lane[10],
+                               _on_time(lane[10])))
+        path = write_ledger(tmp_path, body)
+        report = grade_ledger(path, data_dir=data_dir,
+                              now="2026-08-20T00:00:00Z")
+        assert len(report.graded) == 1
+        assert report.review_result == paper_mod.REVIEW_REVIEWED
+        assert report.beat_total == 1 and report.miss_total == 0
+        text = (tmp_path / "reviews.md").read_text()
+        assert "### review-2026-W34 — REVIEWED" in text
+        assert "- windows_graded_this_week: 1" in text
+        assert "- closed_windows_total: 1" in text
+        assert "- beat_total: 1" in text
+
+    def test_rerun_after_grading_same_week_stays_reviewed(self, cache,
+                                                          tmp_path):
+        # Second same-week pass grades nothing new (flat_review flips
+        # true) but the week's record must STAY REVIEWED — the graded_at
+        # stamps prove a window was graded this week — and stay
+        # byte-identical (idempotent, no duplicate).
+        data_dir, lane = cache
+        body = (trade_record("paper-0002", "ENTRY", lane[3],
+                             _on_time(lane[3]))
+                + trade_record("paper-0003", "EXIT", lane[10],
+                               _on_time(lane[10])))
+        path = write_ledger(tmp_path, body)
+        grade_ledger(path, data_dir=data_dir, now="2026-08-20T00:00:00Z")
+        reviews_before = (tmp_path / "reviews.md").read_bytes()
+        ledger_before = path.read_bytes()
+        report = grade_ledger(path, data_dir=data_dir,
+                              now="2026-08-21T00:00:00Z")  # same ISO week
+        assert report.flat_review  # nothing newly graded, nothing open
+        assert report.review_result == paper_mod.REVIEW_REVIEWED
+        assert not report.review_changed
+        assert (tmp_path / "reviews.md").read_bytes() == reviews_before
+        assert path.read_bytes() == ledger_before
+
+    def test_same_week_state_change_updates_in_place(self, cache, tmp_path):
+        data_dir, lane = cache
+        path = write_ledger(tmp_path, WATCH_RECORD)
+        grade_ledger(path, data_dir=data_dir, now="2026-08-20T00:00:00Z")
+        assert "— FLAT" in (tmp_path / "reviews.md").read_text()
+        # trades land later the same week; the week's record is updated
+        # in place (FLAT -> REVIEWED), never duplicated
+        path.write_text(
+            path.read_text()
+            + trade_record("paper-0002", "ENTRY", lane[3], _on_time(lane[3]))
+            + trade_record("paper-0003", "EXIT", lane[10],
+                           _on_time(lane[10])))
+        report = grade_ledger(path, data_dir=data_dir,
+                              now="2026-08-21T00:00:00Z")
+        assert report.review_changed
+        text = (tmp_path / "reviews.md").read_text()
+        assert text.count("### review-2026-W34") == 1
+        assert "### review-2026-W34 — REVIEWED" in text
+
+    def test_open_position_week_is_reviewed_not_flat(self, cache, tmp_path):
+        data_dir, lane = cache
+        rec = trade_record("paper-0002", "ENTRY", lane[3], _on_time(lane[3]))
+        path = write_ledger(tmp_path, WATCH_RECORD + rec)
+        report = grade_ledger(path, data_dir=data_dir,
+                              now="2026-08-20T00:00:00Z")
+        assert report.open_entries == ["paper-0002"]
+        assert report.review_result == paper_mod.REVIEW_REVIEWED
+        assert "- open_position: true" in (tmp_path / "reviews.md").read_text()
+
+    def test_malformed_ledger_records_no_review(self, cache, tmp_path):
+        # A failed pass never counts as a reviewed week.
+        data_dir, lane = cache
+        body = trade_record("paper-0002", "EXIT", lane[10], _on_time(lane[10]))
+        path = write_ledger(tmp_path, body)
+        with pytest.raises(LedgerFormatError):
+            grade_ledger(path, data_dir=data_dir)
+        assert not (tmp_path / "reviews.md").exists()
+
+    def test_committed_index_matches_generated_header(self):
+        """The committed header-only index is byte-identical to what the
+        grader would generate, so the first real pass only appends."""
+        real = config.EXPERIMENTS_DIR / "paper" / "reviews.md"
+        assert real.read_text() == paper_mod.REVIEWS_HEADER
+        assert "### review-" not in real.read_text()  # no pass ran yet
+
+    def test_ledger_file_grammar_untouched_by_review_write(self, tmp_path):
+        # The review index never adds records to the LEDGER: after a FLAT
+        # pass the ledger still parses to exactly its original records.
+        path = write_ledger(tmp_path, WATCH_RECORD)
+        grade_ledger(path, data_dir=tmp_path / "no-cache",
+                     now="2026-07-17T09:05:00Z")
+        records = parse_records(path.read_text().split("\n"))
+        assert [r.id for r in records] == ["paper-0001"]
+
+
 class TestHoldoutDiscipline:
     def test_grader_source_never_touches_holdout(self):
         """The grader must have zero holdout surface: no unlock token of

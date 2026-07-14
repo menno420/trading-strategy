@@ -44,6 +44,46 @@ from .engine import buy_and_hold_result, run_backtest
 GATE_PASS = "PASS"
 GATE_FAIL = "FAIL"
 
+# Machine-readable ``reason_class`` taxonomy — one class per existing gate
+# outcome path, nothing invented (additive; the verbatim ``reason`` string
+# and the pass/fail decision are unchanged). Purpose: round-7+ rollups can
+# count the UNGRADEABLE_* share as an INFRASTRUCTURE alarm (irreproducible
+# lanes) instead of reading it as strategy evidence.
+REASON_PASS = "PASS"
+#: Genuine rule failure: fixed Sharpe is positive but does not beat
+#: same-window B&H (ties included).
+REASON_FAIL_UNDERPERFORM = "FAIL_UNDERPERFORM"
+#: Genuine rule failure: fixed Sharpe <= 0 — the r3-alignment conjunct
+#: (takes precedence when a lane also underperforms the benchmark).
+REASON_FAIL_NONPOSITIVE = "FAIL_NONPOSITIVE"
+#: No committed ``walk_forward.per_split`` test windows (semantic choice 1).
+REASON_UNGRADEABLE_MISSING_WINDOWS = "UNGRADEABLE_MISSING_WINDOWS"
+#: Committed window does not fit the loaded data — missing data / cache
+#: drift (semantic choice 2).
+REASON_UNGRADEABLE_DRIFT = "UNGRADEABLE_DRIFT"
+#: Committed windows are not contiguous (semantic choice 3).
+REASON_UNGRADEABLE_NONCONTIGUOUS = "UNGRADEABLE_NONCONTIGUOUS"
+#: Fidelity guard: the searched-arm replay did not reproduce the recorded
+#: Sharpe within :data:`REPLAY_TOL` (semantic choice 6).
+REASON_UNGRADEABLE_FIDELITY = "UNGRADEABLE_FIDELITY"
+#: Fixed or benchmark stitched Sharpe is NaN — degenerate returns.
+REASON_UNGRADEABLE_NAN = "UNGRADEABLE_NAN"
+
+#: The infrastructure-alarm subset: any nonzero share of these in a round
+#: rollup means irreproducible/broken lanes, never strategy evidence.
+UNGRADEABLE_CLASSES = frozenset({
+    REASON_UNGRADEABLE_MISSING_WINDOWS,
+    REASON_UNGRADEABLE_DRIFT,
+    REASON_UNGRADEABLE_NONCONTIGUOUS,
+    REASON_UNGRADEABLE_FIDELITY,
+    REASON_UNGRADEABLE_NAN,
+})
+
+#: Every value ``reason_class`` can take (PASS + rule-fail + ungradeable).
+REASON_CLASSES = frozenset({
+    REASON_PASS, REASON_FAIL_UNDERPERFORM, REASON_FAIL_NONPOSITIVE,
+}) | UNGRADEABLE_CLASSES
+
 # Fidelity-guard tolerance on the searched-arm replay, verbatim from R5-D
 # (itself the R4-B standing-rail precedent).
 REPLAY_TOL = 1e-8
@@ -97,10 +137,11 @@ def gate_decision(*, fixed_sharpe, bench_sharpe) -> bool:
     return fixed > bench and fixed > 0.0
 
 
-def _fail(reason: str, **fields) -> dict:
+def _fail(reason: str, *, reason_class: str, **fields) -> dict:
     """A FAIL gate result with every schema key present (None when the
     failure happened before the value could be computed)."""
-    result = {"gate": GATE_FAIL, "reason": reason, "fixed_sharpe": None,
+    result = {"gate": GATE_FAIL, "reason": reason,
+              "reason_class": reason_class, "fixed_sharpe": None,
               "bench_sharpe": None, "searched_sharpe": None,
               "selection_gap": None, "n_periods": None,
               "fixed_per_split": None}
@@ -126,15 +167,20 @@ def run_selection_gate(*, ohlcv, strategy, per_split, top_variant,
     the searched-arm replay must reproduce it within :data:`REPLAY_TOL`.
 
     Returns a machine-readable dict: ``gate`` (:data:`GATE_PASS` /
-    :data:`GATE_FAIL`), ``reason``, ``fixed_sharpe``, ``bench_sharpe``,
-    ``searched_sharpe``, ``selection_gap`` (informational — searched minus
-    fixed, no registered threshold), ``n_periods``, ``fixed_per_split``.
-    NaN values are serialized as None.
+    :data:`GATE_FAIL`), ``reason``, ``reason_class`` (one of
+    :data:`REASON_CLASSES` — additive classification of the outcome path;
+    the UNGRADEABLE_* subset in :data:`UNGRADEABLE_CLASSES` is an
+    infrastructure alarm for rollups, never strategy evidence),
+    ``fixed_sharpe``, ``bench_sharpe``, ``searched_sharpe``,
+    ``selection_gap`` (informational — searched minus fixed, no registered
+    threshold), ``n_periods``, ``fixed_per_split``. NaN values are
+    serialized as None.
     """
     if not per_split:
         return _fail("ungradeable: lane has no committed "
                      "walk_forward.per_split test windows — the gate "
-                     "cannot replay what was never committed")
+                     "cannot replay what was never committed",
+                     reason_class=REASON_UNGRADEABLE_MISSING_WINDOWS)
     windows = [[int(r["test"][0]), int(r["test"][1])] for r in per_split]
     n = int(len(ohlcv))
     for t0, t1 in windows:
@@ -142,14 +188,16 @@ def run_selection_gate(*, ohlcv, strategy, per_split, top_variant,
             return _fail(f"ungradeable: committed test window [{t0}, {t1}] "
                          f"does not fit the loaded data ({n} bars) — "
                          f"positional windows would misalign (missing "
-                         f"data / cache drift)")
+                         f"data / cache drift)",
+                         reason_class=REASON_UNGRADEABLE_DRIFT)
     for prev, nxt in zip(windows, windows[1:]):
         if nxt[0] != prev[1]:
             return _fail(f"ungradeable: committed test windows are not "
                          f"contiguous ({prev} then {nxt}) — the "
                          f"same-window benchmark slice "
                          f"[{windows[0][0]}:{windows[-1][1]}] would not "
-                         f"equal the stitched OOS coverage")
+                         f"equal the stitched OOS coverage",
+                         reason_class=REASON_UNGRADEABLE_NONCONTIGUOUS)
 
     # Searched arm: always replayed (it prices selection_gap); with a
     # recorded Sharpe it is also the R5-D fidelity guard.
@@ -165,6 +213,7 @@ def run_selection_gate(*, ohlcv, strategy, per_split, top_variant,
                          f"vs recorded {recorded_searched_sharpe!r} (tol "
                          f"{REPLAY_TOL}) — refusing to grade an "
                          f"unreproduced lane",
+                         reason_class=REASON_UNGRADEABLE_FIDELITY,
                          searched_sharpe=_clean(searched_sharpe))
 
     # Fixed arm: the committed top variant, selection-free, on the
@@ -188,17 +237,26 @@ def run_selection_gate(*, ohlcv, strategy, per_split, top_variant,
     if math.isnan(fixed_sharpe) or math.isnan(bench_sharpe):
         return _fail("ungradeable: fixed or benchmark stitched Sharpe is "
                      "NaN (degenerate returns) — NaN never passes",
-                     **fields)
+                     reason_class=REASON_UNGRADEABLE_NAN, **fields)
     if gate_decision(fixed_sharpe=fixed_sharpe, bench_sharpe=bench_sharpe):
         return {"gate": GATE_PASS,
                 "reason": (f"fixed-config replay beats same-window B&H "
                            f"({fixed_sharpe:.6f} > {bench_sharpe:.6f}) and "
                            f"is positive"),
+                "reason_class": REASON_PASS,
                 **fields}
+    # Genuine rule failure (both Sharpes non-NaN here). Classify by which
+    # conjunct of the unchanged pass rule failed: a non-positive fixed
+    # Sharpe is FAIL_NONPOSITIVE (even when it also trails the benchmark);
+    # a positive fixed Sharpe that does not beat the benchmark (ties
+    # included) is FAIL_UNDERPERFORM.
+    rule_class = (REASON_FAIL_NONPOSITIVE if fixed_sharpe <= 0.0
+                  else REASON_FAIL_UNDERPERFORM)
     return _fail(f"fixed-config replay does not beat same-window B&H with "
                  f"a positive Sharpe (fixed {fixed_sharpe:.6f}, bench "
                  f"{bench_sharpe:.6f}) — the searched edge does not "
-                 f"survive selection-free", **fields)
+                 f"survive selection-free", reason_class=rule_class,
+                 **fields)
 
 
 def apply_gate(verdict: str, gate_result: dict) -> str:
