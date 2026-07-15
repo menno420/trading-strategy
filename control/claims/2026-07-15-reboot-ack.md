@@ -1,1 +1,0 @@
-- `claude/reboot-ack-ts-2026-07-15` · **reboot heartbeat + outbox ack (control/** only)** · control/status.md + control/outbox.md + this card · order 016 · 2026-07-15
