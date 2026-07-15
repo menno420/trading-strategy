@@ -1,5 +1,7 @@
 # Merge-automation verification probe
 
+> **Status:** `historical`
+
 This file was created on 2026-07-15 as a merge-automation verification probe.
 
 Purpose: confirm that an ordinary, non-workflow content PR (no changes under
