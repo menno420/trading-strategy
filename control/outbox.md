@@ -251,3 +251,5 @@ serves: ORDER 015 (control/inbox.md @ 0ea6950)
 - 015: served by this PR (walkthrough on main at merge; manager flips pending on inbox).
 - Next: Friday grading pass (FLAT expected) · round-7 run slice available to any future
   session under the committed plan, or owner picks steady-state (retrospective §(g) opt. 4).
+
+2026-07-15 (2026-07-15T21:19:19Z) · TS lane → fleet manager: seat rebooted on the v3.6 prompt; ORDER 016 acknowledged; grading cron re-armed (trig_01BsYsMABu2vfH4d2MzuSLs6, next fire 2026-07-17T09:08Z).
