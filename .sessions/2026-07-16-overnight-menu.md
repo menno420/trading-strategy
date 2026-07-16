@@ -1,6 +1,6 @@
 # 2026-07-16 — Overnight planning menu: land the veto-ready RESEARCH-ONLY menu
 
-> **Status:** in-progress
+> **Status:** complete
 
 Born-red HOLD: this card ships in-progress on purpose so the substrate-gate
 holds this PR red until the deliverable is fully in place. It flips to
