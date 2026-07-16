@@ -17,25 +17,37 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 ## In flight
 
 (Verify against live source control — this section is a dated snapshot.
-Live state as of 2026-07-13T13:42Z, MCP-verified: **0 open PRs** beyond
-this refresh's own PR #108, **0 active claims** beyond its own, main @
-`83e736c` (PR #107 ender close-out). Paper lane FLAT/WATCH — sole ledger
-record `paper-0001` WATCH; holdout SPENT. First weekly grading pass due
-2026-07-17T09:05Z — business cron `trig_01UsNU4JRps4b7jiAMdEfXNi`, bound
-to the coordinator seat, grading executor LIVE. This supersedes the old
-`trig_015aNMg5ncoSE2Roe4MKjQnr` reference: the 2026-07-13 trigger
-cutover replaced the ender-session-bound triggers with coordinator-seat
-bindings — full disposition in `control/status.md`.)
+Live state as of 2026-07-16T01:05Z, MCP-verified: **0 open PRs** beyond
+this refresh's own PR #132, **0 active claims** beyond its own, main @
+`36e2dfe` (PR #131 session-ender; the 2026-07-15 reboot-ack DID land —
+PR #130, merge `ad0c903`). Paper lane FLAT/WATCH — sole ledger record
+`paper-0001` WATCH; holdout SPENT; 5055 registered configs / 0 promoted.
+First weekly grading pass due 2026-07-17 — the grading business cron
+`trig_01BsYsMABu2vfH4d2MzuSLs6` (cron `0 9 * * 5`, next recorded fire
+2026-07-17T09:08Z) was bound to the 2026-07-15 session and dies at
+archive; the coordinator is re-arming failsafe+pacemaker post-archive,
+and the in-session fallback is `scripts/grade_paper.py` per
+`paper-lane-protocol.md` §6–§7 (dry-run CLEAN 2026-07-13). A FOREIGN
+trigger `trig_01YXNmgqYeYQ1LuepsLmbNCG` fires 2026-07-17T09:00Z — not
+ours, duplicate-fire watch only. This supersedes the 2026-07-13 snapshot
+that carried `trig_01UsNU4JRps4b7jiAMdEfXNi` as the live grading cron —
+full trigger disposition in `control/status.md`. CI note: merges landed
+by the auto-merge enabler (`github-actions[bot]`) do not trigger main
+push workflows; green evidence for post-`7d6aa67` main SHAs is the
+PR-level checks.)
 
-- EAP close-out (branch `claude/eap-closeout-ts`, ORDER 015): owner
+- EAP close-out LANDED (PR #123, merge `21886fd`; ORDER 015): owner
   walkthrough [eap-closeout-walkthrough-2026-07-14.md](eap-closeout-walkthrough-2026-07-14.md)
   (what the seat did · verify commands · OWNER ACTIONS · handoff), audit
   pointer [audits/eap-project-audit-2026-07-14.md](audits/eap-project-audit-2026-07-14.md),
   and the pre-registered round-7 plan
   [research-round-7-plan.md](research-round-7-plan.md) (PLAN ONLY —
   running is a future session's slice). Docs + control only.
-- Rounds 1–6 retrospective (branch `claude/rounds-retrospective`, PR #120): program-wide synthesis in [research-program-retrospective.md](research-program-retrospective.md) — docs only, changes no verdict.
-- Research Round 6 (branch `claude/round-6-plan`, ORDER 014 items 1+3):
+- Rounds 1–6 retrospective LANDED (PR #120, merge `d857e50`): program-wide synthesis in [research-program-retrospective.md](research-program-retrospective.md) — docs only, changes no verdict.
+- Round 7: pre-registered PLAN ONLY at
+  [research-round-7-plan.md](research-round-7-plan.md) — running it
+  awaits owner direction; nothing has been executed.
+- Research Round 6 CLOSED (plan + run landed 2026-07-13; ORDER 014 items 1+3):
   pre-registered plan [research-round-6-plan.md](research-round-6-plan.md)
   (badge `binding`, committed before any Round-6 outcome exists) — two new
   idea classes on committed caches only (volume families `obv_trend` /
@@ -50,7 +62,7 @@ bindings — full disposition in `control/status.md`.)
   KEEP-dev / 47 KILL / 8 KILL-SIG of 58 lanes, 0 promoted**, gate 17
   PASS / 41 FAIL with 0 KEEPs demoted, no runtime cap hit. Full
   results: [research-round-6-results.md](research-round-6-results.md).
-- Research Round 5 (branch `claude/round-5-research`, PR #110): all four
+- Research Round 5 CLOSED (PR #110, landed 2026-07-13): all four
   pre-registered slices RAN 2026-07-13 against
   [research-round-5-plan.md](research-round-5-plan.md) (committed before
   any outcome existed) — headline **4 KEEP-dev / 1 KILL of the top 5**
@@ -59,8 +71,7 @@ bindings — full disposition in `control/status.md`.)
   `bollinger_breakout` from R5-C, verdict unchanged; 14 new registered
   configs, program cumulative 4345 → 4359; 0 promoted, promotion stays
   CLOSED). Full results:
-  [research-round-5-results.md](research-round-5-results.md); merge
-  close-out pending.
+  [research-round-5-results.md](research-round-5-results.md).
 - Paper lane (post-holdout standing mission): the pre-registered
   forward paper-trading protocol for the surviving RULE-PASS candidate
   is [paper-lane-protocol.md](paper-lane-protocol.md) — binding,
