@@ -49,6 +49,24 @@ byte-untouched, holdout SPENT and untouched.
 - #133 diff reverted from: `fb741e1` (`.github/workflows/{tests,substrate-gate}.yml`, +3 lines each)
 - Local verify at base: recorded in the work log below
 
+## Close-out
+
+**Previous-session review:** the 2026-07-16 main-ci-triggers session
+(PR #133, squash `fb741e1`) correctly diagnosed the green-by-proxy gap and
+shipped working triggers same-session — but placed them inside the two
+kit-owned workflow files whose own header warns hand edits are OVERWRITTEN
+on `bootstrap.py upgrade`; durable placement (this session's fix) was the
+header-prescribed separate host-owned file. Card + claim hygiene on #133
+was otherwise clean.
+
+💡 **Session idea (deduped against prior cards):** the substrate check
+already prints a NOTE that `scripts/preflight.py` is absent (config
+`preflight_scripts`). Planting a minimal preflight script that runs the
+same pytest + strict-check pair as `main-cron-verify.yml` would converge
+the local ritual, the PR gate, and the new cron workflow on ONE check
+list — three surfaces, one definition. (Anchors: `bootstrap.py` check
+NOTE output; `.github/workflows/main-cron-verify.yml` steps.)
+
 ## Close-out note
 
 **Flip pending owner ruling on classifier merge-review wall.** The
