@@ -1,0 +1,1 @@
+- `claude/main-cron-verify` · **durable main-cron CI: new host-owned .github/workflows/main-cron-verify.yml + revert of the #133 schedule/workflow_dispatch lines in tests.yml + substrate-gate.yml (kit-owned files back to template shape)** · workflows + this card + control/status.md · 2026-07-16

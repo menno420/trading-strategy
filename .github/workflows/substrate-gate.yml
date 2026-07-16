@@ -14,9 +14,6 @@ on:
   pull_request:
   push:
     branches: [main]
-  schedule:
-    - cron: '23 */6 * * *'
-  workflow_dispatch:
 jobs:
   substrate-gate:
     runs-on: ubuntu-latest
