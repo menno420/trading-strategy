@@ -241,3 +241,14 @@ do: EAP EXTENDED through 2026-07-21 (Anthropic mail, Diana Liu, 2026-07-14T23:07
 why: the seat's dormancy record predates the extension; without this note a rebooted session would treat dormancy as current
 done-when: seat acknowledges on its first rebooted wake
 provenance: relayed by the Fleet Manager coordinator on live owner directives, 2026-07-15
+
+## ORDER 017 · 2026-07-16T22:05:57Z · status: new
+priority: P1
+do: execute the verbatim owner overnight order below — work the backlog slice-by-slice (one PR each, landed on green), else switch to PLANNING MODE per item 2; keep control/status.md honest.
+why: owner's live overnight autonomy directive (silence = consent) — the seat runs to morning without stalling.
+done-when: morning deliverable landed — landed work and/or a veto-ready planning menu in-repo (planning/2026-07-17-overnight-menu.md), every PR terminal-or-blocker-named, everything in git.
+Provenance: owner live in the coordinator session (event 8a71834b-11ee-4910-8a75-6f2b324137a7), relayed to this seat 2026-07-16 night. Verbatim owner order:
+
+> OVERNIGHT ORDER (owner, live — 2026-07-16 night): I'm going to sleep; run autonomously until morning. Silence = consent. 1. CONTINUE: work your planned backlog — open ORDERs in control/inbox.md, the heartbeat baton's next-tasks, roadmap/planning docs in your repo(s). Slice after slice, one PR each, landed on green via your repo's landing workflow. A blocked PR carries its named blocker; take the next slice, never stall. 2. IF THE BACKLOG IS GENUINELY DRY — switch to PLANNING MODE, and plan excessively. Generate as many concrete, distinct proposals as you honestly can for your repo(s), from small fixes to ambitious features. Write each into the repo (your ideas/ or planning/ convention) with: a 2-3 line pitch · effort (S/M/L) · risk/reversibility · what it unblocks. Quantity is deliberate — tomorrow morning I will skim the whole menu and VETO what I don't want; my veto is the filter, so don't pre-filter down to a few safe picks. Do NOT build the ambitious ones tonight — planning docs only. Small, contained, reversible improvements may be built and landed as usual. 3. HYGIENE: keep heartbeats honest (control/status.md), every PR at a terminal state or carrying a named blocker, everything in git before session end. I'm recreating some projects tomorrow, so leave records clean enough that a fresh seat picks up from the repo alone. Morning deliverable: landed work, or a veto-ready menu of plans in your repo — ideally both.
+
+seat-ack (2026-07-16 night): consumed. Actions this session — (a) schedule-proof recorded (main-cron-verify fired on cron, run 29528724997); (b) veto-ready planning menu landed (planning/2026-07-17-overnight-menu.md, 25 proposals, PR #136); (c) this heartbeat restamp; backlog otherwise dry → PLANNING MODE per item 2. No M/L builds tonight (planning docs only), RESEARCH-ONLY rails held.
