@@ -1,6 +1,6 @@
 # 2026-07-16 — Durable main-cron verification: host-owned workflow + kit-file trigger revert
 
-> **Status:** `in-progress`
+> **Status:** `complete`
 
 - **📊 Model:** fable-5 · medium · implement/verify
 
@@ -69,9 +69,10 @@ NOTE output; `.github/workflows/main-cron-verify.yml` steps.)
 
 ## Close-out note
 
-**Flip pending owner ruling on classifier merge-review wall.** The
-`in-progress` badge on this card is intentional for the entire session:
-the completion flip and the landing decision are explicitly owner-gated
-this time (platform merge-review classifier ruling pending). substrate-gate
-red on this PR is the designed born-red HOLD — do not fight it. No merge,
-no card flip, no dispatch fire by this session.
+**Owner approved live (Y, 2026-07-16).** The completion flip and the
+landing decision were owner-gated (platform merge-review classifier
+ruling); the owner ruled live in-session, replying "Y" to the explicit
+"flip the card + land #134?" ask on 2026-07-16. This commit flips the
+card to `complete`; substrate-gate re-runs green on the new head and the
+already-armed auto-merge (squash) lands PR #134. The earlier
+substrate-gate red was the designed born-red HOLD working as intended.
