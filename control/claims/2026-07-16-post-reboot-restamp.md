@@ -1,1 +1,0 @@
-- `claude/post-reboot-restamp` · **post-reboot restamp: PR dispositions + current-state/status re-stamp vs live GitHub** · docs/current-state.md, control/status.md, .sessions/ · 2026-07-16

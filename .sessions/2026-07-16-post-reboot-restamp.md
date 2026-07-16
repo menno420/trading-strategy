@@ -1,8 +1,8 @@
 # 2026-07-16 — Post-reboot restamp: dispositions + living-ledger re-stamp
 
-> **Status:** `in-progress`
+> **Status:** `complete`
 
-📊 Model: [[fill: model line at close]]
+- **📊 Model:** fable-5 · medium · review/verify
 
 ⚑ Scope (claimed, `control/claims/2026-07-16-post-reboot-restamp.md`,
 branch `claude/post-reboot-restamp`): coordinator-delegated session cycle,
@@ -44,4 +44,40 @@ trigger create/delete/fire, `control/inbox.md` byte-untouched.
 
 ## Close-out
 
-[[fill: close-out at flip]]
+**Previous-session review:** the 2026-07-15 reboot-ack + ender sessions
+(PRs #128–#131) landed clean control-lane work with verifiable trigger
+records but left NO session cards in `.sessions/` — the trigger-record
+carry-forward in the ender heartbeat was exemplary and made this boot's
+verification trivial; the missing cards are the one hygiene gap (the
+newest card on file is 2026-07-14).
+
+💡 **Session idea (deduped against prior cards — distinct from the
+eap-closeout card's derived owner-actions surface, the
+night-research-infra card's grading-pass liveness watchdog, and the
+rounds-retrospective card's funnel table):** main has had NO
+push-triggered CI run since `7d6aa67` (2026-07-14) because the auto-merge
+enabler merges with `GITHUB_TOKEN`, whose pushes never trigger workflows —
+every post-merge main SHA is only "green by proxy" via its PR-head checks
+against a possibly-stale base. Contained fix: add a `schedule:` trigger
+(e.g. daily) to `tests.yml` + `substrate-gate.yml` so main always has
+first-party run evidence at most 24h old, closing the green-by-proxy gap
+without any token/secret change. (Anchors: `.github/workflows/tests.yml`
+`on:` block, `.github/workflows/auto-merge-enabler.yml` header comment;
+verify target: a fresh scheduled run id on main.)
+
+**Verify:** `python3 -m pytest -q` → **668 passed** (docs/control only —
+identical to the main baseline). `python3 bootstrap.py check --strict` →
+exit 0 at boot; born-red HOLD on this PR clears with this flip commit.
+
+Integrity at close: diff vs main touches only `docs/current-state.md`,
+`control/status.md` (this seat is its one writer), this card, the claim
+lifecycle (created first commit, deleted this commit), and the checker's
+guard-fires telemetry delta. `control/inbox.md` byte-untouched; holdout
+never read (SPENT); no sweep/backtest run; no trigger
+created/modified/fired (coordinator owns routines); no
+broker/order/exchange-write code; family-level model attribution only; no
+merge action by this session — the auto-merge enabler is PR #132's
+landing path.
+
+Session end: badge flipped `complete` in this final content commit before
+push.
