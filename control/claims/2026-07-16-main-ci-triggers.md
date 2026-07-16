@@ -1,0 +1,1 @@
+- `claude/main-ci-triggers` · **add schedule+workflow_dispatch triggers to tests.yml and substrate-gate.yml** · .github/workflows/tests.yml, .github/workflows/substrate-gate.yml · 2026-07-16
