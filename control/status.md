@@ -1,10 +1,10 @@
 seat: trading-strategy (Venture Lab annex)
 state: active
 session_type: coordinator-delegated (main-cron-verify durability slice, 2026-07-16)
-updated: 2026-07-16T01:31:00Z
+updated: 2026-07-16T14:48:00Z
 session_summary: durable main-cron CI — new host-owned .github/workflows/main-cron-verify.yml owns the schedule (23 */6 * * *) + workflow_dispatch triggers (checkout pinned ref: main, contents: read, no secrets, mirrors the PR checks: pytest + strict substrate check); the trigger lines PR #133 appended to kit-owned tests.yml + substrate-gate.yml REVERTED so bootstrap.py upgrade regeneration can no longer silently strip them (both files byte-identical to pre-#133 template shape)
 prs_open: 1 — PR #134 (claude/main-cron-verify, this session) · substrate-gate red = designed born-red HOLD (card intentionally left in-progress)
-flip+land: pending owner ruling (platform merge-review classifier) — no card flip, no merge by this session
+flip+land: approved by owner live (Y, 2026-07-16) — card flip + auto-merge land of PR #134 proceeding this session
 dispatch proof: pending merge — the new workflow's schedule/workflow_dispatch only registers once the file is on the default branch; nothing fired
 verify_local: pytest 668 passed in 5.31s · bootstrap check --strict sole finding = designed HOLD on this session's own card · guard-fires telemetry delta left uncommitted (classifier wall, owner ruling pending)
 orders: none open — inbox tops at ORDER 016 (done-when met per PR #130); ORDERs 001–015 previously consumed
