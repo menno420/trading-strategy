@@ -43,6 +43,7 @@ Full index (grounds + capabilities): `docs/SKILLS.md` — the source this block 
 - `any` · **`api.github.com` direct HTTP**: blocked → GitHub access is MCP-tools-only.
 - `any` · **Environment / Project creation**: owner-click actions in the console — queue them as structured owner asks, never wait silently. Routine/schedule creation…
 - `any` · **GraphQL API quota**: tight — batch queries and prefer the REST-backed MCP tools for bulk reads.
+- `any` · `subagent` · platform auto-mode permission classifier denies trigger-persistence MCP calls made from coordinator-spawned workers (3/3 same shape: send_later…
 
 Full ledger (all venues, evidence, freshness): `docs/CAPABILITIES.md` — the seat-local source of truth; append findings THERE, never here.
 <!-- substrate-kit:walls-digest END -->

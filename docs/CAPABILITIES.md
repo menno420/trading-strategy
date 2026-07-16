@@ -111,6 +111,7 @@ as venue `any`.)
 kit-owned — they refresh at upgrade between the fence markers; local
 findings go here, below the fence.)
 
+- 2026-07-16 · wall · `subagent` · platform auto-mode permission classifier denies trigger-persistence MCP calls made from coordinator-spawned workers (3/3 same shape: send_later pacemaker; create_trigger weekly-grading rebind; delete_trigger stale failsafe). Failsafe create succeeded 00:56Z before the denials. Working path: 2h failsafe beat + in-session dispatch; owner can lift via permission rule or run trigger ops from the routines UI. Verbatim denial texts: this entry's landing PR body.
 - 2026-07-12 · capability · `any` · **Auto-merge enabler is the PR landing
   path**: `.github/workflows/auto-merge-enabler.yml` arms native squash
   auto-merge on non-draft `claude/*` PRs, so green agent PRs self-land —
