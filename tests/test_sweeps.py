@@ -1891,3 +1891,78 @@ class TestR6VolumeHourlyGrid:
         # The plan's burden ledger: 360 + 144 + 192 = 696 new registered
         # configs; program cumulative 4359 -> 5055.
         assert sweeps.r6_total_configs() == 696
+
+
+class TestRound7:
+    """Round-7 pre-declaration pins (docs/research-round-7-plan.md, ORDER
+    018): the two STATE-family grids are committed BEFORE the sweep runs and
+    these pins freeze them under the selection-fair standing gate [D-0002]."""
+
+    def test_families_match_strategy_registry(self):
+        for fam in sweeps.R7_FAMILIES:
+            assert fam in STRATEGIES
+        assert sweeps.R7_FAMILIES == ("drawdown_reversion", "high_proximity")
+
+    def test_axes_are_exactly_the_pre_registered_grids(self):
+        assert sweeps._R7_DRAWDOWN_AXES == {
+            "drawdown_reversion": {"lookback": [63, 126, 252],
+                                   "entry_dd": [0.10, 0.20],
+                                   "exit_frac": [0.5, 1.0]}}
+        assert sweeps._R7_HIGHPROX_AXES == {
+            "high_proximity": {"N": [63, 126, 252],
+                               "p": [0.85, 0.90, 0.95, 0.98]}}
+
+    def test_registered_counts(self):
+        assert len(sweeps.r7_drawdown_variants("drawdown_reversion")) == 12
+        assert len(sweeps.r7_highprox_variants("high_proximity")) == 12
+        assert sweeps.r7_variants_per_family() == \
+            {"drawdown_reversion": 12, "high_proximity": 12}
+
+    def test_k_is_round_standard_and_bar_never_lowered(self):
+        from trading_lab import promotion
+        assert sweeps.R7_K == 12
+        assert all(n == sweeps.R7_K
+                   for n in sweeps.r7_variants_per_family().values())
+        assert round(promotion.min_tstat(sweeps.R7_K), 2) == 2.64
+
+    def test_instruments_are_the_committed_r6a_surface_verbatim(self):
+        # Same tuple OBJECT as the R6-A / R4-F 15-ticker daily surface — no
+        # new caches, nothing fetched, no post-hoc instrument selection.
+        assert sweeps.R7_INSTRUMENTS is sweeps.R6_VOLUME_INSTRUMENTS
+        assert len(sweeps.R7_INSTRUMENTS) == 15
+
+    def test_constraints_filtered(self):
+        for p in sweeps.r7_drawdown_variants("drawdown_reversion"):
+            assert p["lookback"] >= 2
+            assert 0.0 < p["entry_dd"] < 1.0
+            assert 0.0 < p["exit_frac"] <= 1.0
+        for p in sweeps.r7_highprox_variants("high_proximity"):
+            assert p["N"] >= 2
+            assert 0.0 < p["p"] <= 1.0
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R7_FAMILIES:
+            for params in sweeps.r7_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+                assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r7_drawdown_variants("astrology")
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r7_highprox_variants("astrology")
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r7_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r7_drawdown_variants("drawdown_reversion")
+                == sweeps.r7_drawdown_variants("drawdown_reversion"))
+        assert (sweeps.r7_highprox_variants("high_proximity")
+                == sweeps.r7_highprox_variants("high_proximity"))
+
+    def test_round_total_configs_and_program_ledger(self):
+        # The plan's burden ledger: 24 variants x 15 tickers = 360 new
+        # registered configs; program cumulative 5055 -> 5415.
+        assert sweeps.r7_total_configs() == 360
+        assert 5055 + sweeps.r7_total_configs() == 5415

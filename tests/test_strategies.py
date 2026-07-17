@@ -1389,3 +1389,121 @@ class TestOvernightGap:
             STRATEGIES["overnight_gap"](random_walk, hold=0)
         with pytest.raises(ValueError, match="atr_period"):
             STRATEGIES["overnight_gap"](random_walk, atr_period=1)
+
+
+class TestDrawdownReversion:
+    @staticmethod
+    def _drawdown_recovery():
+        # 15 bars at the peak (warmup + peak established), a 6-bar decline to
+        # -22% (the last peak stays inside a 15-bar window), a 4-bar trough,
+        # then a 6-bar full recovery back to the peak band.
+        closes = np.concatenate([
+            np.full(15, 100.0),
+            np.linspace(100.0, 78.0, 6),
+            np.full(4, 78.0),
+            np.linspace(78.0, 100.0, 6),
+        ])
+        return make_ohlcv(closes)
+
+    def test_positions_valid(self, random_walk):
+        pos = STRATEGIES["drawdown_reversion"](
+            random_walk, **DEFAULT_PARAMS["drawdown_reversion"])
+        assert isinstance(pos, pd.Series)
+        assert pos.name == "position"
+        assert pos.index.equals(random_walk.index)
+        assert not pos.isna().any()
+        assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_warmup_flat(self):
+        ohlcv = self._drawdown_recovery()
+        pos = STRATEGIES["drawdown_reversion"](ohlcv, lookback=15,
+                                               entry_dd=0.20, exit_frac=1.0)
+        assert (pos.iloc[:15] == 0.0).all()  # peak NaN / at-peak => flat
+
+    def test_enters_in_deep_drawdown_exits_on_full_recovery(self):
+        ohlcv = self._drawdown_recovery()
+        pos = STRATEGIES["drawdown_reversion"](ohlcv, lookback=15,
+                                               entry_dd=0.20, exit_frac=1.0)
+        assert pos.iloc[20] == 1.0   # -22% drawdown bar: entered
+        assert pos.iloc[-1] == 0.0   # recovered to the peak band: flat
+
+    def test_hysteresis_holds_through_the_trough(self):
+        # exit_frac=1.0 => exit threshold at dd==0; the long is held through
+        # the deep trough rather than flickering flat.
+        ohlcv = self._drawdown_recovery()
+        pos = STRATEGIES["drawdown_reversion"](ohlcv, lookback=15,
+                                               entry_dd=0.20, exit_frac=1.0)
+        assert (pos.iloc[20:25] == 1.0).all()
+
+    def test_causality_prefix_invariance(self):
+        ohlcv = self._drawdown_recovery()
+        full = STRATEGIES["drawdown_reversion"](ohlcv, lookback=15,
+                                                entry_dd=0.20, exit_frac=1.0)
+        for k in (16, 20, 25, len(ohlcv) - 1):
+            cut = STRATEGIES["drawdown_reversion"](ohlcv.iloc[:k], lookback=15,
+                                                   entry_dd=0.20, exit_frac=1.0)
+            pd.testing.assert_series_equal(full.iloc[:k], cut)
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="lookback"):
+            STRATEGIES["drawdown_reversion"](random_walk, lookback=1)
+        with pytest.raises(ValueError, match="entry_dd"):
+            STRATEGIES["drawdown_reversion"](random_walk, entry_dd=0.0)
+        with pytest.raises(ValueError, match="entry_dd"):
+            STRATEGIES["drawdown_reversion"](random_walk, entry_dd=1.0)
+        with pytest.raises(ValueError, match="exit_frac"):
+            STRATEGIES["drawdown_reversion"](random_walk, exit_frac=0.0)
+        with pytest.raises(ValueError, match="exit_frac"):
+            STRATEGIES["drawdown_reversion"](random_walk, exit_frac=1.5)
+
+
+class TestHighProximity:
+    @staticmethod
+    def _peak_then_drop():
+        # A 30-bar monotonic rise to an all-time high, then a 30-bar decline
+        # back down well below the trailing-window maximum.
+        closes = np.concatenate([np.linspace(100.0, 150.0, 30),
+                                 np.linspace(150.0, 100.0, 30)])
+        return make_ohlcv(closes)
+
+    def test_positions_valid(self, random_walk):
+        pos = STRATEGIES["high_proximity"](
+            random_walk, **DEFAULT_PARAMS["high_proximity"])
+        assert isinstance(pos, pd.Series)
+        assert pos.name == "position"
+        assert pos.index.equals(random_walk.index)
+        assert not pos.isna().any()
+        assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_warmup_flat(self):
+        ohlcv = self._peak_then_drop()
+        pos = STRATEGIES["high_proximity"](ohlcv, N=20, p=0.95)
+        assert (pos.iloc[:19] == 0.0).all()  # trailing max NaN => flat
+
+    def test_long_near_high_flat_far_below(self):
+        ohlcv = self._peak_then_drop()
+        pos = STRATEGIES["high_proximity"](ohlcv, N=20, p=0.95)
+        assert (pos.iloc[19:30] == 1.0).all()  # monotonic rise => fresh highs
+        assert pos.iloc[59] == 0.0             # far below the trailing max
+
+    def test_fresh_high_always_satisfies_band(self):
+        # The trailing max includes bar t, so a new high is long for any p.
+        ohlcv = self._peak_then_drop()
+        for p in (0.85, 0.90, 0.95, 0.98):
+            pos = STRATEGIES["high_proximity"](ohlcv, N=20, p=p)
+            assert pos.iloc[29] == 1.0
+
+    def test_causality_prefix_invariance(self):
+        ohlcv = self._peak_then_drop()
+        full = STRATEGIES["high_proximity"](ohlcv, N=20, p=0.95)
+        for k in (21, 30, 45, len(ohlcv) - 1):
+            cut = STRATEGIES["high_proximity"](ohlcv.iloc[:k], N=20, p=0.95)
+            pd.testing.assert_series_equal(full.iloc[:k], cut)
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="N"):
+            STRATEGIES["high_proximity"](random_walk, N=1)
+        with pytest.raises(ValueError, match="p"):
+            STRATEGIES["high_proximity"](random_walk, p=0.0)
+        with pytest.raises(ValueError, match="p"):
+            STRATEGIES["high_proximity"](random_walk, p=1.5)

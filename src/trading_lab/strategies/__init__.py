@@ -107,8 +107,9 @@ from __future__ import annotations
 
 from . import (adx_filtered_sma, aroon_trend, atr_trailing,
                bollinger_breakout, bollinger_reversion, buy_and_hold,
-               cci_reversion, crossasset_gate, donchian, ema_crossover,
-               ichimoku_trend, keltner_breakout, macd, macd_supertrend,
+               cci_reversion, crossasset_gate, donchian, drawdown_reversion,
+               ema_crossover, high_proximity, ichimoku_trend,
+               keltner_breakout, macd, macd_supertrend,
                mfi_reversion, obv_trend, overnight_gap, pullback,
                regime_switch, roc_momentum, rsi_mean_reversion,
                sma_crossover, stochastic_reversion, supertrend_flip,
@@ -144,6 +145,8 @@ STRATEGIES = {
     "obv_trend": obv_trend.generate,
     "mfi_reversion": mfi_reversion.generate,
     "overnight_gap": overnight_gap.generate,
+    "drawdown_reversion": drawdown_reversion.generate,
+    "high_proximity": high_proximity.generate,
 }
 
 DEFAULT_PARAMS = {
@@ -187,6 +190,9 @@ DEFAULT_PARAMS = {
     "mfi_reversion": {"period": 14, "buy_below": 20, "sell_above": 80},
     "overnight_gap": {"gap_atr": 1.0, "hold": 3, "mode": "fade",
                       "atr_period": 14},
+    "drawdown_reversion": {"lookback": 126, "entry_dd": 0.10,
+                           "exit_frac": 1.0},
+    "high_proximity": {"N": 126, "p": 0.95},
 }
 
 # P1 trend-following family: the four strategies swept in the
@@ -334,4 +340,5 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "atr_trailing", "trix_momentum", "ichimoku_trend",
            "weekday_long", "regime_switch", "crossasset_gate",
            "obv_trend", "mfi_reversion", "overnight_gap",
+           "drawdown_reversion", "high_proximity",
            "xsec_momentum", "xsec_reversal"]
