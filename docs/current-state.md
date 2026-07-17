@@ -20,7 +20,7 @@ autonomous seat. That phase is **over**:
   retired EAP fleet-coordination scaffolding (`control/`, `docs/succession/`,
   `docs/ROUTINES.md` — each now carries a deprecation banner).
 - **Honest research headline.** Across Rounds 1–7 the program registered
-  **5,055 configs and promoted 0** — **no strategy cleared the significance
+  **5,415 configs and promoted 0** — **no strategy cleared the significance
   bar** (`promotion.min_tstat(K)` ~2.638 at K=12). Promotion is CLOSED, the
   holdout is SPENT, and the negative result *is* the finding. This is a clean,
   honest offline research library, not a live trading system.
@@ -44,7 +44,7 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 State as of 2026-07-17: **0 open PRs** on the repo (beyond the fresh-start
 cleanup PR that carries this edit), **0 active claims**, main advanced through
 the 2026-07-16/17 heartbeat + Friday-grading PRs. Paper lane FLAT/WATCH —
-sole ledger record `paper-0001` WATCH; holdout SPENT; 5,055 registered
+sole ledger record `paper-0001` WATCH; holdout SPENT; 5,415 registered
 configs / 0 promoted. The 2026-07-17 weekly grading pass **already ran**
 in-session as a true no-op (see "Fresh-start snapshot"); there is **no
 self-armed grading cron** — grading runs in-session via
@@ -53,11 +53,18 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
-- **Round 7 is the next executable research slice — PLAN ONLY, unrun**
-  ([research-round-7-plan.md](research-round-7-plan.md)): R7-A
+- **Research Round 7 CLOSED (ran 2026-07-17; ORDER 018)** — both
+  pre-registered slices executed against
+  [research-round-7-plan.md](research-round-7-plan.md): R7-A
   `drawdown_reversion` + R7-B `high_proximity`, 2 families × 15 daily
-  tickers, 360 configs (5,055 → 5,415), under the standing selection-fair
-  gate + R5-D fixed-config row; promotion stays CLOSED, holdout untouched.
+  tickers, 360 new configs (5,055 → 5,415), under the standing
+  selection-fair gate + R5-D fixed-config row. Headline **5 KEEP-dev / 25
+  KILL / 0 KILL-SIG of 30 lanes, 0 promoted**, gate 14 PASS / 16 FAIL with
+  0 KEEPs demoted, 0 UNGRADEABLE (no infrastructure alarm), best
+  informational t 1.20 (BTC-USD `high_proximity`) vs the unchanged 2.638
+  bar, no runtime cap hit. Both new idea classes graded as unexploitable
+  nulls; promotion stays CLOSED, holdout untouched. Full results:
+  [research-round-7-results.md](research-round-7-results.md).
 - EAP close-out LANDED (PR #123, merge `21886fd`; ORDER 015): owner
   walkthrough [eap-closeout-walkthrough-2026-07-14.md](eap-closeout-walkthrough-2026-07-14.md)
   (what the seat did · verify commands · OWNER ACTIONS · handoff), audit
@@ -66,9 +73,10 @@ records are retired and are not worth carrying forward.)
   [research-round-7-plan.md](research-round-7-plan.md) (PLAN ONLY —
   running is a future session's slice). Docs + control only.
 - Rounds 1–6 retrospective LANDED (PR #120, merge `d857e50`): program-wide synthesis in [research-program-retrospective.md](research-program-retrospective.md) — docs only, changes no verdict.
-- Round 7: pre-registered PLAN ONLY at
-  [research-round-7-plan.md](research-round-7-plan.md) — running it
-  awaits owner direction; nothing has been executed.
+- Round 7: pre-registered plan at
+  [research-round-7-plan.md](research-round-7-plan.md) RAN 2026-07-17
+  (ORDER 018, plan-before-outcome honored) — see the Round 7 CLOSED entry
+  above and [research-round-7-results.md](research-round-7-results.md).
 - Research Round 6 CLOSED (plan + run landed 2026-07-13; ORDER 014 items 1+3):
   pre-registered plan [research-round-6-plan.md](research-round-6-plan.md)
   (badge `binding`, committed before any Round-6 outcome exists) — two new

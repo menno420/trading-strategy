@@ -2053,3 +2053,76 @@ def r6_total_configs() -> int:
     slices (the plan's burden ledger: program cumulative 4359 -> 5055)."""
     return (r6_volume_total_configs() + r6_gap_total_configs()
             + r6_volume_hourly_total_configs())
+
+
+# ---------------------------------------------------------------------------
+# Round 7 (docs/research-round-7-plan.md, ORDER 018)
+# ---------------------------------------------------------------------------
+# Two new single-instrument STATE families under the selection-fair standing
+# gate [D-0002]: R7-A drawdown_reversion (normalized depth-from-peak state
+# with a hysteresis exit) and R7-B high_proximity (per-bar close-max
+# proximity band). Both swept over the committed 15-ticker daily surface
+# (same tuple object as R6-A / R4-F — no new caches, nothing fetched).
+
+_R7_DRAWDOWN_AXES: dict[str, dict[str, list]] = {
+    "drawdown_reversion": {"lookback": [63, 126, 252],
+                           "entry_dd": [0.10, 0.20],
+                           "exit_frac": [0.5, 1.0]},
+}
+_R7_HIGHPROX_AXES: dict[str, dict[str, list]] = {
+    "high_proximity": {"N": [63, 126, 252],
+                       "p": [0.85, 0.90, 0.95, 0.98]},
+}
+_R7_DRAWDOWN_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "drawdown_reversion": lambda p: (p["lookback"] >= 2
+                                     and 0.0 < p["entry_dd"] < 1.0
+                                     and 0.0 < p["exit_frac"] <= 1.0),
+}
+_R7_HIGHPROX_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "high_proximity": lambda p: p["N"] >= 2 and 0.0 < p["p"] <= 1.0,
+}
+R7_DRAWDOWN_FAMILIES = tuple(_R7_DRAWDOWN_AXES)
+R7_HIGHPROX_FAMILIES = tuple(_R7_HIGHPROX_AXES)
+R7_FAMILIES = R7_DRAWDOWN_FAMILIES + R7_HIGHPROX_FAMILIES
+R7_INSTRUMENTS = R6_VOLUME_INSTRUMENTS  # same tuple object (15 daily tickers)
+R7_K = 12
+
+
+def r7_drawdown_variants(family: str) -> list[dict]:
+    try:
+        axes = _R7_DRAWDOWN_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R7 drawdown family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals))
+              for vals in product(*(axes[k] for k in keys)))
+    keep = _R7_DRAWDOWN_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r7_highprox_variants(family: str) -> list[dict]:
+    try:
+        axes = _R7_HIGHPROX_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R7 high-proximity family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals))
+              for vals in product(*(axes[k] for k in keys)))
+    keep = _R7_HIGHPROX_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r7_variants(family: str) -> list[dict]:
+    if family in _R7_DRAWDOWN_AXES:
+        return r7_drawdown_variants(family)
+    if family in _R7_HIGHPROX_AXES:
+        return r7_highprox_variants(family)
+    raise ValueError(f"unknown R7 family {family!r}")
+
+
+def r7_variants_per_family() -> dict[str, int]:
+    return {fam: len(r7_variants(fam)) for fam in R7_FAMILIES}
+
+
+def r7_total_configs() -> int:
+    return sum(r7_variants_per_family().values()) * len(R7_INSTRUMENTS)
