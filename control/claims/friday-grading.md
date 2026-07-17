@@ -1,0 +1,1 @@
+- `claude/friday-grading` · **Friday 2026-07-17 in-session paper grading pass + control-lane record** · control/** + .sessions/2026-07-17-friday-grading.md · 2026-07-17
