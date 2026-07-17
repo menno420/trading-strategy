@@ -253,7 +253,11 @@ Provenance: owner live in the coordinator session (event 8a71834b-11ee-4910-8a75
 
 seat-ack (2026-07-16 night): consumed. Actions this session — (a) schedule-proof recorded (main-cron-verify fired on cron, run 29528724997); (b) veto-ready planning menu landed (planning/2026-07-17-overnight-menu.md, 25 proposals, PR #136); (c) this heartbeat restamp; backlog otherwise dry → PLANNING MODE per item 2. No M/L builds tonight (planning docs only), RESEARCH-ONLY rails held.
 
-## ORDER 018 · 2026-07-17T22:39Z · status: new          (priority P1 — owner overnight research GO)
+## ORDER 018 · 2026-07-17T22:39Z · status: new
+priority: P1
+do: Execute the pre-registered Round 7 research (R7-A `drawdown_reversion` + R7-B `high_proximity`, `docs/research-round-7-plan.md`) and land the graded results.
+why: Live owner turn 2026-07-17T22:39Z ("work on the trading strategies") unlocks the previously PLAN-ONLY / owner-gated Round 7 execution.
+done-when: Both slices graded under the selection-fair gate and `docs/research-round-7-results.md` landed on main (delivered by PR #141).
 
 > **Provenance:** owner live in coordinator chat 2026-07-17T22:39Z; landed on coordinator dispatch. (Decide-and-flag: the inbox header names fleet-manager as sole writer, but the owner-pasted seat brief directs landing live owner turns here as ORDERs — provenance decides; landed with this provenance line.)
 
