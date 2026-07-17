@@ -1,5 +1,12 @@
 # Fleet coordination protocol — `control/`
 
+> ⛔ **RETIRED (2026-07-17 fresh-start cleanup).** This `control/` fleet-coordination
+> bus — manager-owned `inbox.md` orders, per-session `status.md` heartbeat,
+> `outbox.md` reports, the `claims/` lane — was **EAP-era autonomy scaffolding**.
+> The project is now an **owner-live seat** (EAP read-only cutoff 2026-07-21); a
+> fresh seat orients from `CONSTITUTION.md` + `docs/current-state.md` (the single
+> living ledger) and does **not** follow the protocol below. Kept for history only.
+
 > Local copy for this repo. Canonical spec: `menno420/superbot` →
 > `docs/planning/fleet-coordination-protocol-2026-07-09.md` (§1). Projects cannot talk to each
 > other directly — committed git files are the only shared medium; this directory is the bus.

@@ -1,5 +1,10 @@
 # gen-2 next-boot — first 10 minutes
 
+> ⛔ **RETIRED (2026-07-17 fresh-start cleanup).** This is an EAP-era gen-1→gen-2
+> succession doc built around the retired `control/` fleet bus. It no longer
+> describes how a seat boots: an owner-live seat orients from `CONSTITUTION.md`
+> + `docs/current-state.md` + `docs/NEXT-TASKS.md`. Kept for history only.
+
 > **Status:** `reference` — succession doc for the fresh gen-2 session. Read this file second (after control/README.md). Everything here was paid for in gen-1 time; do not re-derive it.
 
 ## Read order (files, in order, one line of why)

@@ -58,7 +58,11 @@
   check that contradicts visible evidence is **a bug in the CHECK, not a
   clearance** (PL-006). Every load-bearing claim cites a commit / PR / tag /
   run.
-- When a doc and a source file disagree: Adopt-time state: planted docs were unrendered and CI unwired. Fix: answer the interview slots, run bootstrap.py render --live, install .substrate/ci/substrate-gate.yml into .github/workflows/, and engage the session loop (session-start/session-close). Ongoing: whenever check --strict flags drift, fix docs in the same session before closing.
+- **When a doc and a source file disagree, source wins.** Fix the drifted
+  doc in the same session you spot the drift — never leave a doc contradicting
+  the tree. (CI is wired and the docs are long since rendered; the old
+  adopt-time bootstrap instructions that lived here were unrendered template
+  residue, removed 2026-07-17 in the fresh-start cleanup.)
 
 ## Autonomy rails — act vs. ask
 
@@ -70,16 +74,20 @@ these rails are its adopter-side operating form:
   / planning call — architectural included — is **decided-and-flagged**:
   decide it, one-line rationale, flag it on the run report; route to the
   owner only genuine product-intent forks (PL-001 · PL-012).
-- **Owner absent = normal; silence = consent.** Unattended execution is
-  the design: "wait for the owner to review / approve / confirm" is a
-  hallucinated gate unless it names an owner-only class below — proceed.
-  Ship on green CI; unremarked work is accepted — owner control is
-  reaction after visibility, never pre-approval (PL-012).
-- **An open PR is never a reason to stop.** Open READY (never draft) →
-  arm auto-merge while checks pend → it lands itself; blocked branch →
-  update it (merge, never force) and re-arm; a real, verbatim
-  arming/merge denial → park the PR ready, queue ONE owner item for the
-  systemic cause, take the next slice the same turn (PL-012).
+- **Owner-live is the default now (post-EAP).** The unattended-autonomy
+  phase ended with the EAP read-only cutoff (2026-07-21); this project was
+  re-created as an **owner-live seat**. Decide-and-flag still governs
+  reversible *design / technical / planning* calls — decide, one-line
+  rationale, flag it on the run report — but **landing a PR is not one of
+  them**: "silence = consent" is not a merge signal. Do the work, open the
+  PR, and let the owner review and merge.
+- **Open PRs ready; do not self-land them.** One ready PR per unit of work,
+  never draft. **Do NOT arm auto-merge or expect a PR to "land itself."** The
+  ~2026-07-15 permission classifier denies autonomous merge-arming for this
+  seat, and the owner-live model lands work by the **owner clicking merge on
+  green CI**. A blocked branch → update it (merge, never force); if a merge is
+  genuinely blocked, leave the PR ready and flag it — never loop on arming
+  attempts.
 - **Ask first only for the owner-only classes:** repo settings / rulesets
   / required checks · secrets / env vars / host provisioning · external
   publish + spending money · destructive prod-data ops · account/portal
@@ -135,5 +143,24 @@ stay in `docs/decisions.md` / `docs/question-router.md`.
 
 ## Rails specific to trading-lab
 
-(Hand-filled: the project's own hard rules, one bullet each, each citing its
-[D-NNNN]. Keep the whole hand-filled file under 150 lines.)
+The project's own hard rules. Each is enforced in code/CI at the cited seam —
+none of them is negotiable within a session:
+
+- **RESEARCH-ONLY, forever.** No broker, exchange, order-placement, live-API,
+  data-vendor-credential, or real-money surface exists or is added — ever. The
+  paper lane is mock/signal-side only (`experiments/paper/**`); `requirements.txt`
+  is pandas / numpy / yfinance / requests / pytest only (no broker libs).
+- **The holdout is SPENT and sealed.** `data/p5holdout/` stays unread;
+  `HOLDOUT_START = 2025-01-09` is enforced in `trading_lab.data.load_ohlcv` and
+  `unlock_holdout` is never passed. No new fetch or new ticker without an
+  explicit owner go.
+- **Promotion is CLOSED.** Every KEEP anywhere is a *dev-candidate only* — no
+  OOS or "finding" claim on dev data. The significance bar
+  `promotion.min_tstat(K)` (~2.638 at K=12) is never lowered.
+- **Plan before outcome.** Config grids live in `sweeps.py`, pinned by tests,
+  and every round's plan is committed *before* any run; honest null / negative
+  results are first-class deliverables.
+- **No self-armed routines or persistence.** Grading runs **in-session**
+  (`python3 scripts/grade_paper.py`) or via a **host-owned GitHub Actions cron**
+  — agents do not arm recurring triggers or wake-chains here (see
+  `docs/ROUTINES.md`).

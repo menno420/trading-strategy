@@ -1,1 +1,0 @@
-- `claude/overnight-menu-2026-07-17` · **Overnight planning menu** — veto-ready RESEARCH-ONLY menu of research proposals (planning docs only) · planning/2026-07-17-overnight-menu.md + this card · 2026-07-16
