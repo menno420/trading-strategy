@@ -1,6 +1,6 @@
 # 2026-07-17 — Coordinator seat close-out heartbeat
 
-> **Status:** `in-progress`
+> **Status:** `complete`
 
 Born-red HOLD: this card ships `in-progress` on purpose so the substrate-gate
 holds this PR red until the close-out heartbeat is fully recorded. It flips to
