@@ -1,0 +1,1 @@
+- `claude/coordinator-closeout-heartbeat` · **Coordinator seat close-out heartbeat — neutral control-lane record of the 2026-07-17 close-out (session records, W29 grading no-op, grading cron disposition, parked weekly-grading.yml)** · control/status.md + control/claims/ + .sessions/ · 2026-07-17
