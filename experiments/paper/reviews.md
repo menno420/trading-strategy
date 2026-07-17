@@ -17,16 +17,3 @@
 > weeks that were missed (§6: a missed pass delays grading, nothing else).
 
 ## Review records (one per ISO week, newest last)
-
-### review-2026-W29 — FLAT
-
-- id: review-2026-W29
-- review_week: 2026-W29 (ISO week of the grading pass)
-- result: FLAT
-- windows_graded_this_week: 0
-- closed_windows_total: 0
-- beat_total: 0
-- miss_total: 0
-- open_position: false
-- watch_records: 1
-- note: informational index only — not graded evidence; verdicts live solely in ledger.md (protocol §5-§7)

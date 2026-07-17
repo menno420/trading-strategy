@@ -26,10 +26,9 @@ create/delete/fire, `control/inbox.md` byte-untouched.
 - **WHAT:** run the Friday 2026-07-17 paper-lane grading pass in-session and
   record it, since the bound scheduled executor is archived and the
   replacement workflow is parked.
-- **WHERE:** `experiments/paper/reviews.md` (the §6 grading job's idempotent
-  review index — one new W29 FLAT record), `control/status.md` (heartbeat +
-  grading-pass record, this seat's one writer), `control/claims/friday-grading.md`
-  (claim), and this card.
+- **WHERE:** `control/status.md` (heartbeat + grading-pass record, this seat's
+  one writer), `control/claims/friday-grading.md` (claim), and this card. NO
+  paper-lane data file is committed — see the "no-op" note below.
 - **HOW:** `python3 scripts/grade_paper.py` (no args — the contract), run
   in-session against a hard-synced `origin/main` (`a7017ca`). Idempotent:
   a second run added no further diff.
@@ -39,9 +38,11 @@ create/delete/fire, `control/inbox.md` byte-untouched.
 - **UNBLOCKS:** the 2026-07-17 (ISO week 2026-W29) grading pass is now on
   record; nothing further is owed until the first evaluable window (~early
   August 2026, the 16th paper-lane bar).
-- **VERIFY:** `scripts/grade_paper.py` exit 0; ledger.md graded evidence
-  UNTOUCHED (paper-0001 WATCH left intact, no verdict appended); reviews.md
-  carries exactly one `review-2026-W29 — FLAT` record; second run idempotent.
+- **VERIFY:** `scripts/grade_paper.py` exit 0; `experiments/paper/ledger.md`
+  graded evidence UNTOUCHED (paper-0001 WATCH left intact, no verdict
+  appended); `experiments/paper/reviews.md` stays byte-identical to its
+  header-only template (`git diff origin/main` empty); full `pytest` green
+  (668 passed), including `test_committed_index_matches_generated_header`.
 
 ## Run facts
 
@@ -57,20 +58,34 @@ create/delete/fire, `control/inbox.md` byte-untouched.
   - `this pass: 0 BEAT of 0 newly graded windows; 0 closed windows total in ledger (1 WATCH, 0 open)`
   - `review index: 2026-W29 FLAT — experiments/paper/reviews.md (updated; informational, not graded evidence)`
   - `aggregate (§7): 0 BEAT of 0 closed windows (1 weeks reviewed, of which 1 FLAT)`
-- Result: **graded-ledger NO-OP** (ledger.md untouched, WATCH intact) +
-  informational review-index record for ISO week 2026-W29 (FLAT). The only
-  file mutated by the script is `experiments/paper/reviews.md` (+13 lines,
-  one W29 record); a second run produced no additional diff (idempotent,
-  updated-in-place).
+- Result: **true NO-OP — nothing paper-lane committed.** `ledger.md` is
+  untouched (WATCH intact, no verdict). The script regenerates a W29 FLAT
+  record into `experiments/paper/reviews.md` at run time, but that file is
+  a **regenerable runtime artifact deliberately kept header-only in git** —
+  the invariant `test_committed_index_matches_generated_header`
+  (`tests/test_paper.py`) asserts the committed index is byte-identical to
+  `paper_mod.REVIEWS_HEADER` ("the committed header-only index is
+  byte-identical to what the grader would generate, so the first real pass
+  only appends"). So the run's reviews.md append is left UNCOMMITTED and the
+  file is restored to its header-only template; committing it would (and
+  initially did, at `e6fb4a9`) turn CI's required `pytest` red. The only
+  committed changes this session are `control/**` + this card + the
+  `.substrate/guard-fires.jsonl` check telemetry.
 
-## Files touched
+## Files touched (committed)
 
-- `experiments/paper/reviews.md` — one new `review-2026-W29 — FLAT` record
-  (the §6 grading job's idempotent output; informational, not graded evidence)
 - `control/status.md` — heartbeat overwrite + grading-pass record (this seat
   is its one writer)
 - `control/claims/friday-grading.md` — claim (this session)
+- `.substrate/guard-fires.jsonl` — substrate-check telemetry delta (committed
+  per the checker's instruction; do not revert)
 - this card
+
+NOT committed by design: `experiments/paper/reviews.md` — the grader appends
+a W29 FLAT record to it at run time, but the file is a regenerable runtime
+artifact kept header-only in git (see the Run-facts no-op note; enforced by
+`test_committed_index_matches_generated_header`). It was restored to its
+header-only template after the run. `experiments/paper/ledger.md` — untouched.
 
 ## Evidence SHAs
 
@@ -92,17 +107,25 @@ spends no holdout, and touches no trigger; it only runs the grading job and
 records the pass, so it inherits the standing rails (promotion CLOSED,
 holdout SPENT, RESEARCH-ONLY) verbatim.
 
-💡 **Session idea (deduped against prior cards):** `scripts/grade_paper.py`
-mutating `experiments/paper/reviews.md` on every weekly pass (even a
-graded-ledger no-op) means a purely "nothing changed" grading pass still
-produces a non-empty diff and therefore a PR. A durable convergence: have
-the parked `weekly-grading.yml` (once owner-approved) run this same no-arg
-job and open/refresh the record itself, so the human fallback and the
-workflow share ONE code path and ONE review-index writer — the friction this
-week is precisely that the scheduled writer was archived while the file it
-maintains still needs a weekly touch. (Anchors: `trading_lab.paper.main` /
-`scripts/grade_paper.py`; parked `weekly-grading.yml`;
-`control/status.md` → `grading_executor` / `grading_friday`.)
+💡 **Session idea (deduped against prior cards):** the paper lane has a subtle
+trap a fresh in-session executor can fall into (this session did, then
+corrected): `scripts/grade_paper.py` WRITES a per-week record into
+`experiments/paper/reviews.md`, but that file is intentionally kept
+header-only in git and the record is a regenerable artifact — committing the
+run output turns CI's required `pytest` red via
+`test_committed_index_matches_generated_header`. The contract lives only in
+that test's docstring, not in the script's own help text or in
+`docs/paper-lane-protocol.md` §6. A durable guard recipe: make
+`scripts/grade_paper.py` print an explicit "reviews.md is regenerated per
+pass — do NOT commit it" line on exit (anchor: `trading_lab.paper.main`
+final print), and/or add a `.gitattributes`/pre-commit note; the test target
+that pins the invariant is
+`tests/test_paper.py::TestReviewIndex::test_committed_index_matches_generated_header`.
+Converging the parked `weekly-grading.yml` (once owner-approved) on this same
+no-arg job would also keep the human fallback and the workflow on ONE code
+path. (Anchors: `trading_lab.paper.main` / `scripts/grade_paper.py`; parked
+`weekly-grading.yml`; `control/status.md` → `grading_executor` /
+`grading_friday`.)
 
 ## Landing discipline
 
