@@ -1,12 +1,12 @@
 # 2026-07-17 — Friday in-session paper-lane grading pass (executor of record)
 
-> **Status:** `in-progress`
+> **Status:** `complete`
 
 Born-red HOLD: this card ships `in-progress` on purpose so the substrate-gate
 holds this PR red until the grading pass is fully recorded. It flips to
 `complete` in the LAST commit of this session, which releases the gate.
 
-- **📊 Model:** opus-4.8 · medium · execute/verify
+- **📊 Model:** opus-4.8 · medium · review/verify
 
 ⚑ Scope (claimed, `control/claims/friday-grading.md`, branch
 `claude/friday-grading`): run this week's Friday paper-lane grading pass
