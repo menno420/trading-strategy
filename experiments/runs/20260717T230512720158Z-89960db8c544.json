@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.06899245598055503,
+    "max_drawdown": -0.6111953832320853,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.3906832284981404,
+    "sortino": 0.3859772608614487,
+    "total_return": 1.7195974573756638,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "89960db8c544",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-17T23:05:12+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "f41b4f13d458e02c2f0578cc80dfc47554b76156",
+  "instrument": "XOM",
+  "metrics": {
+    "cagr": 0.036150843502912755,
+    "max_drawdown": -0.4711772277239712,
+    "n_bars": 3779,
+    "n_trades": 81,
+    "sharpe": 0.27344570042013455,
+    "sortino": 0.2569954622598419,
+    "total_return": 0.7032702890711409,
+    "turnover_per_year": 5.401428949457529,
+    "win_rate": 0.34146341463414637
+  },
+  "n_bars": 3779,
+  "notes": "Round 7 slice R7-B high_proximity sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 018 owner overnight research GO; pre-registered docs/research-round-7-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r7-high-proximity/high_proximity__XOM.json)",
+  "params": {
+    "N": 63,
+    "p": 0.85
+  },
+  "run_id": "20260717T230512720158Z-89960db8c544",
+  "schema_version": 1,
+  "strategy": "high_proximity",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.1369418664483757,
+    "max_drawdown": -0.32048971956122474,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8673964015186144,
+    "sortino": 0.7971351390988236,
+    "total_return": 5.852557734879854,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "9d3f428a71cc",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-17T23:04:55+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "f41b4f13d458e02c2f0578cc80dfc47554b76156",
+  "instrument": "SPY",
+  "metrics": {
+    "cagr": 0.044300500957795474,
+    "max_drawdown": -0.25837844327807447,
+    "n_bars": 3779,
+    "n_trades": 24,
+    "sharpe": 0.46169831755234203,
+    "sortino": 0.16774989662844197,
+    "total_return": 0.9156121844647167,
+    "turnover_per_year": 1.6004233924318603,
+    "win_rate": 0.9166666666666666
+  },
+  "n_bars": 3779,
+  "notes": "Round 7 slice R7-A drawdown_reversion sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 018 owner overnight research GO; pre-registered docs/research-round-7-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r7-drawdown-reversion/drawdown_reversion__SPY.json)",
+  "params": {
+    "entry_dd": 0.1,
+    "exit_frac": 0.5,
+    "lookback": 126
+  },
+  "run_id": "20260717T230455291167Z-9d3f428a71cc",
+  "schema_version": 1,
+  "strategy": "drawdown_reversion",
+  "timeframe": "daily",
+  "variants_tried": 12
+}
