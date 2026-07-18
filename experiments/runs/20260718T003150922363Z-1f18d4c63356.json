@@ -1,0 +1,48 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.26328655934387113,
+    "max_drawdown": -0.557692284578402,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8638800519755336,
+    "sortino": 0.8727857658651618,
+    "total_return": 32.275558046263065,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "1f18d4c63356",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-18T00:31:50+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "b225cc21d978a8774701d21843bf85024ee26eb6",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.04465107294769455,
+    "max_drawdown": -0.1748720004039247,
+    "n_bars": 3779,
+    "n_trades": 66,
+    "sharpe": 0.48940160675624034,
+    "sortino": 0.14758141888017942,
+    "total_return": 0.9252783942136384,
+    "turnover_per_year": 4.401164329187616,
+    "win_rate": 0.6363636363636364
+  },
+  "n_bars": 3779,
+  "notes": "Round 7C slice R7-C washout_recovery sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 018 owner overnight research GO; pre-registered docs/research-round-7c-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r7c-conjunction/washout_recovery__AMZN.json)",
+  "params": {
+    "W_dd": 252,
+    "W_prox": 42,
+    "entry_dd": 0.2,
+    "p": 0.9
+  },
+  "run_id": "20260718T003150922363Z-1f18d4c63356",
+  "schema_version": 1,
+  "strategy": "washout_recovery",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

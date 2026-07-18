@@ -1,0 +1,48 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.45441141455618816,
+    "max_drawdown": -0.7496779844224901,
+    "n_bars": 3657,
+    "n_trades": 1,
+    "sharpe": 0.9279233460305005,
+    "sortino": 0.9834322968050291,
+    "total_return": 228.5631794612482,
+    "turnover_per_year": 0.06890894175553733,
+    "win_rate": 1.0
+  },
+  "config_hash": "915e16af384a",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-18T00:31:58+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-06-29 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "b225cc21d978a8774701d21843bf85024ee26eb6",
+  "instrument": "TSLA",
+  "metrics": {
+    "cagr": 0.11053132856987369,
+    "max_drawdown": -0.33497718904941054,
+    "n_bars": 3657,
+    "n_trades": 186,
+    "sharpe": 0.6890243372511107,
+    "sortino": 0.3306806323198415,
+    "total_return": 3.5786647596952594,
+    "turnover_per_year": 12.817063166529941,
+    "win_rate": 0.4731182795698925
+  },
+  "n_bars": 3657,
+  "notes": "Round 7C slice R7-C washout_recovery sweep (post-holdout DEV-ONLY, promotion closed \u2014 ORDER 018 owner overnight research GO; pre-registered docs/research-round-7c-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r7c-conjunction/washout_recovery__TSLA.json)",
+  "params": {
+    "W_dd": 252,
+    "W_prox": 21,
+    "entry_dd": 0.2,
+    "p": 0.95
+  },
+  "run_id": "20260718T003158314528Z-915e16af384a",
+  "schema_version": 1,
+  "strategy": "washout_recovery",
+  "timeframe": "daily",
+  "variants_tried": 12
+}

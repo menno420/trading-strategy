@@ -2126,3 +2126,50 @@ def r7_variants_per_family() -> dict[str, int]:
 
 def r7_total_configs() -> int:
     return sum(r7_variants_per_family().values()) * len(R7_INSTRUMENTS)
+
+
+# ---------------------------------------------------------------------------
+# Round 7C (docs/research-round-7c-plan.md, ORDER 018)
+# ---------------------------------------------------------------------------
+# One new CONJUNCTION family under the selection-fair standing gate [D-0002]:
+# R7-C washout_recovery (long iff SIMULTANEOUSLY washed out from a long-horizon
+# W_dd peak AND reclaiming a short-horizon W_prox high, two DISTINCT windows,
+# no hysteresis). The intersection of R7-A drawdown_reversion and R7-B
+# high_proximity on two windows -- a decision surface neither evaluates. Swept
+# over the committed 15-ticker daily surface (same tuple object as R7 -- no new
+# caches, nothing fetched). W_prox < W_dd is a registered constraint (a single
+# window collapses "washed out yet recovering" to a contradiction).
+
+_R7C_CONJUNCTION_AXES: dict[str, dict[str, list]] = {
+    "washout_recovery": {"W_dd": [252], "entry_dd": [0.10, 0.20],
+                         "W_prox": [21, 42, 63], "p": [0.90, 0.95]},
+}
+_R7C_CONJUNCTION_CONSTRAINTS: dict[str, Callable[[dict], bool]] = {
+    "washout_recovery": lambda c: (c["W_dd"] >= 2 and c["W_prox"] >= 2
+                                   and c["W_prox"] < c["W_dd"]
+                                   and 0.0 < c["entry_dd"] < 1.0
+                                   and 0.0 < c["p"] <= 1.0),
+}
+R7C_CONJUNCTION_FAMILIES = tuple(_R7C_CONJUNCTION_AXES)
+R7C_INSTRUMENTS = R7_INSTRUMENTS  # same 15-ticker tuple object
+R7C_K = 12
+
+
+def r7c_conjunction_variants(family: str) -> list[dict]:
+    try:
+        axes = _R7C_CONJUNCTION_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R7C conjunction family {family!r}") from None
+    keys = list(axes)
+    combos = (dict(zip(keys, vals))
+              for vals in product(*(axes[k] for k in keys)))
+    keep = _R7C_CONJUNCTION_CONSTRAINTS[family]
+    return [c for c in combos if keep(c)]
+
+
+def r7c_conjunction_variants_per_family() -> dict[str, int]:
+    return {fam: len(r7c_conjunction_variants(fam)) for fam in R7C_CONJUNCTION_FAMILIES}
+
+
+def r7c_total_configs() -> int:
+    return sum(r7c_conjunction_variants_per_family().values()) * len(R7C_INSTRUMENTS)

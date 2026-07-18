@@ -1507,3 +1507,87 @@ class TestHighProximity:
             STRATEGIES["high_proximity"](random_walk, p=0.0)
         with pytest.raises(ValueError, match="p"):
             STRATEGIES["high_proximity"](random_walk, p=1.5)
+
+
+class TestWashoutRecovery:
+    @staticmethod
+    def _washout_then_bounce():
+        # 20 bars at the peak (long-window peak established), an 8-bar
+        # decline to -30% (the 100 peak stays inside a 20-bar window), then
+        # a 6-bar bounce whose top (78) is still -22% below the long peak
+        # yet a fresh short-window high => washed-out AND recovering.
+        closes = np.concatenate([
+            np.full(20, 100.0),
+            np.linspace(96.0, 70.0, 8),
+            np.linspace(72.0, 78.0, 6),
+        ])
+        return make_ohlcv(closes)
+
+    def test_positions_valid(self, random_walk):
+        pos = STRATEGIES["washout_recovery"](
+            random_walk, **DEFAULT_PARAMS["washout_recovery"])
+        assert isinstance(pos, pd.Series)
+        assert pos.name == "position"
+        assert pos.index.equals(random_walk.index)
+        assert not pos.isna().any()
+        assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_warmup_flat(self):
+        ohlcv = self._washout_then_bounce()
+        pos = STRATEGIES["washout_recovery"](ohlcv, W_dd=20, entry_dd=0.20,
+                                             W_prox=5, p=0.95)
+        # long window not full for the first W_dd-1 bars => peak NaN => flat
+        assert (pos.iloc[:19] == 0.0).all()
+
+    def test_recovering_but_not_washed_is_flat(self):
+        # At the peak plateau the close is a fresh short-window high
+        # (recovering) but not washed out (dd == 0) => flat: the conjunction
+        # requires BOTH states, not the proximity term alone.
+        ohlcv = self._washout_then_bounce()
+        pos = STRATEGIES["washout_recovery"](ohlcv, W_dd=20, entry_dd=0.20,
+                                             W_prox=5, p=0.95)
+        assert pos.iloc[19] == 0.0
+
+    def test_washed_but_not_recovering_is_flat(self):
+        # At the trough the close is deeply washed out (-30%) but far below
+        # its short-window max => not recovering => flat: the drawdown term
+        # alone does not fire the lane.
+        ohlcv = self._washout_then_bounce()
+        pos = STRATEGIES["washout_recovery"](ohlcv, W_dd=20, entry_dd=0.20,
+                                             W_prox=5, p=0.95)
+        assert pos.iloc[27] == 0.0
+
+    def test_long_only_in_the_intersection(self):
+        # The bounce top: -22% below the long-horizon peak (washed out) AND
+        # a fresh short-window high (recovering) => long, the decision
+        # surface neither component evaluates.
+        ohlcv = self._washout_then_bounce()
+        pos = STRATEGIES["washout_recovery"](ohlcv, W_dd=20, entry_dd=0.20,
+                                             W_prox=5, p=0.95)
+        assert pos.iloc[-1] == 1.0
+
+    def test_causality_prefix_invariance(self):
+        ohlcv = self._washout_then_bounce()
+        full = STRATEGIES["washout_recovery"](ohlcv, W_dd=20, entry_dd=0.20,
+                                              W_prox=5, p=0.95)
+        for k in (21, 25, 30, len(ohlcv) - 1):
+            cut = STRATEGIES["washout_recovery"](ohlcv.iloc[:k], W_dd=20,
+                                                 entry_dd=0.20, W_prox=5,
+                                                 p=0.95)
+            pd.testing.assert_series_equal(full.iloc[:k], cut)
+
+    def test_rejects_bad_params(self, random_walk):
+        with pytest.raises(ValueError, match="W_dd"):
+            STRATEGIES["washout_recovery"](random_walk, W_dd=1)
+        with pytest.raises(ValueError, match="W_prox"):
+            STRATEGIES["washout_recovery"](random_walk, W_dd=20, W_prox=1)
+        with pytest.raises(ValueError, match="W_prox"):
+            STRATEGIES["washout_recovery"](random_walk, W_dd=20, W_prox=20)
+        with pytest.raises(ValueError, match="entry_dd"):
+            STRATEGIES["washout_recovery"](random_walk, entry_dd=0.0)
+        with pytest.raises(ValueError, match="entry_dd"):
+            STRATEGIES["washout_recovery"](random_walk, entry_dd=1.0)
+        with pytest.raises(ValueError, match="p"):
+            STRATEGIES["washout_recovery"](random_walk, p=0.0)
+        with pytest.raises(ValueError, match="p"):
+            STRATEGIES["washout_recovery"](random_walk, p=1.5)

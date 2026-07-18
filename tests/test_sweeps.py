@@ -1966,3 +1966,69 @@ class TestRound7:
         # registered configs; program cumulative 5055 -> 5415.
         assert sweeps.r7_total_configs() == 360
         assert 5055 + sweeps.r7_total_configs() == 5415
+
+
+class TestRound7C:
+    """Round-7C pre-declaration pins (docs/research-round-7c-plan.md, ORDER
+    018): the washout_recovery CONJUNCTION grid is committed BEFORE the sweep
+    runs and these pins freeze it under the selection-fair standing gate
+    [D-0002]. W_prox < W_dd is a registered constraint, not a variant."""
+
+    def test_families_match_strategy_registry(self):
+        for fam in sweeps.R7C_CONJUNCTION_FAMILIES:
+            assert fam in STRATEGIES
+        assert sweeps.R7C_CONJUNCTION_FAMILIES == ("washout_recovery",)
+
+    def test_axes_are_exactly_the_pre_registered_grid(self):
+        assert sweeps._R7C_CONJUNCTION_AXES == {
+            "washout_recovery": {"W_dd": [252], "entry_dd": [0.10, 0.20],
+                                 "W_prox": [21, 42, 63], "p": [0.90, 0.95]}}
+
+    def test_registered_counts(self):
+        assert len(sweeps.r7c_conjunction_variants("washout_recovery")) == 12
+        assert sweeps.r7c_conjunction_variants_per_family() == \
+            {"washout_recovery": 12}
+
+    def test_k_is_round_standard_and_bar_never_lowered(self):
+        from trading_lab import promotion
+        assert sweeps.R7C_K == 12
+        assert all(n == sweeps.R7C_K
+                   for n in sweeps.r7c_conjunction_variants_per_family().values())
+        assert round(promotion.min_tstat(sweeps.R7C_K), 2) == 2.64
+
+    def test_instruments_are_the_r7_surface_verbatim(self):
+        # Same tuple OBJECT as the R7 15-ticker daily surface — no new
+        # caches, nothing fetched, no post-hoc instrument selection.
+        assert sweeps.R7C_INSTRUMENTS is sweeps.R7_INSTRUMENTS
+        assert len(sweeps.R7C_INSTRUMENTS) == 15
+
+    def test_wprox_lt_wdd_constraint_enforced(self):
+        # The registered constraint: every expanded variant satisfies
+        # W_prox < W_dd (a single window collapses to a contradiction).
+        for c in sweeps.r7c_conjunction_variants("washout_recovery"):
+            assert c["W_dd"] >= 2
+            assert c["W_prox"] >= 2
+            assert c["W_prox"] < c["W_dd"]
+            assert 0.0 < c["entry_dd"] < 1.0
+            assert 0.0 < c["p"] <= 1.0
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R7C_CONJUNCTION_FAMILIES:
+            for params in sweeps.r7c_conjunction_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+                assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r7c_conjunction_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r7c_conjunction_variants("washout_recovery")
+                == sweeps.r7c_conjunction_variants("washout_recovery"))
+
+    def test_round_total_configs_and_program_ledger(self):
+        # The plan's burden ledger: 12 variants x 15 tickers = 180 new
+        # registered configs; program cumulative 5415 -> 5595.
+        assert sweeps.r7c_total_configs() == 180
+        assert 5415 + sweeps.r7c_total_configs() == 5595
