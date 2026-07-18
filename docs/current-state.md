@@ -56,6 +56,20 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
+- **Cross-round meta-analysis (Rounds 1–8) IN FLIGHT** (PR #152, branch
+  `claude/cross-round-meta-analysis`; ORDER 018) — new doc
+  [cross-round-meta-analysis.md](cross-round-meta-analysis.md) consolidates the
+  whole program (P1 → Round 8, **5,793 registered configs / 0 promoted**),
+  extending the [dashboard](research-program-dashboard.md) (P1 → Round 7) and
+  [retrospective](research-program-retrospective.md) (Rounds 1–6) through the
+  four newest slices (R7-A/B, R7-C, R7-D, R8) and foregrounding the effect-size
+  distribution (strongest dev arm each round vs the 2.638 bar; program best t
+  anywhere 1.66, R5). Ships a read-only aggregator
+  `scripts/aggregate_effect_sizes.py` (pytest-pinned) that emits the R6–R8
+  effect-size table from committed `experiments/sweeps/*/summary.json`.
+  **RESEARCH-ONLY / in-sample: no sweep re-run, holdout still SPENT and
+  untouched, promotion still CLOSED / 0 promoted.** Docs + read-only tooling
+  only; changes no verdict.
 - **Research Round 8 CLOSED (ran 2026-07-18; owner GO 2026-07-18T13:47Z /
   menu #03)** — the pre-registered HOURLY companion executed against
   [research-round-8-plan.md](research-round-8-plan.md): the two newest R7
