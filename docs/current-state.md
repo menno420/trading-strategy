@@ -19,8 +19,8 @@ autonomous seat. That phase is **over**:
   from this repo alone — read `CONSTITUTION.md` + this file; ignore the
   retired EAP fleet-coordination scaffolding (`control/`, `docs/succession/`,
   `docs/ROUTINES.md` — each now carries a deprecation banner).
-- **Honest research headline.** Across Rounds 1–7 the program registered
-  **5,415 configs and promoted 0** — **no strategy cleared the significance
+- **Honest research headline.** Across Rounds 1–7C the program registered
+  **5,595 configs and promoted 0** — **no strategy cleared the significance
   bar** (`promotion.min_tstat(K)` ~2.638 at K=12). Promotion is CLOSED, the
   holdout is SPENT, and the negative result *is* the finding. This is a clean,
   honest offline research library, not a live trading system. One canonical
@@ -44,10 +44,10 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 ## In flight
 
 (Verify against live source control — this section is a dated snapshot.
-State as of 2026-07-17: **0 open PRs** on the repo (beyond the fresh-start
+State as of 2026-07-18: **0 open PRs** on the repo (beyond the fresh-start
 cleanup PR that carries this edit), **0 active claims**, main advanced through
 the 2026-07-16/17 heartbeat + Friday-grading PRs. Paper lane FLAT/WATCH —
-sole ledger record `paper-0001` WATCH; holdout SPENT; 5,415 registered
+sole ledger record `paper-0001` WATCH; holdout SPENT; 5,595 registered
 configs / 0 promoted. The 2026-07-17 weekly grading pass **already ran**
 in-session as a true no-op (see "Fresh-start snapshot"); there is **no
 self-armed grading cron** — grading runs in-session via
@@ -56,14 +56,23 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
-- **Round 7C pre-registered PLAN ONLY — running is a future slice**
-  ([research-round-7c-plan.md](research-round-7c-plan.md), badge `binding`):
-  the first Round-7 interaction family — the drawdown × high-proximity
-  conjunction (`washout_recovery`), long only when washed out from a
-  long-horizon peak AND reclaiming a short-horizon high on two distinct
-  windows, 12-variant grid × 15 daily tickers (180 configs, 5,415 → 5,595 at
-  run). Registered null: most lanes KILL. No code/grid committed to
-  `sweeps.py` here; executing R7-C is a separately claimed future slice.
+- **Research Round 7C CLOSED (ran 2026-07-18; ORDER 018)** — the single
+  pre-registered slice executed against
+  [research-round-7c-plan.md](research-round-7c-plan.md): R7-C
+  `washout_recovery`, the first Round-7 interaction family (drawdown ×
+  high-proximity CONJUNCTION — long only when washed out from a long-horizon
+  peak AND reclaiming a short-horizon high on two distinct windows), 1 family
+  × 15 daily tickers, 180 new configs (5,415 → 5,595), under the standing
+  selection-fair gate + R5-D fixed-config row. Headline **1 KEEP-dev / 11
+  KILL / 3 KILL-SIG of 15 lanes, 0 promoted**, gate 2 PASS / 13 FAIL with 1
+  KEEP demoted (GLD, the first R7-family gate demotion), 0 UNGRADEABLE (no
+  infrastructure alarm), best informational t 0.22 (TLT) vs the unchanged
+  2.638 bar, no runtime cap hit. The conjunction adds no benchmark-beating
+  edge (its sole KEEP is the same low-vol survivorship name the components
+  each returned) and is significantly value-destroying on high-drift names
+  (3 KILL-SIG: AMZN t −3.00, MSFT t −3.72, QQQ t −3.11 — the first KILL-SIG
+  any R7 family produced). Promotion stays CLOSED, holdout untouched. Full
+  results: [research-round-7c-results.md](research-round-7c-results.md).
 - **Research Round 7 CLOSED (ran 2026-07-17; ORDER 018)** — both
   pre-registered slices executed against
   [research-round-7-plan.md](research-round-7-plan.md): R7-A
