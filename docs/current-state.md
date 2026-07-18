@@ -23,7 +23,10 @@ autonomous seat. That phase is **over**:
   **5,415 configs and promoted 0** — **no strategy cleared the significance
   bar** (`promotion.min_tstat(K)` ~2.638 at K=12). Promotion is CLOSED, the
   holdout is SPENT, and the negative result *is* the finding. This is a clean,
-  honest offline research library, not a live trading system.
+  honest offline research library, not a live trading system. One canonical
+  per-round scoreboard (configs added + cumulative, KEEP-dev / KILL /
+  KILL-SIG, best informational t, promoted — every number cited) lives in
+  [research-program-dashboard.md](research-program-dashboard.md).
 - **Paper lane is a no-op for now.** The Friday 2026-07-17 grading pass ran
   in-session (`python3 scripts/grade_paper.py`, exit 0) and was a **true
   no-op** — `experiments/paper/ledger.md` untouched, `paper-0001` still WATCH,
