@@ -44,6 +44,16 @@ Machine-readable rollup: `summary.json` in
 (runner `scripts/run_r8_hourly_sweep.py`, cloned from the R6-C hourly
 runner so the selection-fair gate runs on every lane).
 
+## Rendering results docs
+
+The results-table block below (slice-summary row, per-lane table, Counts
+sub-tables, reason_class rollup + the mandatory UNGRADEABLE infra-alarm line,
+and the burden line) is generated — not hand-typed — from the committed sweep
+JSONs by `python3 scripts/render_round_results.py <slice>` (e.g. `r8-hourly`),
+a read-only generator (numbers-tested against this doc in
+`tests/test_render_round_results.py`). Single-name slices only; portfolio
+slices (e.g. `r7d-xsec-drawdown`) are a documented TBD.
+
 ## Reading the per-lane table
 
 Every lane below carries its R5-D fixed-config row (standing rule 2 —
