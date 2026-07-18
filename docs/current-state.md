@@ -56,6 +56,14 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
+- **Round 7C pre-registered PLAN ONLY — running is a future slice**
+  ([research-round-7c-plan.md](research-round-7c-plan.md), badge `binding`):
+  the first Round-7 interaction family — the drawdown × high-proximity
+  conjunction (`washout_recovery`), long only when washed out from a
+  long-horizon peak AND reclaiming a short-horizon high on two distinct
+  windows, 12-variant grid × 15 daily tickers (180 configs, 5,415 → 5,595 at
+  run). Registered null: most lanes KILL. No code/grid committed to
+  `sweeps.py` here; executing R7-C is a separately claimed future slice.
 - **Research Round 7 CLOSED (ran 2026-07-17; ORDER 018)** — both
   pre-registered slices executed against
   [research-round-7-plan.md](research-round-7-plan.md): R7-A
