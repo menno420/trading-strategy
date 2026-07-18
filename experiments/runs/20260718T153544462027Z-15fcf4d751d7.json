@@ -1,0 +1,46 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.3825470465393914,
+    "max_drawdown": -0.6111052425639715,
+    "n_bars": 3180,
+    "n_trades": 14,
+    "sharpe": 1.1364814587701744,
+    "sortino": 1.1049482276978055,
+    "total_return": 58.60004590113193,
+    "turnover_per_year": 0.0792452830188679,
+    "win_rate": null
+  },
+  "config_hash": "15fcf4d751d7",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-18T15:35:44+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2012-05-18 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "a79de47ffff494e45bd5725eee3f3a461abce100",
+  "instrument": "XSEC-14",
+  "metrics": {
+    "cagr": 0.27374226460575324,
+    "max_drawdown": -0.4362224517614227,
+    "n_bars": 3180,
+    "n_trades": 643,
+    "sharpe": 0.9622686465810708,
+    "sortino": 0.9644160549287604,
+    "total_return": 20.18503588853671,
+    "turnover_per_year": 11.002056257937117,
+    "win_rate": null
+  },
+  "n_bars": 3180,
+  "notes": "Round 7D slice R7-D (post-holdout DEV-ONLY, promotion CLOSED \u2014 owner GO 2026-07-18): top full-dev-period config of 6 tried this family (6 the lane) \u2014 post-hoc selection, in-sample; the per-config walk-forward OOS numbers live in experiments/sweeps/r7d-xsec-drawdown/xsec_drawdown__XSEC-14.json. Portfolio lane: instrument XSEC-14 = equal-weight deepest-drawdown-k basket over 14 instruments; benchmark = equal-weight basket B&H, same costs; common index starts at META's first bar 2012-05-18 (latest-starting instrument \u2014 the Round-3 xsec short-history convention); win_rate is null (single-book episode metric undefined for a cross-sectional portfolio).",
+  "params": {
+    "L": 63,
+    "k": 3
+  },
+  "run_id": "20260718T153544462027Z-15fcf4d751d7",
+  "schema_version": 1,
+  "strategy": "xsec_drawdown",
+  "timeframe": "daily",
+  "variants_tried": 6
+}

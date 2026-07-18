@@ -1,0 +1,1305 @@
+{
+  "alignment": "common date index = intersection of the 14 instruments' dev-rail date indexes \u2014 starts at the LATEST-starting instrument, META 2012-05-18 (TSLA 2010-06-29 second-latest; the other 12 reach back to 2010-01-04), the same handling the Round-2 R3 lane used for BTC-USD's 2014 start; lookbacks count aligned bars",
+  "benchmark_full_period_metrics": {
+    "cagr": 0.3825470465393914,
+    "max_drawdown": -0.6111052425639715,
+    "n_bars": 3180,
+    "n_trades": 14,
+    "sharpe": 1.1364814587701744,
+    "sortino": 1.1049482276978055,
+    "total_return": 58.60004590113193,
+    "turnover_per_year": 0.0792452830188679,
+    "win_rate": null
+  },
+  "cap_seconds": 900,
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-18T15:35:44+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2012-05-18 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "family": "xsec_drawdown",
+  "family_variants_tried": 6,
+  "full_period_variants": {
+    "note": "single-split in-sample rows for deflated-Sharpe bookkeeping \u2014 NOT findings",
+    "rows": [
+      {
+        "metrics": {
+          "cagr": 0.2928673072073862,
+          "max_drawdown": -0.4301030884388105,
+          "n_bars": 3180,
+          "n_trades": 444,
+          "sharpe": 0.920846560942066,
+          "sortino": 0.9336772834814756,
+          "total_return": 24.568464776338057,
+          "turnover_per_year": 12.155721511980726,
+          "win_rate": null
+        },
+        "params": {
+          "L": 63,
+          "k": 2
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.27374226460575324,
+          "max_drawdown": -0.4362224517614227,
+          "n_bars": 3180,
+          "n_trades": 643,
+          "sharpe": 0.9622686465810708,
+          "sortino": 0.9644160549287604,
+          "total_return": 20.18503588853671,
+          "turnover_per_year": 11.002056257937117,
+          "win_rate": null
+        },
+        "params": {
+          "L": 63,
+          "k": 3
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.2493598399634942,
+          "max_drawdown": -0.4538926762671698,
+          "n_bars": 3180,
+          "n_trades": 401,
+          "sharpe": 0.8297419228405959,
+          "sortino": 0.8297605345659015,
+          "total_return": 15.599870207946296,
+          "turnover_per_year": 9.22553933268344,
+          "win_rate": null
+        },
+        "params": {
+          "L": 126,
+          "k": 2
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.2049766868082017,
+          "max_drawdown": -0.44147991120256125,
+          "n_bars": 3180,
+          "n_trades": 578,
+          "sharpe": 0.7826616856528982,
+          "sortino": 0.7711517627907765,
+          "total_return": 9.51655194348227,
+          "turnover_per_year": 8.078189178942978,
+          "win_rate": null
+        },
+        "params": {
+          "L": 126,
+          "k": 3
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.2269585664403504,
+          "max_drawdown": -0.5074072756495054,
+          "n_bars": 3180,
+          "n_trades": 347,
+          "sharpe": 0.7919885425839797,
+          "sortino": 0.7794378708963755,
+          "total_return": 12.211395747666902,
+          "turnover_per_year": 5.894335759198824,
+          "win_rate": null
+        },
+        "params": {
+          "L": 252,
+          "k": 2
+        }
+      },
+      {
+        "metrics": {
+          "cagr": 0.2491088908142136,
+          "max_drawdown": -0.421983853298573,
+          "n_bars": 3180,
+          "n_trades": 535,
+          "sharpe": 0.9214424292531761,
+          "sortino": 0.8992341645395029,
+          "total_return": 15.557843754876675,
+          "turnover_per_year": 6.739858218778908,
+          "win_rate": null
+        },
+        "params": {
+          "L": 252,
+          "k": 3
+        }
+      }
+    ]
+  },
+  "git_sha": "a79de47ffff494e45bd5725eee3f3a461abce100",
+  "instrument": "XSEC-14",
+  "instrument_first_bars": {
+    "AAPL": "2010-01-04",
+    "AMZN": "2010-01-04",
+    "GLD": "2010-01-04",
+    "GOOGL": "2010-01-04",
+    "JPM": "2010-01-04",
+    "META": "2012-05-18",
+    "MSFT": "2010-01-04",
+    "NVDA": "2010-01-04",
+    "QQQ": "2010-01-04",
+    "SLV": "2010-01-04",
+    "SPY": "2010-01-04",
+    "TLT": "2010-01-04",
+    "TSLA": "2010-06-29",
+    "XOM": "2010-01-04"
+  },
+  "instruments": [
+    "AAPL",
+    "AMZN",
+    "GLD",
+    "GOOGL",
+    "JPM",
+    "META",
+    "MSFT",
+    "NVDA",
+    "QQQ",
+    "SLV",
+    "SPY",
+    "TLT",
+    "TSLA",
+    "XOM"
+  ],
+  "lane_variants_tried": 6,
+  "n_bars": 3180,
+  "order": "owner GO 2026-07-18 (docs/research-round-7d-plan.md)",
+  "post_holdout_dev_only": true,
+  "program_variants_tried": 5601,
+  "rebalance_every_bars": 21,
+  "schema_version": 1,
+  "selection_walk_forward": {
+    "note": "select-on-train over the family's 6-config grid, mirroring prior lanes' machinery \u2014 BOOKKEEPING ONLY: not a registered config, carries no verdict",
+    "oos_metrics": {
+      "cagr": 0.22560740648458943,
+      "max_drawdown": -0.38059903550887975,
+      "n_bars": 2016,
+      "sharpe": 0.7603514937931737,
+      "sortino": 0.7728643874364114,
+      "total_return": 4.091092810625717
+    },
+    "per_split": [
+      {
+        "params": {
+          "L": 126,
+          "k": 2
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 1.7278764761329044,
+        "train": [
+          0,
+          1008
+        ],
+        "train_score": 1.1861006147846964
+      },
+      {
+        "params": {
+          "L": 126,
+          "k": 2
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 0.5797607088707611,
+        "train": [
+          252,
+          1260
+        ],
+        "train_score": 1.4157626903104226
+      },
+      {
+        "params": {
+          "L": 63,
+          "k": 2
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.18645223641261274,
+        "train": [
+          504,
+          1512
+        ],
+        "train_score": 1.381886302819869
+      },
+      {
+        "params": {
+          "L": 63,
+          "k": 2
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.8716546218864892,
+        "train": [
+          756,
+          1764
+        ],
+        "train_score": 1.1849750552163572
+      },
+      {
+        "params": {
+          "L": 63,
+          "k": 2
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 1.1993010681639078,
+        "train": [
+          1008,
+          2016
+        ],
+        "train_score": 0.8223613226489521
+      },
+      {
+        "params": {
+          "L": 63,
+          "k": 3
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 0.23957964293962977,
+        "train": [
+          1260,
+          2268
+        ],
+        "train_score": 0.9982059564503108
+      },
+      {
+        "params": {
+          "L": 252,
+          "k": 3
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.9353935021076383,
+        "train": [
+          1512,
+          2520
+        ],
+        "train_score": 0.9822529380168834
+      },
+      {
+        "params": {
+          "L": 63,
+          "k": 3
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 0.967461368098841,
+        "train": [
+          1764,
+          2772
+        ],
+        "train_score": 1.0171503560641282
+      }
+    ],
+    "variants_tried": 48
+  },
+  "sweep": "r7d-xsec-drawdown",
+  "timeframe": "daily",
+  "top_full_period_variant": {
+    "ledger_run": "20260718T153544462027Z-15fcf4d751d7.json",
+    "metrics": {
+      "cagr": 0.27374226460575324,
+      "max_drawdown": -0.4362224517614227,
+      "n_bars": 3180,
+      "n_trades": 643,
+      "sharpe": 0.9622686465810708,
+      "sortino": 0.9644160549287604,
+      "total_return": 20.18503588853671,
+      "turnover_per_year": 11.002056257937117,
+      "win_rate": null
+    },
+    "params": {
+      "L": 63,
+      "k": 3
+    }
+  },
+  "variants_tried": 6,
+  "walk_forward": {
+    "benchmark_oos_metrics": {
+      "cagr": 0.355704772987123,
+      "max_drawdown": -0.5006661014343327,
+      "n_bars": 2016,
+      "n_trades": 14,
+      "sharpe": 1.1933935713256574,
+      "sortino": 1.125904268229854,
+      "total_return": 10.410928929898928,
+      "turnover_per_year": 0.12499999999999997,
+      "win_rate": null
+    },
+    "n_splits": 8,
+    "note": "each config is one FIXED portfolio rule \u2014 no per-split fitting \u2014 so its stitched OOS is the rule evaluated on the identical split scheme's test windows (Round-2 R3 scheme; verdicts per config per the Round-2 \u00a76 rule)",
+    "oos_end": "2024-05-24 00:00:00",
+    "oos_start": "2016-05-23 00:00:00",
+    "per_config": [
+      {
+        "n_splits": 8,
+        "oos_metrics": {
+          "cagr": 0.30863900503796105,
+          "max_drawdown": -0.38863763144706864,
+          "n_bars": 2016,
+          "sharpe": 0.9185104110046974,
+          "sortino": 0.9307137077145148,
+          "total_return": 7.60119681072878
+        },
+        "params": {
+          "L": 63,
+          "k": 2
+        },
+        "per_split": [
+          {
+            "params": {
+              "L": 63,
+              "k": 2
+            },
+            "test": [
+              1008,
+              1260
+            ],
+            "test_sharpe": 1.7690435072351214,
+            "train": [
+              0,
+              1008
+            ],
+            "train_score": 0.7812482995942428
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 2
+            },
+            "test": [
+              1260,
+              1512
+            ],
+            "test_sharpe": 1.5444886240968736,
+            "train": [
+              252,
+              1260
+            ],
+            "train_score": 1.2290668055147242
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 2
+            },
+            "test": [
+              1512,
+              1764
+            ],
+            "test_sharpe": 0.18645223641261274,
+            "train": [
+              504,
+              1512
+            ],
+            "train_score": 1.381886302819869
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 2
+            },
+            "test": [
+              1764,
+              2016
+            ],
+            "test_sharpe": 0.8716546218864892,
+            "train": [
+              756,
+              1764
+            ],
+            "train_score": 1.1849750552163572
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 2
+            },
+            "test": [
+              2016,
+              2268
+            ],
+            "test_sharpe": 1.1993010681639078,
+            "train": [
+              1008,
+              2016
+            ],
+            "train_score": 0.8223613226489521
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 2
+            },
+            "test": [
+              2268,
+              2520
+            ],
+            "test_sharpe": -0.02674023041622556,
+            "train": [
+              1260,
+              2268
+            ],
+            "train_score": 0.8822977523825116
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 2
+            },
+            "test": [
+              2520,
+              2772
+            ],
+            "test_sharpe": 1.4825193109873425,
+            "train": [
+              1512,
+              2520
+            ],
+            "train_score": 0.5210298458260205
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 2
+            },
+            "test": [
+              2772,
+              3024
+            ],
+            "test_sharpe": 1.3225657374149182,
+            "train": [
+              1764,
+              2772
+            ],
+            "train_score": 0.8267915626803453
+          }
+        ],
+        "promotion_grade": {
+          "alpha_one_sided": 0.05,
+          "min_tstat": 2.3939797998185104,
+          "n_periods": 2016,
+          "note": "ORDER 007 bar on the stitched OOS Sharpe delta vs the basket-B&H benchmark, Bonferroni K = variants this family \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+          "sharpe_delta": -0.27488316032095994,
+          "sharpe_se": 0.35384917890604345,
+          "timeframe": "daily",
+          "tstat": -0.7768370727064733,
+          "variants_tried": 6,
+          "verdict": "KILLED"
+        },
+        "verdict": "KILL"
+      },
+      {
+        "n_splits": 8,
+        "oos_metrics": {
+          "cagr": 0.2834028777121158,
+          "max_drawdown": -0.4362224517614227,
+          "n_bars": 2016,
+          "sharpe": 0.9301456784217824,
+          "sortino": 0.928096711091683,
+          "total_return": 6.360444969360877
+        },
+        "params": {
+          "L": 63,
+          "k": 3
+        },
+        "per_split": [
+          {
+            "params": {
+              "L": 63,
+              "k": 3
+            },
+            "test": [
+              1008,
+              1260
+            ],
+            "test_sharpe": 1.225082514038963,
+            "train": [
+              0,
+              1008
+            ],
+            "train_score": 0.9167419067990394
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 3
+            },
+            "test": [
+              1260,
+              1512
+            ],
+            "test_sharpe": 1.3778417555093214,
+            "train": [
+              252,
+              1260
+            ],
+            "train_score": 1.2620976922862759
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 3
+            },
+            "test": [
+              1512,
+              1764
+            ],
+            "test_sharpe": 0.11143444577887848,
+            "train": [
+              504,
+              1512
+            ],
+            "train_score": 1.252466197585541
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 3
+            },
+            "test": [
+              1764,
+              2016
+            ],
+            "test_sharpe": 0.6900900658796899,
+            "train": [
+              756,
+              1764
+            ],
+            "train_score": 1.0124345176179288
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 3
+            },
+            "test": [
+              2016,
+              2268
+            ],
+            "test_sharpe": 2.342751557167264,
+            "train": [
+              1008,
+              2016
+            ],
+            "train_score": 0.6076372912434294
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 3
+            },
+            "test": [
+              2268,
+              2520
+            ],
+            "test_sharpe": 0.23957964293962977,
+            "train": [
+              1260,
+              2268
+            ],
+            "train_score": 0.9982059564503108
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 3
+            },
+            "test": [
+              2520,
+              2772
+            ],
+            "test_sharpe": 1.2981967980884785,
+            "train": [
+              1512,
+              2520
+            ],
+            "train_score": 0.8054890557990378
+          },
+          {
+            "params": {
+              "L": 63,
+              "k": 3
+            },
+            "test": [
+              2772,
+              3024
+            ],
+            "test_sharpe": 0.967461368098841,
+            "train": [
+              1764,
+              2772
+            ],
+            "train_score": 1.0171503560641282
+          }
+        ],
+        "promotion_grade": {
+          "alpha_one_sided": 0.05,
+          "min_tstat": 2.3939797998185104,
+          "n_periods": 2016,
+          "note": "ORDER 007 bar on the stitched OOS Sharpe delta vs the basket-B&H benchmark, Bonferroni K = variants this family \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+          "sharpe_delta": -0.26324789290387496,
+          "sharpe_se": 0.3538567169585428,
+          "timeframe": "daily",
+          "tstat": -0.7439392281896873,
+          "variants_tried": 6,
+          "verdict": "KILLED"
+        },
+        "verdict": "KILL"
+      },
+      {
+        "n_splits": 8,
+        "oos_metrics": {
+          "cagr": 0.15141114146651646,
+          "max_drawdown": -0.41415813957160097,
+          "n_bars": 2016,
+          "sharpe": 0.5705440648687448,
+          "sortino": 0.5779858308014412,
+          "total_return": 2.0891814636288135
+        },
+        "params": {
+          "L": 126,
+          "k": 2
+        },
+        "per_split": [
+          {
+            "params": {
+              "L": 126,
+              "k": 2
+            },
+            "test": [
+              1008,
+              1260
+            ],
+            "test_sharpe": 1.7278764761329044,
+            "train": [
+              0,
+              1008
+            ],
+            "train_score": 1.1861006147846964
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 2
+            },
+            "test": [
+              1260,
+              1512
+            ],
+            "test_sharpe": 0.5797607088707611,
+            "train": [
+              252,
+              1260
+            ],
+            "train_score": 1.4157626903104226
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 2
+            },
+            "test": [
+              1512,
+              1764
+            ],
+            "test_sharpe": 0.24659927214930585,
+            "train": [
+              504,
+              1512
+            ],
+            "train_score": 1.3807746744646512
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 2
+            },
+            "test": [
+              1764,
+              2016
+            ],
+            "test_sharpe": 0.9670002650635346,
+            "train": [
+              756,
+              1764
+            ],
+            "train_score": 0.6869818556431799
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 2
+            },
+            "test": [
+              2016,
+              2268
+            ],
+            "test_sharpe": 0.34811127023715194,
+            "train": [
+              1008,
+              2016
+            ],
+            "train_score": 0.7657479404679045
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 2
+            },
+            "test": [
+              2268,
+              2520
+            ],
+            "test_sharpe": 0.16575313630256358,
+            "train": [
+              1260,
+              2268
+            ],
+            "train_score": 0.557892861382573
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 2
+            },
+            "test": [
+              2520,
+              2772
+            ],
+            "test_sharpe": 0.5618335256867203,
+            "train": [
+              1512,
+              2520
+            ],
+            "train_score": 0.4618513151547773
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 2
+            },
+            "test": [
+              2772,
+              3024
+            ],
+            "test_sharpe": 0.7292247219418939,
+            "train": [
+              1764,
+              2772
+            ],
+            "train_score": 0.3476277643234808
+          }
+        ],
+        "promotion_grade": {
+          "alpha_one_sided": 0.05,
+          "min_tstat": 2.3939797998185104,
+          "n_periods": 2016,
+          "note": "ORDER 007 bar on the stitched OOS Sharpe delta vs the basket-B&H benchmark, Bonferroni K = variants this family \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+          "sharpe_delta": -0.6228495064569126,
+          "sharpe_se": 0.35366754764668734,
+          "timeframe": "daily",
+          "tstat": -1.7611158009870251,
+          "variants_tried": 6,
+          "verdict": "KILLED"
+        },
+        "verdict": "KILL"
+      },
+      {
+        "n_splits": 8,
+        "oos_metrics": {
+          "cagr": 0.15979452732631838,
+          "max_drawdown": -0.44147991120256136,
+          "n_bars": 2016,
+          "sharpe": 0.6228220252171603,
+          "sortino": 0.6316272146797329,
+          "total_return": 2.2737720837024806
+        },
+        "params": {
+          "L": 126,
+          "k": 3
+        },
+        "per_split": [
+          {
+            "params": {
+              "L": 126,
+              "k": 3
+            },
+            "test": [
+              1008,
+              1260
+            ],
+            "test_sharpe": 1.5084694839211772,
+            "train": [
+              0,
+              1008
+            ],
+            "train_score": 0.9500386353458666
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 3
+            },
+            "test": [
+              1260,
+              1512
+            ],
+            "test_sharpe": 0.8300728628240128,
+            "train": [
+              252,
+              1260
+            ],
+            "train_score": 1.2839162529151236
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 3
+            },
+            "test": [
+              1512,
+              1764
+            ],
+            "test_sharpe": -0.12175157108168858,
+            "train": [
+              504,
+              1512
+            ],
+            "train_score": 1.2341428207287386
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 3
+            },
+            "test": [
+              1764,
+              2016
+            ],
+            "test_sharpe": 0.5887102946768057,
+            "train": [
+              756,
+              1764
+            ],
+            "train_score": 0.4994879322254249
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 3
+            },
+            "test": [
+              2016,
+              2268
+            ],
+            "test_sharpe": 1.1080800127754646,
+            "train": [
+              1008,
+              2016
+            ],
+            "train_score": 0.4952263993497936
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 3
+            },
+            "test": [
+              2268,
+              2520
+            ],
+            "test_sharpe": 0.3512876347073942,
+            "train": [
+              1260,
+              2268
+            ],
+            "train_score": 0.5354173135847858
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 3
+            },
+            "test": [
+              2520,
+              2772
+            ],
+            "test_sharpe": 0.7171893716172533,
+            "train": [
+              1512,
+              2520
+            ],
+            "train_score": 0.5369666392053135
+          },
+          {
+            "params": {
+              "L": 126,
+              "k": 3
+            },
+            "test": [
+              2772,
+              3024
+            ],
+            "test_sharpe": 1.0162161495832942,
+            "train": [
+              1764,
+              2772
+            ],
+            "train_score": 0.5037414961102208
+          }
+        ],
+        "promotion_grade": {
+          "alpha_one_sided": 0.05,
+          "min_tstat": 2.3939797998185104,
+          "n_periods": 2016,
+          "note": "ORDER 007 bar on the stitched OOS Sharpe delta vs the basket-B&H benchmark, Bonferroni K = variants this family \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+          "sharpe_delta": -0.570571546108497,
+          "sharpe_se": 0.3536894218965024,
+          "timeframe": "daily",
+          "tstat": -1.6131993517054048,
+          "variants_tried": 6,
+          "verdict": "KILLED"
+        },
+        "verdict": "KILL"
+      },
+      {
+        "n_splits": 8,
+        "oos_metrics": {
+          "cagr": 0.2114467247012537,
+          "max_drawdown": -0.47188057888841106,
+          "n_bars": 2016,
+          "sharpe": 0.7059682703227965,
+          "sortino": 0.724642216059699,
+          "total_return": 3.6391088295389284
+        },
+        "params": {
+          "L": 252,
+          "k": 2
+        },
+        "per_split": [
+          {
+            "params": {
+              "L": 252,
+              "k": 2
+            },
+            "test": [
+              1008,
+              1260
+            ],
+            "test_sharpe": 1.7785161404215202,
+            "train": [
+              0,
+              1008
+            ],
+            "train_score": 0.8544823194883641
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 2
+            },
+            "test": [
+              1260,
+              1512
+            ],
+            "test_sharpe": 0.39918396349169477,
+            "train": [
+              252,
+              1260
+            ],
+            "train_score": 1.2670231685849755
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 2
+            },
+            "test": [
+              1512,
+              1764
+            ],
+            "test_sharpe": 0.2080664097274991,
+            "train": [
+              504,
+              1512
+            ],
+            "train_score": 0.9373004728558095
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 2
+            },
+            "test": [
+              1764,
+              2016
+            ],
+            "test_sharpe": 1.2236105461500943,
+            "train": [
+              756,
+              1764
+            ],
+            "train_score": 0.5628108504455744
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 2
+            },
+            "test": [
+              2016,
+              2268
+            ],
+            "test_sharpe": 0.6974293670429744,
+            "train": [
+              1008,
+              2016
+            ],
+            "train_score": 0.56896536344782
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 2
+            },
+            "test": [
+              2268,
+              2520
+            ],
+            "test_sharpe": 0.4689414693846608,
+            "train": [
+              1260,
+              2268
+            ],
+            "train_score": 0.6906216894179809
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 2
+            },
+            "test": [
+              2520,
+              2772
+            ],
+            "test_sharpe": 0.5814715142954668,
+            "train": [
+              1512,
+              2520
+            ],
+            "train_score": 0.7669904276993946
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 2
+            },
+            "test": [
+              2772,
+              3024
+            ],
+            "test_sharpe": 0.82803783541154,
+            "train": [
+              1764,
+              2772
+            ],
+            "train_score": 0.457372244859303
+          }
+        ],
+        "promotion_grade": {
+          "alpha_one_sided": 0.05,
+          "min_tstat": 2.3939797998185104,
+          "n_periods": 2016,
+          "note": "ORDER 007 bar on the stitched OOS Sharpe delta vs the basket-B&H benchmark, Bonferroni K = variants this family \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+          "sharpe_delta": -0.48742530100286086,
+          "sharpe_se": 0.3537281568213783,
+          "timeframe": "daily",
+          "tstat": -1.3779657954936153,
+          "variants_tried": 6,
+          "verdict": "KILLED"
+        },
+        "verdict": "KILL"
+      },
+      {
+        "n_splits": 8,
+        "oos_metrics": {
+          "cagr": 0.269336134715497,
+          "max_drawdown": -0.42198385329857313,
+          "n_bars": 2016,
+          "sharpe": 0.9017557670470746,
+          "sortino": 0.9279991942325638,
+          "total_return": 5.7392745246493755
+        },
+        "params": {
+          "L": 252,
+          "k": 3
+        },
+        "per_split": [
+          {
+            "params": {
+              "L": 252,
+              "k": 3
+            },
+            "test": [
+              1008,
+              1260
+            ],
+            "test_sharpe": 2.1158512361178063,
+            "train": [
+              0,
+              1008
+            ],
+            "train_score": 0.83989639427463
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 3
+            },
+            "test": [
+              1260,
+              1512
+            ],
+            "test_sharpe": 0.5675580781463209,
+            "train": [
+              252,
+              1260
+            ],
+            "train_score": 1.2811077378585811
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 3
+            },
+            "test": [
+              1512,
+              1764
+            ],
+            "test_sharpe": 0.027996528860241898,
+            "train": [
+              504,
+              1512
+            ],
+            "train_score": 1.1128591744918102
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 3
+            },
+            "test": [
+              1764,
+              2016
+            ],
+            "test_sharpe": 0.9166465230795169,
+            "train": [
+              756,
+              1764
+            ],
+            "train_score": 0.5447227039037258
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 3
+            },
+            "test": [
+              2016,
+              2268
+            ],
+            "test_sharpe": 1.8162926962429307,
+            "train": [
+              1008,
+              2016
+            ],
+            "train_score": 0.43278568193656436
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 3
+            },
+            "test": [
+              2268,
+              2520
+            ],
+            "test_sharpe": 0.7147998697932075,
+            "train": [
+              1260,
+              2268
+            ],
+            "train_score": 0.7836546717362638
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 3
+            },
+            "test": [
+              2520,
+              2772
+            ],
+            "test_sharpe": 0.9353935021076383,
+            "train": [
+              1512,
+              2520
+            ],
+            "train_score": 0.9822529380168834
+          },
+          {
+            "params": {
+              "L": 252,
+              "k": 3
+            },
+            "test": [
+              2772,
+              3024
+            ],
+            "test_sharpe": 1.1218199051436823,
+            "train": [
+              1764,
+              2772
+            ],
+            "train_score": 0.9173278146641745
+          }
+        ],
+        "promotion_grade": {
+          "alpha_one_sided": 0.05,
+          "min_tstat": 2.3939797998185104,
+          "n_periods": 2016,
+          "note": "ORDER 007 bar on the stitched OOS Sharpe delta vs the basket-B&H benchmark, Bonferroni K = variants this family \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout (nothing here is a finding)",
+          "sharpe_delta": -0.29163780427858277,
+          "sharpe_se": 0.35383849062288353,
+          "timeframe": "daily",
+          "tstat": -0.8242116445986272,
+          "variants_tried": 6,
+          "verdict": "KILLED"
+        },
+        "verdict": "KILL"
+      }
+    ],
+    "test_size": 252,
+    "train_size": 1008
+  }
+}
