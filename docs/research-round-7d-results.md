@@ -86,17 +86,47 @@ window, same costs (5 bps slippage + 1 bp commission per side). t =
 informational ORDER-007 Bonferroni t on the stitched OOS Sharpe delta vs the
 benchmark at K = 6 (bar ≈2.39, never lowered, promotion CLOSED).
 
-| Slice | Family | Lane | OOS Sharpe | basket B&H Sharpe | t | bar (K=6) | Verdict |
-|---|---|---|---|---|---|---|---|
-| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L63/k2 | 0.919 | 1.193 | −0.78 | 2.39 | KILL |
-| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L63/k3 | 0.930 | 1.193 | −0.74 | 2.39 | KILL |
-| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L126/k2 | 0.571 | 1.193 | −1.76 | 2.39 | KILL |
-| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L126/k3 | 0.623 | 1.193 | −1.61 | 2.39 | KILL |
-| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L252/k2 | 0.706 | 1.193 | −1.38 | 2.39 | KILL |
-| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L252/k3 | 0.902 | 1.193 | −0.82 | 2.39 | KILL |
+Gate columns are sourced from the real selection-fair gate block recorded on
+every lane (`selection_gate` in each `per_config` entry). This is a
+1-config-per-lane portfolio slice, so `fixed_sharpe == searched_sharpe ==` the
+lane's OOS Sharpe and `selection_gap = searched − fixed = 0.0` **by
+construction** (no within-lane variant selection to replay); the gate is run
+to honor standing rule 1 and coincides with the §6 rule here — see the
+Reading note below.
+
+| Slice | Family | Lane | OOS Sharpe | basket B&H Sharpe | t | bar (K=6) | Verdict | Gate | fixed / searched / gap |
+|---|---|---|---|---|---|---|---|---|---|
+| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L63/k2 | 0.919 | 1.193 | −0.78 | 2.39 | KILL | FAIL | 0.919 / 0.919 / 0.0 |
+| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L63/k3 | 0.930 | 1.193 | −0.74 | 2.39 | KILL | FAIL | 0.930 / 0.930 / 0.0 |
+| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L126/k2 | 0.571 | 1.193 | −1.76 | 2.39 | KILL | FAIL | 0.571 / 0.571 / 0.0 |
+| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L126/k3 | 0.623 | 1.193 | −1.61 | 2.39 | KILL | FAIL | 0.623 / 0.623 / 0.0 |
+| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L252/k2 | 0.706 | 1.193 | −1.38 | 2.39 | KILL | FAIL | 0.706 / 0.706 / 0.0 |
+| r7d-xsec-drawdown | xsec_drawdown | XSEC-14, L252/k3 | 0.902 | 1.193 | −0.82 | 2.39 | KILL | FAIL | 0.902 / 0.902 / 0.0 |
+
+All 6 gate decisions are `FAIL` with `reason_class = FAIL_UNDERPERFORM` (fixed
+Sharpe positive but below same-window basket B&H) — folded through
+`selection_gate.apply_gate` before the verdict is written; since every §6
+verdict is already KILL the gate demotes nothing, but it is exercised and
+recorded on every lane per standing rule 1.
 
 Select-on-train stitch over the 6-config grid (BOOKKEEPING ONLY — not a
 registered config, no verdict): OOS Sharpe 0.760, also below the benchmark.
+
+### Reading — the selection-fair gate is degenerate on a 1-config-per-lane slice
+
+For this portfolio slice each lane runs `portfolio_walk_forward` with a
+**one-config grid**, so there is **no within-lane variant selection**. The
+selection-fair gate is therefore exercised and recorded per lane (standing
+rule 1) but is **degenerate**: `searched_sharpe == fixed_sharpe` (the lane's
+own stitched OOS Sharpe), `selection_gap = 0.0`, and the fixed-config replay
+IS the lane result — so the gate's fixed-vs-B&H test coincides exactly with
+the §6 KEEP rule (OOS Sharpe > basket B&H AND > 0). It is run to honor
+standing rule 1 and would **bite a future MULTI-variant portfolio lane**
+(where an in-window re-selection could flatter the searched Sharpe over its
+own fixed config, the R5-D pathology); here there is nothing for it to catch.
+`run_selection_gate` is single-instrument-shaped, so the runner calls
+`selection_gate.gate_decision` and builds the module-shaped block directly
+(reusing the module's constants and reason strings).
 
 ### Counts
 
@@ -109,18 +139,19 @@ unchanged K=6 bar ≈2.39.
 
 ## reason_class rollup (all 6 lanes)
 
-Round 7D is a PORTFOLIO lane run on the Round-3 xsec portfolio template,
-which grades by the Round-2 §6 rule (OOS Sharpe vs basket B&H) and the
-informational ORDER-007 t-bar; no per-lane fidelity/window pathology arose —
-all 6 lanes graded cleanly on the full 8-split OOS window. Standing rule 3
-requires the rollup with the UNGRADEABLE-share reported as an infrastructure
-alarm; here the UNGRADEABLE (infrastructure) classes are all zero.
+This rollup is now sourced directly from the `selection_gate` block recorded
+on each of the 6 lanes (the `reason_class` field, one of
+`selection_gate.REASON_CLASSES`) — not narrated. All 6 resolved to
+`FAIL_UNDERPERFORM`; no per-lane fidelity/window pathology arose (all 6 graded
+cleanly on the full 8-split OOS window), so every `UNGRADEABLE_*`
+(infrastructure) class is zero. Standing rule 3 requires the UNGRADEABLE share
+reported as an infrastructure alarm.
 
 | reason_class | count | kind |
 |---|---|---|
-| `FAIL_UNDERPERFORM` (§6: OOS Sharpe < basket B&H) | 6 | strategy |
-| `KEEP` | 0 | strategy |
-| `KILL_SIG` (significantly worse than B&H) | 0 | strategy |
+| `PASS` | 0 | strategy |
+| `FAIL_UNDERPERFORM` (fixed Sharpe > 0 but ≤ basket B&H) | 6 | strategy |
+| `FAIL_NONPOSITIVE` (fixed Sharpe ≤ 0) | 0 | strategy |
 | `UNGRADEABLE_MISSING_WINDOWS` | 0 | infrastructure |
 | `UNGRADEABLE_DRIFT` | 0 | infrastructure |
 | `UNGRADEABLE_NONCONTIGUOUS` | 0 | infrastructure |
@@ -128,10 +159,13 @@ alarm; here the UNGRADEABLE (infrastructure) classes are all zero.
 | `UNGRADEABLE_NAN` | 0 | infrastructure |
 
 **UNGRADEABLE share: 0 of 6 lanes (0.0%) — no infrastructure alarm.** Every
-lane resolved to a strategy verdict on clean, contiguous OOS windows; no
-missing/non-contiguous window, NaN, or drift condition occurred. The 6/6
-KILL is a strategy result (drawdown ranking underperforms the basket),
-never an infrastructure artefact.
+lane resolved to a strategy `reason_class` on clean, contiguous OOS windows;
+no missing/non-contiguous window, NaN, or drift condition occurred. The 6/6
+`FAIL_UNDERPERFORM` is a strategy result (drawdown ranking underperforms the
+basket), never an infrastructure artefact. (`KILL-SIG` is a separate §6 /
+`classify_verdict` concept — significantly worse than B&H — not a
+`selection_gate` reason_class; 0 lanes are KILL-SIG, reported in Counts
+above.)
 
 ## What this round says — and does NOT say
 
@@ -162,8 +196,14 @@ never an infrastructure artefact.
 - Runner: `scripts/run_r7d_xsec_drawdown.py` (cloned from
   `scripts/run_r3_xsec_expanded.py`; SLICE `r7d-xsec-drawdown`, cap 900 s).
 - Artifacts: `experiments/sweeps/r7d-xsec-drawdown/xsec_drawdown__XSEC-14.json`
-  (per-config OOS metrics, per-split rows, benchmark OOS metrics, grade
-  blocks); ledger run
-  `experiments/runs/20260718T153544462027Z-15fcf4d751d7.json`
+  (per-config OOS metrics, per-split rows, benchmark OOS metrics, ORDER-007
+  grade blocks, and the per-lane `selection_gate` block with
+  `verdict_pre_gate`/`verdict`); ledger run
+  `experiments/runs/20260718T154651954579Z-15fcf4d751d7.json`
   (top full-period config L63/k3, `instrument="XSEC-14"`, `variants_tried=6`);
   `experiments/index.jsonl`.
+- Selection-fair gate (standing rule 1): built in
+  `scripts/run_r7d_xsec_drawdown.py::selection_gate_block` via
+  `trading_lab.selection_gate.gate_decision` and folded through
+  `selection_gate.apply_gate`; degenerate on this 1-config-per-lane slice
+  (`fixed == searched`, `selection_gap = 0`), see the Reading note above.
