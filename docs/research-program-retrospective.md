@@ -448,4 +448,6 @@ phase documents; round 3's design lives in `.sessions/2026-07-13-r3-*.md`
 cards rather than a plan doc. See also
 [research-round-6-results.md](research-round-6-results.md) for the most
 recent round close and [selection-fair-gate.md](selection-fair-gate.md)
-for the standing gate.*
+for the standing gate. This narrative is extended through Round 8 (with the
+cross-round effect-size distribution) in
+[cross-round-meta-analysis.md](cross-round-meta-analysis.md).*

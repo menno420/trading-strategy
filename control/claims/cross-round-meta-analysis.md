@@ -1,0 +1,1 @@
+- `claude/cross-round-meta-analysis` · **Cross-round meta-analysis of Rounds 1–8 (RESEARCH-ONLY, no holdout)** · docs/ · 2026-07-18
