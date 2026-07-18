@@ -27,6 +27,12 @@
 
 docs
 
+## Key reference docs
+
+- [`strategy-catalog.md`](strategy-catalog.md) — adjacency reference for all
+  32 strategy families (class, one-line thesis, round tested, standing dev-only
+  verdict, per-row source).
+
 ## Placement rule of thumb
 
 Before creating a new file, find the row above that matches it; if no row
