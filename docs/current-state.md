@@ -56,6 +56,13 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
+- **Research Round 8 pre-registered (PLAN ONLY; owner GO 2026-07-18T13:47Z /
+  menu #03)** — [research-round-8-plan.md](research-round-8-plan.md) (badge
+  `binding`): an HOURLY companion re-sweeping the R7 families
+  (`drawdown_reversion` + `high_proximity`) verbatim on the committed 8-ticker
+  hourly cache, (12 + 12) × 8 = 192 registered configs (5,601 → 5,793),
+  registered null (hourly amplifies KILLs), single-2024-regime / 5-split
+  caveat declared. Running is a future slice; dev-only, promotion CLOSED.
 - **Research Round 7D CLOSED (ran 2026-07-18; owner GO 2026-07-18T13:47Z)** —
   the single pre-registered slice executed against
   [research-round-7d-plan.md](research-round-7d-plan.md): R7-D
