@@ -129,5 +129,7 @@ separate rows.
 retrospective docs at origin/main HEAD `82ef4cc` (Round 7 / PR #141). This
 is a docs-only synthesis — source code and merged results always win over
 this page. See [research-program-retrospective.md](research-program-retrospective.md)
-for the narrative synthesis (Rounds 1–6) and each linked `research-round-N-results.md`
-for the per-round detail.*
+for the narrative synthesis (Rounds 1–6),
+[cross-round-meta-analysis.md](cross-round-meta-analysis.md) for the
+effect-size synthesis extended through Round 8 (5,793 configs / 0 promoted),
+and each linked `research-round-N-results.md` for the per-round detail.*
