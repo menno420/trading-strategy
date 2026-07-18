@@ -56,6 +56,15 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
+- **Research Round 7D pre-registration (PLAN ONLY, in flight 2026-07-18)** —
+  [research-round-7d-plan.md](research-round-7d-plan.md) (badge `binding`):
+  `xsec_drawdown`, the first cross-sectional PORTFOLIO family to rank the
+  XSEC-14 basket on DRAWDOWN DEPTH (not trailing return like
+  `xsec_momentum`/`xsec_reversal`), a 6-variant grid (`L`{63,126,252} ×
+  `k`{2,3}, `rebalance_every` frozen 21) counted as a portfolio lane
+  (`configs = variants` → 6 registered configs, program 5,595 → 5,601). PLAN
+  ONLY — running is a future separately-claimed slice; no grid committed to
+  `sweeps.py`, dev-only, promotion CLOSED / 0 promoted, holdout untouched.
 - **Research Round 7C CLOSED (ran 2026-07-18; ORDER 018)** — the single
   pre-registered slice executed against
   [research-round-7c-plan.md](research-round-7c-plan.md): R7-C
