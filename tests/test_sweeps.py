@@ -2118,3 +2118,90 @@ class TestR7DXsecDrawdown:
         # lane, configs = variants); program cumulative 5595 -> 5601.
         assert sweeps.r7d_total_configs() == 6
         assert 5595 + sweeps.r7d_total_configs() == 5601
+
+
+class TestRound8Hourly:
+    """Round-8 pre-declaration pins (docs/research-round-8-plan.md, owner GO
+    2026-07-18T13:47Z): the HOURLY COMPANION grids for the two newest R7
+    single-instrument families are committed BEFORE the sweep runs and these
+    pins freeze them under the selection-fair standing gate [D-0002]. NO new
+    strategy code — the IDENTICAL R7 12-variant grids re-registered on the
+    committed 8-ticker hourly cache; grid identity with R7 pinned here.
+    Mirrors TestRound7."""
+
+    def test_families_match_strategy_registry(self):
+        for fam in sweeps.R8_HOURLY_FAMILIES:
+            assert fam in STRATEGIES
+        assert sweeps.R8_HOURLY_FAMILIES == ("drawdown_reversion",
+                                             "high_proximity")
+
+    def test_axes_are_exactly_the_pre_registered_grids(self):
+        assert sweeps._R8_HOURLY_DRAWDOWN_AXES == {
+            "drawdown_reversion": {"lookback": [63, 126, 252],
+                                   "entry_dd": [0.10, 0.20],
+                                   "exit_frac": [0.5, 1.0]}}
+        assert sweeps._R8_HOURLY_HIGHPROX_AXES == {
+            "high_proximity": {"N": [63, 126, 252],
+                               "p": [0.85, 0.90, 0.95, 0.98]}}
+
+    def test_axes_are_value_identical_to_the_r7_daily_axes(self):
+        # Pure timeframe companion: the hourly grids carry the SAME parameter
+        # values as the R7 daily grids (only the bar denomination differs).
+        assert (sweeps._R8_HOURLY_DRAWDOWN_AXES
+                == sweeps._R7_DRAWDOWN_AXES)
+        assert (sweeps._R8_HOURLY_HIGHPROX_AXES
+                == sweeps._R7_HIGHPROX_AXES)
+
+    def test_registered_counts(self):
+        assert len(sweeps.r8_hourly_variants("drawdown_reversion")) == 12
+        assert len(sweeps.r8_hourly_variants("high_proximity")) == 12
+        assert sweeps.r8_hourly_variants_per_family() == \
+            {"drawdown_reversion": 12, "high_proximity": 12}
+
+    def test_k_is_round_standard_and_bar_never_lowered(self):
+        from trading_lab import promotion
+        assert sweeps.R8_K == 12
+        assert all(n == sweeps.R8_K
+                   for n in sweeps.r8_hourly_variants_per_family().values())
+        assert round(promotion.min_tstat(sweeps.R8_K), 2) == 2.64
+
+    def test_instruments_are_the_committed_hourly8_surface_verbatim(self):
+        # Same tuple OBJECT as the R6-C / r3-trend-hourly 8-ticker hourly
+        # surface — no new caches, nothing fetched, no post-hoc selection.
+        assert (sweeps.R8_HOURLY_INSTRUMENTS
+                is sweeps.R6_VOLUME_HOURLY_INSTRUMENTS)
+        assert len(sweeps.R8_HOURLY_INSTRUMENTS) == 8
+        assert set(sweeps.R8_HOURLY_INSTRUMENTS) == {
+            "AAPL", "AMZN", "GLD", "GOOGL", "META", "MSFT", "NVDA", "SLV"}
+
+    def test_constraints_filtered(self):
+        for p in sweeps.r8_hourly_variants("drawdown_reversion"):
+            assert p["lookback"] >= 2
+            assert 0.0 < p["entry_dd"] < 1.0
+            assert 0.0 < p["exit_frac"] <= 1.0
+        for p in sweeps.r8_hourly_variants("high_proximity"):
+            assert p["N"] >= 2
+            assert 0.0 < p["p"] <= 1.0
+
+    def test_every_variant_runs(self, random_walk):
+        for fam in sweeps.R8_HOURLY_FAMILIES:
+            for params in sweeps.r8_hourly_variants(fam):
+                pos = STRATEGIES[fam](random_walk, **params)
+                assert not pos.isna().any()
+                assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r8_hourly_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r8_hourly_variants("drawdown_reversion")
+                == sweeps.r8_hourly_variants("drawdown_reversion"))
+        assert (sweeps.r8_hourly_variants("high_proximity")
+                == sweeps.r8_hourly_variants("high_proximity"))
+
+    def test_round_total_configs_and_program_ledger(self):
+        # Burden ledger: (12 + 12) variants x 8 hourly tickers = 192 new
+        # registered configs; program cumulative 5601 -> 5793.
+        assert sweeps.r8_total_configs() == 192
+        assert 5601 + sweeps.r8_total_configs() == 5793

@@ -2212,3 +2212,50 @@ def r7d_xsec_drawdown_variants_per_family() -> dict[str, int]:
 def r7d_total_configs() -> int:
     # PORTFOLIO lane: configs = variants (instruments do NOT multiply)
     return sum(r7d_xsec_drawdown_variants_per_family().values())
+
+
+# ---------------------------------------------------------------------------
+# Round 8 (docs/research-round-8-plan.md, owner GO 2026-07-18T13:47Z)
+# ---------------------------------------------------------------------------
+# HOURLY COMPANION for the two NEWEST R7 single-instrument families — R7-A
+# drawdown_reversion and R7-B high_proximity — re-registered VERBATIM on the
+# committed 8-ticker hourly cache (same tuple object as R6-C / r3-trend-hourly).
+# NO new strategy code, NO new parameter territory: the IDENTICAL R7 12-variant
+# grids (grid identity with _R7_DRAWDOWN_AXES / _R7_HIGHPROX_AXES pinned by
+# tests), now bar-denominated on hourly bars per the p1-trend-hourly / R6-C
+# convention. This isolates the single variable of bar frequency on two
+# already-graded families (the Round-3 slice-5/14/15 and Round-6 R6-C
+# timeframe-expansion precedent).
+
+_R8_HOURLY_DRAWDOWN_AXES: dict[str, dict[str, list]] = {
+    "drawdown_reversion": {"lookback": [63, 126, 252],
+                           "entry_dd": [0.10, 0.20],
+                           "exit_frac": [0.5, 1.0]},
+}
+_R8_HOURLY_HIGHPROX_AXES: dict[str, dict[str, list]] = {
+    "high_proximity": {"N": [63, 126, 252],
+                       "p": [0.85, 0.90, 0.95, 0.98]},
+}
+R8_HOURLY_FAMILIES = ("drawdown_reversion", "high_proximity")
+R8_HOURLY_INSTRUMENTS = R6_VOLUME_HOURLY_INSTRUMENTS  # 8-ticker hourly set (same tuple object)
+R8_K = 12
+
+
+def r8_hourly_variants(family: str) -> list[dict]:
+    if family == "drawdown_reversion":
+        axes = _R8_HOURLY_DRAWDOWN_AXES[family]
+    elif family == "high_proximity":
+        axes = _R8_HOURLY_HIGHPROX_AXES[family]
+    else:
+        raise ValueError(f"unknown R8 hourly family {family!r}")
+    keys = list(axes)
+    return [dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys))]
+
+
+def r8_hourly_variants_per_family() -> dict[str, int]:
+    return {fam: len(r8_hourly_variants(fam)) for fam in R8_HOURLY_FAMILIES}
+
+
+def r8_total_configs() -> int:
+    # single-instrument lanes: configs = variants × instruments
+    return sum(r8_hourly_variants_per_family().values()) * len(R8_HOURLY_INSTRUMENTS)

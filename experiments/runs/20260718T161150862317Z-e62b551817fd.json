@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.3568015449012083,
+    "max_drawdown": -0.22149983676741947,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.2397262046014743,
+    "sortino": 1.207402601433659,
+    "total_return": 0.5860308071505125,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "e62b551817fd",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-18T16:11:50+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "a4dc661ce508b8824f3cdeb7537254e93a27dc10",
+  "instrument": "AMZN",
+  "metrics": {
+    "cagr": 0.09372506358037636,
+    "max_drawdown": -0.022827055639097482,
+    "n_bars": 2476,
+    "n_trades": 2,
+    "sharpe": 1.7821453736137394,
+    "sortino": 0.5042732531358987,
+    "total_return": 0.14502129139726105,
+    "turnover_per_year": 1.323101777059774,
+    "win_rate": 1.0
+  },
+  "n_bars": 2476,
+  "notes": "Round 8 hourly companion sweep (post-holdout DEV-ONLY, promotion closed \u2014 owner GO 2026-07-18T13:47Z; pre-registered docs/research-round-8-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r8-hourly/drawdown_reversion__AMZN.json)",
+  "params": {
+    "entry_dd": 0.2,
+    "exit_frac": 0.5,
+    "lookback": 252
+  },
+  "run_id": "20260718T161150862317Z-e62b551817fd",
+  "schema_version": 1,
+  "strategy": "drawdown_reversion",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}

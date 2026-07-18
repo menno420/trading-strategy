@@ -1,0 +1,47 @@
+{
+  "benchmark_metrics": {
+    "cagr": 1.1848430526782217,
+    "max_drawdown": -0.34215233426589897,
+    "n_bars": 2476,
+    "n_trades": 1,
+    "sharpe": 1.9493204747433084,
+    "sortino": 1.928590389640925,
+    "total_return": 2.2588733042509337,
+    "turnover_per_year": 0.661550888529887,
+    "win_rate": 1.0
+  },
+  "config_hash": "0c52a85fadb8",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-18T16:11:49+00:00",
+  "data_end": "2025-01-08 20:30:00",
+  "data_start": "2023-08-10 13:30:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "a4dc661ce508b8824f3cdeb7537254e93a27dc10",
+  "instrument": "NVDA",
+  "metrics": {
+    "cagr": 0.24025174126568039,
+    "max_drawdown": -0.06944828130641223,
+    "n_bars": 2476,
+    "n_trades": 4,
+    "sharpe": 2.305955704086912,
+    "sortino": 0.5222296432448638,
+    "total_return": 0.38468005515683146,
+    "turnover_per_year": 2.646203554119548,
+    "win_rate": 1.0
+  },
+  "n_bars": 2476,
+  "notes": "Round 8 hourly companion sweep (post-holdout DEV-ONLY, promotion closed \u2014 owner GO 2026-07-18T13:47Z; pre-registered docs/research-round-8-plan.md): top full-dev-period variant of 12 tried (post-hoc selection \u2014 in-sample; the walk-forward OOS number and the selection-fair gate block live in experiments/sweeps/r8-hourly/drawdown_reversion__NVDA.json)",
+  "params": {
+    "entry_dd": 0.2,
+    "exit_frac": 1.0,
+    "lookback": 63
+  },
+  "run_id": "20260718T161149730220Z-0c52a85fadb8",
+  "schema_version": 1,
+  "strategy": "drawdown_reversion",
+  "timeframe": "hourly",
+  "variants_tried": 12
+}
