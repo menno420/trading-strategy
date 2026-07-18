@@ -2173,3 +2173,42 @@ def r7c_conjunction_variants_per_family() -> dict[str, int]:
 
 def r7c_total_configs() -> int:
     return sum(r7c_conjunction_variants_per_family().values()) * len(R7C_INSTRUMENTS)
+
+
+# ---------------------------------------------------------------------------
+# Round 7D slice R7-D: cross-sectional drawdown-ranking PORTFOLIO family
+# (lane: r7d-xsec-drawdown x XSEC-14 basket x daily). Mirrors the Round-3
+# slice-7 xsec layout (_R3_XSEC_EXPANDED_AXES ff.) -- a PORTFOLIO lane where
+# configs = variants (the instruments do NOT multiply the count). xsec_drawdown
+# ranks the basket on DRAWDOWN DEPTH (close/rolling(L).max() - 1), a drawdown
+# STATE distinct from the trailing-return ranking of xsec_momentum /
+# xsec_reversal. rebalance_every is FROZEN = 21 (the xsec_momentum monthly
+# cadence), declared in a map like R3_XSEC_EXPANDED_REBALANCE_EVERY and NOT
+# swept. Registered constraints: L >= 2, 1 <= k <= 14, rebalance_every >= 1 --
+# all six grid points valid, so no constraint map is needed.
+
+_R7D_XSEC_DRAWDOWN_AXES: dict[str, dict[str, list]] = {
+    "xsec_drawdown": {"L": [63, 126, 252], "k": [2, 3]},
+}
+R7D_XSEC_DRAWDOWN_FAMILIES = ("xsec_drawdown",)
+R7D_INSTRUMENTS = R3_XSEC_EXPANDED_INSTRUMENTS  # XSEC-14, same tuple object
+R7D_XSEC_DRAWDOWN_REBALANCE_EVERY = {"xsec_drawdown": 21}
+R7D_K = 6
+
+
+def r7d_xsec_drawdown_variants(family: str) -> list[dict]:
+    try:
+        axes = _R7D_XSEC_DRAWDOWN_AXES[family]
+    except KeyError:
+        raise ValueError(f"unknown R7D xsec-drawdown family {family!r}") from None
+    keys = list(axes)
+    return [dict(zip(keys, vals)) for vals in product(*(axes[k] for k in keys))]
+
+
+def r7d_xsec_drawdown_variants_per_family() -> dict[str, int]:
+    return {fam: len(r7d_xsec_drawdown_variants(fam)) for fam in R7D_XSEC_DRAWDOWN_FAMILIES}
+
+
+def r7d_total_configs() -> int:
+    # PORTFOLIO lane: configs = variants (instruments do NOT multiply)
+    return sum(r7d_xsec_drawdown_variants_per_family().values())

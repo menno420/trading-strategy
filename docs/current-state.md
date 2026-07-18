@@ -19,8 +19,8 @@ autonomous seat. That phase is **over**:
   from this repo alone — read `CONSTITUTION.md` + this file; ignore the
   retired EAP fleet-coordination scaffolding (`control/`, `docs/succession/`,
   `docs/ROUTINES.md` — each now carries a deprecation banner).
-- **Honest research headline.** Across Rounds 1–7C the program registered
-  **5,595 configs and promoted 0** — **no strategy cleared the significance
+- **Honest research headline.** Across Rounds 1–7D the program registered
+  **5,601 configs and promoted 0** — **no strategy cleared the significance
   bar** (`promotion.min_tstat(K)` ~2.638 at K=12). Promotion is CLOSED, the
   holdout is SPENT, and the negative result *is* the finding. This is a clean,
   honest offline research library, not a live trading system. One canonical
@@ -47,7 +47,7 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 State as of 2026-07-18: **0 open PRs** on the repo (beyond the fresh-start
 cleanup PR that carries this edit), **0 active claims**, main advanced through
 the 2026-07-16/17 heartbeat + Friday-grading PRs. Paper lane FLAT/WATCH —
-sole ledger record `paper-0001` WATCH; holdout SPENT; 5,595 registered
+sole ledger record `paper-0001` WATCH; holdout SPENT; 5,601 registered
 configs / 0 promoted. The 2026-07-17 weekly grading pass **already ran**
 in-session as a true no-op (see "Fresh-start snapshot"); there is **no
 self-armed grading cron** — grading runs in-session via
@@ -56,15 +56,23 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
-- **Research Round 7D pre-registration (PLAN ONLY, in flight 2026-07-18)** —
-  [research-round-7d-plan.md](research-round-7d-plan.md) (badge `binding`):
+- **Research Round 7D CLOSED (ran 2026-07-18; owner GO 2026-07-18T13:47Z)** —
+  the single pre-registered slice executed against
+  [research-round-7d-plan.md](research-round-7d-plan.md): R7-D
   `xsec_drawdown`, the first cross-sectional PORTFOLIO family to rank the
-  XSEC-14 basket on DRAWDOWN DEPTH (not trailing return like
-  `xsec_momentum`/`xsec_reversal`), a 6-variant grid (`L`{63,126,252} ×
-  `k`{2,3}, `rebalance_every` frozen 21) counted as a portfolio lane
-  (`configs = variants` → 6 registered configs, program 5,595 → 5,601). PLAN
-  ONLY — running is a future separately-claimed slice; no grid committed to
-  `sweeps.py`, dev-only, promotion CLOSED / 0 promoted, holdout untouched.
+  XSEC-14 basket on DRAWDOWN DEPTH (depth from a trailing `L`-bar close peak,
+  not trailing point-to-point return like `xsec_momentum`/`xsec_reversal`),
+  6-variant grid (`L`{63,126,252} × `k`{2,3}, `rebalance_every` frozen 21;
+  portfolio lane, `configs = variants` → 6 registered configs). Results:
+  [research-round-7d-results.md](research-round-7d-results.md) — **the
+  registered null holds cleanly: 0 KEEP-dev / 6 KILL / 0 KILL-SIG of 6 lanes,
+  0 promoted, best informational t −0.74 (L63/k3) vs the unchanged K=6 bar
+  ≈2.39; every lane 0.26–0.62 Sharpe below the equal-weight basket B&H (OOS
+  1.193), none significantly worse (0 KILL-SIG), and the registered
+  concentration mirror ran the wrong way (shallower `k=3`/shorter `L=63`
+  out-Sharpe deeper/longer)**; 0 UNGRADEABLE, no infrastructure alarm;
+  runtime 2.1 s vs 900 s cap, no CAP-HIT. Program cumulative 5,595 → 5,601,
+  dev-only, promotion CLOSED / 0 promoted, holdout untouched.
 - **Research Round 7C CLOSED (ran 2026-07-18; ORDER 018)** — the single
   pre-registered slice executed against
   [research-round-7c-plan.md](research-round-7c-plan.md): R7-C
