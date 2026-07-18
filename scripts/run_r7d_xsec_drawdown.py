@@ -65,12 +65,14 @@ Usage: python3 scripts/run_r7d_xsec_drawdown.py
 import json
 import sys
 import time
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from trading_lab import config, ledger, metrics, promotion, sweeps  # noqa: E402
+from trading_lab import (config, ledger, metrics,  # noqa: E402
+                         promotion, selection_gate, sweeps)
 from trading_lab.data import load_ohlcv  # noqa: E402
 from trading_lab.portfolio import (align_common_index,  # noqa: E402
                                    basket_buy_and_hold_result,
@@ -116,6 +118,75 @@ def split_rows(wf: dict) -> list[dict]:
         "test_sharpe": (None if s["test_sharpe"] != s["test_sharpe"]
                         else s["test_sharpe"]),
     } for s in wf["splits"]]
+
+
+#: Honest note stamped on every lane's gate block: this is a
+#: 1-config-per-lane portfolio slice, so the standing gate is DEGENERATE.
+_GATE_NOTE = (
+    "standing selection-fair gate [D-0002] (docs/selection-fair-gate.md), "
+    "standing rule 1 of docs/research-round-7d-plan.md — run + recorded on "
+    "EVERY Round-7D lane, folded through selection_gate.apply_gate BEFORE the "
+    "verdict is written. 1-config-per-lane PORTFOLIO slice: this lane runs "
+    "portfolio_walk_forward with a ONE-config grid, so there is NO within-lane "
+    "variant selection — fixed_sharpe == searched_sharpe (the lane's own "
+    "stitched OOS Sharpe) and selection_gap == 0.0 BY CONSTRUCTION. The gate "
+    "is therefore degenerate here and coincides with the §6 KEEP rule; it is "
+    "exercised to honor standing rule 1 and would bite a future MULTI-variant "
+    "portfolio lane. Doubles as the R5-D fixed-config row (standing rule 2) — "
+    "selection_gap informational, no registered threshold; report-only "
+    "(R4-B precedent), not ledgered. run_selection_gate is single-instrument "
+    "shaped (ohlcv+strategy) so it cannot grade a portfolio lane; the "
+    "decision is selection_gate.gate_decision and the block mirrors the "
+    "module's own result shape and reuses its constants."
+)
+
+
+def selection_gate_block(*, fixed_sharpe, bench_sharpe, per_split,
+                         n_periods) -> dict:
+    """Build the selection-fair standing-gate result block for one portfolio
+    lane, in the shape :func:`selection_gate.run_selection_gate` produces
+    (so :func:`selection_gate.apply_gate` folds it and rollups read it).
+
+    KEY FACT (encoded honestly): this is a 1-config-per-lane portfolio slice
+    — the lane's walk-forward grid is ONE config, so there is no within-lane
+    selection to replay. Hence ``fixed_sharpe == searched_sharpe`` (the
+    lane's own stitched OOS Sharpe) and ``selection_gap == 0.0`` by
+    construction. The gate decision itself is the module's pure rule
+    (:func:`selection_gate.gate_decision`); the ``reason_class`` follows the
+    module taxonomy with the module's precedence (non-positive beats
+    underperform); UNGRADEABLE_NAN only if a Sharpe is missing/NaN.
+    """
+    sg = selection_gate
+    searched_sharpe = fixed_sharpe  # no within-lane selection to replay
+    selection_gap = (None if (fixed_sharpe is None or searched_sharpe is None)
+                     else searched_sharpe - fixed_sharpe)  # 0.0 by construction
+    # Fixed arm == searched arm: mirror the single-name lane's per-split rows
+    # ({params, test, test_sharpe}) so the R5-D fixed-config row is legible.
+    fixed_per_split = [{"params": r["params"], "test": r["test"],
+                        "test_sharpe": r["test_sharpe"]} for r in per_split]
+    common = {"fixed_sharpe": fixed_sharpe, "bench_sharpe": bench_sharpe,
+              "searched_sharpe": searched_sharpe,
+              "selection_gap": selection_gap, "n_periods": n_periods,
+              "fixed_per_split": fixed_per_split, "note": _GATE_NOTE}
+    if fixed_sharpe is None or bench_sharpe is None:
+        return {"gate": sg.GATE_FAIL,
+                "reason": ("ungradeable: fixed or benchmark stitched Sharpe is "
+                           "NaN (degenerate returns) — NaN never passes"),
+                "reason_class": sg.REASON_UNGRADEABLE_NAN, **common}
+    if sg.gate_decision(fixed_sharpe=fixed_sharpe, bench_sharpe=bench_sharpe):
+        return {"gate": sg.GATE_PASS,
+                "reason": (f"fixed-config replay beats same-window B&H "
+                           f"({fixed_sharpe:.6f} > {bench_sharpe:.6f}) and is "
+                           f"positive"),
+                "reason_class": sg.REASON_PASS, **common}
+    reason_class = (sg.REASON_FAIL_NONPOSITIVE if fixed_sharpe <= 0.0
+                    else sg.REASON_FAIL_UNDERPERFORM)
+    return {"gate": sg.GATE_FAIL,
+            "reason": (f"fixed-config replay does not beat same-window B&H "
+                       f"with a positive Sharpe (fixed {fixed_sharpe:.6f}, "
+                       f"bench {bench_sharpe:.6f}) — the searched edge does "
+                       f"not survive selection-free"),
+            "reason_class": reason_class, **common}
 
 
 def main() -> None:
@@ -274,12 +345,23 @@ def main() -> None:
             oos_sharpe = entry["oos_metrics"]["sharpe"]
             keep = (oos_sharpe is not None and bench_sharpe is not None
                     and oos_sharpe > bench_sharpe and oos_sharpe > 0)
-            verdict = "KEEP (dev-candidate only)" if keep else "KILL"
+            verdict_pre_gate = (promotion.VERDICT_KEEP_DEV if keep
+                                else promotion.SWEEP_KILL)
             grade = promotion.grade_promotion(
                 strategy_sharpe=oos_sharpe, benchmark_sharpe=bench_sharpe,
                 n_periods=entry["oos_metrics"]["n_bars"],
                 timeframe=TIMEFRAME, variants_tried=len(variants))
+            # Standing rule 1: selection-fair gate on EVERY lane, folded
+            # through apply_gate BEFORE the verdict is written (here the gate
+            # only ever demotes KEEP->KILL; degenerate on this 1-config lane).
+            gate_block = selection_gate_block(
+                fixed_sharpe=oos_sharpe, bench_sharpe=bench_sharpe,
+                per_split=entry["per_split"],
+                n_periods=entry["oos_metrics"]["n_bars"])
+            verdict = selection_gate.apply_gate(verdict_pre_gate, gate_block)
+            entry["verdict_pre_gate"] = verdict_pre_gate
             entry["verdict"] = verdict
+            entry["selection_gate"] = gate_block
             entry["promotion_grade"] = {
                 "note": ("ORDER 007 bar on the stitched OOS Sharpe delta "
                          "vs the basket-B&H benchmark, Bonferroni K = "
@@ -289,7 +371,8 @@ def main() -> None:
                 **grade,
             }
             config_verdicts.append((entry["params"], oos_sharpe,
-                                    grade["tstat"], verdict))
+                                    grade["tstat"], verdict,
+                                    gate_block["reason_class"]))
 
         sweep_record = {
             "schema_version": 1,
@@ -361,11 +444,13 @@ def main() -> None:
         out.write_text(json.dumps(sweep_record, indent=2, sort_keys=True)
                        + "\n")
 
-        for params, oos_sharpe, tstat, verdict in config_verdicts:
+        for params, oos_sharpe, tstat, verdict, reason_class in config_verdicts:
             keyed = " ".join(f"{k}={v}" for k, v in params.items())
             print(f"{family} {keyed}: oos_sharpe={oos_sharpe:.3f} "
-                  f"bench={bench_sharpe:.3f} t={tstat:.2f} {verdict}")
-            verdict_lines.append((family, params, oos_sharpe, verdict))
+                  f"bench={bench_sharpe:.3f} t={tstat:.2f} {verdict} "
+                  f"[gate {reason_class}]")
+            verdict_lines.append((family, params, oos_sharpe, verdict,
+                                  reason_class))
         print(f"{family} selection stitch (bookkeeping only): oos_sharpe="
               f"{sweep_record['selection_walk_forward']['oos_metrics']['sharpe']:.3f}")
         print(f"-> {out.name}")
@@ -374,6 +459,14 @@ def main() -> None:
     runtime = time.monotonic() - t0
     print(f"\nsummary: {len(verdict_lines) - kills} KEEP / {kills} KILL "
           f"of {len(verdict_lines)} configs")
+    reason_rollup = Counter(v[4] for v in verdict_lines)
+    ungradeable = sum(reason_rollup[c]
+                      for c in selection_gate.UNGRADEABLE_CLASSES)
+    alarm = "INFRASTRUCTURE ALARM" if ungradeable else "no infra alarm"
+    rollup_str = ", ".join(f"{k}={reason_rollup[k]}"
+                           for k in sorted(reason_rollup))
+    print(f"selection-fair gate reason_class rollup: {rollup_str} "
+          f"(UNGRADEABLE share {ungradeable}/{len(verdict_lines)} — {alarm})")
     print(f"runtime {runtime:.1f} s "
           f"(cap {CAP_SECONDS} s{' — CAP-HIT' if cap_hit else ' — not hit'})")
     if skipped:

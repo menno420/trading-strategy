@@ -16,7 +16,7 @@
     "commission_bps": 1.0,
     "slippage_bps": 5.0
   },
-  "created_utc": "2026-07-18T15:35:44+00:00",
+  "created_utc": "2026-07-18T15:46:51+00:00",
   "data_end": "2025-01-08 00:00:00",
   "data_start": "2012-05-18 00:00:00",
   "execution": "signal at bar t fills at bar t+1 open",
@@ -129,7 +129,7 @@
       }
     ]
   },
-  "git_sha": "a79de47ffff494e45bd5725eee3f3a461abce100",
+  "git_sha": "4e6328435666a91537fbfa31a700e259f436cd5e",
   "instrument": "XSEC-14",
   "instrument_first_bars": {
     "AAPL": "2010-01-04",
@@ -315,7 +315,7 @@
   "sweep": "r7d-xsec-drawdown",
   "timeframe": "daily",
   "top_full_period_variant": {
-    "ledger_run": "20260718T153544462027Z-15fcf4d751d7.json",
+    "ledger_run": "20260718T154651954579Z-15fcf4d751d7.json",
     "metrics": {
       "cagr": 0.27374226460575324,
       "max_drawdown": -0.4362224517614227,
@@ -506,7 +506,109 @@
           "variants_tried": 6,
           "verdict": "KILLED"
         },
-        "verdict": "KILL"
+        "selection_gate": {
+          "bench_sharpe": 1.1933935713256574,
+          "fixed_per_split": [
+            {
+              "params": {
+                "L": 63,
+                "k": 2
+              },
+              "test": [
+                1008,
+                1260
+              ],
+              "test_sharpe": 1.7690435072351214
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 2
+              },
+              "test": [
+                1260,
+                1512
+              ],
+              "test_sharpe": 1.5444886240968736
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 2
+              },
+              "test": [
+                1512,
+                1764
+              ],
+              "test_sharpe": 0.18645223641261274
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 2
+              },
+              "test": [
+                1764,
+                2016
+              ],
+              "test_sharpe": 0.8716546218864892
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 2
+              },
+              "test": [
+                2016,
+                2268
+              ],
+              "test_sharpe": 1.1993010681639078
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 2
+              },
+              "test": [
+                2268,
+                2520
+              ],
+              "test_sharpe": -0.02674023041622556
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 2
+              },
+              "test": [
+                2520,
+                2772
+              ],
+              "test_sharpe": 1.4825193109873425
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 2
+              },
+              "test": [
+                2772,
+                3024
+              ],
+              "test_sharpe": 1.3225657374149182
+            }
+          ],
+          "fixed_sharpe": 0.9185104110046974,
+          "gate": "FAIL",
+          "n_periods": 2016,
+          "note": "standing selection-fair gate [D-0002] (docs/selection-fair-gate.md), standing rule 1 of docs/research-round-7d-plan.md \u2014 run + recorded on EVERY Round-7D lane, folded through selection_gate.apply_gate BEFORE the verdict is written. 1-config-per-lane PORTFOLIO slice: this lane runs portfolio_walk_forward with a ONE-config grid, so there is NO within-lane variant selection \u2014 fixed_sharpe == searched_sharpe (the lane's own stitched OOS Sharpe) and selection_gap == 0.0 BY CONSTRUCTION. The gate is therefore degenerate here and coincides with the \u00a76 KEEP rule; it is exercised to honor standing rule 1 and would bite a future MULTI-variant portfolio lane. Doubles as the R5-D fixed-config row (standing rule 2) \u2014 selection_gap informational, no registered threshold; report-only (R4-B precedent), not ledgered. run_selection_gate is single-instrument shaped (ohlcv+strategy) so it cannot grade a portfolio lane; the decision is selection_gate.gate_decision and the block mirrors the module's own result shape and reuses its constants.",
+          "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.918510, bench 1.193394) \u2014 the searched edge does not survive selection-free",
+          "reason_class": "FAIL_UNDERPERFORM",
+          "searched_sharpe": 0.9185104110046974,
+          "selection_gap": 0.0
+        },
+        "verdict": "KILL",
+        "verdict_pre_gate": "KILL"
       },
       {
         "n_splits": 8,
@@ -664,7 +766,109 @@
           "variants_tried": 6,
           "verdict": "KILLED"
         },
-        "verdict": "KILL"
+        "selection_gate": {
+          "bench_sharpe": 1.1933935713256574,
+          "fixed_per_split": [
+            {
+              "params": {
+                "L": 63,
+                "k": 3
+              },
+              "test": [
+                1008,
+                1260
+              ],
+              "test_sharpe": 1.225082514038963
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 3
+              },
+              "test": [
+                1260,
+                1512
+              ],
+              "test_sharpe": 1.3778417555093214
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 3
+              },
+              "test": [
+                1512,
+                1764
+              ],
+              "test_sharpe": 0.11143444577887848
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 3
+              },
+              "test": [
+                1764,
+                2016
+              ],
+              "test_sharpe": 0.6900900658796899
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 3
+              },
+              "test": [
+                2016,
+                2268
+              ],
+              "test_sharpe": 2.342751557167264
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 3
+              },
+              "test": [
+                2268,
+                2520
+              ],
+              "test_sharpe": 0.23957964293962977
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 3
+              },
+              "test": [
+                2520,
+                2772
+              ],
+              "test_sharpe": 1.2981967980884785
+            },
+            {
+              "params": {
+                "L": 63,
+                "k": 3
+              },
+              "test": [
+                2772,
+                3024
+              ],
+              "test_sharpe": 0.967461368098841
+            }
+          ],
+          "fixed_sharpe": 0.9301456784217824,
+          "gate": "FAIL",
+          "n_periods": 2016,
+          "note": "standing selection-fair gate [D-0002] (docs/selection-fair-gate.md), standing rule 1 of docs/research-round-7d-plan.md \u2014 run + recorded on EVERY Round-7D lane, folded through selection_gate.apply_gate BEFORE the verdict is written. 1-config-per-lane PORTFOLIO slice: this lane runs portfolio_walk_forward with a ONE-config grid, so there is NO within-lane variant selection \u2014 fixed_sharpe == searched_sharpe (the lane's own stitched OOS Sharpe) and selection_gap == 0.0 BY CONSTRUCTION. The gate is therefore degenerate here and coincides with the \u00a76 KEEP rule; it is exercised to honor standing rule 1 and would bite a future MULTI-variant portfolio lane. Doubles as the R5-D fixed-config row (standing rule 2) \u2014 selection_gap informational, no registered threshold; report-only (R4-B precedent), not ledgered. run_selection_gate is single-instrument shaped (ohlcv+strategy) so it cannot grade a portfolio lane; the decision is selection_gate.gate_decision and the block mirrors the module's own result shape and reuses its constants.",
+          "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.930146, bench 1.193394) \u2014 the searched edge does not survive selection-free",
+          "reason_class": "FAIL_UNDERPERFORM",
+          "searched_sharpe": 0.9301456784217824,
+          "selection_gap": 0.0
+        },
+        "verdict": "KILL",
+        "verdict_pre_gate": "KILL"
       },
       {
         "n_splits": 8,
@@ -822,7 +1026,109 @@
           "variants_tried": 6,
           "verdict": "KILLED"
         },
-        "verdict": "KILL"
+        "selection_gate": {
+          "bench_sharpe": 1.1933935713256574,
+          "fixed_per_split": [
+            {
+              "params": {
+                "L": 126,
+                "k": 2
+              },
+              "test": [
+                1008,
+                1260
+              ],
+              "test_sharpe": 1.7278764761329044
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 2
+              },
+              "test": [
+                1260,
+                1512
+              ],
+              "test_sharpe": 0.5797607088707611
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 2
+              },
+              "test": [
+                1512,
+                1764
+              ],
+              "test_sharpe": 0.24659927214930585
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 2
+              },
+              "test": [
+                1764,
+                2016
+              ],
+              "test_sharpe": 0.9670002650635346
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 2
+              },
+              "test": [
+                2016,
+                2268
+              ],
+              "test_sharpe": 0.34811127023715194
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 2
+              },
+              "test": [
+                2268,
+                2520
+              ],
+              "test_sharpe": 0.16575313630256358
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 2
+              },
+              "test": [
+                2520,
+                2772
+              ],
+              "test_sharpe": 0.5618335256867203
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 2
+              },
+              "test": [
+                2772,
+                3024
+              ],
+              "test_sharpe": 0.7292247219418939
+            }
+          ],
+          "fixed_sharpe": 0.5705440648687448,
+          "gate": "FAIL",
+          "n_periods": 2016,
+          "note": "standing selection-fair gate [D-0002] (docs/selection-fair-gate.md), standing rule 1 of docs/research-round-7d-plan.md \u2014 run + recorded on EVERY Round-7D lane, folded through selection_gate.apply_gate BEFORE the verdict is written. 1-config-per-lane PORTFOLIO slice: this lane runs portfolio_walk_forward with a ONE-config grid, so there is NO within-lane variant selection \u2014 fixed_sharpe == searched_sharpe (the lane's own stitched OOS Sharpe) and selection_gap == 0.0 BY CONSTRUCTION. The gate is therefore degenerate here and coincides with the \u00a76 KEEP rule; it is exercised to honor standing rule 1 and would bite a future MULTI-variant portfolio lane. Doubles as the R5-D fixed-config row (standing rule 2) \u2014 selection_gap informational, no registered threshold; report-only (R4-B precedent), not ledgered. run_selection_gate is single-instrument shaped (ohlcv+strategy) so it cannot grade a portfolio lane; the decision is selection_gate.gate_decision and the block mirrors the module's own result shape and reuses its constants.",
+          "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.570544, bench 1.193394) \u2014 the searched edge does not survive selection-free",
+          "reason_class": "FAIL_UNDERPERFORM",
+          "searched_sharpe": 0.5705440648687448,
+          "selection_gap": 0.0
+        },
+        "verdict": "KILL",
+        "verdict_pre_gate": "KILL"
       },
       {
         "n_splits": 8,
@@ -980,7 +1286,109 @@
           "variants_tried": 6,
           "verdict": "KILLED"
         },
-        "verdict": "KILL"
+        "selection_gate": {
+          "bench_sharpe": 1.1933935713256574,
+          "fixed_per_split": [
+            {
+              "params": {
+                "L": 126,
+                "k": 3
+              },
+              "test": [
+                1008,
+                1260
+              ],
+              "test_sharpe": 1.5084694839211772
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 3
+              },
+              "test": [
+                1260,
+                1512
+              ],
+              "test_sharpe": 0.8300728628240128
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 3
+              },
+              "test": [
+                1512,
+                1764
+              ],
+              "test_sharpe": -0.12175157108168858
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 3
+              },
+              "test": [
+                1764,
+                2016
+              ],
+              "test_sharpe": 0.5887102946768057
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 3
+              },
+              "test": [
+                2016,
+                2268
+              ],
+              "test_sharpe": 1.1080800127754646
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 3
+              },
+              "test": [
+                2268,
+                2520
+              ],
+              "test_sharpe": 0.3512876347073942
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 3
+              },
+              "test": [
+                2520,
+                2772
+              ],
+              "test_sharpe": 0.7171893716172533
+            },
+            {
+              "params": {
+                "L": 126,
+                "k": 3
+              },
+              "test": [
+                2772,
+                3024
+              ],
+              "test_sharpe": 1.0162161495832942
+            }
+          ],
+          "fixed_sharpe": 0.6228220252171603,
+          "gate": "FAIL",
+          "n_periods": 2016,
+          "note": "standing selection-fair gate [D-0002] (docs/selection-fair-gate.md), standing rule 1 of docs/research-round-7d-plan.md \u2014 run + recorded on EVERY Round-7D lane, folded through selection_gate.apply_gate BEFORE the verdict is written. 1-config-per-lane PORTFOLIO slice: this lane runs portfolio_walk_forward with a ONE-config grid, so there is NO within-lane variant selection \u2014 fixed_sharpe == searched_sharpe (the lane's own stitched OOS Sharpe) and selection_gap == 0.0 BY CONSTRUCTION. The gate is therefore degenerate here and coincides with the \u00a76 KEEP rule; it is exercised to honor standing rule 1 and would bite a future MULTI-variant portfolio lane. Doubles as the R5-D fixed-config row (standing rule 2) \u2014 selection_gap informational, no registered threshold; report-only (R4-B precedent), not ledgered. run_selection_gate is single-instrument shaped (ohlcv+strategy) so it cannot grade a portfolio lane; the decision is selection_gate.gate_decision and the block mirrors the module's own result shape and reuses its constants.",
+          "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.622822, bench 1.193394) \u2014 the searched edge does not survive selection-free",
+          "reason_class": "FAIL_UNDERPERFORM",
+          "searched_sharpe": 0.6228220252171603,
+          "selection_gap": 0.0
+        },
+        "verdict": "KILL",
+        "verdict_pre_gate": "KILL"
       },
       {
         "n_splits": 8,
@@ -1138,7 +1546,109 @@
           "variants_tried": 6,
           "verdict": "KILLED"
         },
-        "verdict": "KILL"
+        "selection_gate": {
+          "bench_sharpe": 1.1933935713256574,
+          "fixed_per_split": [
+            {
+              "params": {
+                "L": 252,
+                "k": 2
+              },
+              "test": [
+                1008,
+                1260
+              ],
+              "test_sharpe": 1.7785161404215202
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 2
+              },
+              "test": [
+                1260,
+                1512
+              ],
+              "test_sharpe": 0.39918396349169477
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 2
+              },
+              "test": [
+                1512,
+                1764
+              ],
+              "test_sharpe": 0.2080664097274991
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 2
+              },
+              "test": [
+                1764,
+                2016
+              ],
+              "test_sharpe": 1.2236105461500943
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 2
+              },
+              "test": [
+                2016,
+                2268
+              ],
+              "test_sharpe": 0.6974293670429744
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 2
+              },
+              "test": [
+                2268,
+                2520
+              ],
+              "test_sharpe": 0.4689414693846608
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 2
+              },
+              "test": [
+                2520,
+                2772
+              ],
+              "test_sharpe": 0.5814715142954668
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 2
+              },
+              "test": [
+                2772,
+                3024
+              ],
+              "test_sharpe": 0.82803783541154
+            }
+          ],
+          "fixed_sharpe": 0.7059682703227965,
+          "gate": "FAIL",
+          "n_periods": 2016,
+          "note": "standing selection-fair gate [D-0002] (docs/selection-fair-gate.md), standing rule 1 of docs/research-round-7d-plan.md \u2014 run + recorded on EVERY Round-7D lane, folded through selection_gate.apply_gate BEFORE the verdict is written. 1-config-per-lane PORTFOLIO slice: this lane runs portfolio_walk_forward with a ONE-config grid, so there is NO within-lane variant selection \u2014 fixed_sharpe == searched_sharpe (the lane's own stitched OOS Sharpe) and selection_gap == 0.0 BY CONSTRUCTION. The gate is therefore degenerate here and coincides with the \u00a76 KEEP rule; it is exercised to honor standing rule 1 and would bite a future MULTI-variant portfolio lane. Doubles as the R5-D fixed-config row (standing rule 2) \u2014 selection_gap informational, no registered threshold; report-only (R4-B precedent), not ledgered. run_selection_gate is single-instrument shaped (ohlcv+strategy) so it cannot grade a portfolio lane; the decision is selection_gate.gate_decision and the block mirrors the module's own result shape and reuses its constants.",
+          "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.705968, bench 1.193394) \u2014 the searched edge does not survive selection-free",
+          "reason_class": "FAIL_UNDERPERFORM",
+          "searched_sharpe": 0.7059682703227965,
+          "selection_gap": 0.0
+        },
+        "verdict": "KILL",
+        "verdict_pre_gate": "KILL"
       },
       {
         "n_splits": 8,
@@ -1296,7 +1806,109 @@
           "variants_tried": 6,
           "verdict": "KILLED"
         },
-        "verdict": "KILL"
+        "selection_gate": {
+          "bench_sharpe": 1.1933935713256574,
+          "fixed_per_split": [
+            {
+              "params": {
+                "L": 252,
+                "k": 3
+              },
+              "test": [
+                1008,
+                1260
+              ],
+              "test_sharpe": 2.1158512361178063
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 3
+              },
+              "test": [
+                1260,
+                1512
+              ],
+              "test_sharpe": 0.5675580781463209
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 3
+              },
+              "test": [
+                1512,
+                1764
+              ],
+              "test_sharpe": 0.027996528860241898
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 3
+              },
+              "test": [
+                1764,
+                2016
+              ],
+              "test_sharpe": 0.9166465230795169
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 3
+              },
+              "test": [
+                2016,
+                2268
+              ],
+              "test_sharpe": 1.8162926962429307
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 3
+              },
+              "test": [
+                2268,
+                2520
+              ],
+              "test_sharpe": 0.7147998697932075
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 3
+              },
+              "test": [
+                2520,
+                2772
+              ],
+              "test_sharpe": 0.9353935021076383
+            },
+            {
+              "params": {
+                "L": 252,
+                "k": 3
+              },
+              "test": [
+                2772,
+                3024
+              ],
+              "test_sharpe": 1.1218199051436823
+            }
+          ],
+          "fixed_sharpe": 0.9017557670470746,
+          "gate": "FAIL",
+          "n_periods": 2016,
+          "note": "standing selection-fair gate [D-0002] (docs/selection-fair-gate.md), standing rule 1 of docs/research-round-7d-plan.md \u2014 run + recorded on EVERY Round-7D lane, folded through selection_gate.apply_gate BEFORE the verdict is written. 1-config-per-lane PORTFOLIO slice: this lane runs portfolio_walk_forward with a ONE-config grid, so there is NO within-lane variant selection \u2014 fixed_sharpe == searched_sharpe (the lane's own stitched OOS Sharpe) and selection_gap == 0.0 BY CONSTRUCTION. The gate is therefore degenerate here and coincides with the \u00a76 KEEP rule; it is exercised to honor standing rule 1 and would bite a future MULTI-variant portfolio lane. Doubles as the R5-D fixed-config row (standing rule 2) \u2014 selection_gap informational, no registered threshold; report-only (R4-B precedent), not ledgered. run_selection_gate is single-instrument shaped (ohlcv+strategy) so it cannot grade a portfolio lane; the decision is selection_gate.gate_decision and the block mirrors the module's own result shape and reuses its constants.",
+          "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.901756, bench 1.193394) \u2014 the searched edge does not survive selection-free",
+          "reason_class": "FAIL_UNDERPERFORM",
+          "searched_sharpe": 0.9017557670470746,
+          "selection_gap": 0.0
+        },
+        "verdict": "KILL",
+        "verdict_pre_gate": "KILL"
       }
     ],
     "test_size": 252,
