@@ -19,8 +19,8 @@ autonomous seat. That phase is **over**:
   from this repo alone — read `CONSTITUTION.md` + this file; ignore the
   retired EAP fleet-coordination scaffolding (`control/`, `docs/succession/`,
   `docs/ROUTINES.md` — each now carries a deprecation banner).
-- **Honest research headline.** Across Rounds 1–7D the program registered
-  **5,601 configs and promoted 0** — **no strategy cleared the significance
+- **Honest research headline.** Across Rounds 1–8 the program registered
+  **5,793 configs and promoted 0** — **no strategy cleared the significance
   bar** (`promotion.min_tstat(K)` ~2.638 at K=12). Promotion is CLOSED, the
   holdout is SPENT, and the negative result *is* the finding. This is a clean,
   honest offline research library, not a live trading system. One canonical
@@ -47,7 +47,7 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 State as of 2026-07-18: **0 open PRs** on the repo (beyond the fresh-start
 cleanup PR that carries this edit), **0 active claims**, main advanced through
 the 2026-07-16/17 heartbeat + Friday-grading PRs. Paper lane FLAT/WATCH —
-sole ledger record `paper-0001` WATCH; holdout SPENT; 5,601 registered
+sole ledger record `paper-0001` WATCH; holdout SPENT; 5,793 registered
 configs / 0 promoted. The 2026-07-17 weekly grading pass **already ran**
 in-session as a true no-op (see "Fresh-start snapshot"); there is **no
 self-armed grading cron** — grading runs in-session via
@@ -56,13 +56,25 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
-- **Research Round 8 pre-registered (PLAN ONLY; owner GO 2026-07-18T13:47Z /
-  menu #03)** — [research-round-8-plan.md](research-round-8-plan.md) (badge
-  `binding`): an HOURLY companion re-sweeping the R7 families
-  (`drawdown_reversion` + `high_proximity`) verbatim on the committed 8-ticker
-  hourly cache, (12 + 12) × 8 = 192 registered configs (5,601 → 5,793),
-  registered null (hourly amplifies KILLs), single-2024-regime / 5-split
-  caveat declared. Running is a future slice; dev-only, promotion CLOSED.
+- **Research Round 8 CLOSED (ran 2026-07-18; owner GO 2026-07-18T13:47Z /
+  menu #03)** — the pre-registered HOURLY companion executed against
+  [research-round-8-plan.md](research-round-8-plan.md): the two newest R7
+  single-instrument families (`drawdown_reversion` + `high_proximity`)
+  re-swept VERBATIM (grid identity with the daily R7 axes pinned by tests) on
+  the committed 8-ticker hourly cache, (12 + 12) × 8 = 192 registered configs.
+  Results: [research-round-8-results.md](research-round-8-results.md) — **3
+  KEEP-dev / 13 KILL / 0 KILL-SIG of 16 hourly lanes, 0 promoted, gate 8 PASS
+  / 8 FAIL (0 demoted), best informational t 1.079 (MSFT `drawdown_reversion`)
+  vs the unchanged 2.638 bar — nothing clears it. `high_proximity` nulled
+  harder on hourly exactly as the null predicted (0 KEEP-dev / 8 KILL vs its
+  daily 2 KEEP-dev / 13 KILL); `drawdown_reversion` did NOT amplify KILLs by
+  raw count (3 KEEP-dev / 5 KILL) but all 3 hourly dev-KEEPs rest on the single
+  ~8.5-month 2024 regime (5 splits, R5-B single-window-luck caveat) and none
+  clear the bar**; INFRASTRUCTURE ALARM — 1/16 lanes (`drawdown_reversion` ·
+  GLD) `UNGRADEABLE_NAN` (degenerate stitched OOS, reported as infra not
+  strategy evidence, standing rule 3); runtime 4.8 s vs 900 s cap, no CAP-HIT.
+  Program cumulative 5,601 → 5,793, dev-only, promotion CLOSED / 0 promoted,
+  holdout untouched.
 - **Research Round 7D CLOSED (ran 2026-07-18; owner GO 2026-07-18T13:47Z)** —
   the single pre-registered slice executed against
   [research-round-7d-plan.md](research-round-7d-plan.md): R7-D
