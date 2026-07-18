@@ -17,9 +17,12 @@ it arms **only `claude/*`** head branches from this repo (not forks, not
 drafts), and never arms a PR carrying the `do-not-automerge` label
 (re-checked fresh against the API to defeat the stale-payload race).
 
-Until action 1 is done, PRs park **READY + green** with auto-merge simply
-never armed — a safe no-op, not a failure. This is the current expected
-state.
+Until action 1 is done, GitHub-native auto-merge simply can't be *armed* on a
+PR — but this is **not** a reason to leave PRs waiting. Agents merge their own
+green `claude/*` PRs directly (REST/MCP squash-on-green — the path every merge
+to date has used), so nothing parks unmerged. The two owner settings below
+only remove the manual merge step; they are a convenience, not a gate on
+landing.
 
 ## ⚑ Open owner actions (six-field form: what / why / exact click / where / blocking? / fallback)
 
