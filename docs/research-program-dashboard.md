@@ -1,0 +1,133 @@
+# Research Program Dashboard — Per-Round Scoreboard (P1 → Round 7)
+
+> **Status:** `reference`
+>
+> One canonical, honest scoreboard for the whole research program, so the
+> program-wide picture no longer has to be re-stitched from seven separate
+> results docs. **Docs only:** this file changes no verdict, schedules
+> nothing, reads no holdout data, and implies no promotion. Every number is
+> carried from a cited committed source doc — where a round's doc does not
+> state a number the cell reads `n/r` (not recorded), never an invented
+> value. **POST-HOLDOUT, DEV-ONLY: the holdout is SPENT and promotion is
+> CLOSED.** This is NOT investment advice.
+
+## Headline
+
+Across P1 baselines through Round 7 the program registered **5,415
+registered configurations and promoted 0** — **no strategy ever cleared
+the significance bar** (`trading_lab.promotion.min_tstat(K)` ≈ 2.638 at
+K=12; the bar only ever rises). Promotion is **CLOSED**, the holdout is
+**SPENT** (13 one-shot reads, ORDER 008), and the negative result *is* the
+finding. The single PROMOTED-TO-FINDING ever minted — AAPL donchian, P2 era
+— was demoted to RULE-PASS on 2026-07-10 under ORDER 007 (its holdout
+confirmation was t = 0.02). Nothing in six-plus rounds came within ~1.0 t of
+its bar; the best informational t anywhere is **1.66** (Round 5, an SLV
+`williams_r_reversion` grid neighbor). This is a clean, honest **offline
+research library, not a live trading system.**
+
+## Per-round scoreboard
+
+| Round | Configs added | Cumulative | KEEP-dev | KILL | KILL-SIG | Best t (vs 2.638) | Promoted | Source |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| P1 baselines | 590 | 590 | n/r¹ | n/r¹ | n/r¹ | n/r² | 0³ | `p1-*-results.md` (aggregated in `research-program-retrospective.md` §b) |
+| Round 2 | 78 | 668 | 5 | 9 | —⁴ | n/r⁵ | 0 | `research-round-2-results.md` |
+| interim · bollinger-mtf | 12 | 680 | 0 | n/r⁶ | —⁴ | n/r⁶ | 0 | `research/bollinger-mtf-dev-2026-07-12.md` |
+| Round 3 | 3,468 | 4,148 | 58⁷ | 238⁷ | 4⁷ | 1.04 | 0 | `research-round-3-results.md`; `research-round-4-results.md` §R4-A |
+| Round 4 | 197 | 4,345 | 5⁸ | 60⁸ | 30⁸ | 1.09⁹ | 0 | `research-round-4-results.md` |
+| Round 5 | 14 | 4,359 | 4 | 1 | 0 | 1.66 | 0 | `research-round-5-results.md` |
+| Round 6 | 696 | 5,055 | 3 | 47 | 8 | 0.60 | 0 | `research-round-6-results.md` |
+| Round 7 | 360 | 5,415 | 5 | 25 | 0 | 1.20¹⁰ | 0 | `research-round-7-results.md` |
+| **Program total** | **5,415** | **5,415** | —¹¹ | —¹¹ | —¹¹ | **1.66** (R5-A) | **0** | rows above |
+
+The cumulative column reconciles exactly: 590 + 78 + 12 + 3,468 + 197 + 14 +
+696 + 360 = **5,415** (the `program_variants_tried` chain, cross-checked
+against `src/trading_lab/sweeps.py` in `research-program-retrospective.md`
+§b). P2 (2 validation runs), P4 (99 transfer backtests), and P5 (13 holdout
+reads) added *runs* but **no new registered configs**, so they are not
+separate rows.
+
+### Footnotes (every figure is cited)
+
+1. P1 predates the KEEP/KILL vocabulary (introduced in Round 2 §6; KILL-SIG
+   only from R4-A). P1 graded beats-vs-B&H: 7/32 trend daily, 3/24
+   mean-reversion, 5/32 trend hourly, 3/3 on BTC but "none is a finding"
+   (video) — "weak evidence, not a discovery"
+   (`research-program-retrospective.md` §a; the four `p1-*-results.md`).
+   590 = 177 + 144 + 177 + 92.
+2. No Bonferroni t was computed in P1 by design. The only significance ever
+   attached to a P1/P2 lane came from the later ORDER 007 re-grade of AAPL
+   donchian: t = 0.42 at K=1 (3.448 at honest K=177), demoted
+   (`p2-regrade-aapl-donchian.md`; `research-program-retrospective.md` §b/§f).
+3. 0 net/standing. The single PROMOTED-TO-FINDING (AAPL donchian) was
+   demoted to RULE-PASS on 2026-07-10; its one-shot holdout confirmation was
+   t = 0.02 (`research-program-retrospective.md` §d/§f).
+4. The KILL-SIG verdict class (t ≤ −`min_tstat`, the mirrored bar) did not
+   exist until R4-A, so it is undefined (`—`) for Round 2 and the interim
+   slice.
+5. Round 2 computed no t-stats anywhere, by design
+   (`research-round-2-results.md`).
+6. bollinger-mtf: a clean NULL — all 12 pre-declared Δ Sharpe ≤ 0, 0 graded
+   KEEP; no t reported (`research/bollinger-mtf-dev-2026-07-12.md`;
+   `research-program-retrospective.md` §b). Listed as its own row so the
+   cumulative reconciles (668 + 12 = 680).
+7. Round 3's own **core** headline is 1,752 configs / 41 KEEP-dev / 125 KILL
+   of 166 core lanes, best t 1.04 (`research-round-3-results.md`). This row
+   instead uses the **full committed surface** — 3,468 configs across 13
+   core + extended sweeps → 302 per-lane summaries, re-graded **58 KEEP /
+   238 KILL / 4 KILL-SIG** (+2 UNGRADEABLE) by R4-A
+   (`research-round-4-results.md` §R4-A; funnel in
+   `research-program-retrospective.md` §b) — so the config count matches the
+   4,148 cumulative. The 4 KILL-SIG arose from the R4-A re-grade, not from
+   Round 3 as-run.
+8. Round 4 **new-search** slices only: R4-C committees 5 KEEP / 7 KILL, R4-D
+   regime 0/6, R4-E cross-asset 0/2, R4-F day-of-week 0/45 + 30 KILL-SIG (at
+   the honest K=75 bar, 3.209) — sum **5 KEEP / 60 KILL / 30 KILL-SIG** of
+   95 new-search lanes (`research-round-4-results.md` §closing tally). R4-A
+   (302-lane re-grade of Round 3) and R4-B (2×/4× cost re-grade of the 58
+   KEEPs, killing 16 at 2×) are re-grades of prior-round lanes and are
+   excluded here to avoid double-counting Round-3 lanes.
+9. Best t among Round-4 **new** configs: 1.09 (R4-C committees,
+   `research-round-4-results.md` §R4-C). R4-B's cost re-grade of a Round-3
+   survivor (BTC-USD `bollinger_breakout` at 2× costs) reached 1.315 — the
+   highest number attributed to Round 4 — but it is a re-grade of a Round-3
+   lane, not a new Round-4 config.
+10. 1.20 in the round headline; 1.195 in the per-lane t column (BTC-USD
+    daily `high_proximity`, `research-round-7-results.md`).
+11. KEEP-dev / KILL / KILL-SIG are **not additive** across rounds: later
+    rounds re-grade and demote earlier lanes (R4-A/B re-grade Round 3; R5-B
+    demoted a Round-3 KEEP), and no document states a merged post-Round-6
+    standing KEEP list — the combined surviving surface is explicitly "not
+    measured" (`research-program-retrospective.md` §b/§f). The program's best
+    informational t anywhere is **1.66** (R5-A, SLV `williams_r_reversion`
+    ±1-grid-step neighbor), still far under any bar.
+
+## How to read this
+
+- **KEEP-dev = dev-candidate only, never a finding.** Every KEEP above is a
+  dev-data artifact scored on the same window it was selected in — not an
+  out-of-sample claim. Genuine OOS validation of any survivor requires a
+  new, owner-gated, pre-registered protocol on post-2026 data.
+- **The bar is never lowered.** `min_tstat(K) = Φ⁻¹(1 − 0.05/max(1,K))` is a
+  one-sided Bonferroni correction over K = variants tried; it **only ever
+  rises** (1.645 at K=1, ≈2.33 at K=5, 2.638 at K=12, up to 3.448 at
+  K=177). K rises only as more variants are tried; no K was ever counted
+  down.
+- **Best-t is informational.** Promotion is CLOSED and the holdout is SPENT,
+  so the "Best t" column measures nothing that could promote — it exists to
+  show how far the strongest dev arm each round sat *below* its bar. None
+  came within ~1.0 t.
+- **KILL-SIG = significantly harmful** (t ≤ −`min_tstat`), a mirror of the
+  bar in the negative. A KILL-SIG is *explicitly NOT a signal to invert* the
+  strategy — it flags a lane whose measured harm is beyond noise (often an
+  exposure artifact, e.g. Round 4's 30 day-of-week KILL-SIGs).
+- **Nulls and KILLs are first-class results.** The program's product is its
+  ledgered negative evidence, not a strategy.
+
+---
+
+*Provenance: generated 2026-07-17 (UTC) from the cited committed results and
+retrospective docs at origin/main HEAD `82ef4cc` (Round 7 / PR #141). This
+is a docs-only synthesis — source code and merged results always win over
+this page. See [research-program-retrospective.md](research-program-retrospective.md)
+for the narrative synthesis (Rounds 1–6) and each linked `research-round-N-results.md`
+for the per-round detail.*
