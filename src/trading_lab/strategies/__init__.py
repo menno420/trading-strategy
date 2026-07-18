@@ -114,8 +114,8 @@ from . import (adx_filtered_sma, aroon_trend, atr_trailing,
                regime_switch, roc_momentum, rsi_mean_reversion,
                sma_crossover, stochastic_reversion, supertrend_flip,
                trix_momentum, vol_filtered_trend, washout_recovery,
-               weekday_long, williams_r_reversion, xsec_momentum,
-               xsec_reversal)
+               weekday_long, williams_r_reversion, xsec_drawdown,
+               xsec_momentum, xsec_reversal)
 
 STRATEGIES = {
     "buy_and_hold": buy_and_hold.generate,
@@ -319,9 +319,19 @@ R6_GAP_FAMILY = ["overnight_gap"]
 # code; the Round-3 slice-5/14/15 precedent).
 R6_VOLUME_HOURLY_FAMILY = ["obv_trend", "mfi_reversion"]
 
+# Round 7D slice R7-D (docs/research-round-7d-plan.md § R7-D, owner GO
+# 2026-07-18, post-holdout dev-only, promotion CLOSED): the single NEW
+# cross-sectional PORTFOLIO family swept in the r7d-xsec-drawdown × XSEC-14
+# basket × daily lane — ranks the basket on DRAWDOWN DEPTH (depth from a
+# trailing L-bar close peak), structurally distinct from its return-ranked
+# neighbours xsec_momentum / xsec_reversal. Panel interface (weights over
+# aligned closes), so it lives in PORTFOLIO_STRATEGIES, not STRATEGIES.
+R7D_XSEC_DRAWDOWN_FAMILY = "xsec_drawdown"
+
 PORTFOLIO_STRATEGIES = {
     "xsec_momentum": xsec_momentum.generate_weights,
     "xsec_reversal": xsec_reversal.generate_weights,
+    "xsec_drawdown": xsec_drawdown.generate_weights,
 }
 
 __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
@@ -335,6 +345,7 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "R3_HOURLY_COMPLETION_FAMILY", "R4_SEASONALITY_FAMILY",
            "R4_REGIME_FAMILY", "R4_CROSSASSET_FAMILY",
            "R6_VOLUME_FAMILY", "R6_GAP_FAMILY", "R6_VOLUME_HOURLY_FAMILY",
+           "R7D_XSEC_DRAWDOWN_FAMILY",
            "buy_and_hold", "sma_crossover", "rsi_mean_reversion",
            "ema_crossover", "macd", "donchian", "supertrend_flip",
            "macd_supertrend", "bollinger_reversion", "pullback",
@@ -345,4 +356,4 @@ __all__ = ["STRATEGIES", "DEFAULT_PARAMS", "PORTFOLIO_STRATEGIES",
            "weekday_long", "regime_switch", "crossasset_gate",
            "obv_trend", "mfi_reversion", "overnight_gap",
            "drawdown_reversion", "high_proximity", "washout_recovery",
-           "xsec_momentum", "xsec_reversal"]
+           "xsec_drawdown", "xsec_momentum", "xsec_reversal"]

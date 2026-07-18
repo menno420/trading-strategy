@@ -1099,6 +1099,148 @@ class TestXsecReversal:
             generate_weights(bad, N=5, k=1)
 
 
+class TestXsecDrawdown:
+    """Round 7D portfolio family: rank the aligned basket by DRAWDOWN DEPTH
+    (close / trailing-L-bar-max - 1, <= 0) and hold the deepest k names
+    equal-weight. Panel interface, so it lives in PORTFOLIO_STRATEGIES, not
+    STRATEGIES. Distinct from xsec_momentum / xsec_reversal, which rank on
+    trailing point-to-point return. Tests mirror TestXsecReversal."""
+
+    @staticmethod
+    def make_dd_closes(depths: dict, L: int, n: int) -> pd.DataFrame:
+        """Aligned closes panel where, at the decision bar iloc ``L``, each
+        column has a KNOWN drawdown depth. Each column ramps up to a peak of
+        100 at iloc ``L-1`` (the trailing max), then sits at ``100*(1+d)``
+        from iloc ``L`` onward, so ``depth[L] == d`` exactly (the rolling-L
+        window at iloc L spans positions 1..L, whose max is the peak 100)."""
+        idx = pd.bdate_range("2024-01-01", periods=n)
+        data = {}
+        for t, d in sorted(depths.items()):
+            col = np.empty(n)
+            col[:L] = np.linspace(90.0, 100.0, L)  # peak 100 at iloc L-1
+            col[L:] = 100.0 * (1.0 + d)
+            data[t] = col
+        return pd.DataFrame(data, index=idx)
+
+    def test_registered_as_portfolio_strategy_only(self):
+        from trading_lab.strategies import (PORTFOLIO_STRATEGIES,
+                                            R7D_XSEC_DRAWDOWN_FAMILY)
+        assert R7D_XSEC_DRAWDOWN_FAMILY == "xsec_drawdown"
+        assert "xsec_drawdown" in PORTFOLIO_STRATEGIES
+        assert "xsec_drawdown" not in STRATEGIES  # panel interface
+
+    def test_ranking_selects_deepest_k_by_drawdown(self):
+        from trading_lab.strategies.xsec_drawdown import generate_weights
+        closes = self.make_dd_closes(
+            {"A": -0.30, "B": -0.05, "C": -0.20, "D": -0.10}, L=5, n=8)
+        w = generate_weights(closes, L=5, k=2, rebalance_every=5)
+        first = w.iloc[5]  # first decision bar (iloc L)
+        # deepest-2 drawdowns are A (-0.30) and C (-0.20)
+        assert first["A"] == 0.5 and first["C"] == 0.5
+        assert first["B"] == 0.0 and first["D"] == 0.0
+
+    def test_not_reducible_to_trailing_return_ranking(self):
+        # A name can have a deeper drawdown yet a HIGHER trailing return than
+        # another: the drawdown key and the point-to-point-return key are not
+        # monotone transforms of each other. Peak-then-partially-recover (X)
+        # vs shallow-monotone-decline (Y): X has the deeper trailing peak
+        # drawdown but the higher close/close[0] return.
+        from trading_lab.strategies.xsec_drawdown import \
+            generate_weights as dd
+        from trading_lab.strategies.xsec_reversal import \
+            generate_weights as rev
+        n = 8
+        idx = pd.bdate_range("2024-01-01", periods=n)
+        # X: 100 -> 130 (peak at iloc 4) -> 120 (deep drawdown -7.7%, but
+        #    trailing return over N=5 is +20% vs iloc 0 = 100).
+        x = np.array([100, 108, 116, 124, 130, 120, 120, 120], float)
+        # Y: 100 -> 96 monotone slide (shallow drawdown -4% from its own peak
+        #    100, but trailing return -4%).
+        y = np.array([100, 99, 98, 97, 96, 96, 96, 96], float)
+        closes = pd.DataFrame({"X": x, "Y": y}, index=idx)
+        wd = dd(closes, L=5, k=1, rebalance_every=5).iloc[5]
+        wr = rev(closes, N=5, k=1, rebalance_every=5).iloc[5]
+        assert wd["X"] == 1.0   # deepest drawdown = X
+        assert wr["Y"] == 1.0   # worst trailing return = Y
+        # the two rankings disagree -> not the same family
+
+    def test_decision_rows_only_on_the_schedule_flat_before_L(self):
+        from trading_lab.strategies.xsec_drawdown import generate_weights
+        closes = self.make_dd_closes({"A": -0.10, "B": -0.20}, L=10, n=30)
+        w = generate_weights(closes, L=10, k=1, rebalance_every=5)
+        decision_ilocs = np.nonzero(~w.isna().all(axis=1).to_numpy())[0]
+        assert list(decision_ilocs) == [10, 15, 20, 25]
+        # warm-up: cash/flat (all-NaN, no decision) before iloc L
+        assert w.iloc[:10].isna().all().all()
+
+    def test_weights_equal_weight_deepest_k_long_only_sum_to_1(self):
+        from trading_lab.strategies.xsec_drawdown import generate_weights
+        rng = np.random.default_rng(74)
+        idx = pd.bdate_range("2024-01-01", periods=200)
+        closes = pd.DataFrame(
+            {t: 100.0 * np.exp(np.cumsum(rng.normal(0.0, 0.02, 200)))
+             for t in ("A", "B", "C", "D", "E")}, index=idx)
+        for k in (2, 3):
+            w = generate_weights(closes, L=63, k=k, rebalance_every=21)
+            rows = w.dropna(how="all")
+            assert len(rows) > 0
+            assert (rows.to_numpy() >= 0.0).all()             # long-only
+            assert np.allclose(rows.sum(axis=1), 1.0)          # fully invested
+            assert ((rows == 0.0) | np.isclose(rows, 1.0 / k)).all().all()
+            assert ((rows > 0).sum(axis=1) == k).all()         # exactly k names
+
+    def test_hold_between_rebalances(self):
+        from trading_lab.strategies.xsec_drawdown import generate_weights
+        closes = self.make_dd_closes({"A": -0.10, "B": -0.20}, L=5, n=40)
+        w = generate_weights(closes, L=5, k=1, rebalance_every=7)
+        # every bar that is not a decision bar is all-NaN (hold the book)
+        decision = set(range(5, len(closes), 7))
+        for i in range(len(closes)):
+            if i in decision:
+                assert not w.iloc[i].isna().any()
+            else:
+                assert w.iloc[i].isna().all()
+
+    def test_tie_breaks_deterministically_by_column_order(self):
+        from trading_lab.strategies.xsec_drawdown import generate_weights
+        closes = self.make_dd_closes({"A": -0.15, "B": -0.15}, L=5, n=8)
+        w = generate_weights(closes, L=5, k=1, rebalance_every=5)
+        # identical depth -> lowest column index (alphabetical) wins
+        assert w.iloc[5]["A"] == 1.0 and w.iloc[5]["B"] == 0.0
+
+    def test_causality_prefix_invariance(self):
+        from trading_lab.strategies.xsec_drawdown import generate_weights
+        rng = np.random.default_rng(42)
+        idx = pd.bdate_range("2024-01-01", periods=200)
+        closes = pd.DataFrame(
+            {t: 100.0 * np.exp(np.cumsum(rng.normal(0.0, 0.02, 200)))
+             for t in ("A", "B", "C", "D")}, index=idx)
+        full = generate_weights(closes, L=63, k=2, rebalance_every=21)
+        cut = 150
+        truncated = generate_weights(closes.iloc[:cut], L=63, k=2,
+                                     rebalance_every=21)
+        # schedule anchored at iloc 0 + rolling max through bar t only ->
+        # the prefix's weights equal the full panel's on the shared bars
+        # (the portfolio_walk_forward slicing contract).
+        pd.testing.assert_frame_equal(full.iloc[:cut], truncated)
+
+    def test_rejects_bad_params(self):
+        from trading_lab.strategies.xsec_drawdown import generate_weights
+        closes = self.make_dd_closes({"A": -0.10, "B": -0.20}, L=5, n=20)
+        with pytest.raises(ValueError, match="L"):
+            generate_weights(closes, L=1, k=1)          # L < 2
+        with pytest.raises(ValueError, match="k"):
+            generate_weights(closes, L=5, k=0)          # k < 1
+        with pytest.raises(ValueError, match="k"):
+            generate_weights(closes, L=5, k=3)          # k > n_inst (2)
+        with pytest.raises(ValueError, match="rebalance_every"):
+            generate_weights(closes, L=5, k=1, rebalance_every=0)
+        with pytest.raises(ValueError, match="NaN"):
+            bad = closes.copy()
+            bad.iloc[3, 0] = np.nan
+            generate_weights(bad, L=5, k=1)
+
+
 class TestTrixMomentum:
     def test_trix_sign_in_geometric_trends(self):
         # The indicator itself: constant-rate geometric growth drives the

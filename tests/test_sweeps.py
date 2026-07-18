@@ -2032,3 +2032,89 @@ class TestRound7C:
         # registered configs; program cumulative 5415 -> 5595.
         assert sweeps.r7c_total_configs() == 180
         assert 5415 + sweeps.r7c_total_configs() == 5595
+
+
+class TestR7DXsecDrawdown:
+    """Round-7D pre-declaration pins (docs/research-round-7d-plan.md, owner
+    GO 2026-07-18): the xsec_drawdown cross-sectional PORTFOLIO grid is
+    committed BEFORE the sweep runs and these pins freeze it. PORTFOLIO lane:
+    configs = variants (instruments do NOT multiply). Mirrors
+    TestR3XsecExpandedGrid."""
+
+    def test_family_registered_as_portfolio_only(self):
+        from trading_lab.strategies import (PORTFOLIO_STRATEGIES,
+                                            R7D_XSEC_DRAWDOWN_FAMILY)
+        assert R7D_XSEC_DRAWDOWN_FAMILY == "xsec_drawdown"
+        assert sweeps.R7D_XSEC_DRAWDOWN_FAMILIES == (R7D_XSEC_DRAWDOWN_FAMILY,)
+        for fam in sweeps.R7D_XSEC_DRAWDOWN_FAMILIES:
+            assert fam in PORTFOLIO_STRATEGIES
+            assert fam not in STRATEGIES  # panel interface, not per-ticker
+
+    def test_axes_are_exactly_the_pre_registered_grid(self):
+        assert sweeps._R7D_XSEC_DRAWDOWN_AXES == {
+            "xsec_drawdown": {"L": [63, 126, 252], "k": [2, 3]}}
+
+    def test_registered_counts(self):
+        # L{63,126,252} x k{2,3} = 3 x 2 = 6 variants.
+        assert len(sweeps.r7d_xsec_drawdown_variants("xsec_drawdown")) == 6
+        assert sweeps.r7d_xsec_drawdown_variants_per_family() == \
+            {"xsec_drawdown": 6}
+
+    def test_portfolio_config_count_is_variants_not_times_instruments(self):
+        # PORTFOLIO lane: 6 configs, NOT 6 x 14 = 84.
+        assert sweeps.r7d_total_configs() == 6
+        assert sweeps.r7d_total_configs() == \
+            len(sweeps.r7d_xsec_drawdown_variants("xsec_drawdown"))
+
+    def test_k_is_round_standard_and_bar_never_lowered(self):
+        from trading_lab import promotion
+        assert sweeps.R7D_K == 6
+        assert all(n == sweeps.R7D_K
+                   for n in sweeps.r7d_xsec_drawdown_variants_per_family().values())
+        # xsec K=6 Bonferroni bar, unchanged and never lowered (~2.39).
+        assert round(promotion.min_tstat(sweeps.R7D_K), 2) == 2.39
+
+    def test_basket_is_the_xsec14_tuple_object(self):
+        assert sweeps.R7D_INSTRUMENTS is sweeps.R3_XSEC_EXPANDED_INSTRUMENTS
+        assert len(sweeps.R7D_INSTRUMENTS) == 14
+        assert "BTC-USD" not in sweeps.R7D_INSTRUMENTS
+
+    def test_rebalance_cadence_frozen_not_swept(self):
+        assert sweeps.R7D_XSEC_DRAWDOWN_REBALANCE_EVERY == {"xsec_drawdown": 21}
+        for params in sweeps.r7d_xsec_drawdown_variants("xsec_drawdown"):
+            assert "rebalance_every" not in params
+            assert set(params) == {"L", "k"}  # nothing else is swept
+
+    def test_grid_is_exactly_the_registered_product(self):
+        variants = sweeps.r7d_xsec_drawdown_variants("xsec_drawdown")
+        assert ({(p["L"], p["k"]) for p in variants}
+                == {(L, k) for L in (63, 126, 252) for k in (2, 3)})
+
+    def test_every_variant_runs(self):
+        from trading_lab.strategies import PORTFOLIO_STRATEGIES
+        rng = np.random.default_rng(714)
+        idx = pd.bdate_range("2020-01-01", periods=400)
+        closes = pd.DataFrame(
+            {t: 100.0 * np.exp(np.cumsum(rng.normal(0.0, 0.02, 400)))
+             for t in sweeps.R7D_INSTRUMENTS}, index=idx)
+        rebal = sweeps.R7D_XSEC_DRAWDOWN_REBALANCE_EVERY["xsec_drawdown"]
+        for params in sweeps.r7d_xsec_drawdown_variants("xsec_drawdown"):
+            w = PORTFOLIO_STRATEGIES["xsec_drawdown"](
+                closes, rebalance_every=rebal, **params)
+            rows = w.dropna(how="all")
+            assert len(rows) > 0
+            assert np.allclose(rows.sum(axis=1), 1.0)
+
+    def test_unknown_family_rejected(self):
+        with pytest.raises(ValueError, match="unknown"):
+            sweeps.r7d_xsec_drawdown_variants("astrology")
+
+    def test_deterministic_order(self):
+        assert (sweeps.r7d_xsec_drawdown_variants("xsec_drawdown")
+                == sweeps.r7d_xsec_drawdown_variants("xsec_drawdown"))
+
+    def test_round_total_configs_and_program_ledger(self):
+        # Burden ledger: 6 variants = 6 new registered configs (portfolio
+        # lane, configs = variants); program cumulative 5595 -> 5601.
+        assert sweeps.r7d_total_configs() == 6
+        assert 5595 + sweeps.r7d_total_configs() == 5601
