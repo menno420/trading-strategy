@@ -56,6 +56,22 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
+- **Research Round 9 pre-registered (PLAN + INFRASTRUCTURE, ZERO results;
+  live owner turn 2026-07-19 / ORDER 019)** —
+  [research-round-9-plan.md](research-round-9-plan.md) (badge `binding`): the
+  owner's signal-CONFLUENCE idea — enter only when ≥2 (and separately ≥3)
+  DISTINCT thesis-class strategies agree, a cross-class ≥K-of-N majority VOTE
+  (`trading_lab.ensemble.confluence_positions`, an AND/vote gate distinct from
+  the R4-C committee AVERAGE and the R7-C within-class AND). Two fixed-default
+  member panels (SET-3 trend/mean-rev/breakout; SET-5 adds drawdown STATE +
+  volume), K ∈ {2,3} → 4 vote configs × 15 daily tickers = 60 registered
+  configs (`r9_total_configs()` = 60; 5,793 → 5,853 on the future RUN).
+  Registered null (distinct-class signals are often anti-correlated → AND-gating
+  collapses trade count and statistical power → a negative result is expected),
+  with a mandatory pre-registered correlation/overlap check and trade-count /
+  SE-inflation section. This PR lands the plan + the `confluence_positions` gate
+  + the pinned grid/tests; the sweep runner + graded results are a future RUN
+  slice. Dev-only, promotion CLOSED, `min_tstat` bar unchanged.
 - **Cross-round meta-analysis (Rounds 1–8) IN FLIGHT** (PR #152, branch
   `claude/cross-round-meta-analysis`; ORDER 018) — new doc
   [cross-round-meta-analysis.md](cross-round-meta-analysis.md) consolidates the
