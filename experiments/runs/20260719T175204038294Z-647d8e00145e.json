@@ -1,0 +1,51 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.21377063927729822,
+    "max_drawdown": -0.3646004454130759,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9142669643667102,
+    "sortino": 0.9094050636198474,
+    "total_return": 17.269032233311567,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "647d8e00145e",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-19T17:52:04+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "97ef9eddb2996e2b74c03acd8a0bfb34b66da69f",
+  "instrument": "MSFT",
+  "metrics": {
+    "cagr": 0.1753763614889683,
+    "max_drawdown": -0.3730756008070423,
+    "n_bars": 3779,
+    "n_trades": 47,
+    "sharpe": 0.8184951652969062,
+    "sortino": 0.7911112003832282,
+    "total_return": 10.281732622458549,
+    "turnover_per_year": 3.1341624768457264,
+    "win_rate": 0.5416666666666666
+  },
+  "n_bars": 3779,
+  "notes": "Round 10 inverse-confluence EXIT vote (post-holdout DEV-ONLY, promotion CLOSED \u2014 live owner turn 2026-07-19 / ORDER 020; pre-registered docs/research-round-10-plan.md): instrument top exit-vote config of 4 tried (post-hoc selection \u2014 the per-lane grades and the selection-fair gate blocks live in experiments/sweeps/r10-exit-confluence/*__MSFT.json)",
+  "params": {
+    "k": 3,
+    "members": [
+      "ema_crossover",
+      "rsi_mean_reversion",
+      "donchian"
+    ],
+    "vote": "exit_confluence_flat_when>=k-of-N"
+  },
+  "run_id": "20260719T175204038294Z-647d8e00145e",
+  "schema_version": 1,
+  "strategy": "r10_exit_confluence_set3_k3",
+  "timeframe": "daily",
+  "variants_tried": 4
+}

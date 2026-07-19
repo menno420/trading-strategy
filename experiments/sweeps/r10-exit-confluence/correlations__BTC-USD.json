@@ -1,0 +1,181 @@
+{
+  "corr_identity_check": {
+    "identity_confirmed": true,
+    "max_abs_diff_exit_vs_position": 7.771561172376096e-16,
+    "note": "Pearson identity corr(1-x,1-y)=corr(x,y) for 0/1 series: the member EXIT-signal (flat-bar) correlation must EQUAL the R9 member POSITION (long-bar) correlation. A correctness check on the round, not a re-derivation."
+  },
+  "exit_signal_correlation": {
+    "donchian": {
+      "donchian": 1.0,
+      "drawdown_reversion": -0.44243001452985736,
+      "ema_crossover": 0.5029079334030966,
+      "obv_trend": 0.5055200726288769,
+      "rsi_mean_reversion": -0.3622110132684502
+    },
+    "drawdown_reversion": {
+      "donchian": -0.44243001452985736,
+      "drawdown_reversion": 1.0,
+      "ema_crossover": -0.3659910136363384,
+      "obv_trend": -0.2844902684201046,
+      "rsi_mean_reversion": 0.35846681403191
+    },
+    "ema_crossover": {
+      "donchian": 0.5029079334030966,
+      "drawdown_reversion": -0.3659910136363384,
+      "ema_crossover": 1.0,
+      "obv_trend": 0.5021921647288822,
+      "rsi_mean_reversion": -0.6738664132613602
+    },
+    "obv_trend": {
+      "donchian": 0.5055200726288769,
+      "drawdown_reversion": -0.2844902684201046,
+      "ema_crossover": 0.5021921647288822,
+      "obv_trend": 1.0,
+      "rsi_mean_reversion": -0.4452200172445552
+    },
+    "rsi_mean_reversion": {
+      "donchian": -0.3622110132684502,
+      "drawdown_reversion": 0.35846681403191,
+      "ema_crossover": -0.6738664132613602,
+      "obv_trend": -0.4452200172445552,
+      "rsi_mean_reversion": 1.0
+    }
+  },
+  "exit_signal_overlap_jaccard": {
+    "donchian": {
+      "donchian": 1.0,
+      "drawdown_reversion": 0.060595446584938706,
+      "ema_crossover": 0.5757972913936217,
+      "obv_trend": 0.5738137082601055,
+      "rsi_mean_reversion": 0.2545722713864307
+    },
+    "drawdown_reversion": {
+      "donchian": 0.060595446584938706,
+      "drawdown_reversion": 1.0,
+      "ema_crossover": 0.05048465266558966,
+      "obv_trend": 0.07782426778242678,
+      "rsi_mean_reversion": 0.37994050148746283
+    },
+    "ema_crossover": {
+      "donchian": 0.5757972913936217,
+      "drawdown_reversion": 0.05048465266558966,
+      "ema_crossover": 1.0,
+      "obv_trend": 0.5511307767944936,
+      "rsi_mean_reversion": 0.09376786735277301
+    },
+    "obv_trend": {
+      "donchian": 0.5738137082601055,
+      "drawdown_reversion": 0.07782426778242678,
+      "ema_crossover": 0.5511307767944936,
+      "obv_trend": 1.0,
+      "rsi_mean_reversion": 0.15954850518608907
+    },
+    "rsi_mean_reversion": {
+      "donchian": 0.2545722713864307,
+      "drawdown_reversion": 0.37994050148746283,
+      "ema_crossover": 0.09376786735277301,
+      "obv_trend": 0.15954850518608907,
+      "rsi_mean_reversion": 1.0
+    }
+  },
+  "flag_gt_0p5": {
+    "rule": "Confluence between correlated members is one signal counted twice; if mean pairwise member exit-signal-correlation on an instrument exceeds ~0.5, any apparent vote edge is not diversified and must be reported as such.",
+    "set3": false,
+    "set5": false,
+    "threshold": 0.5
+  },
+  "mean_pairwise_exit_signal_corr": {
+    "set3": -0.17772316437557126,
+    "set5": -0.07051217555679003
+  },
+  "mean_pairwise_position_corr": {
+    "set3": -0.17772316437557098,
+    "set5": -0.07051217555678986
+  },
+  "members_set3": [
+    "ema_crossover",
+    "rsi_mean_reversion",
+    "donchian"
+  ],
+  "members_set5": [
+    "ema_crossover",
+    "rsi_mean_reversion",
+    "donchian",
+    "drawdown_reversion",
+    "obv_trend"
+  ],
+  "position_correlation": {
+    "donchian": {
+      "donchian": 1.0,
+      "drawdown_reversion": -0.4424300145298574,
+      "ema_crossover": 0.5029079334030969,
+      "obv_trend": 0.505520072628877,
+      "rsi_mean_reversion": -0.36221101326844984
+    },
+    "drawdown_reversion": {
+      "donchian": -0.4424300145298574,
+      "drawdown_reversion": 1.0,
+      "ema_crossover": -0.36599101363633807,
+      "obv_trend": -0.2844902684201048,
+      "rsi_mean_reversion": 0.3584668140319098
+    },
+    "ema_crossover": {
+      "donchian": 0.5029079334030969,
+      "drawdown_reversion": -0.36599101363633807,
+      "ema_crossover": 1.0,
+      "obv_trend": 0.5021921647288822,
+      "rsi_mean_reversion": -0.67386641326136
+    },
+    "obv_trend": {
+      "donchian": 0.505520072628877,
+      "drawdown_reversion": -0.2844902684201048,
+      "ema_crossover": 0.5021921647288822,
+      "obv_trend": 1.0,
+      "rsi_mean_reversion": -0.4452200172445544
+    },
+    "rsi_mean_reversion": {
+      "donchian": -0.36221101326844984,
+      "drawdown_reversion": 0.3584668140319098,
+      "ema_crossover": -0.67386641326136,
+      "obv_trend": -0.4452200172445544,
+      "rsi_mean_reversion": 1.0
+    }
+  },
+  "return_correlation": {
+    "donchian": {
+      "donchian": 1.0,
+      "drawdown_reversion": 0.36476933638736725,
+      "ema_crossover": 0.7644051440822338,
+      "obv_trend": 0.7823162425819915,
+      "rsi_mean_reversion": 0.13441275974334177
+    },
+    "drawdown_reversion": {
+      "donchian": 0.36476933638736725,
+      "drawdown_reversion": 1.0,
+      "ema_crossover": 0.5509033971541711,
+      "obv_trend": 0.535508629391502,
+      "rsi_mean_reversion": 0.6568819322702031
+    },
+    "ema_crossover": {
+      "donchian": 0.7644051440822338,
+      "drawdown_reversion": 0.5509033971541711,
+      "ema_crossover": 1.0,
+      "obv_trend": 0.8222383024788417,
+      "rsi_mean_reversion": 0.15326928548377733
+    },
+    "obv_trend": {
+      "donchian": 0.7823162425819915,
+      "drawdown_reversion": 0.535508629391502,
+      "ema_crossover": 0.8222383024788417,
+      "obv_trend": 1.0,
+      "rsi_mean_reversion": 0.2122253716696004
+    },
+    "rsi_mean_reversion": {
+      "donchian": 0.13441275974334177,
+      "drawdown_reversion": 0.6568819322702031,
+      "ema_crossover": 0.15326928548377733,
+      "obv_trend": 0.2122253716696004,
+      "rsi_mean_reversion": 1.0
+    }
+  }
+}

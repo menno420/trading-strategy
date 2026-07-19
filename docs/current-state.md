@@ -19,8 +19,8 @@ autonomous seat. That phase is **over**:
   from this repo alone — read `CONSTITUTION.md` + this file; ignore the
   retired EAP fleet-coordination scaffolding (`control/`, `docs/succession/`,
   `docs/ROUTINES.md` — each now carries a deprecation banner).
-- **Honest research headline.** Across Rounds 1–9 the program registered
-  **5,853 configs and promoted 0** — **no strategy cleared the significance
+- **Honest research headline.** Across Rounds 1–10 the program registered
+  **5,913 configs and promoted 0** — **no strategy cleared the significance
   bar** (`promotion.min_tstat(K)` ~2.638 at K=12). Promotion is CLOSED, the
   holdout is SPENT, and the negative result *is* the finding. This is a clean,
   honest offline research library, not a live trading system. One canonical
@@ -47,7 +47,7 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 State as of 2026-07-18: **0 open PRs** on the repo (beyond the fresh-start
 cleanup PR that carries this edit), **0 active claims**, main advanced through
 the 2026-07-16/17 heartbeat + Friday-grading PRs. Paper lane FLAT/WATCH —
-sole ledger record `paper-0001` WATCH; holdout SPENT; 5,853 registered
+sole ledger record `paper-0001` WATCH; holdout SPENT; 5,913 registered
 configs / 0 promoted. The 2026-07-17 weekly grading pass **already ran**
 in-session as a true no-op (see "Fresh-start snapshot"); there is **no
 self-armed grading cron** — grading runs in-session via
@@ -56,27 +56,31 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
-- **Research Round 10 pre-registered (PLAN + INFRASTRUCTURE, ZERO results;
-  live owner turn 2026-07-19 / ORDER 020)** —
-  [research-round-10-plan.md](research-round-10-plan.md) (badge `binding`): the
-  INVERSE of the owner's signal-confluence idea — hold long by DEFAULT and use a
-  cross-class ≥K-of-N majority VOTE to decide when to STEP ASIDE (go flat), a
-  risk-OFF de-risking overlay on buy-and-hold
+- **Research Round 10 CLOSED (ran 2026-07-19; live owner turn 2026-07-19 /
+  ORDER 020)** — the pre-registered inverse-confluence EXIT vote executed
+  against [research-round-10-plan.md](research-round-10-plan.md): the INVERSE of
+  the owner's signal-confluence idea — hold long by DEFAULT and use a cross-class
+  ≥K-of-N majority VOTE to decide when to STEP ASIDE (go flat), a risk-OFF
+  de-risking overlay on buy-and-hold
   (`trading_lab.ensemble.exit_confluence_positions`, the De Morgan DUAL of the
   R9 entry vote: R9 is long iff ≥K long, R10 is flat iff ≥K flat). The SAME two
-  fixed-default member panels as R9 (SET-3 trend/mean-rev/breakout; SET-5 adds
-  drawdown STATE + volume), K ∈ {2,3} → 4 exit-vote configs × 15 daily tickers =
-  60 registered configs (`r10_total_configs()` = 60; 5,853 → 5,913 on the future
-  RUN). Registered null (R9 found the members near-independent, so ≥K agreement
-  to exit is rare either way → a strict K=3 exit ≈ buy-and-hold / a loose K=2
-  exit sheds the drift → a negative result is expected), with a mandatory
-  pre-registered exit-signal correlation/overlap check (the Pearson identity
-  `corr(1-x,1-y)=corr(x,y)` means it equals R9's already-reported position
-  correlations) and a trade-count / SE-inflation section that flags any
-  degenerate ~0-exit lane. This PR lands the plan + the
-  `exit_confluence_positions` gate + the pinned grid/tests; the sweep runner +
-  graded results are a future RUN slice. Dev-only, promotion CLOSED, `min_tstat`
-  bar unchanged.
+  fixed-default member panels as R9 (SET-3; SET-5) × K ∈ {2,3} × 15 daily
+  tickers = **60 configs graded**, **11 KEEP-dev / 40 KILL / 9 KILL-SIG, 0
+  promoted**, best informational t **1.04** (BTC-USD SET-3/K=2 — the SAME lane
+  and value as R9, as the De Morgan dual demands) vs the K=4 bar 2.24 and program
+  K=60 bar 3.14; gate 14 PASS / 46 FAIL with 0 KEEP demoted. Pre-registered
+  exit-signal correlation check CONFIRMS the Pearson identity
+  `corr(1-x,1-y)=corr(x,y)` to machine precision (max |exit_corr − pos_corr| =
+  1.3e-15) — the exit-signal correlations EQUAL R9's position correlations,
+  **0 of 15 instruments trip >0.5**, members near-independent. The two exit
+  corners fail from opposite sides (mirror of R9): the strict SET-3/K=3 exit
+  steps aside a median 8.5% of bars (≈ buy-and-hold, adds nothing, near-zero t),
+  the loose SET-5/K=2 exit steps aside a median 85% of bars (sheds the drift a
+  hold rides) and holds 8 of the 9 KILL-SIG lanes (NVDA −4.07, MSFT −3.34, JPM
+  −2.89, GOOGL −2.67). 0 UNGRADEABLE, no degenerate ~0-exit lane; runtime 27 s
+  vs 900 s cap. Program cumulative **5,853 → 5,913**, dev-only, promotion CLOSED
+  / 0 promoted, holdout untouched (`min_tstat` bar unchanged). Results:
+  [research-round-10-results.md](research-round-10-results.md).
 - **Research Round 9 CLOSED (ran 2026-07-19; live owner turn 2026-07-19 /
   ORDER 019)** — the pre-registered signal-CONFLUENCE vote executed against
   [research-round-9-plan.md](research-round-9-plan.md): the owner's idea —
