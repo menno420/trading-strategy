@@ -1,10 +1,10 @@
-# Cross-Round Meta-Analysis — Rounds 1–9
+# Cross-Round Meta-Analysis — Rounds 1–10
 
 > **Status:** `reference`
 >
-> Written 2026-07-18 (UTC); scoreboard extended 2026-07-19 with Round 9. An
-> honest synthesis across the whole research program — P1 baselines through
-> Round 9 — consolidating what the existing
+> Written 2026-07-18 (UTC); scoreboard extended 2026-07-19 with Rounds 9 and 10.
+> An honest synthesis across the whole research program — P1 baselines through
+> Round 10 — consolidating what the existing
 > program-wide docs cover separately: the narrative
 > [research-program-retrospective.md](research-program-retrospective.md)
 > (Rounds 1–6) and the scoreboard
@@ -24,7 +24,7 @@
 
 ## Headline — the negative result IS the finding
 
-Across P1 baselines through Round 9 the program registered **5,853 registered
+Across P1 baselines through Round 10 the program registered **5,913 registered
 configurations and promoted 0.** **No strategy ever cleared the significance
 bar** (`trading_lab.promotion.min_tstat(K)` ≈ 2.638 at K=12; the bar only ever
 rises). The negative result *is* the finding — a clean, honest **offline
@@ -38,10 +38,10 @@ confirmation was t = 0.02 (`p2-regrade-aapl-donchian.md`;
 (Round 5, an SLV `williams_r_reversion` grid neighbor,
 `research-round-5-results.md` L46–48) — still far under any bar in use.
 
-## Per-round scoreboard (P1 → Round 9)
+## Per-round scoreboard (P1 → Round 10)
 
 Extends the [dashboard](research-program-dashboard.md) (P1 → Round 7) with the
-four post-Round-7 slices (R7-C, R7-D, R8, R9). Every cell is carried from a cited
+five post-Round-7 slices (R7-C, R7-D, R8, R9, R10). Every cell is carried from a cited
 committed source; `n/r` = not recorded in the round's doc (never an invented
 value). KEEP/KILL/KILL-SIG are **not additive** across rounds — later rounds
 re-grade and demote earlier lanes (see the dashboard's footnote 11) — so the
@@ -62,14 +62,16 @@ promotions).
 | Round 7D | 6 | 5,601 | 0 | 6 | 0 | −0.74 (vs 2.39)⁵ | 0 | `research-round-7d-results.md` |
 | Round 8 | 192 | 5,793 | 3 | 13 | 0 | 1.08 (vs 2.64) | 0 | `research-round-8-results.md` |
 | Round 9 | 60 | 5,853 | 11 | 44 | 5 | 1.04 (vs 2.24 / 3.14)⁷ | 0 | `research-round-9-results.md` |
-| **Program total** | **5,853** | **5,853** | —⁶ | —⁶ | —⁶ | **1.66** (R5) | **0** | rows above |
+| Round 10 | 60 | 5,913 | 11 | 40 | 9 | 1.04 (vs 2.24 / 3.14)⁸ | 0 | `research-round-10-results.md` |
+| **Program total** | **5,913** | **5,913** | —⁶ | —⁶ | —⁶ | **1.66** (R5) | **0** | rows above |
 
 The cumulative column reconciles exactly: the dashboard's chain to 5,415
-(P1 → Round 7) plus **180 (R7-C) + 6 (R7-D) + 192 (R8) + 60 (R9) = 5,853**
-(`sweeps.r7c_total_configs()` / `r7d_total_configs()` / `r9_total_configs()`
-and the R8 grid identity, each pinned by `tests/test_sweeps.py`; the R9
-`summary.json` `program_variants_tried` field reads `5853`). P2/P4/P5 added
-*runs* but no new registered configs, so they are not separate rows.
+(P1 → Round 7) plus **180 (R7-C) + 6 (R7-D) + 192 (R8) + 60 (R9) + 60 (R10) =
+5,913** (`sweeps.r7c_total_configs()` / `r7d_total_configs()` /
+`r9_total_configs()` / `r10_total_configs()` and the R8 grid identity, each
+pinned by `tests/test_sweeps.py`; the R10 `summary.json` `program_variants_tried`
+field reads `5913`). P2/P4/P5 added *runs* but no new registered configs, so they
+are not separate rows.
 
 **Footnotes.** ¹ P1 predates the KEEP/KILL vocabulary (Round 2 §6) and computed
 no Bonferroni t by design; it graded beats-vs-B&H (7/32 trend daily, 3/24
@@ -90,6 +92,15 @@ per-lane K=4 (bar 2.24) and program-wide K=60 (bar 3.14); its best t 1.04
 (BTC-USD SET-3/K=2) is under half the nearer bar. The 5 KILL-SIG lanes are all
 the strict all-agree corner (SET-3/K=3 + one SET-5/K=3), significantly
 value-destroying on high-drift names (NVDA −5.09, MSFT −2.88, JPM −2.64).
+⁸ R10 is the inverse-confluence EXIT vote — the De Morgan dual of R9 (hold by
+default, go flat when ≥K distinct classes agree OUT) — graded at the same
+honest multiplicities (per-lane K=4 bar 2.24, program K=60 bar 3.14). Its best t
+1.04 is the SAME BTC-USD SET-3/K=2 lane and value as R9 (the dual gives the same
+best). The 9 KILL-SIG lanes are 8 the loose SET-5/K=2 exit + MSFT SET-5/K=3
+(value-destroying on high-drift names: NVDA −4.07, MSFT −3.34, JPM −2.89, GOOGL
+−2.67). The pre-registered exit-signal correlation EQUALS R9's position
+correlation to 1e-15 (`corr(1-x,1-y)=corr(x,y)` confirmed numerically), 0/15
+trip >0.5 — R10 is a proven De Morgan pair with R9 over one identical panel.
 
 ## Effect-size distribution — how far below the bar
 

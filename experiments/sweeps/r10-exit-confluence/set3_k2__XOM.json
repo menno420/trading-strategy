@@ -1,0 +1,246 @@
+{
+  "benchmark": "buy-and-hold (exit vote is an overlay ON the hold)",
+  "benchmark_full_period_metrics": {
+    "cagr": 0.06899245598055503,
+    "max_drawdown": -0.6111953832320853,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.3906832284981404,
+    "sortino": 0.3859772608614487,
+    "total_return": 1.7195974573756638,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-19T17:52:15+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "exit_stats": {
+    "benchmark_trades": 1,
+    "degenerate_near_bh": false,
+    "exit_events": 63,
+    "flat_bars": 1923,
+    "flat_fraction": 0.5088647790420746,
+    "n_bars": 3779,
+    "n_trades": 124
+  },
+  "full_period_metrics": {
+    "cagr": 0.06016939572627811,
+    "max_drawdown": -0.26709237565225985,
+    "n_bars": 3779,
+    "n_trades": 124,
+    "sharpe": 0.4348294613950682,
+    "sortino": 0.31054049776432435,
+    "total_return": 1.4017525012739362,
+    "turnover_per_year": 8.26885419423128,
+    "win_rate": 0.43548387096774194
+  },
+  "git_sha": "97ef9eddb2996e2b74c03acd8a0bfb34b66da69f",
+  "instrument": "XOM",
+  "k": 2,
+  "lane_variants_tried": 4,
+  "member_correlation": {
+    "flag_gt_0p5": false,
+    "mean_pairwise_exit_signal_corr": -0.07082292680127436,
+    "mean_pairwise_position_corr": -0.07082292680127436
+  },
+  "members": [
+    "ema_crossover",
+    "rsi_mean_reversion",
+    "donchian"
+  ],
+  "n_bars": 3779,
+  "order": "live owner turn 2026-07-19 / ORDER 020; pre-registered docs/research-round-10-plan.md",
+  "post_holdout_dev_only": true,
+  "program_variants_tried": 5913,
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.2414027276049464,
+    "n_periods": 3779,
+    "note": "Lo-2002 Sharpe-delta t on the full-dev-period lane Sharpe vs same-instrument buy-and-hold (the exit overlay modifies a hold), Bonferroni K = 4 exit-vote configs on this instrument \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout",
+    "program_min_tstat_K60": 3.143980287069073,
+    "sharpe_delta": 0.04414623289692776,
+    "sharpe_se": 0.2582814836113144,
+    "timeframe": "daily",
+    "tstat": 0.1709229491780489,
+    "variants_tried": 4,
+    "verdict": "RULE-PASS"
+  },
+  "schema_version": 1,
+  "selection_gate": {
+    "bench_sharpe": 0.2940549506913933,
+    "fixed_per_split": [
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": -0.9853417661463361
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 0.04399947020316332
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.3644314536584532
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.48546854219592206
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.38288490758959326
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": -0.2671596598841661
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.595941435768403
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 1.485710482136296
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": 0.7233990588134189
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": -0.3960090833762744
+      }
+    ],
+    "fixed_sharpe": 0.37073841043403377,
+    "gate": "PASS",
+    "n_periods": 2520,
+    "note": "standing gate [D-0002] (docs/selection-fair-gate.md) on EVERY R10 lane; doubles as the R5-D fixed-config row. searched arm = instrument BEST-of-4 exit-vote config (plan \u00a79 (member-set, K) search dimension); fixed arm = this lane's config; selection_gap informational, no registered threshold; gate replay report-only (R4-B precedent), not ledgered",
+    "reason": "fixed-config replay beats same-window B&H (0.370738 > 0.294055) and is positive",
+    "reason_class": "PASS",
+    "searched_config": {
+      "k": 3,
+      "set": "set3"
+    },
+    "searched_sharpe": 0.3759559268301762,
+    "selection_gap": 0.00521751639614243
+  },
+  "set": "set3",
+  "sweep": "r10-exit-confluence",
+  "timeframe": "daily",
+  "verdict": "KEEP",
+  "verdict_pre_gate": "KEEP"
+}

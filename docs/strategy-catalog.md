@@ -58,21 +58,31 @@ directly instead of re-deriving adjacency from seven results docs.
 
 ## Ensemble compositors (not registry families)
 
-Two families in `trading_lab.ensemble` COMBINE the fixed positions of several
+Three families in `trading_lab.ensemble` COMBINE the fixed positions of several
 registry members rather than reading price directly, so they are graded but
-not counted among the 32 registry families above. Both are dev-only; neither
+not counted among the 32 registry families above. All three are dev-only; none
 is promoted.
 
 | Compositor | Kind | Combines | Round tested | Standing verdict | Source |
 |---|---|---|---|---|---|
 | `committee_positions` | ensemble (AVERAGE) | Survivor committee → fractional ~OR-weighted size (2-of-3 long → 0.5 long). | Round 4 (slice R4-C) | KEEP-dev (weak) | `research-round-4-results.md` §R4-C (5 KEEP-dev / 7 KILL of 12, best t 1.09, 0 promoted) |
 | `confluence_positions` | ensemble (≥K-of-N VOTE) | Binary cross-class ≥K-of-N vote — long iff ≥K distinct-class members agree (the owner's "wait for 2–3 to agree"). | Round 9 | KEEP-dev (weak) | `research-round-9-results.md` (11 KEEP-dev / 44 KILL / 5 KILL-SIG of 60, best t 1.04, 0 promoted; members near-independent, 0/15 trip >0.5; strict all-agree corner value-destroying) |
+| `exit_confluence_positions` | ensemble (≥K-of-N EXIT VOTE) | Binary cross-class ≥K-of-N EXIT vote — hold long by default, go FLAT iff ≥K distinct-class members agree OUT; the De Morgan dual of `confluence_positions` (`1 − confluence_positions([1−m …], k)`) as a de-risking overlay on buy-and-hold. | Round 10 | KEEP-dev (weak) | `research-round-10-results.md` (11 KEEP-dev / 40 KILL / 9 KILL-SIG of 60, best t 1.04, 0 promoted; exit-signal corr = R9 pos-corr to 1e-15, 0/15 trip >0.5; loose SET-5/K=2 exit sheds drift, value-destroying) |
 
 The R9 vote's 11 KEEP-devs are weak survivorship lanes (best t 1.04 vs the K=4
 bar 2.24 / K=60 bar 3.14) on the same low-vol / high-drift names prior rounds
 returned; its 5 KILL-SIG lanes (all SET-3/K=3 + one SET-5/K=3) make it, like
 `overnight_gap` and `washout_recovery` before it, a family with measured *harm*
 in its strict corner — but not a burned class (it holds dev-candidates).
+
+`exit_confluence_positions` (R10) is the proven De Morgan dual of the R9 vote
+over one identical panel: its 11 KEEP-devs cluster on the same survivorship
+names (BTC ×3, TLT ×3, XOM ×3) and 8 of them are the strict/rare-exit corner
+that sits closest to buy-and-hold (adds nothing), while its 9 KILL-SIG lanes are
+almost all the loose SET-5/K=2 exit that steps aside through the drift
+(value-destroying — the mirror of R9, whose harm lived in the strict corner).
+Best t 1.04 is the SAME BTC-USD SET-3/K=2 lane as R9. Like the R9 vote it holds
+dev-candidates but is not a finding — 0 promoted.
 
 ## How to read this table
 
