@@ -264,3 +264,11 @@ done-when: Both slices graded under the selection-fair gate and `docs/research-r
 Owner (verbatim): "I'm going to sleep now, proceed to work on both your repos as much as you can, improve or create new books, come up with new things to sell, work on the trading strategies etc, thank you."
 
 Seat reading: "work on the trading strategies" is the live owner turn that unlocks EXECUTING the pre-registered Round 7 research (`docs/research-round-7-plan.md`: R7-A `drawdown_reversion` + R7-B `high_proximity`), previously PLAN-ONLY / owner-gated. RESEARCH-ONLY rail UNCHANGED and absolute: dev caches + paper data, strategy/backtest/grading/analysis code + docs only; NO broker/order/exchange-write code, NO live API config; promotion stays CLOSED and the holdout stays SPENT. Continuous slice-after-slice research loop; backpressure ≤3 open PRs.
+
+## ORDER 019 · 2026-07-19T16:46:05Z · status: new
+priority: P1
+do: Research the owner's signal-confluence idea — enter only when ≥2 (and separately ≥3) DISTINCT strategies agree (cross-thesis-class majority vote); pre-register and grade under the standard corrections (Round 9).
+why: Live owner turn 2026-07-19 (verbatim: "any more progress on the trading strategies, what I was thinking about, isn't it a good idea to find multiple strategies and wait untill at least 2 or 3 give the same signals, what do you think about that?"), relayed via the venture-lab coordinator on a live owner turn.
+done-when: R9 confluence sweep graded under the selection-fair gate and `docs/research-round-9-results.md` landed on main.
+
+> **Provenance:** owner live in coordinator chat 2026-07-19; landed on coordinator dispatch. (Decide-and-flag: the inbox header names fleet-manager as sole writer AND `control/` is RETIRED at HEAD — `docs/current-state.md` is the single living ledger — but the ORDER 018 precedent lands live owner turns here as ORDERs under a decide-and-flag note; provenance decides, landed with this line.)
