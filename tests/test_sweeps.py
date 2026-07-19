@@ -2384,3 +2384,59 @@ class TestRound10:
         # registered configs; program cumulative 5853 -> 5913 (on the RUN).
         assert sweeps.r10_total_configs() == 60
         assert 5853 + sweeps.r10_total_configs() == 5913
+
+
+class TestRound11:
+    """Round-11 pre-declaration pins (docs/research-round-11-plan.md, ORDER
+    021): the cross-asset regime-conditioning grid is committed BEFORE the sweep
+    runs and these pins freeze it. Condition a base long on a RISK-LEG target by
+    a CAUSAL cross-asset regime score (trading_lab.xasset_regime), CONTINUOUSLY
+    via a causal rolling-percentile-rank -- NOT a binary gate (how R11 differs
+    materially from the burned R4 crossasset_gate / regime_switch classes). Grid:
+    3 signals x 3 windows x 3 targets = 27 configs; the mandatory unconditioned
+    control arm is plain buy-and-hold of the same target."""
+
+    def test_signals_are_the_three_causal_regime_scores(self):
+        from trading_lab import xasset_regime
+        assert sweeps._R11_SIGNALS == [
+            "xasset_eq_bond_mom", "xasset_metals_riskoff", "xasset_breadth"]
+        # identical to the module's registered signal names (the code the RUN uses)
+        assert tuple(sweeps._R11_SIGNALS) == xasset_regime.REGIME_SIGNALS
+
+    def test_windows_are_the_registered_trailing_windows(self):
+        assert sweeps._R11_WINDOWS == [63, 126, 252]
+
+    def test_targets_are_nyse_calendar_legs_btc_excluded(self):
+        # All three targets share the NYSE calendar with the SPY/QQQ/GLD/TLT
+        # regime inputs (no cross-calendar reindex). BTC-USD is EXCLUDED as a
+        # target (its weekend calendar would force an as-of reindex).
+        assert sweeps._R11_TARGETS == ["SPY", "QQQ", "NVDA"]
+        assert "BTC-USD" not in sweeps._R11_TARGETS
+
+    def test_percentile_window_is_fixed_252_not_swept(self):
+        from trading_lab import xasset_regime
+        assert sweeps._R11_PERCENTILE_WINDOW == 252
+        # matches the module default -- the normalization window is not a
+        # searched axis (only (signal, window, target) is).
+        assert sweeps._R11_PERCENTILE_WINDOW == xasset_regime.PERCENTILE_WINDOW
+
+    def test_configs_are_exactly_the_registered_product(self):
+        configs = sweeps.r11_configs()
+        expected = [{"signal": s, "window": w, "target": t}
+                    for s in ["xasset_eq_bond_mom", "xasset_metals_riskoff",
+                              "xasset_breadth"]
+                    for w in [63, 126, 252]
+                    for t in ["SPY", "QQQ", "NVDA"]]
+        assert configs == expected
+        assert len(configs) == 27
+
+    def test_deterministic_order(self):
+        assert sweeps.r11_configs() == sweeps.r11_configs()
+
+    def test_round_total_configs_and_program_ledger(self):
+        # Burden ledger: 3 signals x 3 windows x 3 targets = 27 new registered
+        # configs; program cumulative 5913 -> 5940 (on the future RUN). Each
+        # config names its own target, so targets do NOT multiply again.
+        assert sweeps.r11_total_configs() == 27
+        assert sweeps.R11_K == 27
+        assert 5913 + sweeps.r11_total_configs() == 5940
