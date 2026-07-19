@@ -1,6 +1,6 @@
 # 2026-07-19 — Round 9 run: execute the pre-registered signal-confluence vote
 
-> **Status:** `in-progress` — Round 9 EXECUTED — cross-class ≥K-of-N
+> **Status:** `complete` — Round 9 EXECUTED — cross-class ≥K-of-N
 > signal-confluence vote: **11 KEEP-dev / 44 KILL / 5 KILL-SIG of 60 lanes,
 > 0 promoted**, best informational t **1.04** (BTC-USD set3/k2) vs the K=4
 > bar 2.24 and the program K=60 bar 3.14; gate 16 PASS / 44 FAIL (1 KEEP
@@ -97,14 +97,21 @@ exposure. Same null, more precisely mechanised than the plan's baseline.
 
 ## Close-out
 
-**Done** ([[fill: commit list]]):
-- born-red FIRST commit: this session card (`in-progress` hold).
-- the runner + artifacts + results doc + dashboard/catalog/current-state.
-- close-out flip: badge `in-progress` → `complete`.
+**Done** (3 commits):
+- `34af557` — born-red FIRST commit: this session card (`in-progress` hold).
+- `4ea9383` — the runner `scripts/run_r9_confluence_sweep.py`, the 60-lane
+  sweep + artifacts under `experiments/sweeps/r9-confluence/` + 15 ledger runs
+  + `index.jsonl`, `docs/research-round-9-results.md`, the R9 rows in
+  dashboard / meta-analysis / strategy-catalog / current-state, and the
+  `aggregate_effect_sizes.py` selector tightening (R9's dual K=4/K=60 bar
+  schema excluded from the uniform-2.638-bar rollup).
+- (this commit) — close-out flip: badge `in-progress` → `complete`, close-out
+  slots resolved.
 
 **Verify:**
-- `python3 -m pytest -q` → [[fill: pass count]].
-- `python3 bootstrap.py check --strict` → [[fill: exit]] at flip.
+- `python3 -m pytest -q` → 786 passed.
+- `python3 bootstrap.py check --strict` → EXIT 0 at flip (the born-red
+  in-progress hold clears when the badge flips to `complete`).
 - Integrity: the branch diff touches only `scripts/run_r9_confluence_sweep.py`
   + `experiments/sweeps/r9-confluence/**` + `experiments/runs` + `index.jsonl`
   + `docs/research-round-9-results.md` + `docs/research-program-dashboard.md`

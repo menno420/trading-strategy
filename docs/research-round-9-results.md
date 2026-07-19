@@ -239,7 +239,8 @@ part of the finding.
 
 ## R5-D fixed-config rows & selection-fair gate (standing rules 1–2)
 
-The selection-fair standing gate ([D-0002]) ran on all 60 lanes with the
+The selection-fair standing gate ([selection-fair-gate.md](selection-fair-gate.md))
+ran on all 60 lanes with the
 fidelity guard armed (searched arm = the instrument's best-of-4 vote config
 over the committed 1008/252 test windows; every replay reproduced its recorded
 stitched Sharpe within 1e-8, so **0 fidelity failures**). The gate block
