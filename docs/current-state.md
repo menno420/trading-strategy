@@ -19,8 +19,8 @@ autonomous seat. That phase is **over**:
   from this repo alone — read `CONSTITUTION.md` + this file; ignore the
   retired EAP fleet-coordination scaffolding (`control/`, `docs/succession/`,
   `docs/ROUTINES.md` — each now carries a deprecation banner).
-- **Honest research headline.** Across Rounds 1–10 the program registered
-  **5,913 configs and promoted 0** — **no strategy cleared the significance
+- **Honest research headline.** Across Rounds 1–11 the program registered
+  **5,940 configs and promoted 0** — **no strategy cleared the significance
   bar** (`promotion.min_tstat(K)` ~2.638 at K=12). Promotion is CLOSED, the
   holdout is SPENT, and the negative result *is* the finding. This is a clean,
   honest offline research library, not a live trading system. One canonical
@@ -47,7 +47,7 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 State as of 2026-07-18: **0 open PRs** on the repo (beyond the fresh-start
 cleanup PR that carries this edit), **0 active claims**, main advanced through
 the 2026-07-16/17 heartbeat + Friday-grading PRs. Paper lane FLAT/WATCH —
-sole ledger record `paper-0001` WATCH; holdout SPENT; 5,913 registered
+sole ledger record `paper-0001` WATCH; holdout SPENT; 5,940 registered
 configs / 0 promoted. The 2026-07-17 weekly grading pass **already ran**
 in-session as a true no-op (see "Fresh-start snapshot"); there is **no
 self-armed grading cron** — grading runs in-session via
@@ -67,29 +67,40 @@ records are retired and are not worth carrying forward.)
   `regime_switch` classes), and **fundamentals** + **flows / positioning**
   (higher-potential but OWNER-GATED on point-in-time / feed data access). Same
   `min_tstat(K)` bar, same RESEARCH-ONLY rails, same pre-registration protocol —
-  a new data type gets no easier bar. **PLAN-ONLY: no round pre-registered, no
-  code, no data ingestion, no dependency; execution awaits an explicit owner
-  turn** (owner-decision list in the doc's §6). No round CLOSED or flipped; the
-  5,913/0 tally, holdout SPENT, and promotion CLOSED rails are untouched.
-- **Research Round 11 PRE-REGISTERED (PLAN-ONLY; coordinator-authorized on the
-  owner's standing 2026-07-19 turn / ORDER 021)** — the self-serve first step
-  from the new-data-source direction, pre-registered against
-  [research-round-11-plan.md](research-round-11-plan.md) (badge `binding`):
-  condition a base long on a RISK-LEG target (SPY/QQQ/NVDA) by a CAUSAL
-  cross-asset regime score built entirely from the EXISTING daily cache
-  (`trading_lab.xasset_regime` — `xasset_eq_bond_mom`, `xasset_metals_riskoff`,
-  `xasset_breadth`), CONTINUOUSLY via a causal rolling-percentile-rank (trailing
-  252, never full-sample) — how R11 differs MATERIALLY from the burned R4
-  `crossasset_gate` (0/2) / `regime_switch` (0/6) binary gates — with a mandatory
-  unconditioned buy-and-hold control arm. 3 signals × 3 windows × 3 targets =
-  **27 configs** (`r11_total_configs()` = 27), pinned by tests; a headline
-  no-lookahead truncation test enforces the causality guarantee. **PLAN + CODE
-  INFRASTRUCTURE, ZERO results: this PR lands the plan + the causal regime module
-  + tests + the pinned grid; the sweep RUNNER + graded
-  `docs/research-round-11-results.md` are a separate future RUN PR.** No round
-  CLOSED or flipped; the 5,913/0 tally, holdout SPENT, and promotion CLOSED rails
-  are untouched (the RUN advances the ledger 5,913 → 5,940 and reports 0-promoted
-  as the expected outcome).
+  a new data type gets no easier bar. **The self-serve cross-asset / macro-regime
+  first step has now been EXECUTED as Round 11 (CLOSED, 0 promoted — see below);
+  the OWNER-GATED fundamentals / flows candidates remain PLAN-ONLY, awaiting an
+  explicit owner turn** (owner-decision list in the doc's §6). Holdout SPENT and
+  promotion CLOSED rails untouched (the program tally now stands at 5,940/0
+  through Round 11).
+- **Research Round 11 CLOSED (ran 2026-07-19; live owner turn 2026-07-19 /
+  ORDER 021)** — the pre-registered cross-asset regime conditioning round
+  executed against [research-round-11-plan.md](research-round-11-plan.md): the
+  self-serve first step from the new-data-source direction — condition a RISK-LEG
+  target's exposure CONTINUOUSLY on a CAUSAL cross-asset regime score built
+  entirely from the EXISTING daily cache (`trading_lab.xasset_regime` —
+  `xasset_eq_bond_mom`, `xasset_metals_riskoff`, `xasset_breadth`) via a causal
+  rolling-percentile-rank (trailing 252, never full-sample), the continuous form
+  the burned R4 `crossasset_gate` (0/2) / `regime_switch` (0/6) binary gates
+  never tried, graded against a mandatory unconditioned buy-and-hold control arm.
+  3 signals × 3 windows × 3 targets (SPY/QQQ/NVDA) = **27 configs graded**,
+  **2 KEEP-dev / 25 KILL / 0 KILL-SIG, 0 promoted**, best informational t **0.68**
+  (NVDA `xasset_breadth`/W252) vs the per-lane K=9 bar 2.54 and program K=27 bar
+  2.90 — barely a quarter of the nearer bar; gate 4 PASS / 23 FAIL with 0 KEEP
+  demoted. The mandatory control arm is decisive: **only 2 of 27 conditioned
+  lanes beat their own base buy-and-hold** (both NVDA `xasset_breadth`, +0.106 /
+  +0.175 Sharpe), and the median lane UNDERPERFORMS its hold by −0.257 Sharpe,
+  because a rank-normalized exposure averages ~0.5 and structurally sheds the
+  drift rather than timing the drawdowns. The **headline no-lookahead truncation
+  control PASSES on the REAL cached panels** (45 probes across all 3 signals × 3
+  windows, regime score and conditioned position bit-for-bit identical full vs
+  truncated, max |diff| = 0.0) — so the null is a property of a genuinely causal
+  rule, not a hindsight artifact. 0 UNGRADEABLE lanes, no degenerate ~constant
+  lane (position std 0.30–0.35); runtime 36 s vs 900 s cap. Program cumulative
+  **5,913 → 5,940**, dev-only, promotion CLOSED / 0 promoted, holdout untouched
+  (`min_tstat` bar unchanged). Reproduces the burned R4 cross-asset null in
+  continuous form. Results:
+  [research-round-11-results.md](research-round-11-results.md).
 - **Research Round 10 CLOSED (ran 2026-07-19; live owner turn 2026-07-19 /
   ORDER 020)** — the pre-registered inverse-confluence EXIT vote executed
   against [research-round-10-plan.md](research-round-10-plan.md): the INVERSE of

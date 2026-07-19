@@ -58,16 +58,19 @@ directly instead of re-deriving adjacency from seven results docs.
 
 ## Ensemble compositors (not registry families)
 
-Three families in `trading_lab.ensemble` COMBINE the fixed positions of several
-registry members rather than reading price directly, so they are graded but
-not counted among the 32 registry families above. All three are dev-only; none
-is promoted.
+Four position-composing families outside the STRATEGIES registry — three in
+`trading_lab.ensemble` that COMBINE the fixed positions of several registry
+members, plus `xasset_regime` which CONDITIONS a single target's exposure on a
+cross-asset regime score — rather than reading one instrument's price directly,
+so they are graded but not counted among the 32 registry families above. All
+four are dev-only; none is promoted.
 
 | Compositor | Kind | Combines | Round tested | Standing verdict | Source |
 |---|---|---|---|---|---|
 | `committee_positions` | ensemble (AVERAGE) | Survivor committee → fractional ~OR-weighted size (2-of-3 long → 0.5 long). | Round 4 (slice R4-C) | KEEP-dev (weak) | `research-round-4-results.md` §R4-C (5 KEEP-dev / 7 KILL of 12, best t 1.09, 0 promoted) |
 | `confluence_positions` | ensemble (≥K-of-N VOTE) | Binary cross-class ≥K-of-N vote — long iff ≥K distinct-class members agree (the owner's "wait for 2–3 to agree"). | Round 9 | KEEP-dev (weak) | `research-round-9-results.md` (11 KEEP-dev / 44 KILL / 5 KILL-SIG of 60, best t 1.04, 0 promoted; members near-independent, 0/15 trip >0.5; strict all-agree corner value-destroying) |
 | `exit_confluence_positions` | ensemble (≥K-of-N EXIT VOTE) | Binary cross-class ≥K-of-N EXIT vote — hold long by default, go FLAT iff ≥K distinct-class members agree OUT; the De Morgan dual of `confluence_positions` (`1 − confluence_positions([1−m …], k)`) as a de-risking overlay on buy-and-hold. | Round 10 | KEEP-dev (weak) | `research-round-10-results.md` (11 KEEP-dev / 40 KILL / 9 KILL-SIG of 60, best t 1.04, 0 promoted; exit-signal corr = R9 pos-corr to 1e-15, 0/15 trip >0.5; loose SET-5/K=2 exit sheds drift, value-destroying) |
+| `regime_conditioned_positions` (`xasset_regime`) | conditioning (x-asset regime) | Size a risk-leg target's exposure CONTINUOUSLY by the CAUSAL rolling-percentile-rank (trailing 252) of a cross-asset regime score — eq/bond momentum, metals risk-off, or cross-asset breadth; the continuous, causally-normalized successor to the burned binary `crossasset_gate` (control = unconditioned buy-and-hold of the target). | Round 11 | KEEP-dev (weak) — loses to hold | `research-round-11-results.md` (2 KEEP-dev / 25 KILL / 0 KILL-SIG of 27, best t 0.68 NVDA `xasset_breadth`/W252, 0 promoted; only 2 of 27 lanes beat their base hold, median −0.257 Sharpe; rank-normalized exposure averages ~0.5 and sheds the drift rather than timing drawdowns; no-lookahead truncation control PASS on the real panels; reproduces the R4 `crossasset_gate`/`regime_switch` null in continuous form) |
 
 The R9 vote's 11 KEEP-devs are weak survivorship lanes (best t 1.04 vs the K=4
 bar 2.24 / K=60 bar 3.14) on the same low-vol / high-drift names prior rounds

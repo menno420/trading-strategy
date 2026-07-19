@@ -1,4 +1,4 @@
-# Research Program Dashboard — Per-Round Scoreboard (P1 → Round 10)
+# Research Program Dashboard — Per-Round Scoreboard (P1 → Round 11)
 
 > **Status:** `reference`
 >
@@ -13,7 +13,7 @@
 
 ## Headline
 
-Across P1 baselines through Round 10 the program registered **5,913
+Across P1 baselines through Round 11 the program registered **5,940
 registered configurations and promoted 0** — **no strategy ever cleared
 the significance bar** (`trading_lab.promotion.min_tstat(K)` ≈ 2.638 at
 K=12; the bar only ever rises). Promotion is **CLOSED**, the holdout is
@@ -42,10 +42,11 @@ research library, not a live trading system.**
 | Round 8 | 192 | 5,793 | 3 | 13 | 0 | 1.08 | 0 | `research-round-8-results.md` |
 | Round 9 | 60 | 5,853 | 11 | 44 | 5 | 1.04¹³ | 0 | `research-round-9-results.md` |
 | Round 10 | 60 | 5,913 | 11 | 40 | 9 | 1.04¹⁴ | 0 | `research-round-10-results.md` |
-| **Program total** | **5,913** | **5,913** | —¹¹ | —¹¹ | —¹¹ | **1.66** (R5-A) | **0** | rows above |
+| Round 11 | 27 | 5,940 | 2 | 25 | 0 | 0.68¹⁵ | 0 | `research-round-11-results.md` |
+| **Program total** | **5,940** | **5,940** | —¹¹ | —¹¹ | —¹¹ | **1.66** (R5-A) | **0** | rows above |
 
 The cumulative column reconciles exactly: 590 + 78 + 12 + 3,468 + 197 + 14 +
-696 + 360 + 180 + 6 + 192 + 60 + 60 = **5,913** (the `program_variants_tried` chain,
+696 + 360 + 180 + 6 + 192 + 60 + 60 + 27 = **5,940** (the `program_variants_tried` chain,
 cross-checked against `src/trading_lab/sweeps.py` in
 `research-program-retrospective.md` §b and
 [cross-round-meta-analysis.md](cross-round-meta-analysis.md); each round's total
@@ -126,6 +127,18 @@ configs**, so they are not separate rows.
     GOOGL −2.67). The pre-registered exit-signal correlation EQUALS R9's
     position correlation to 1e-15 (`corr(1-x,1-y)=corr(x,y)` confirmed), 0/15
     trip >0.5; `research-round-10-results.md`.
+15. R11 is the cross-asset regime conditioning round (condition a risk-leg
+    target's exposure CONTINUOUSLY on a CAUSAL cross-asset regime score via a
+    causal rolling-percentile-rank), graded at its honest multiplicities —
+    per-lane K=9 (bar 2.54) and program-wide K=27 (bar 2.90). Best t 0.68 (NVDA
+    `xasset_breadth`/W252) is barely a quarter of the nearer bar; 0 KILL-SIG.
+    Only 2 of 27 conditioned lanes beat their own base buy-and-hold (both NVDA
+    `xasset_breadth`); the median lane loses −0.257 Sharpe to its hold because a
+    rank-normalized exposure averages ~0.5 and structurally sheds the drift. The
+    headline no-lookahead truncation control PASSES on the real panels (45
+    probes, 0 diff), so the null is causal, not a hindsight artifact; reproduces
+    the burned R4 `crossasset_gate` (0/2) / `regime_switch` (0/6) null with the
+    continuous form + unconditioned control (`research-round-11-results.md`).
 
 ## How to read this
 
@@ -158,7 +171,9 @@ extended 2026-07-19 with the R7-C / R7-D / R8 / R9 rows (carried from
 `research-round-9-results.md`). This is a docs-only synthesis — source code
 and merged results always win over this page. Extended 2026-07-19 with the R10
 row (inverse-confluence exit vote, 60 configs / 0 promoted; carried from
-`research-round-10-results.md`). See [research-program-retrospective.md](research-program-retrospective.md)
+`research-round-10-results.md`) and the R11 row (cross-asset regime
+conditioning, 27 configs / 0 promoted; carried from
+`research-round-11-results.md`). See [research-program-retrospective.md](research-program-retrospective.md)
 for the narrative synthesis (Rounds 1–6),
 [cross-round-meta-analysis.md](cross-round-meta-analysis.md) for the
 effect-size synthesis extended through Round 8 (5,793 configs / 0 promoted),
