@@ -1,0 +1,225 @@
+{
+  "benchmark": "unconditioned buy-and-hold of the target (position == 1.0, the mandatory control arm)",
+  "benchmark_full_period_metrics": {
+    "cagr": 0.1369418664483757,
+    "max_drawdown": -0.32048971956122474,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8673964015186144,
+    "sortino": 0.7971351390988236,
+    "total_return": 5.852557734879854,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "control_arm": {
+    "base_hold_sharpe": 0.8673964015186144,
+    "beats_base_hold": false,
+    "conditioned_sharpe": 0.6291683021176321,
+    "note": "mandatory unconditioned control arm (plan \u00a75): base buy-and-hold Sharpe of the target reported next to the conditioned lane; a lane that fails to beat its own hold is not a candidate",
+    "sharpe_gap_vs_base_hold": -0.23822809940098233
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-19T18:41:53+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "full_period_metrics": {
+    "cagr": 0.05455630278741319,
+    "max_drawdown": -0.14939360216452435,
+    "n_bars": 3779,
+    "n_trades": 1716,
+    "sharpe": 0.6291683021176321,
+    "sortino": 0.5539920036930115,
+    "total_return": 1.2179667364166349,
+    "turnover_per_year": 15.596718708653084,
+    "win_rate": 0.5425407925407926
+  },
+  "git_sha": "f5fd09686ec5cbe8ef13ca8fcdea277615b88201",
+  "lane_variants_tried": 9,
+  "n_bars": 3779,
+  "order": "live owner turn 2026-07-19 / ORDER 021; pre-registered docs/research-round-11-plan.md",
+  "percentile_window": 252,
+  "position_stats": {
+    "degenerate_near_constant": false,
+    "frac_flat_warm": 0.0037528868360277136,
+    "frac_fully_invested_warm": 0.2315242494226328,
+    "pos_mean_all": 0.5827368876455937,
+    "pos_mean_warm": 0.6351508944609408,
+    "pos_nunique_warm": 244,
+    "pos_std_warm": 0.30099085352877714,
+    "warm_bars": 3464
+  },
+  "post_holdout_dev_only": true,
+  "program_variants_tried": 5940,
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.539184813651313,
+    "n_periods": 3779,
+    "note": "Lo-2002 Sharpe-delta t on the full-dev-period lane Sharpe vs same-target buy-and-hold (the unconditioned control), Bonferroni K = 9 (signal, window) configs on this target \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout",
+    "program_min_tstat_K27": 2.902353478942126,
+    "sharpe_delta": -0.23822809940098233,
+    "sharpe_se": 0.25833444088832924,
+    "timeframe": "daily",
+    "tstat": -0.9221693343783056,
+    "variants_tried": 9,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "selection_gate": {
+    "bench_sharpe": 0.7609406160043444,
+    "fixed_per_split": [
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.28603103968192506
+      },
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": -0.8381500025426554
+      },
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 1.195516979072288
+      },
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 2.8413364541418424
+      },
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -0.28055262903854644
+      },
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 1.385100366749283
+      },
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.46497533612354
+      },
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 0.9581601201564911
+      },
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -0.31021165535209544
+      },
+      {
+        "params": {
+          "percentile_window": 252,
+          "signal": "xasset_breadth",
+          "target": "SPY",
+          "window": 63
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 1.8833202739219672
+      }
+    ],
+    "fixed_sharpe": 0.6194888544195862,
+    "gate": "FAIL",
+    "n_periods": 2520,
+    "note": "standing gate [D-0002] (docs/selection-fair-gate.md) on EVERY R11 lane; doubles as the R5-D fixed-config row. searched arm = target BEST-of-9 (signal, window) config (plan \u00a77 search dimension); fixed arm = this lane's config; selection_gap informational, no registered threshold; gate replay report-only (R4-B precedent), not ledgered",
+    "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.619489, bench 0.760941) \u2014 the searched edge does not survive selection-free",
+    "reason_class": "FAIL_UNDERPERFORM",
+    "searched_config": {
+      "signal": "xasset_breadth",
+      "window": 126
+    },
+    "searched_sharpe": 0.7642501397392403,
+    "selection_gap": 0.14476128531965404
+  },
+  "signal": "xasset_breadth",
+  "sweep": "r11-xasset-regime",
+  "target": "SPY",
+  "timeframe": "daily",
+  "verdict": "KILL",
+  "verdict_pre_gate": "KILL",
+  "window": 63
+}

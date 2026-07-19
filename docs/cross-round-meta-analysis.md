@@ -1,10 +1,10 @@
-# Cross-Round Meta-Analysis — Rounds 1–10
+# Cross-Round Meta-Analysis — Rounds 1–11
 
 > **Status:** `reference`
 >
-> Written 2026-07-18 (UTC); scoreboard extended 2026-07-19 with Rounds 9 and 10.
-> An honest synthesis across the whole research program — P1 baselines through
-> Round 10 — consolidating what the existing
+> Written 2026-07-18 (UTC); scoreboard extended 2026-07-19 with Rounds 9, 10,
+> and 11. An honest synthesis across the whole research program — P1 baselines
+> through Round 11 — consolidating what the existing
 > program-wide docs cover separately: the narrative
 > [research-program-retrospective.md](research-program-retrospective.md)
 > (Rounds 1–6) and the scoreboard
@@ -24,7 +24,7 @@
 
 ## Headline — the negative result IS the finding
 
-Across P1 baselines through Round 10 the program registered **5,913 registered
+Across P1 baselines through Round 11 the program registered **5,940 registered
 configurations and promoted 0.** **No strategy ever cleared the significance
 bar** (`trading_lab.promotion.min_tstat(K)` ≈ 2.638 at K=12; the bar only ever
 rises). The negative result *is* the finding — a clean, honest **offline
@@ -38,10 +38,10 @@ confirmation was t = 0.02 (`p2-regrade-aapl-donchian.md`;
 (Round 5, an SLV `williams_r_reversion` grid neighbor,
 `research-round-5-results.md` L46–48) — still far under any bar in use.
 
-## Per-round scoreboard (P1 → Round 10)
+## Per-round scoreboard (P1 → Round 11)
 
 Extends the [dashboard](research-program-dashboard.md) (P1 → Round 7) with the
-five post-Round-7 slices (R7-C, R7-D, R8, R9, R10). Every cell is carried from a cited
+six post-Round-7 slices (R7-C, R7-D, R8, R9, R10, R11). Every cell is carried from a cited
 committed source; `n/r` = not recorded in the round's doc (never an invented
 value). KEEP/KILL/KILL-SIG are **not additive** across rounds — later rounds
 re-grade and demote earlier lanes (see the dashboard's footnote 11) — so the
@@ -63,15 +63,16 @@ promotions).
 | Round 8 | 192 | 5,793 | 3 | 13 | 0 | 1.08 (vs 2.64) | 0 | `research-round-8-results.md` |
 | Round 9 | 60 | 5,853 | 11 | 44 | 5 | 1.04 (vs 2.24 / 3.14)⁷ | 0 | `research-round-9-results.md` |
 | Round 10 | 60 | 5,913 | 11 | 40 | 9 | 1.04 (vs 2.24 / 3.14)⁸ | 0 | `research-round-10-results.md` |
-| **Program total** | **5,913** | **5,913** | —⁶ | —⁶ | —⁶ | **1.66** (R5) | **0** | rows above |
+| Round 11 | 27 | 5,940 | 2 | 25 | 0 | 0.68 (vs 2.54 / 2.90)⁹ | 0 | `research-round-11-results.md` |
+| **Program total** | **5,940** | **5,940** | —⁶ | —⁶ | —⁶ | **1.66** (R5) | **0** | rows above |
 
 The cumulative column reconciles exactly: the dashboard's chain to 5,415
-(P1 → Round 7) plus **180 (R7-C) + 6 (R7-D) + 192 (R8) + 60 (R9) + 60 (R10) =
-5,913** (`sweeps.r7c_total_configs()` / `r7d_total_configs()` /
-`r9_total_configs()` / `r10_total_configs()` and the R8 grid identity, each
-pinned by `tests/test_sweeps.py`; the R10 `summary.json` `program_variants_tried`
-field reads `5913`). P2/P4/P5 added *runs* but no new registered configs, so they
-are not separate rows.
+(P1 → Round 7) plus **180 (R7-C) + 6 (R7-D) + 192 (R8) + 60 (R9) + 60 (R10) +
+27 (R11) = 5,940** (`sweeps.r7c_total_configs()` / `r7d_total_configs()` /
+`r9_total_configs()` / `r10_total_configs()` / `r11_total_configs()` and the R8
+grid identity, each pinned by `tests/test_sweeps.py`; the R11 `summary.json`
+`program_variants_tried` field reads `5940`). P2/P4/P5 added *runs* but no new
+registered configs, so they are not separate rows.
 
 **Footnotes.** ¹ P1 predates the KEEP/KILL vocabulary (Round 2 §6) and computed
 no Bonferroni t by design; it graded beats-vs-B&H (7/32 trend daily, 3/24
@@ -101,6 +102,20 @@ best). The 9 KILL-SIG lanes are 8 the loose SET-5/K=2 exit + MSFT SET-5/K=3
 −2.67). The pre-registered exit-signal correlation EQUALS R9's position
 correlation to 1e-15 (`corr(1-x,1-y)=corr(x,y)` confirmed numerically), 0/15
 trip >0.5 — R10 is a proven De Morgan pair with R9 over one identical panel.
+⁹ R11 is cross-asset regime conditioning — condition a risk-leg target's
+exposure CONTINUOUSLY on a CAUSAL cross-asset regime score (causal
+rolling-percentile-rank of eq/bond momentum, metals risk-off, or cross-asset
+breadth) — graded at the round's honest multiplicities (per-lane K=9 bar 2.54,
+program K=27 bar 2.90). Its best t 0.68 (NVDA `xasset_breadth`/W252) is barely a
+quarter of the nearer bar; 0 KILL-SIG. Only 2 of 27 conditioned lanes beat their
+own base buy-and-hold (both NVDA `xasset_breadth`); the median lane loses −0.257
+Sharpe to its hold because a rank-normalized exposure averages ~0.5 and
+structurally sheds the drift. The headline no-lookahead truncation control
+PASSES on the real panels (45 probes, 0 diff — the null is causal, not a
+hindsight artifact). R11 reproduces the burned R4 `crossasset_gate` (0/2) /
+`regime_switch` (0/6) null with the continuous form + unconditioned control
+reported alongside — extending "conditioning loses to its own controls, on every
+axis tested" to the last untested conditioning shape.
 
 ## Effect-size distribution — how far below the bar
 
@@ -200,7 +215,14 @@ Five convergent findings, each ledgered across multiple rounds:
   volatility, trend strength, cross-asset momentum all subtracted value against
   their unconditioned controls (`research-round-4-results.md` §closing item 4);
   the mandatory control-arm guard is why "TLT would have looked like a weak KEEP"
-  without it.
+  without it. **Round 11 extends this to the CONTINUOUS, causally-normalized
+  cross-asset regime form** the burned R4 binary gate never tried: sizing a risk
+  leg's exposure by a causal rolling-percentile-rank of a cross-asset regime
+  score still loses to holding — only 2 of 27 lanes beat their base hold, median
+  −0.257 Sharpe, best t 0.68 — because a rank-normalized exposure averages ~0.5
+  and sheds the drift rather than timing the drawdowns
+  (`research-round-11-results.md`; lookahead control PASS on the real panels, so
+  the null is causal, not an artifact).
 - **Drawdown reduces drawdown, not return.** The only consistently observed
   effect across the program is drawdown *reduction*, never a decision metric and
   never a benchmark-beating return edge. Round 7's `drawdown_reversion` (3 weak
