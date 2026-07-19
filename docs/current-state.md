@@ -71,6 +71,25 @@ records are retired and are not worth carrying forward.)
   code, no data ingestion, no dependency; execution awaits an explicit owner
   turn** (owner-decision list in the doc's §6). No round CLOSED or flipped; the
   5,913/0 tally, holdout SPENT, and promotion CLOSED rails are untouched.
+- **Research Round 11 PRE-REGISTERED (PLAN-ONLY; coordinator-authorized on the
+  owner's standing 2026-07-19 turn / ORDER 021)** — the self-serve first step
+  from the new-data-source direction, pre-registered against
+  [research-round-11-plan.md](research-round-11-plan.md) (badge `binding`):
+  condition a base long on a RISK-LEG target (SPY/QQQ/NVDA) by a CAUSAL
+  cross-asset regime score built entirely from the EXISTING daily cache
+  (`trading_lab.xasset_regime` — `xasset_eq_bond_mom`, `xasset_metals_riskoff`,
+  `xasset_breadth`), CONTINUOUSLY via a causal rolling-percentile-rank (trailing
+  252, never full-sample) — how R11 differs MATERIALLY from the burned R4
+  `crossasset_gate` (0/2) / `regime_switch` (0/6) binary gates — with a mandatory
+  unconditioned buy-and-hold control arm. 3 signals × 3 windows × 3 targets =
+  **27 configs** (`r11_total_configs()` = 27), pinned by tests; a headline
+  no-lookahead truncation test enforces the causality guarantee. **PLAN + CODE
+  INFRASTRUCTURE, ZERO results: this PR lands the plan + the causal regime module
+  + tests + the pinned grid; the sweep RUNNER + graded
+  `docs/research-round-11-results.md` are a separate future RUN PR.** No round
+  CLOSED or flipped; the 5,913/0 tally, holdout SPENT, and promotion CLOSED rails
+  are untouched (the RUN advances the ledger 5,913 → 5,940 and reports 0-promoted
+  as the expected outcome).
 - **Research Round 10 CLOSED (ran 2026-07-19; live owner turn 2026-07-19 /
   ORDER 020)** — the pre-registered inverse-confluence EXIT vote executed
   against [research-round-10-plan.md](research-round-10-plan.md): the INVERSE of
