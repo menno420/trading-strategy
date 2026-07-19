@@ -1,6 +1,6 @@
 # 2026-07-19 — Round 10 pre-registration (inverse-confluence EXIT vote, go-flat when ≥K agree)
 
-> **Status:** `in-progress` — Round 10 pre-registered (PLAN + CODE
+> **Status:** `complete` — Round 10 pre-registered (PLAN + CODE
 > INFRASTRUCTURE, ZERO results) — `docs/research-round-10-plan.md` (binding):
 > the INVERSE of the owner's confluence idea — hold long by DEFAULT and use a
 > cross-thesis-class ≥K-of-N majority VOTE to decide when to STEP ASIDE (go
@@ -91,5 +91,57 @@ holdout untouched — confirmed clean at HEAD (`b1564f2`).
 
 ## Close-out
 
-(to be written at the close-out flip — this PR is a complete, landable
-deliverable on its own; the R10 RUN slice is a separate future session + card.)
+**Done** (6 commits on `claude/r10-inverse-confluence-prereg`, cut from
+origin/main HEAD `b1564f2`):
+- `2551472` — born-red FIRST commit: this session card (`in-progress` hold).
+- `2289a1d` — `control/inbox.md` ORDER 020 (inverse-confluence exit-vote
+  research) under a decide-and-flag provenance note (the ORDER 019 precedent;
+  `control/` RETIRED at HEAD).
+- `7d60530` — `ensemble.exit_confluence_positions(members, k)`: the risk-OFF ≥k
+  exit vote (long by default, go flat when ≥k members are flat), the De Morgan
+  dual `1 - confluence_positions([1-m for m in members], k)` + 11 unit tests
+  incl. the identity.
+- `feff384` — the R10 grid pinned in `sweeps.py` (`_R10_MEMBER_SET_3` /
+  `_R10_MEMBER_SET_5` aliasing the R9 panels, `_R10_VOTE_CONFIGS`,
+  `_R10_INSTRUMENTS = R7_INSTRUMENTS`, `r10_vote_configs()`,
+  `r10_total_configs()` = 15 × 4 = 60) + 12 pins in `tests/test_sweeps.py`.
+- `da31935` — the BINDING plan `docs/research-round-10-plan.md` (badge `binding`)
+  + a PLAN-ONLY reachability bullet in `docs/current-state.md`'s rounds list
+  (NOT the health heartbeat / NOT a CLOSED flip — that is the RUN PR's job) +
+  the guard-fires telemetry delta.
+- (this commit) — close-out flip: badge `in-progress` → `complete`, close-out
+  written. The pre-registration is a complete, landable deliverable on its own.
+
+**Verify:**
+- `python3 -m pytest -q` → **809 passed** (786 prior + 11 exit-vote ensemble + 12
+  R10 sweeps pins).
+- `python3 bootstrap.py check --strict` → EXIT 0 at flip (the born-red
+  in-progress HOLD was the only red; it clears when the badge flips to
+  `complete`). Advisories only: seat-digest + pre-existing model-line payload
+  nits on OLDER cards (never exit-affecting); this card's Model line carries the
+  taught three-field form (`opus-4.8 · medium · idea/planning`) and adds no new
+  advisory.
+- No member substitutions were required — the R10 panels are the R9 panels
+  reused VERBATIM (aliased, not duplicated): `ema_crossover`,
+  `rsi_mean_reversion`, `donchian` (SET-3) + `drawdown_reversion`, `obv_trend`
+  (SET-5), all resolving to registry families emitting clean 0/1 daily positions.
+
+**Integrity — PLAN + INFRASTRUCTURE, ZERO results:** the branch diff touches
+only the plan doc, the `exit_confluence_positions` gate + its tests, the pinned
+R10 grid + its tests, the ORDER 020 inbox append, the current-state reachability
+bullet, the guard-fires telemetry delta, and this card. NO sweep run, NO
+backtest, NO runner, NO verdict; the holdout was never read, no fetch,
+`experiments/paper/**` untouched, `control/status.md` untouched, no triggers, no
+broker code. Promotion stays CLOSED / 0 promoted, holdout stays SPENT, the
+`min_tstat` bar is unchanged. NO manual merge — the landing workflow merges on
+green.
+
+**Next (the R10 RUN slice, a future separately-claimed session + card):** clone a
+gate-carrying daily runner into `scripts/run_r10_exit_confluence_sweep.py`
+(compose each (instrument × exit-vote config) via `exit_confluence_positions`,
+benchmark vs buy-and-hold, grade under the Round-2 rule + selection-fair gate on
+every lane), compute the pre-registered exit-signal correlation/overlap check
+(§ 6, confirming the `corr(1-x,1-y)=corr(x,y)` identity vs R9) and the exit-count
+/ trade-count-vs-B&H / SE-inflation impact (§ 7) with the degenerate ~0-exit
+flag, and land `docs/research-round-10-results.md` (5,853 → 5,913), flipping the
+round to CLOSED in `docs/current-state.md`.
