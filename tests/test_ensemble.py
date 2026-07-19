@@ -14,7 +14,8 @@ from conftest import make_ohlcv
 from trading_lab import sweeps
 from trading_lab.engine import run_backtest
 from trading_lab.ensemble import (committee_positions, confluence_positions,
-                                  enumerate_committees)
+                                  enumerate_committees,
+                                  exit_confluence_positions)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 KEEP_UNIVERSE = REPO_ROOT / sweeps.R4_ENSEMBLE_KEEP_UNIVERSE
@@ -162,6 +163,91 @@ class TestConfluencePositions:
         short = _series([-1, 0, 1])
         with pytest.raises(ValueError, match="must be 0/1"):
             confluence_positions([a, short], k=2)
+
+
+class TestExitConfluencePositions:
+    """R10 inverse-confluence EXIT-vote tests (docs/research-round-10-plan.md):
+    the risk-OFF ≥k-of-N vote — long by DEFAULT, go flat when at least k members
+    are simultaneously FLAT — the De Morgan dual of the R9 entry vote applied to
+    buy-and-hold. Members are 0/1 lanes."""
+
+    def test_k2_of_3_exit_threshold(self):
+        # per-bar FLAT counts: [0, 2, 2, 2, 3]
+        a = _series([1, 1, 0, 0, 0])
+        b = _series([1, 0, 0, 1, 0])
+        c = _series([1, 0, 1, 0, 0])
+        out = exit_confluence_positions([a, b, c], k=2)
+        # hold (1.0) only where < 2 members are flat: bar 0; else step aside
+        assert list(out) == [1.0, 0.0, 0.0, 0.0, 0.0]
+        assert out.index.equals(a.index)
+
+    def test_k3_of_3_exit_is_unanimity_out(self):
+        a = _series([1, 1, 0, 0, 0])
+        b = _series([1, 0, 0, 1, 0])
+        c = _series([1, 0, 1, 0, 0])
+        out = exit_confluence_positions([a, b, c], k=3)
+        # only bar 4 has all three flat → the only exit; hold everywhere else
+        assert list(out) == [1.0, 1.0, 1.0, 1.0, 0.0]
+
+    def test_de_morgan_identity_holds(self):
+        # exit_confluence_positions(m, k) == 1 - confluence_positions(1-m, k)
+        a = _series([1, 1, 0, 0, 0])
+        b = _series([1, 0, 0, 1, 0])
+        c = _series([1, 0, 1, 0, 0])
+        for k in (1, 2, 3):
+            lhs = exit_confluence_positions([a, b, c], k)
+            inverted = [1.0 - m for m in (a, b, c)]
+            rhs = 1.0 - confluence_positions(inverted, k)
+            pd.testing.assert_series_equal(lhs, rhs)
+
+    def test_all_long_never_exits(self):
+        o = _series([1, 1, 1])
+        for k in (1, 2, 3):
+            out = exit_confluence_positions([o, o.copy(), o.copy()], k=k)
+            assert list(out) == [1.0, 1.0, 1.0]
+
+    def test_all_flat_always_exits_when_k_le_n(self):
+        z = _series([0, 0, 0])
+        for k in (1, 2, 3):
+            out = exit_confluence_positions([z, z.copy(), z.copy()], k=k)
+            assert list(out) == [0.0, 0.0, 0.0]
+
+    def test_result_is_binary_and_engine_valid(self):
+        a = _series([1, 1, 0, 1])
+        b = _series([1, 0, 0, 1])
+        out = exit_confluence_positions([a, b], k=2)
+        assert set(out.unique()) <= {0.0, 1.0}
+        assert (out.abs() <= 1).all()
+
+    def test_rejects_single_member(self):
+        with pytest.raises(ValueError, match=">= 2 members"):
+            exit_confluence_positions([_series([1, 0])], k=1)
+
+    def test_rejects_k_out_of_range(self):
+        a, b = _series([1, 0, 1]), _series([1, 1, 0])
+        with pytest.raises(ValueError, match=r"1 <= k <= 2"):
+            exit_confluence_positions([a, b], k=0)
+        with pytest.raises(ValueError, match=r"1 <= k <= 2"):
+            exit_confluence_positions([a, b], k=3)
+
+    def test_rejects_misaligned_indices(self):
+        a = _series([1, 0, 1])
+        b = _series([1, 0, 1], start="2024-02-01")
+        with pytest.raises(ValueError, match="misaligned"):
+            exit_confluence_positions([a, b], k=2)
+
+    def test_rejects_nan(self):
+        a = _series([1, 0, 1])
+        bad = a.copy()
+        bad.iloc[1] = float("nan")
+        with pytest.raises(ValueError, match="NaN"):
+            exit_confluence_positions([a, bad], k=2)
+
+    def test_rejects_non_binary_values(self):
+        a = _series([1, 0, 1])
+        frac = _series([0.5, 0.0, 1.0])
+        with pytest.raises(ValueError, match="must be 0/1"):
+            exit_confluence_positions([a, frac], k=2)
 
 
 class TestEngineFractionalPositions:

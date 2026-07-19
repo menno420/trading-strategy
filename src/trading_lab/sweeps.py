@@ -2301,3 +2301,38 @@ def r9_vote_configs() -> list[dict]:
 def r9_total_configs() -> int:
     # single-instrument confluence lanes: configs = vote configs x instruments
     return len(_R9_VOTE_CONFIGS) * len(_R9_INSTRUMENTS)
+
+
+# --- Round 10: inverse-confluence EXIT vote (docs/research-round-10-plan.md) ---
+# The De Morgan DUAL of R9: instead of a >=K vote to ENTER (R9's
+# confluence_positions), a >=K cross-class vote to EXIT to cash -- hold long by
+# DEFAULT, step aside (go flat) on bars where >=K distinct members are FLAT
+# (trading_lab.ensemble.exit_confluence_positions, a risk-OFF de-risking overlay
+# on buy-and-hold). SAME member panels, SAME grid, SAME instruments as R9 -- the
+# only change is the gate direction (out of a hold, not into cash). Members run
+# at their FIXED DEFAULT_PARAMS (no per-member re-search); the only searched axis
+# is (member-set, K). The R9 member sets are reused VERBATIM (aliased, not
+# duplicated) so the two rounds vote over one identical panel.
+_R10_MEMBER_SET_3 = _R9_MEMBER_SET_3  # same list object as R9's SET-3 panel
+_R10_MEMBER_SET_5 = _R9_MEMBER_SET_5  # same list object as R9's SET-5 panel
+# Each vote config: the member panel + the EXIT threshold K. K in {2, 3} for
+# BOTH sets => 4 configs. Registered constraint: 2 <= K <= len(members).
+_R10_VOTE_CONFIGS: list[dict] = [
+    {"set": "set3", "members": _R10_MEMBER_SET_3, "k": 2},
+    {"set": "set3", "members": _R10_MEMBER_SET_3, "k": 3},
+    {"set": "set5", "members": _R10_MEMBER_SET_5, "k": 2},
+    {"set": "set5", "members": _R10_MEMBER_SET_5, "k": 3},
+]
+_R10_INSTRUMENTS = R7_INSTRUMENTS  # same 15-ticker daily tuple object as R9
+R10_INSTRUMENTS = _R10_INSTRUMENTS
+R10_K = 60  # program-wide multiplicity for this round (15 x 4 = 60)
+
+
+def r10_vote_configs() -> list[dict]:
+    """The 4 pre-registered (member-set, K) exit-vote configs, deterministic."""
+    return [dict(c) for c in _R10_VOTE_CONFIGS]
+
+
+def r10_total_configs() -> int:
+    # single-instrument exit-vote lanes: configs = vote configs x instruments
+    return len(_R10_VOTE_CONFIGS) * len(_R10_INSTRUMENTS)

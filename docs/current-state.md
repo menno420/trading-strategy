@@ -56,6 +56,27 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
+- **Research Round 10 pre-registered (PLAN + INFRASTRUCTURE, ZERO results;
+  live owner turn 2026-07-19 / ORDER 020)** —
+  [research-round-10-plan.md](research-round-10-plan.md) (badge `binding`): the
+  INVERSE of the owner's signal-confluence idea — hold long by DEFAULT and use a
+  cross-class ≥K-of-N majority VOTE to decide when to STEP ASIDE (go flat), a
+  risk-OFF de-risking overlay on buy-and-hold
+  (`trading_lab.ensemble.exit_confluence_positions`, the De Morgan DUAL of the
+  R9 entry vote: R9 is long iff ≥K long, R10 is flat iff ≥K flat). The SAME two
+  fixed-default member panels as R9 (SET-3 trend/mean-rev/breakout; SET-5 adds
+  drawdown STATE + volume), K ∈ {2,3} → 4 exit-vote configs × 15 daily tickers =
+  60 registered configs (`r10_total_configs()` = 60; 5,853 → 5,913 on the future
+  RUN). Registered null (R9 found the members near-independent, so ≥K agreement
+  to exit is rare either way → a strict K=3 exit ≈ buy-and-hold / a loose K=2
+  exit sheds the drift → a negative result is expected), with a mandatory
+  pre-registered exit-signal correlation/overlap check (the Pearson identity
+  `corr(1-x,1-y)=corr(x,y)` means it equals R9's already-reported position
+  correlations) and a trade-count / SE-inflation section that flags any
+  degenerate ~0-exit lane. This PR lands the plan + the
+  `exit_confluence_positions` gate + the pinned grid/tests; the sweep runner +
+  graded results are a future RUN slice. Dev-only, promotion CLOSED, `min_tstat`
+  bar unchanged.
 - **Research Round 9 CLOSED (ran 2026-07-19; live owner turn 2026-07-19 /
   ORDER 019)** — the pre-registered signal-CONFLUENCE vote executed against
   [research-round-9-plan.md](research-round-9-plan.md): the owner's idea —

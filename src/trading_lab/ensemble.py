@@ -110,6 +110,44 @@ def confluence_positions(members: Sequence[pd.Series], k: int) -> pd.Series:
     return (longs >= k).astype(float)
 
 
+def exit_confluence_positions(members: Sequence[pd.Series], k: int) -> pd.Series:
+    """Risk-OFF ≥k-of-N EXIT vote: hold long by DEFAULT, go flat when ≥k agree OUT.
+
+    Pre-registered in ``docs/research-round-10-plan.md`` (Round 10, the INVERSE
+    of the owner's signal-confluence idea): a de-risking overlay on buy-and-hold.
+    The default position is IN-MARKET (``1.0`` long); the vote gates you OUT — on
+    every bar where the count of members that are FLAT (``== 0``) is ``>= k``, the
+    lane returns flat (``0.0``). In one line: **long unless ≥k members want out.**
+
+    This is the **De Morgan dual** of the R9 entry vote
+    (:func:`confluence_positions`) applied to a buy-and-hold baseline. Where R9
+    is long iff ≥k members are LONG, R10 is flat iff ≥k members are FLAT, so the
+    held position is exactly the complement of a ≥k confluence on the INVERTED
+    member series::
+
+        exit_confluence_positions(members, k)
+            == 1.0 - confluence_positions([1 - m for m in members], k)
+
+    (going flat when ≥k members are flat == a ≥k confluence on ``1 - member``,
+    then the held position is its complement). The implementation reuses the R9
+    primitive on that inverted panel, so the two votes stay a proven pair.
+
+    ``members`` are the frozen per-bar position series of the panel members over
+    the SAME bars (identical indices). Members are 0/1 long/flat lanes (the R10
+    panel runs each family at its fixed default params); values must be exactly
+    ``{0.0, 1.0}``. Memoryless and per-bar: it reads only bar-``t`` member states
+    (already causal), so no lookahead is introduced.
+
+    Raises ``ValueError`` under the SAME validation as
+    :func:`confluence_positions` — ``>= 2`` members with aligned NaN-free
+    ``{0.0, 1.0}`` positions and ``1 <= k <= len(members)`` — enforced by the
+    delegated R9 primitive on the inverted panel (inversion preserves the
+    ``{0.0, 1.0}`` domain, the shared index, and NaN-freeness).
+    """
+    inverted = [1.0 - m.astype(float) for m in members]
+    return 1.0 - confluence_positions(inverted, k)
+
+
 def enumerate_committees(lanes: Sequence[Mapping], *,
                          min_members: int = 2) -> list[dict]:
     """Enumerate committee groups from KEEP-lane rows.

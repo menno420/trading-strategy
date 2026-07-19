@@ -2284,3 +2284,103 @@ class TestRound9:
         # registered configs; program cumulative 5793 -> 5853.
         assert sweeps.r9_total_configs() == 60
         assert 5793 + sweeps.r9_total_configs() == 5853
+
+
+class TestRound10:
+    """Round-10 pre-declaration pins (docs/research-round-10-plan.md, ORDER
+    020): the INVERSE-confluence EXIT-vote grid is committed BEFORE the sweep
+    runs and these pins freeze it. It is the De Morgan DUAL of R9 -- the SAME
+    member panels, SAME grid, SAME instruments, run at FIXED DEFAULT_PARAMS (no
+    per-member re-search); the only searched axis is (member-set, K). The vote
+    is trading_lab.ensemble.exit_confluence_positions (long by default, go flat
+    when >=K members are flat -- a risk-OFF gate OUT of a hold, distinct from
+    R9's confluence_positions gate INTO a long)."""
+
+    def test_member_sets_reuse_the_r9_panels_verbatim(self):
+        # Same list OBJECTS as R9 -- one identical panel, aliased not duplicated.
+        assert sweeps._R10_MEMBER_SET_3 is sweeps._R9_MEMBER_SET_3
+        assert sweeps._R10_MEMBER_SET_5 is sweeps._R9_MEMBER_SET_5
+        assert sweeps._R10_MEMBER_SET_3 == [
+            "ema_crossover", "rsi_mean_reversion", "donchian"]
+        assert sweeps._R10_MEMBER_SET_5 == [
+            "ema_crossover", "rsi_mean_reversion", "donchian",
+            "drawdown_reversion", "obv_trend"]
+
+    def test_every_member_is_in_the_strategy_registry(self):
+        from trading_lab.strategies import DEFAULT_PARAMS
+        for m in sweeps._R10_MEMBER_SET_3 + sweeps._R10_MEMBER_SET_5:
+            assert m in STRATEGIES
+            assert m in DEFAULT_PARAMS
+
+    def test_member_classes_are_distinct_per_set(self):
+        assert len(sweeps._R10_MEMBER_SET_3) == len(set(sweeps._R10_MEMBER_SET_3))
+        assert len(sweeps._R10_MEMBER_SET_5) == len(set(sweeps._R10_MEMBER_SET_5))
+
+    def test_vote_configs_are_exactly_the_pre_registered_grid(self):
+        assert sweeps.r10_vote_configs() == [
+            {"set": "set3", "members": sweeps._R10_MEMBER_SET_3, "k": 2},
+            {"set": "set3", "members": sweeps._R10_MEMBER_SET_3, "k": 3},
+            {"set": "set5", "members": sweeps._R10_MEMBER_SET_5, "k": 2},
+            {"set": "set5", "members": sweeps._R10_MEMBER_SET_5, "k": 3},
+        ]
+        assert len(sweeps.r10_vote_configs()) == 4
+
+    def test_grid_matches_r9_except_gate_direction(self):
+        # R10 is R9's dual: identical (set, members, K) axes -- only the
+        # compositor differs (exit_confluence_positions vs confluence_positions).
+        assert sweeps.r10_vote_configs() == sweeps.r9_vote_configs()
+
+    def test_k_within_two_and_three_and_valid_for_its_set(self):
+        for c in sweeps.r10_vote_configs():
+            assert c["k"] in (2, 3)
+            assert 2 <= c["k"] <= len(c["members"])
+
+    def test_instruments_are_the_r7_surface_verbatim(self):
+        # Same tuple OBJECT as the R7/R9 15-ticker daily surface -- no new
+        # caches, nothing fetched, no post-hoc instrument selection.
+        assert sweeps._R10_INSTRUMENTS is sweeps.R7_INSTRUMENTS
+        assert sweeps.R10_INSTRUMENTS is sweeps.R7_INSTRUMENTS
+        assert sweeps._R10_INSTRUMENTS is sweeps._R9_INSTRUMENTS
+        assert len(sweeps.R10_INSTRUMENTS) == 15
+
+    def test_deterministic_order(self):
+        assert sweeps.r10_vote_configs() == sweeps.r10_vote_configs()
+
+    def test_members_emit_binary_positions_at_defaults(self, random_walk):
+        from trading_lab.strategies import DEFAULT_PARAMS
+        for m in sweeps._R10_MEMBER_SET_5:
+            pos = STRATEGIES[m](random_walk, **DEFAULT_PARAMS[m])
+            assert not pos.isna().any()
+            assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_exit_vote_runs_end_to_end(self, random_walk):
+        # The exit compositor grades a full (member-set, K) config into a binary
+        # long-by-default / flat-on-exit lane on the shared index.
+        from trading_lab.ensemble import exit_confluence_positions
+        from trading_lab.strategies import DEFAULT_PARAMS
+        for c in sweeps.r10_vote_configs():
+            members = [STRATEGIES[m](random_walk, **DEFAULT_PARAMS[m])
+                       for m in c["members"]]
+            vote = exit_confluence_positions(members, c["k"])
+            assert vote.index.equals(random_walk.index)
+            assert set(np.unique(vote)) <= {0.0, 1.0}
+
+    def test_de_morgan_dual_of_the_r9_entry_vote(self, random_walk):
+        # exit_confluence_positions(m, k) == 1 - confluence_positions(1-m, k)
+        # over the actual R10 panels at default params, per vote config.
+        from trading_lab.ensemble import (confluence_positions,
+                                          exit_confluence_positions)
+        from trading_lab.strategies import DEFAULT_PARAMS
+        for c in sweeps.r10_vote_configs():
+            members = [STRATEGIES[m](random_walk, **DEFAULT_PARAMS[m])
+                       for m in c["members"]]
+            exit_lane = exit_confluence_positions(members, c["k"])
+            inverted = [1.0 - m.astype(float) for m in members]
+            dual = 1.0 - confluence_positions(inverted, c["k"])
+            pd.testing.assert_series_equal(exit_lane, dual)
+
+    def test_round_total_configs_and_program_ledger(self):
+        # Burden ledger: 4 exit-vote configs x 15 daily tickers = 60 new
+        # registered configs; program cumulative 5853 -> 5913 (on the RUN).
+        assert sweeps.r10_total_configs() == 60
+        assert 5853 + sweeps.r10_total_configs() == 5913
