@@ -2259,3 +2259,45 @@ def r8_hourly_variants_per_family() -> dict[str, int]:
 def r8_total_configs() -> int:
     # single-instrument lanes: configs = variants × instruments
     return sum(r8_hourly_variants_per_family().values()) * len(R8_HOURLY_INSTRUMENTS)
+
+
+# ---------------------------------------------------------------------------
+# Round 9 (docs/research-round-9-plan.md, ORDER 019)
+# ---------------------------------------------------------------------------
+# The owner's signal-CONFLUENCE idea: enter only when >=K of N DISTINCT
+# thesis-class strategies agree (a cross-class majority VOTE via
+# trading_lab.ensemble.confluence_positions -- an AND/vote gate, distinct from
+# the R4-C committee AVERAGE). Members run at their FIXED DEFAULT_PARAMS (no
+# per-member re-search -- a deliberate pre-registered choice to keep the
+# multiplicity K low and give the idea its best shot); the only searched axis
+# is (member-set, K). Two panels: SET-3 spans trend / mean-reversion /
+# breakout (3 distinct classes); SET-5 adds a drawdown STATE and a VOLUME
+# class (5 distinct classes). K in {2, 3} per set => 4 vote configs. Swept
+# over the committed 15-ticker daily surface (same tuple object as R7 -- no
+# new caches, nothing fetched; obv_trend reads the volume column every daily
+# cache ticker carries).
+
+_R9_MEMBER_SET_3 = ["ema_crossover", "rsi_mean_reversion", "donchian"]
+_R9_MEMBER_SET_5 = ["ema_crossover", "rsi_mean_reversion", "donchian",
+                    "drawdown_reversion", "obv_trend"]
+# Each vote config: the member panel + the vote threshold K. K in {2, 3}
+# for BOTH sets => 4 configs. Registered constraint: 2 <= K <= len(members).
+_R9_VOTE_CONFIGS: list[dict] = [
+    {"set": "set3", "members": _R9_MEMBER_SET_3, "k": 2},
+    {"set": "set3", "members": _R9_MEMBER_SET_3, "k": 3},
+    {"set": "set5", "members": _R9_MEMBER_SET_5, "k": 2},
+    {"set": "set5", "members": _R9_MEMBER_SET_5, "k": 3},
+]
+_R9_INSTRUMENTS = R7_INSTRUMENTS  # same 15-ticker daily tuple object
+R9_INSTRUMENTS = _R9_INSTRUMENTS
+R9_K = 60  # program-wide multiplicity for this round (15 x 4 = 60)
+
+
+def r9_vote_configs() -> list[dict]:
+    """The 4 pre-registered (member-set, K) vote configs, deterministic order."""
+    return [dict(c) for c in _R9_VOTE_CONFIGS]
+
+
+def r9_total_configs() -> int:
+    # single-instrument confluence lanes: configs = vote configs x instruments
+    return len(_R9_VOTE_CONFIGS) * len(_R9_INSTRUMENTS)

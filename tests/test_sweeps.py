@@ -2205,3 +2205,82 @@ class TestRound8Hourly:
         # registered configs; program cumulative 5601 -> 5793.
         assert sweeps.r8_total_configs() == 192
         assert 5601 + sweeps.r8_total_configs() == 5793
+
+
+class TestRound9:
+    """Round-9 pre-declaration pins (docs/research-round-9-plan.md, ORDER
+    019): the signal-CONFLUENCE vote grid is committed BEFORE the sweep runs
+    and these pins freeze it. Members run at FIXED DEFAULT_PARAMS (no
+    per-member re-search); the only searched axis is (member-set, K). The
+    vote itself is trading_lab.ensemble.confluence_positions (an AND/vote
+    gate, distinct from the R4-C committee AVERAGE)."""
+
+    def test_member_sets_are_exactly_the_pre_registered_panels(self):
+        assert sweeps._R9_MEMBER_SET_3 == [
+            "ema_crossover", "rsi_mean_reversion", "donchian"]
+        assert sweeps._R9_MEMBER_SET_5 == [
+            "ema_crossover", "rsi_mean_reversion", "donchian",
+            "drawdown_reversion", "obv_trend"]
+
+    def test_every_member_is_in_the_strategy_registry(self):
+        from trading_lab.strategies import DEFAULT_PARAMS
+        for m in sweeps._R9_MEMBER_SET_3 + sweeps._R9_MEMBER_SET_5:
+            assert m in STRATEGIES
+            assert m in DEFAULT_PARAMS
+
+    def test_member_classes_are_distinct_per_set(self):
+        # Distinctness is the whole point: no family repeats within a panel
+        # (a vote among duplicates is one signal counted twice).
+        assert len(sweeps._R9_MEMBER_SET_3) == len(set(sweeps._R9_MEMBER_SET_3))
+        assert len(sweeps._R9_MEMBER_SET_5) == len(set(sweeps._R9_MEMBER_SET_5))
+
+    def test_vote_configs_are_exactly_the_pre_registered_grid(self):
+        assert sweeps.r9_vote_configs() == [
+            {"set": "set3", "members": sweeps._R9_MEMBER_SET_3, "k": 2},
+            {"set": "set3", "members": sweeps._R9_MEMBER_SET_3, "k": 3},
+            {"set": "set5", "members": sweeps._R9_MEMBER_SET_5, "k": 2},
+            {"set": "set5", "members": sweeps._R9_MEMBER_SET_5, "k": 3},
+        ]
+        assert len(sweeps.r9_vote_configs()) == 4
+
+    def test_k_within_two_and_three_and_valid_for_its_set(self):
+        for c in sweeps.r9_vote_configs():
+            assert c["k"] in (2, 3)
+            assert 2 <= c["k"] <= len(c["members"])
+
+    def test_instruments_are_the_r7_surface_verbatim(self):
+        # Same tuple OBJECT as the R7 15-ticker daily surface — no new
+        # caches, nothing fetched, no post-hoc instrument selection.
+        assert sweeps._R9_INSTRUMENTS is sweeps.R7_INSTRUMENTS
+        assert sweeps.R9_INSTRUMENTS is sweeps.R7_INSTRUMENTS
+        assert len(sweeps.R9_INSTRUMENTS) == 15
+
+    def test_deterministic_order(self):
+        assert sweeps.r9_vote_configs() == sweeps.r9_vote_configs()
+
+    def test_members_emit_binary_positions_at_defaults(self, random_walk):
+        # Every panel member, at its fixed default params, is a 0/1 long/flat
+        # lane — the precondition confluence_positions enforces.
+        from trading_lab.strategies import DEFAULT_PARAMS
+        for m in sweeps._R9_MEMBER_SET_5:
+            pos = STRATEGIES[m](random_walk, **DEFAULT_PARAMS[m])
+            assert not pos.isna().any()
+            assert set(np.unique(pos)) <= {0.0, 1.0}
+
+    def test_vote_runs_end_to_end(self, random_walk):
+        # The confluence compositor grades a full (member-set, K) config into
+        # a binary lane on the shared index.
+        from trading_lab.ensemble import confluence_positions
+        from trading_lab.strategies import DEFAULT_PARAMS
+        for c in sweeps.r9_vote_configs():
+            members = [STRATEGIES[m](random_walk, **DEFAULT_PARAMS[m])
+                       for m in c["members"]]
+            vote = confluence_positions(members, c["k"])
+            assert vote.index.equals(random_walk.index)
+            assert set(np.unique(vote)) <= {0.0, 1.0}
+
+    def test_round_total_configs_and_program_ledger(self):
+        # Burden ledger: 4 vote configs x 15 daily tickers = 60 new
+        # registered configs; program cumulative 5793 -> 5853.
+        assert sweeps.r9_total_configs() == 60
+        assert 5793 + sweeps.r9_total_configs() == 5853
