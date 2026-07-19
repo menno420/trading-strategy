@@ -56,6 +56,21 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
+- **New-data-source research direction SKETCHED (PLAN-ONLY / awaiting-owner;
+  live owner turn 2026-07-19)** — with 10 rounds / 5,913 configs of
+  price/volume-derived indicators + their combinations promoting 0, the frontier
+  is a genuinely NEW data type, not another combination. Forward-looking scoping
+  memo [research-direction-new-data-sources.md](research-direction-new-data-sources.md)
+  (badge `plan`) sketches the candidates: **cross-asset / macro-regime**
+  (LOWEST cost — SELF-SERVE, testable on the EXISTING cache's TLT/GLD/SLV/SPY/
+  QQQ/BTC legs, but must differ materially from the burned R4 `crossasset_gate` /
+  `regime_switch` classes), and **fundamentals** + **flows / positioning**
+  (higher-potential but OWNER-GATED on point-in-time / feed data access). Same
+  `min_tstat(K)` bar, same RESEARCH-ONLY rails, same pre-registration protocol —
+  a new data type gets no easier bar. **PLAN-ONLY: no round pre-registered, no
+  code, no data ingestion, no dependency; execution awaits an explicit owner
+  turn** (owner-decision list in the doc's §6). No round CLOSED or flipped; the
+  5,913/0 tally, holdout SPENT, and promotion CLOSED rails are untouched.
 - **Research Round 10 CLOSED (ran 2026-07-19; live owner turn 2026-07-19 /
   ORDER 020)** — the pre-registered inverse-confluence EXIT vote executed
   against [research-round-10-plan.md](research-round-10-plan.md): the INVERSE of
