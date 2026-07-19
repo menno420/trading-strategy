@@ -1,15 +1,15 @@
 # 2026-07-19 — Round 9 pre-registration (signal-confluence vote, cross-class ≥K-of-N)
 
-> **Status:** `in-progress` — Round 9 pre-registered (PLAN + CODE
-> INFRASTRUCTURE, ZERO results) — `docs/research-round-9-plan.md` (binding): a
+> **Status:** `complete` — Round 9 pre-registered (PLAN + CODE INFRASTRUCTURE,
+> ZERO results) — `docs/research-round-9-plan.md` (binding): a
 > cross-thesis-class ≥K-of-N majority VOTE that enters only when ≥2 (and
 > separately ≥3) DISTINCT strategies agree, the owner's live signal-confluence
 > idea. This PR lands the plan + the `ensemble.confluence_positions` vote gate
 > + the pinned 60-config R9 grid (`sweeps._R9_*`, `r9_total_configs()` = 60)
-> with tests; the sweep RUNNER + graded results are a separate future RUN PR.
-> POST-HOLDOUT, DEV-ONLY: holdout SPENT, promotion CLOSED, `min_tstat` bar
-> never lowered. Held BORN-RED intentionally — the card stays `in-progress`;
-> the RUN PR closes the round.
+> with tests; the sweep RUNNER + graded results are a separate future RUN PR
+> with its own card. POST-HOLDOUT, DEV-ONLY: holdout SPENT, promotion CLOSED,
+> `min_tstat` bar never lowered. This pre-registration is a complete, landable
+> deliverable on its own — the card flips `complete` as the final commit.
 
 📊 Model: opus-4.8 · medium · idea/planning
 
@@ -93,5 +93,53 @@ grades under. No sweep re-run, holdout untouched — confirmed clean at HEAD.
 
 ## Close-out
 
-*(Held BORN-RED — this card stays `in-progress` by design; the RUN PR closes
-Round 9. No close-out flip in this PR.)*
+**Done** (6 commits on `claude/r9-confluence-prereg`, cut from origin/main HEAD
+`d907d01`):
+- `84724bb` — born-red FIRST commit: this session card (`in-progress` hold).
+- `427429b` — `control/inbox.md` ORDER 019 (signal-confluence research) under a
+  decide-and-flag provenance note (the ORDER 018 precedent; `control/` RETIRED
+  at HEAD).
+- `e445a15` — `ensemble.confluence_positions(members, k)`: the binary ≥k-of-N
+  vote gate (AND/vote, distinct from `committee_positions`' AVERAGE) + 12 unit
+  tests.
+- `a91a938` — the R9 grid pinned in `sweeps.py` (`_R9_MEMBER_SET_3`,
+  `_R9_MEMBER_SET_5`, `_R9_VOTE_CONFIGS`, `_R9_INSTRUMENTS = R7_INSTRUMENTS`,
+  `r9_vote_configs()`, `r9_total_configs()` = 15 × 4 = 60) + 10 pins in
+  `tests/test_sweeps.py`.
+- `e5e96b3` — the BINDING plan `docs/research-round-9-plan.md` (badge `binding`)
+  + a PLAN-ONLY reachability bullet in `docs/current-state.md`'s rounds list
+  (NOT the health heartbeat / NOT a CLOSED flip — that is the RUN PR's job).
+- (this commit) — close-out flip: badge `in-progress` → `complete`, close-out
+  written. The pre-registration is a complete, landable deliverable on its own.
+
+**Verify:**
+- `python3 -m pytest -q` → **786 passed** (762 prior + 12 ensemble + 10 sweeps +
+  the confluence end-to-end pins).
+- `python3 bootstrap.py check --strict` → EXIT 0 at flip (the born-red
+  in-progress HOLD was the only red; it clears when the badge flips to
+  `complete`). Advisories only: seat-digest + pre-existing model-line payload
+  nits on OLDER cards (never exit-affecting); this card's Model line carries the
+  taught three-field form (`opus-4.8 · medium · idea/planning`) and adds no new
+  advisory.
+- No member substitutions were required — all five R9 members
+  (`ema_crossover`, `rsi_mean_reversion`, `donchian`, `drawdown_reversion`,
+  `obv_trend`) resolve to registry families with sane defaults emitting clean
+  0/1 daily positions; `obv_trend` reads volume, present on every one of the 15
+  daily cache tickers (verified).
+
+**Integrity — PLAN + INFRASTRUCTURE, ZERO results:** the branch diff touches
+only the plan doc, the `confluence_positions` gate + its tests, the pinned R9
+grid + its tests, the ORDER 019 inbox append, the current-state reachability
+bullet, and this card. NO sweep run, NO backtest, NO runner, NO verdict; the
+holdout was never read, no fetch, `experiments/paper/**` untouched,
+`control/status.md` untouched, no triggers, no broker code. Promotion stays
+CLOSED / 0 promoted, holdout stays SPENT, the `min_tstat` bar is unchanged. NO
+manual merge — the landing workflow merges on green.
+
+**Next (the R9 RUN slice, a future separately-claimed session + card):** clone a
+gate-carrying daily runner into `scripts/run_r9_confluence_sweep.py` (compose
+each (instrument × vote config) via `confluence_positions`, grade under the
+Round-2 rule + selection-fair gate on every lane), compute the pre-registered
+correlation/overlap check (§ 6) and the trade-count / SE-inflation impact (§ 7)
+as first-class report sections, and land `docs/research-round-9-results.md`
+(5,793 → 5,853), flipping the round to CLOSED in `docs/current-state.md`.
