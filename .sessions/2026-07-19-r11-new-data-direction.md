@@ -1,6 +1,17 @@
 # 2026-07-19 — Research-direction sketch: what a "new data source" round would look like
 
-> **Status:** `in-progress`
+> **Status:** `complete` — new-data-source research direction SKETCHED
+> (PLAN-ONLY): [docs/research-direction-new-data-sources.md](../docs/research-direction-new-data-sources.md)
+> (badge `plan`) scopes the frontier now that 10 rounds / 5,913 configs of
+> price/volume-derived indicators + their combinations promoted 0 — cross-asset
+> / macro-regime (LOWEST cost, SELF-SERVE on the existing TLT/GLD/SLV/SPY/QQQ/BTC
+> cache, must differ materially from the burned R4 crossasset_gate/regime_switch
+> classes) as the recommended first step, fundamentals + flows/positioning
+> (higher-potential, OWNER-GATED on point-in-time / feed data). Same
+> `min_tstat(K)` bar, same RESEARCH-ONLY rails, same pre-registration protocol —
+> a new data type gets no easier bar. NO round pre-registered, NO code, NO data
+> ingestion, NO dependency; execution awaits an explicit owner turn. Holdout
+> SPENT, promotion CLOSED, 5,913/0 tally unchanged, no round CLOSED or flipped.
 
 📊 Model: opus-4.8 · medium · idea/planning
 
@@ -91,12 +102,15 @@ access.
   slots resolved.
 
 **Verify:**
-- `python3 -m pytest -q` → [[fill: passed count]].
+- `python3 -m pytest -q` → 809 passed.
 - `python3 bootstrap.py check --strict` → EXIT 0 at flip (the born-red
   in-progress hold clears when the badge flips to `complete`).
 - Integrity: the branch diff touches only
   `docs/research-direction-new-data-sources.md` +
-  the `docs/current-state.md` pointer + this session card. PLAN ONLY — no
+  the `docs/current-state.md` pointer + this session card +
+  the `.substrate/guard-fires.jsonl` telemetry delta (appended by running
+  `bootstrap.py check`, committed not reverted per the check's own note). PLAN
+  ONLY — no
   code / grid / run / verdict / holdout / paper / dependency / trigger changes;
   the holdout was never read, no fetch, `experiments/paper/**` untouched, the
   `min_tstat` bar unchanged, the 5,913/0 tally unchanged, promotion CLOSED / 0
