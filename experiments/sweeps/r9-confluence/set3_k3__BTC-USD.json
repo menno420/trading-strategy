@@ -1,0 +1,235 @@
+{
+  "benchmark_full_period_metrics": {
+    "cagr": 0.42908207843060886,
+    "max_drawdown": -0.833830983670915,
+    "n_bars": 3767,
+    "n_trades": 1,
+    "sharpe": 0.9120554396024015,
+    "sortino": 0.923949627079613,
+    "total_return": 206.90197400349632,
+    "turnover_per_year": 0.06689673480222989,
+    "win_rate": 1.0
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-19T17:15:39+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2014-09-17 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "full_period_metrics": {
+    "cagr": 0.022214383177433072,
+    "max_drawdown": -0.2582607006341293,
+    "n_bars": 3767,
+    "n_trades": 40,
+    "sharpe": 0.2955790113811146,
+    "sortino": 0.07497853828342224,
+    "total_return": 0.38879315194277786,
+    "turnover_per_year": 2.675869392089196,
+    "win_rate": 0.6
+  },
+  "git_sha": "6f1a4e9aa61df6f8ec42bb00e3c744195300cf03",
+  "instrument": "BTC-USD",
+  "k": 3,
+  "lane_variants_tried": 4,
+  "member_correlation": {
+    "flag_gt_0p5": false,
+    "mean_pairwise_position_corr": -0.17772316437557098
+  },
+  "members": [
+    "ema_crossover",
+    "rsi_mean_reversion",
+    "donchian"
+  ],
+  "n_bars": 3767,
+  "order": "live owner turn 2026-07-19 / ORDER 019; pre-registered docs/research-round-9-plan.md",
+  "post_holdout_dev_only": true,
+  "program_variants_tried": 5853,
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.2414027276049464,
+    "n_periods": 3767,
+    "note": "Lo-2002 Sharpe-delta t on the full-dev-period lane Sharpe vs same-instrument buy-and-hold, Bonferroni K = 4 vote configs on this instrument \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout",
+    "program_min_tstat_K60": 3.143980287069073,
+    "sharpe_delta": -0.6164764282212869,
+    "sharpe_se": 0.25866644768699393,
+    "timeframe": "daily",
+    "tstat": -2.383287178270876,
+    "variants_tried": 4,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "selection_gate": {
+    "bench_sharpe": 0.8211061068266703,
+    "fixed_per_split": [
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 1.75753103965474
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 0.17489844944309862
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": 0.9952207284499084
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 1.4307406055955483
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": -1.57219709342305
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": 1.0530190551348637
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": -0.016761966326238952
+      }
+    ],
+    "fixed_sharpe": 0.37978570221981506,
+    "gate": "FAIL",
+    "n_periods": 2520,
+    "note": "standing gate [D-0002] (docs/selection-fair-gate.md) on EVERY R9 lane; doubles as the R5-D fixed-config row. searched arm = instrument BEST-of-4 vote config (plan \u00a79 (member-set, K) search dimension); fixed arm = this lane's config; selection_gap informational, no registered threshold; gate replay report-only (R4-B precedent), not ledgered",
+    "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.379786, bench 0.821106) \u2014 the searched edge does not survive selection-free",
+    "reason_class": "FAIL_UNDERPERFORM",
+    "searched_config": {
+      "k": 2,
+      "set": "set3"
+    },
+    "searched_sharpe": 1.1411103880245097,
+    "selection_gap": 0.7613246858046947
+  },
+  "set": "set3",
+  "sweep": "r9-confluence",
+  "timeframe": "daily",
+  "verdict": "KILL-SIG",
+  "verdict_pre_gate": "KILL-SIG"
+}

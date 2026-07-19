@@ -1,4 +1,4 @@
-# Research Program Dashboard — Per-Round Scoreboard (P1 → Round 7)
+# Research Program Dashboard — Per-Round Scoreboard (P1 → Round 9)
 
 > **Status:** `reference`
 >
@@ -13,7 +13,7 @@
 
 ## Headline
 
-Across P1 baselines through Round 7 the program registered **5,415
+Across P1 baselines through Round 9 the program registered **5,853
 registered configurations and promoted 0** — **no strategy ever cleared
 the significance bar** (`trading_lab.promotion.min_tstat(K)` ≈ 2.638 at
 K=12; the bar only ever rises). Promotion is **CLOSED**, the holdout is
@@ -37,14 +37,20 @@ research library, not a live trading system.**
 | Round 5 | 14 | 4,359 | 4 | 1 | 0 | 1.66 | 0 | `research-round-5-results.md` |
 | Round 6 | 696 | 5,055 | 3 | 47 | 8 | 0.60 | 0 | `research-round-6-results.md` |
 | Round 7 | 360 | 5,415 | 5 | 25 | 0 | 1.20¹⁰ | 0 | `research-round-7-results.md` |
-| **Program total** | **5,415** | **5,415** | —¹¹ | —¹¹ | —¹¹ | **1.66** (R5-A) | **0** | rows above |
+| Round 7C | 180 | 5,595 | 1 | 11 | 3 | 0.22 | 0 | `research-round-7c-results.md` |
+| Round 7D | 6 | 5,601 | 0 | 6 | 0 | −0.74¹² | 0 | `research-round-7d-results.md` |
+| Round 8 | 192 | 5,793 | 3 | 13 | 0 | 1.08 | 0 | `research-round-8-results.md` |
+| Round 9 | 60 | 5,853 | 11 | 44 | 5 | 1.04¹³ | 0 | `research-round-9-results.md` |
+| **Program total** | **5,853** | **5,853** | —¹¹ | —¹¹ | —¹¹ | **1.66** (R5-A) | **0** | rows above |
 
 The cumulative column reconciles exactly: 590 + 78 + 12 + 3,468 + 197 + 14 +
-696 + 360 = **5,415** (the `program_variants_tried` chain, cross-checked
-against `src/trading_lab/sweeps.py` in `research-program-retrospective.md`
-§b). P2 (2 validation runs), P4 (99 transfer backtests), and P5 (13 holdout
-reads) added *runs* but **no new registered configs**, so they are not
-separate rows.
+696 + 360 + 180 + 6 + 192 + 60 = **5,853** (the `program_variants_tried` chain,
+cross-checked against `src/trading_lab/sweeps.py` in
+`research-program-retrospective.md` §b and
+[cross-round-meta-analysis.md](cross-round-meta-analysis.md); each round's total
+pinned by `tests/test_sweeps.py`). P2 (2 validation runs), P4 (99 transfer
+backtests), and P5 (13 holdout reads) added *runs* but **no new registered
+configs**, so they are not separate rows.
 
 ### Footnotes (every figure is cited)
 
@@ -100,6 +106,15 @@ separate rows.
     measured" (`research-program-retrospective.md` §b/§f). The program's best
     informational t anywhere is **1.66** (R5-A, SLV `williams_r_reversion`
     ±1-grid-step neighbor), still far under any bar.
+12. R7-D is a PORTFOLIO lane graded at the xsec K=6 convention (bar ≈2.39),
+    not K=12; its best t is negative — every lane underperforms the basket B&H
+    (`research-round-7d-results.md`).
+13. R9 is the cross-class ≥K-of-N signal-confluence vote graded at its honest
+    multiplicities — per-lane K=4 (bar 2.24) and program-wide K=60 (bar 3.14);
+    best t 1.04 (BTC-USD SET-3/K=2) is under half the nearer bar. The 5
+    KILL-SIG lanes are all the strict all-agree corner (significantly
+    value-destroying on high-drift names: NVDA −5.09, MSFT −2.88, JPM −2.64;
+    `research-round-9-results.md`).
 
 ## How to read this
 
@@ -126,9 +141,11 @@ separate rows.
 ---
 
 *Provenance: generated 2026-07-17 (UTC) from the cited committed results and
-retrospective docs at origin/main HEAD `82ef4cc` (Round 7 / PR #141). This
-is a docs-only synthesis — source code and merged results always win over
-this page. See [research-program-retrospective.md](research-program-retrospective.md)
+retrospective docs at origin/main HEAD `82ef4cc` (Round 7 / PR #141), and
+extended 2026-07-19 with the R7-C / R7-D / R8 / R9 rows (carried from
+[cross-round-meta-analysis.md](cross-round-meta-analysis.md) and
+`research-round-9-results.md`). This is a docs-only synthesis — source code
+and merged results always win over this page. See [research-program-retrospective.md](research-program-retrospective.md)
 for the narrative synthesis (Rounds 1–6),
 [cross-round-meta-analysis.md](cross-round-meta-analysis.md) for the
 effect-size synthesis extended through Round 8 (5,793 configs / 0 promoted),
