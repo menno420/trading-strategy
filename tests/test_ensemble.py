@@ -13,7 +13,8 @@ import pytest
 from conftest import make_ohlcv
 from trading_lab import sweeps
 from trading_lab.engine import run_backtest
-from trading_lab.ensemble import committee_positions, enumerate_committees
+from trading_lab.ensemble import (committee_positions, confluence_positions,
+                                  enumerate_committees)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 KEEP_UNIVERSE = REPO_ROOT / sweeps.R4_ENSEMBLE_KEEP_UNIVERSE
@@ -80,6 +81,87 @@ class TestCommitteePositions:
             committee_positions([a, bad_nan])
         with pytest.raises(ValueError, match=r"outside \[-1, 1\]"):
             committee_positions([a, a * 2])
+
+
+class TestConfluencePositions:
+    """R9 confluence-vote tests (docs/research-round-9-plan.md): the binary
+    >=k-of-N majority vote — long iff at least k members are simultaneously
+    long — distinct from the R4-C committee AVERAGE. Members are 0/1 lanes."""
+
+    def test_k2_of_3_threshold(self):
+        # per-bar counts of longs: [3, 2, 1, 0, 2]
+        a = _series([1, 1, 1, 0, 1])
+        b = _series([1, 1, 0, 0, 1])
+        c = _series([1, 0, 0, 0, 0])
+        out = confluence_positions([a, b, c], k=2)
+        # >= 2 longs on bars 0,1,4; flat on bars 2,3
+        assert list(out) == [1.0, 1.0, 0.0, 0.0, 1.0]
+        assert out.index.equals(a.index)
+
+    def test_k3_of_3_is_unanimity(self):
+        a = _series([1, 1, 1, 0, 1])
+        b = _series([1, 1, 0, 0, 1])
+        c = _series([1, 0, 0, 0, 0])
+        out = confluence_positions([a, b, c], k=3)
+        # only bar 0 has all three long
+        assert list(out) == [1.0, 0.0, 0.0, 0.0, 0.0]
+
+    def test_all_flat_never_votes_long(self):
+        z = _series([0, 0, 0])
+        out = confluence_positions([z, z.copy(), z.copy()], k=1)
+        assert list(out) == [0.0, 0.0, 0.0]
+
+    def test_all_long_always_votes_long(self):
+        o = _series([1, 1, 1])
+        for k in (1, 2, 3):
+            out = confluence_positions([o, o.copy(), o.copy()], k=k)
+            assert list(out) == [1.0, 1.0, 1.0]
+
+    def test_k1_is_an_or_gate(self):
+        a = _series([1, 0, 0])
+        b = _series([0, 1, 0])
+        out = confluence_positions([a, b], k=1)
+        assert list(out) == [1.0, 1.0, 0.0]
+
+    def test_result_is_binary_and_engine_valid(self):
+        a = _series([1, 1, 0, 1])
+        b = _series([1, 0, 0, 1])
+        out = confluence_positions([a, b], k=2)
+        assert set(out.unique()) <= {0.0, 1.0}
+        assert (out.abs() <= 1).all()
+
+    def test_rejects_single_member(self):
+        with pytest.raises(ValueError, match=">= 2 members"):
+            confluence_positions([_series([1, 0])], k=1)
+
+    def test_rejects_k_out_of_range(self):
+        a, b = _series([1, 0, 1]), _series([1, 1, 0])
+        with pytest.raises(ValueError, match=r"1 <= k <= 2"):
+            confluence_positions([a, b], k=0)
+        with pytest.raises(ValueError, match=r"1 <= k <= 2"):
+            confluence_positions([a, b], k=3)
+
+    def test_rejects_misaligned_indices(self):
+        a = _series([1, 0, 1])
+        b = _series([1, 0, 1], start="2024-02-01")
+        with pytest.raises(ValueError, match="misaligned"):
+            confluence_positions([a, b], k=2)
+
+    def test_rejects_nan(self):
+        a = _series([1, 0, 1])
+        bad = a.copy()
+        bad.iloc[1] = float("nan")
+        with pytest.raises(ValueError, match="NaN"):
+            confluence_positions([a, bad], k=2)
+
+    def test_rejects_non_binary_values(self):
+        a = _series([1, 0, 1])
+        frac = _series([0.5, 0.0, 1.0])
+        with pytest.raises(ValueError, match="must be 0/1"):
+            confluence_positions([a, frac], k=2)
+        short = _series([-1, 0, 1])
+        with pytest.raises(ValueError, match="must be 0/1"):
+            confluence_positions([a, short], k=2)
 
 
 class TestEngineFractionalPositions:

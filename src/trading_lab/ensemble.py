@@ -66,6 +66,50 @@ def committee_positions(members: Sequence[pd.Series]) -> pd.Series:
     return sum(m.astype(float) for m in members) / float(len(members))
 
 
+def confluence_positions(members: Sequence[pd.Series], k: int) -> pd.Series:
+    """Binary ≥k-of-N confluence VOTE: long iff at least ``k`` members agree.
+
+    Pre-registered in ``docs/research-round-9-plan.md`` (Round 9, the owner's
+    signal-confluence idea): enter only when at least ``k`` of the ``N``
+    DISTINCT members are simultaneously long. This is an **AND / majority-vote
+    gate**, structurally distinct from :func:`committee_positions`, which
+    AVERAGES member positions into a fractional ~OR-weighted size. Where the
+    committee sizes 1-of-3 agreement at ``1/3`` long, the vote returns ``0.0``
+    below its threshold and a full ``1.0`` at/above it — a binary confluence
+    signal, never a fractional one.
+
+    ``members`` are the frozen per-bar position series of the panel members
+    over the SAME bars (identical indices). Members are 0/1 long/flat lanes
+    (the R9 panel runs each family at its fixed default params); values must be
+    exactly ``{0.0, 1.0}``. The result is long (``1.0``) on every bar where the
+    count of members equal to ``1`` is ``>= k``, else flat (``0.0``), on the
+    members' shared index. Memoryless and per-bar: it reads only bar-``t``
+    member states (already causal), so no lookahead is introduced.
+
+    Raises ``ValueError`` unless there are ``>= 2`` members with aligned
+    NaN-free ``{0.0, 1.0}`` positions and ``1 <= k <= len(members)`` (``k`` out
+    of that range makes the vote either trivially always-long or unsatisfiable).
+    """
+    n = len(members)
+    if n < 2:
+        raise ValueError(f"a confluence vote needs >= 2 members, got {n}")
+    if not (1 <= k <= n):
+        raise ValueError(f"k must satisfy 1 <= k <= {n} members, got {k}")
+    first = members[0]
+    for i, pos in enumerate(members):
+        if not pos.index.equals(first.index):
+            raise ValueError(f"member {i} index misaligned with member 0 — "
+                             "confluence members must share the same bars")
+        if pos.isna().any():
+            raise ValueError(f"member {i} positions contain NaN")
+        vals = set(pd.unique(pos.astype(float)))
+        if not vals <= {0.0, 1.0}:
+            raise ValueError(f"member {i} positions must be 0/1 (long/flat), "
+                             f"got values {sorted(vals)}")
+    longs = sum(m.astype(float) for m in members)  # per-bar count of longs
+    return (longs >= k).astype(float)
+
+
 def enumerate_committees(lanes: Sequence[Mapping], *,
                          min_members: int = 2) -> list[dict]:
     """Enumerate committee groups from KEEP-lane rows.
