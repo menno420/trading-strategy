@@ -2336,3 +2336,44 @@ def r10_vote_configs() -> list[dict]:
 def r10_total_configs() -> int:
     # single-instrument exit-vote lanes: configs = vote configs x instruments
     return len(_R10_VOTE_CONFIGS) * len(_R10_INSTRUMENTS)
+
+
+# --- Round 11: cross-asset regime conditioning (docs/research-round-11-plan.md) ---
+# The self-serve first step from docs/research-direction-new-data-sources.md
+# §2.1: condition a base long on a RISK-LEG target by a CAUSAL cross-asset
+# regime score built entirely from the EXISTING daily cache (no new ingestion,
+# no new ticker, no new dependency). Differs MATERIALLY from the burned R4
+# crossasset_gate / regime_switch classes (docs/strategy-catalog.md): the
+# conditioning is CONTINUOUS (a causal rolling-percentile-rank of a real-valued
+# regime score, trading_lab.xasset_regime.regime_conditioned_positions), NOT a
+# binary momentum-sign gate, and it uses causal ROLLING normalization, never a
+# full-sample rank/z-score. The mandatory unconditioned control arm is plain
+# buy-and-hold of the same target (position == 1.0), reported next to every lane.
+#
+# Grid: 3 signals x 3 windows x 3 targets = 27 configs. The search dimension for
+# the selection-fair gate is (signal, window) per target (per-lane K = 9).
+_R11_SIGNALS = ["xasset_eq_bond_mom", "xasset_metals_riskoff", "xasset_breadth"]
+_R11_WINDOWS = [63, 126, 252]
+# All three targets are on the NYSE calendar (same index as the SPY/QQQ/GLD/TLT
+# regime inputs), so NO cross-calendar as-of reindex is needed. BTC-USD is
+# deliberately EXCLUDED as a target: its 24/7 weekend calendar would force an
+# as-of reindex and add lookahead risk (see the plan's LOOKAHEAD-CONTROL section).
+_R11_TARGETS = ["SPY", "QQQ", "NVDA"]
+# The trailing window (bars) over which the raw regime score is normalized into
+# a causal percentile rank. FIXED, not swept (mirrors xasset_regime default).
+_R11_PERCENTILE_WINDOW = 252
+R11_K = 27  # program-wide multiplicity for this round (3 x 3 x 3 = 27)
+
+
+def r11_configs() -> list[dict]:
+    """The 27 pre-registered (signal, window, target) configs, deterministic
+    order (signal outer, then window, then target)."""
+    return [{"signal": s, "window": w, "target": t}
+            for s in _R11_SIGNALS for w in _R11_WINDOWS for t in _R11_TARGETS]
+
+
+def r11_total_configs() -> int:
+    # cross-asset conditioning lanes: configs = signals x windows x targets.
+    # Each config already names its own target, so targets do NOT multiply the
+    # count a second time (unlike the single-instrument x-instruments lanes).
+    return len(_R11_SIGNALS) * len(_R11_WINDOWS) * len(_R11_TARGETS)
