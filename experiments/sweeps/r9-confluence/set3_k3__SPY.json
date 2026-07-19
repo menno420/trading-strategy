@@ -1,0 +1,235 @@
+{
+  "benchmark_full_period_metrics": {
+    "cagr": 0.1369418664483757,
+    "max_drawdown": -0.32048971956122474,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.8673964015186144,
+    "sortino": 0.7971351390988236,
+    "total_return": 5.852557734879854,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-19T17:15:55+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "full_period_metrics": {
+    "cagr": 0.023513238642943746,
+    "max_drawdown": -0.08276674622924474,
+    "n_bars": 3779,
+    "n_trades": 44,
+    "sharpe": 0.5448519148644657,
+    "sortino": 0.1903953714875552,
+    "total_return": 0.4169741025261866,
+    "turnover_per_year": 2.9341095527917442,
+    "win_rate": 0.6818181818181818
+  },
+  "git_sha": "6f1a4e9aa61df6f8ec42bb00e3c744195300cf03",
+  "instrument": "SPY",
+  "k": 3,
+  "lane_variants_tried": 4,
+  "member_correlation": {
+    "flag_gt_0p5": false,
+    "mean_pairwise_position_corr": -0.08903424680420378
+  },
+  "members": [
+    "ema_crossover",
+    "rsi_mean_reversion",
+    "donchian"
+  ],
+  "n_bars": 3779,
+  "order": "live owner turn 2026-07-19 / ORDER 019; pre-registered docs/research-round-9-plan.md",
+  "post_holdout_dev_only": true,
+  "program_variants_tried": 5853,
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.2414027276049464,
+    "n_periods": 3779,
+    "note": "Lo-2002 Sharpe-delta t on the full-dev-period lane Sharpe vs same-instrument buy-and-hold, Bonferroni K = 4 vote configs on this instrument \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout",
+    "program_min_tstat_K60": 3.143980287069073,
+    "sharpe_delta": -0.3225444866541487,
+    "sharpe_se": 0.25830909020431697,
+    "timeframe": "daily",
+    "tstat": -1.2486764844358473,
+    "variants_tried": 4,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "selection_gate": {
+    "bench_sharpe": 0.7609406160043444,
+    "fixed_per_split": [
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 1.3014536303122815
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 1.5748468115664676
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 1.7989597938762496
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -0.0001333455977232274
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 0.49019545959999106
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 1.4617172508475507
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": null
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -0.28077210605806024
+      },
+      {
+        "params": {
+          "k": 3,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 0.7180801850800463
+      }
+    ],
+    "fixed_sharpe": 0.5584265936972792,
+    "gate": "FAIL",
+    "n_periods": 2520,
+    "note": "standing gate [D-0002] (docs/selection-fair-gate.md) on EVERY R9 lane; doubles as the R5-D fixed-config row. searched arm = instrument BEST-of-4 vote config (plan \u00a79 (member-set, K) search dimension); fixed arm = this lane's config; selection_gap informational, no registered threshold; gate replay report-only (R4-B precedent), not ledgered",
+    "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.558427, bench 0.760941) \u2014 the searched edge does not survive selection-free",
+    "reason_class": "FAIL_UNDERPERFORM",
+    "searched_config": {
+      "k": 2,
+      "set": "set3"
+    },
+    "searched_sharpe": 0.680758517798877,
+    "selection_gap": 0.12233192410159777
+  },
+  "set": "set3",
+  "sweep": "r9-confluence",
+  "timeframe": "daily",
+  "verdict": "KILL",
+  "verdict_pre_gate": "KILL"
+}

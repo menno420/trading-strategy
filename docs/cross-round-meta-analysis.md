@@ -1,15 +1,16 @@
-# Cross-Round Meta-Analysis — Rounds 1–8
+# Cross-Round Meta-Analysis — Rounds 1–9
 
 > **Status:** `reference`
 >
-> Written 2026-07-18 (UTC). An honest synthesis across the whole research
-> program — P1 baselines through Round 8 — consolidating what the existing
+> Written 2026-07-18 (UTC); scoreboard extended 2026-07-19 with Round 9. An
+> honest synthesis across the whole research program — P1 baselines through
+> Round 9 — consolidating what the existing
 > program-wide docs cover separately: the narrative
 > [research-program-retrospective.md](research-program-retrospective.md)
 > (Rounds 1–6) and the scoreboard
 > [research-program-dashboard.md](research-program-dashboard.md) (P1 → Round 7).
-> This doc extends both through the four newest slices (R7-A/B, R7-C, R7-D, R8)
-> and foregrounds the **effect-size distribution** — how far the strongest dev
+> This doc extends both through the five newest slices (R7-A/B, R7-C, R7-D, R8,
+> R9) and foregrounds the **effect-size distribution** — how far the strongest dev
 > arm each round sat *below* its significance bar.
 >
 > **RESEARCH-ONLY, IN-SAMPLE.** Every number below traces to a committed round
@@ -23,7 +24,7 @@
 
 ## Headline — the negative result IS the finding
 
-Across P1 baselines through Round 8 the program registered **5,793 registered
+Across P1 baselines through Round 9 the program registered **5,853 registered
 configurations and promoted 0.** **No strategy ever cleared the significance
 bar** (`trading_lab.promotion.min_tstat(K)` ≈ 2.638 at K=12; the bar only ever
 rises). The negative result *is* the finding — a clean, honest **offline
@@ -37,10 +38,10 @@ confirmation was t = 0.02 (`p2-regrade-aapl-donchian.md`;
 (Round 5, an SLV `williams_r_reversion` grid neighbor,
 `research-round-5-results.md` L46–48) — still far under any bar in use.
 
-## Per-round scoreboard (P1 → Round 8)
+## Per-round scoreboard (P1 → Round 9)
 
 Extends the [dashboard](research-program-dashboard.md) (P1 → Round 7) with the
-three post-Round-7 slices (R7-C, R7-D, R8). Every cell is carried from a cited
+four post-Round-7 slices (R7-C, R7-D, R8, R9). Every cell is carried from a cited
 committed source; `n/r` = not recorded in the round's doc (never an invented
 value). KEEP/KILL/KILL-SIG are **not additive** across rounds — later rounds
 re-grade and demote earlier lanes (see the dashboard's footnote 11) — so the
@@ -60,14 +61,15 @@ promotions).
 | Round 7C | 180 | 5,595 | 1 | 11 | 3 | 0.22 (vs 2.64) | 0 | `research-round-7c-results.md` |
 | Round 7D | 6 | 5,601 | 0 | 6 | 0 | −0.74 (vs 2.39)⁵ | 0 | `research-round-7d-results.md` |
 | Round 8 | 192 | 5,793 | 3 | 13 | 0 | 1.08 (vs 2.64) | 0 | `research-round-8-results.md` |
-| **Program total** | **5,793** | **5,793** | —⁶ | —⁶ | —⁶ | **1.66** (R5) | **0** | rows above |
+| Round 9 | 60 | 5,853 | 11 | 44 | 5 | 1.04 (vs 2.24 / 3.14)⁷ | 0 | `research-round-9-results.md` |
+| **Program total** | **5,853** | **5,853** | —⁶ | —⁶ | —⁶ | **1.66** (R5) | **0** | rows above |
 
 The cumulative column reconciles exactly: the dashboard's chain to 5,415
-(P1 → Round 7) plus **180 (R7-C) + 6 (R7-D) + 192 (R8) = 5,793**
-(`sweeps.r7c_total_configs()` / `r7d_total_configs()` and the R8 grid identity,
-each pinned by `tests/test_sweeps.py`; the R8 `summary.json`
-`program_variants_tried` field reads `5793`). P2/P4/P5 added *runs* but no new
-registered configs, so they are not separate rows.
+(P1 → Round 7) plus **180 (R7-C) + 6 (R7-D) + 192 (R8) + 60 (R9) = 5,853**
+(`sweeps.r7c_total_configs()` / `r7d_total_configs()` / `r9_total_configs()`
+and the R8 grid identity, each pinned by `tests/test_sweeps.py`; the R9
+`summary.json` `program_variants_tried` field reads `5853`). P2/P4/P5 added
+*runs* but no new registered configs, so they are not separate rows.
 
 **Footnotes.** ¹ P1 predates the KEEP/KILL vocabulary (Round 2 §6) and computed
 no Bonferroni t by design; it graded beats-vs-B&H (7/32 trend daily, 3/24
@@ -81,8 +83,13 @@ slices only (R4-C/D/E/F); R4-A/B are re-grades of prior-round lanes, excluded to
 avoid double-counting. ⁵ R7-D is a PORTFOLIO lane graded at the xsec K=6
 convention (bar ≈2.39), not K=12; its best t is negative (every lane
 underperforms the basket B&H). ⁶ KEEP/KILL/KILL-SIG are non-additive across
-rounds (dashboard fn 11); the combined post-Round-8 standing KEEP surface is
-explicitly **not measured** in any committed doc.
+rounds (dashboard fn 11); the combined post-Round-9 standing KEEP surface is
+explicitly **not measured** in any committed doc. ⁷ R9 is the cross-class
+≥K-of-N signal-confluence vote graded at the round's honest multiplicities —
+per-lane K=4 (bar 2.24) and program-wide K=60 (bar 3.14); its best t 1.04
+(BTC-USD SET-3/K=2) is under half the nearer bar. The 5 KILL-SIG lanes are all
+the strict all-agree corner (SET-3/K=3 + one SET-5/K=3), significantly
+value-destroying on high-drift names (NVDA −5.09, MSFT −2.88, JPM −2.64).
 
 ## Effect-size distribution — how far below the bar
 

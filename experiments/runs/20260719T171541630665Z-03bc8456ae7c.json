@@ -1,0 +1,51 @@
+{
+  "benchmark_metrics": {
+    "cagr": 0.05513217979353291,
+    "max_drawdown": -0.45324522209074203,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.4288612934839662,
+    "sortino": 0.41325051095354487,
+    "total_return": 1.2361994689445917,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "config_hash": "03bc8456ae7c",
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-19T17:15:41+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "git_sha": "6f1a4e9aa61df6f8ec42bb00e3c744195300cf03",
+  "instrument": "GLD",
+  "metrics": {
+    "cagr": 0.015337584899254075,
+    "max_drawdown": -0.06687651533712657,
+    "n_bars": 3779,
+    "n_trades": 36,
+    "sharpe": 0.5663475046263613,
+    "sortino": 0.12787793660340335,
+    "total_return": 0.256408050099346,
+    "turnover_per_year": 2.4006350886477907,
+    "win_rate": 0.7777777777777778
+  },
+  "n_bars": 3779,
+  "notes": "Round 9 signal-confluence vote (post-holdout DEV-ONLY, promotion CLOSED \u2014 live owner turn 2026-07-19 / ORDER 019; pre-registered docs/research-round-9-plan.md): instrument top vote config of 4 tried (post-hoc selection \u2014 the per-lane grades and the selection-fair gate blocks live in experiments/sweeps/r9-confluence/*__GLD.json)",
+  "params": {
+    "k": 3,
+    "members": [
+      "ema_crossover",
+      "rsi_mean_reversion",
+      "donchian"
+    ],
+    "vote": "confluence>=k-of-N"
+  },
+  "run_id": "20260719T171541630665Z-03bc8456ae7c",
+  "schema_version": 1,
+  "strategy": "r9_confluence_set3_k3",
+  "timeframe": "daily",
+  "variants_tried": 4
+}

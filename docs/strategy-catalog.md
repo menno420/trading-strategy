@@ -56,6 +56,24 @@ directly instead of re-deriving adjacency from seven results docs.
 | `xsec_momentum` | portfolio | Hold the top-k trailing-return names equal-weight, periodic rebalance (first portfolio family). | Round 2 / Round 3 (XSEC-14) | KEEP-dev | `research-round-2-results.md` (3 KEEP / 3 KILL); `research-round-3-results.md` (6/6 XSEC-14) |
 | `xsec_reversal` | portfolio | Hold the k worst trailing-return names equal-weight, weekly rebalance (mirror of `xsec_momentum`). | Round 3 (slice 7) | KILL | `research-round-3-results.md` (0 KEEP / 6; all 6 XSEC-14 KEEPs were `xsec_momentum`) |
 
+## Ensemble compositors (not registry families)
+
+Two families in `trading_lab.ensemble` COMBINE the fixed positions of several
+registry members rather than reading price directly, so they are graded but
+not counted among the 32 registry families above. Both are dev-only; neither
+is promoted.
+
+| Compositor | Kind | Combines | Round tested | Standing verdict | Source |
+|---|---|---|---|---|---|
+| `committee_positions` | ensemble (AVERAGE) | Survivor committee → fractional ~OR-weighted size (2-of-3 long → 0.5 long). | Round 4 (slice R4-C) | KEEP-dev (weak) | `research-round-4-results.md` §R4-C (5 KEEP-dev / 7 KILL of 12, best t 1.09, 0 promoted) |
+| `confluence_positions` | ensemble (≥K-of-N VOTE) | Binary cross-class ≥K-of-N vote — long iff ≥K distinct-class members agree (the owner's "wait for 2–3 to agree"). | Round 9 | KEEP-dev (weak) | `research-round-9-results.md` (11 KEEP-dev / 44 KILL / 5 KILL-SIG of 60, best t 1.04, 0 promoted; members near-independent, 0/15 trip >0.5; strict all-agree corner value-destroying) |
+
+The R9 vote's 11 KEEP-devs are weak survivorship lanes (best t 1.04 vs the K=4
+bar 2.24 / K=60 bar 3.14) on the same low-vol / high-drift names prior rounds
+returned; its 5 KILL-SIG lanes (all SET-3/K=3 + one SET-5/K=3) make it, like
+`overnight_gap` and `washout_recovery` before it, a family with measured *harm*
+in its strict corner — but not a burned class (it holds dev-candidates).
+
 ## How to read this table
 
 - **Class** is the single best-fit label from the allowed set (single-name /

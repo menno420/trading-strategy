@@ -1,0 +1,235 @@
+{
+  "benchmark_full_period_metrics": {
+    "cagr": 0.21377063927729822,
+    "max_drawdown": -0.3646004454130759,
+    "n_bars": 3779,
+    "n_trades": 1,
+    "sharpe": 0.9142669643667102,
+    "sortino": 0.9094050636198474,
+    "total_return": 17.269032233311567,
+    "turnover_per_year": 0.06668430801799419,
+    "win_rate": 1.0
+  },
+  "costs": {
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0
+  },
+  "created_utc": "2026-07-19T17:15:47+00:00",
+  "data_end": "2025-01-08 00:00:00",
+  "data_start": "2010-01-04 00:00:00",
+  "execution": "signal at bar t fills at bar t+1 open",
+  "full_period_metrics": {
+    "cagr": 0.06421184469028507,
+    "max_drawdown": -0.25241945722846515,
+    "n_bars": 3779,
+    "n_trades": 134,
+    "sharpe": 0.46749780603449925,
+    "sortino": 0.34779241426647484,
+    "total_return": 1.5428109354138142,
+    "turnover_per_year": 8.93569727441122,
+    "win_rate": 0.47761194029850745
+  },
+  "git_sha": "6f1a4e9aa61df6f8ec42bb00e3c744195300cf03",
+  "instrument": "MSFT",
+  "k": 2,
+  "lane_variants_tried": 4,
+  "member_correlation": {
+    "flag_gt_0p5": false,
+    "mean_pairwise_position_corr": -0.14086976300233436
+  },
+  "members": [
+    "ema_crossover",
+    "rsi_mean_reversion",
+    "donchian"
+  ],
+  "n_bars": 3779,
+  "order": "live owner turn 2026-07-19 / ORDER 019; pre-registered docs/research-round-9-plan.md",
+  "post_holdout_dev_only": true,
+  "program_variants_tried": 5853,
+  "promotion_grade": {
+    "alpha_one_sided": 0.05,
+    "min_tstat": 2.2414027276049464,
+    "n_periods": 3779,
+    "note": "Lo-2002 Sharpe-delta t on the full-dev-period lane Sharpe vs same-instrument buy-and-hold, Bonferroni K = 4 vote configs on this instrument \u2014 INFORMATIONAL ONLY, promotion is CLOSED post-holdout",
+    "program_min_tstat_K60": 3.143980287069073,
+    "sharpe_delta": -0.4467691583322109,
+    "sharpe_se": 0.25828903374613577,
+    "timeframe": "daily",
+    "tstat": -1.7297256172762117,
+    "variants_tried": 4,
+    "verdict": "KILLED"
+  },
+  "schema_version": 1,
+  "selection_gate": {
+    "bench_sharpe": 1.1013658409231666,
+    "fixed_per_split": [
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1008,
+          1260
+        ],
+        "test_sharpe": 0.819693434785906
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1260,
+          1512
+        ],
+        "test_sharpe": 0.3852586920589646
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1512,
+          1764
+        ],
+        "test_sharpe": 0.2006170210300335
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          1764,
+          2016
+        ],
+        "test_sharpe": 1.1588877781876838
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2016,
+          2268
+        ],
+        "test_sharpe": -0.9433741271226762
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2268,
+          2520
+        ],
+        "test_sharpe": 1.4948642600526951
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2520,
+          2772
+        ],
+        "test_sharpe": 0.46617788438917057
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          2772,
+          3024
+        ],
+        "test_sharpe": 2.2457941824300303
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          3024,
+          3276
+        ],
+        "test_sharpe": -1.3464756114760208
+      },
+      {
+        "params": {
+          "k": 2,
+          "members": [
+            "ema_crossover",
+            "rsi_mean_reversion",
+            "donchian"
+          ]
+        },
+        "test": [
+          3276,
+          3528
+        ],
+        "test_sharpe": 1.8079800703914979
+      }
+    ],
+    "fixed_sharpe": 0.5912850151884725,
+    "gate": "FAIL",
+    "n_periods": 2520,
+    "note": "standing gate [D-0002] (docs/selection-fair-gate.md) on EVERY R9 lane; doubles as the R5-D fixed-config row. searched arm = instrument BEST-of-4 vote config (plan \u00a79 (member-set, K) search dimension); fixed arm = this lane's config; selection_gap informational, no registered threshold; gate replay report-only (R4-B precedent), not ledgered",
+    "reason": "fixed-config replay does not beat same-window B&H with a positive Sharpe (fixed 0.591285, bench 1.101366) \u2014 the searched edge does not survive selection-free",
+    "reason_class": "FAIL_UNDERPERFORM",
+    "searched_config": {
+      "k": 2,
+      "set": "set5"
+    },
+    "searched_sharpe": 0.9365743000298457,
+    "selection_gap": 0.3452892848413731
+  },
+  "set": "set3",
+  "sweep": "r9-confluence",
+  "timeframe": "daily",
+  "verdict": "KILL",
+  "verdict_pre_gate": "KILL"
+}

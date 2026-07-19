@@ -58,11 +58,21 @@ class SliceEffect:
 
 
 def _is_modern_run_slice(summary: dict) -> bool:
-    """A run-slice with verdict counts AND per-lane tstat (R6–R8 schema)."""
+    """A run-slice with verdict counts AND per-lane tstat at a single uniform
+    Bonferroni bar (the R6–R8 schema this effect-size table renders).
+
+    A lane must carry both ``tstat`` and the uniform per-lane ``min_tstat``
+    field this table reads into its single ``bar`` column. Slices whose lanes
+    report their t against MULTIPLE bars instead (e.g. Round 9's cross-class
+    confluence vote, graded at BOTH a per-lane K=4 and a program-wide K=60 bar
+    via ``min_tstat_K4`` / ``min_tstat_K60``) do not fit a single-bar table and
+    are correctly excluded — their effect sizes live in their own results docs
+    and the per-round scoreboard, not this uniform-bar rollup."""
     lanes = summary.get("lanes")
     if not summary.get("verdict_counts"):
         return False
-    return bool(lanes) and isinstance(lanes, list) and "tstat" in lanes[0]
+    return (bool(lanes) and isinstance(lanes, list)
+            and "tstat" in lanes[0] and "min_tstat" in lanes[0])
 
 
 def aggregate(sweeps_dir: Path = SWEEPS_DIR) -> list[SliceEffect]:

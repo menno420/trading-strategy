@@ -19,8 +19,8 @@ autonomous seat. That phase is **over**:
   from this repo alone — read `CONSTITUTION.md` + this file; ignore the
   retired EAP fleet-coordination scaffolding (`control/`, `docs/succession/`,
   `docs/ROUTINES.md` — each now carries a deprecation banner).
-- **Honest research headline.** Across Rounds 1–8 the program registered
-  **5,793 configs and promoted 0** — **no strategy cleared the significance
+- **Honest research headline.** Across Rounds 1–9 the program registered
+  **5,853 configs and promoted 0** — **no strategy cleared the significance
   bar** (`promotion.min_tstat(K)` ~2.638 at K=12). Promotion is CLOSED, the
   holdout is SPENT, and the negative result *is* the finding. This is a clean,
   honest offline research library, not a live trading system. One canonical
@@ -47,7 +47,7 @@ documented in [docs/p0-lab-guide.md](p0-lab-guide.md); the locked holdout
 State as of 2026-07-18: **0 open PRs** on the repo (beyond the fresh-start
 cleanup PR that carries this edit), **0 active claims**, main advanced through
 the 2026-07-16/17 heartbeat + Friday-grading PRs. Paper lane FLAT/WATCH —
-sole ledger record `paper-0001` WATCH; holdout SPENT; 5,793 registered
+sole ledger record `paper-0001` WATCH; holdout SPENT; 5,853 registered
 configs / 0 promoted. The 2026-07-17 weekly grading pass **already ran**
 in-session as a true no-op (see "Fresh-start snapshot"); there is **no
 self-armed grading cron** — grading runs in-session via
@@ -56,22 +56,25 @@ self-armed grading cron** — grading runs in-session via
 [docs/NEXT-TASKS.md](NEXT-TASKS.md)). The EAP-era session-bound trigger
 records are retired and are not worth carrying forward.)
 
-- **Research Round 9 pre-registered (PLAN + INFRASTRUCTURE, ZERO results;
-  live owner turn 2026-07-19 / ORDER 019)** —
-  [research-round-9-plan.md](research-round-9-plan.md) (badge `binding`): the
-  owner's signal-CONFLUENCE idea — enter only when ≥2 (and separately ≥3)
-  DISTINCT thesis-class strategies agree, a cross-class ≥K-of-N majority VOTE
-  (`trading_lab.ensemble.confluence_positions`, an AND/vote gate distinct from
-  the R4-C committee AVERAGE and the R7-C within-class AND). Two fixed-default
-  member panels (SET-3 trend/mean-rev/breakout; SET-5 adds drawdown STATE +
-  volume), K ∈ {2,3} → 4 vote configs × 15 daily tickers = 60 registered
-  configs (`r9_total_configs()` = 60; 5,793 → 5,853 on the future RUN).
-  Registered null (distinct-class signals are often anti-correlated → AND-gating
-  collapses trade count and statistical power → a negative result is expected),
-  with a mandatory pre-registered correlation/overlap check and trade-count /
-  SE-inflation section. This PR lands the plan + the `confluence_positions` gate
-  + the pinned grid/tests; the sweep runner + graded results are a future RUN
-  slice. Dev-only, promotion CLOSED, `min_tstat` bar unchanged.
+- **Research Round 9 CLOSED (ran 2026-07-19; live owner turn 2026-07-19 /
+  ORDER 019)** — the pre-registered signal-CONFLUENCE vote executed against
+  [research-round-9-plan.md](research-round-9-plan.md): the owner's idea —
+  enter only when ≥2 (and separately ≥3) DISTINCT thesis-class strategies agree,
+  a cross-class ≥K-of-N majority VOTE
+  (`trading_lab.ensemble.confluence_positions`). Two fixed-default member panels
+  (SET-3; SET-5) × K ∈ {2,3} × 15 daily tickers = **60 configs graded**,
+  **11 KEEP-dev / 44 KILL / 5 KILL-SIG, 0 promoted**, best informational t
+  **1.04** (BTC-USD SET-3/K=2) vs the K=4 bar 2.24 and program K=60 bar 3.14;
+  gate 16 PASS / 44 FAIL with 1 KEEP demoted (TLT SET-5/K=2). Pre-registered
+  correlation check: **0 of 15 instruments trip >0.5** — members are
+  near-independent, so the vote is NOT one signal counted twice; the strict
+  all-agree corner (SET-3/K=3) COLLAPSES trade count (median shrink ×0.51,
+  SE-inflation ×1.40) and holds all 5 KILL-SIG lanes (NVDA −5.09, MSFT −2.88,
+  JPM −2.64), while looser votes churn trades up and still lose to B&H. 0
+  UNGRADEABLE, no degenerate lane; runtime 26 s vs 900 s cap. Program cumulative
+  **5,793 → 5,853**, dev-only, promotion CLOSED / 0 promoted, holdout untouched
+  (`min_tstat` bar unchanged). Results:
+  [research-round-9-results.md](research-round-9-results.md).
 - **Cross-round meta-analysis (Rounds 1–8) IN FLIGHT** (PR #152, branch
   `claude/cross-round-meta-analysis`; ORDER 018) — new doc
   [cross-round-meta-analysis.md](cross-round-meta-analysis.md) consolidates the
