@@ -272,3 +272,11 @@ why: Live owner turn 2026-07-19 (verbatim: "any more progress on the trading str
 done-when: R9 confluence sweep graded under the selection-fair gate and `docs/research-round-9-results.md` landed on main.
 
 > **Provenance:** owner live in coordinator chat 2026-07-19; landed on coordinator dispatch. (Decide-and-flag: the inbox header names fleet-manager as sole writer AND `control/` is RETIRED at HEAD — `docs/current-state.md` is the single living ledger — but the ORDER 018 precedent lands live owner turns here as ORDERs under a decide-and-flag note; provenance decides, landed with this line.)
+
+## ORDER 020 · 2026-07-19T17:37:27Z · status: new
+priority: P1
+do: Pre-register and grade Round 10 — the INVERSE of the owner's confluence idea: a ≥K cross-class vote to EXIT to cash (hold long by default, step aside when ≥K distinct strategies signal out), the risk-OFF de-risking dual of the R9 entry vote.
+why: The venture-lab coordinator relayed the owner's live 2026-07-19 confluence turn; R9 answered the ENTRY framing (60 configs, 0 promoted, best t 1.04, members near-independent, entry vote sat in cash through the drift), and the coordinator authorized testing the exit/de-risking complement next on the same owner turn.
+done-when: R10 exit-vote sweep graded under the selection-fair gate and `docs/research-round-10-results.md` landed on main.
+
+> **Provenance:** owner live in coordinator chat 2026-07-19; landed on coordinator dispatch. (Decide-and-flag: the inbox header names fleet-manager as sole writer AND `control/` is RETIRED at HEAD — `docs/current-state.md` is the single living ledger — but the ORDER 019 precedent lands live owner turns here as ORDERs under a decide-and-flag note; provenance decides, landed with this line.)
