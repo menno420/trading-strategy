@@ -280,3 +280,11 @@ why: The venture-lab coordinator relayed the owner's live 2026-07-19 confluence 
 done-when: R10 exit-vote sweep graded under the selection-fair gate and `docs/research-round-10-results.md` landed on main.
 
 > **Provenance:** owner live in coordinator chat 2026-07-19; landed on coordinator dispatch. (Decide-and-flag: the inbox header names fleet-manager as sole writer AND `control/` is RETIRED at HEAD — `docs/current-state.md` is the single living ledger — but the ORDER 019 precedent lands live owner turns here as ORDERs under a decide-and-flag note; provenance decides, landed with this line.)
+
+## ORDER 021 · 2026-07-19T18:24:57Z · status: new
+priority: P1
+do: Pre-register + grade Round 11 — cross-asset regime conditioning (continuous, causal), the self-serve first step from the new-data-source direction: condition a base long on a risk-leg target (SPY/QQQ/NVDA) by a causal cross-asset regime score (3 signals × 3 windows × 3 targets = 27 configs), continuously via a causal rolling-percentile-rank (never a binary gate, never full-sample normalization), with a mandatory unconditioned buy-and-hold control arm.
+why: coordinator-authorized on the owner's standing 2026-07-19 turn; uses only the existing cache (no new data provisioning, no new dependency), inside RESEARCH-ONLY rails. It is the recommended SELF-SERVE first step in `docs/research-direction-new-data-sources.md` §2.1/§3, and it differs materially from the burned R4 `crossasset_gate` / `regime_switch` classes (continuous conditioning + causal rolling normalization + mandatory control arm).
+done-when: R11 graded under the selection-fair gate and `docs/research-round-11-results.md` landed on main.
+
+> **Provenance:** owner live in coordinator chat 2026-07-19 (standing turn); landed on coordinator dispatch. (Decide-and-flag: the inbox header names fleet-manager as sole writer AND `control/` is RETIRED at HEAD — `docs/current-state.md` is the single living ledger — but the ORDER 019/020 precedent lands live owner turns here as ORDERs under a decide-and-flag note; provenance decides, landed with this line.)
