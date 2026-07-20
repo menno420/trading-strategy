@@ -288,3 +288,10 @@ why: coordinator-authorized on the owner's standing 2026-07-19 turn; uses only t
 done-when: R11 graded under the selection-fair gate and `docs/research-round-11-results.md` landed on main.
 
 > **Provenance:** owner live in coordinator chat 2026-07-19 (standing turn); landed on coordinator dispatch. (Decide-and-flag: the inbox header names fleet-manager as sole writer AND `control/` is RETIRED at HEAD — `docs/current-state.md` is the single living ledger — but the ORDER 019/020 precedent lands live owner turns here as ORDERs under a decide-and-flag note; provenance decides, landed with this line.)
+
+## ORDER 022 · 2026-07-20T13:22:06Z · status: new
+priority: P1
+do: Your substrate-kit v1.20.1 upgrade PR #160 is red on its substrate-gate: the new gate flags pre-existing false-wall findings in this repo's docs (see the PR body's finding list). Fix on the PR branch with plain additive commits: rephrase each flagged standing-limitation line as a dated past-tense fact or add a dated supersession note (never delete history; owner-verbatim lines go in the checker's allowlist if supported). Reference implementation: fleet-manager PR #390 (commit d0e16e2). Gate green means the armed auto-merge lands the upgrade.
+why: the v1.20.1 kit-upgrade wave left this repo's upgrade PR red on pre-existing repo-local doc findings the new gate flags; fleet-manager fixed the same pattern (PR #390, merged 2026-07-20T12:08Z) and its gate went green.
+done-when: PR #160's substrate-gate is green and the armed auto-merge has landed the v1.20.1 upgrade on main.
+provenance: fleet-manager ORDER routing (kit-wave sweep 2026-07-20); owner nothing-stuck directive 2026-07-19. (Decide-and-flag: control/ is recorded as RETIRED at HEAD, but the ORDER 019/020/021 precedent lands manager ORDERs here; provenance decides, landed with this line.)
