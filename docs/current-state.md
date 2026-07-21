@@ -8,6 +8,8 @@
 > file. Read it second (right after the working agreement) and keep it current
 > as the project moves.
 
+**Program closeout:** see [docs/PROJECT-CLOSEOUT.md](./PROJECT-CLOSEOUT.md) — the durable summary of the whole program for a cold reader (owner + fresh session).
+
 ## Fresh-start snapshot (2026-07-17)
 
 This project ran through the Claude Code Projects EAP as an unattended
@@ -32,6 +34,10 @@ autonomous seat. That phase is **over**:
   no-op** — `experiments/paper/ledger.md` untouched, `paper-0001` still WATCH,
   0 closed windows. `grade_paper.py` stays a graded-ledger no-op until the
   first evaluable window **~early August 2026** (the 16th paper-lane bar).
+  **Grading after program close:** the Friday grading cron dies with the
+  2026-07-21 program close. From 2026-07-24 on, the owner or a fresh session
+  must run `python3 scripts/grade_paper.py` manually (expected: a true no-op /
+  FLAT until ~early August 2026 when the first window becomes evaluable).
 
 ## Stability baseline
 
@@ -393,3 +399,5 @@ GitHub Actions (substrate gate `check --strict` plus pytest). Releases are
 informal — `main` is the source of truth for research results. The EAP
 fleet-coordination bus (`control/inbox.md` orders, `control/status.md`
 heartbeat) is retired; this file is the single living ledger.
+
+**SEAT CLOSED — 2026-07-21.** Final closeout landed via claude/final-closeout; docs/PROJECT-CLOSEOUT.md is the handoff artifact. The retired control/status.md heartbeat is not resurrected — this ledger carries the closed-state.
