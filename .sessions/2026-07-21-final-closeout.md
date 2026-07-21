@@ -1,6 +1,6 @@
 # Session — Final program closeout
 
-> **Status:** `in-progress` — writing docs/PROJECT-CLOSEOUT.md + records true-up ahead of the 2026-07-22T00:00Z read-only cutoff. Flips to `complete` as the deliberate last commit.
+> **Status:** `complete` — Final closeout landed: docs/PROJECT-CLOSEOUT.md written, docs/current-state.md trued up, ORDER 023 recorded. Program handoff complete ahead of the 2026-07-21 read-only cutoff.
 
 💡 **Session idea:** Produce the durable closeout artifact (docs/PROJECT-CLOSEOUT.md) that lets the owner and a cold future session understand the whole program — 11 rounds / 5,940 configs / 0 promoted, holdout SPENT, promotion CLOSED, paper-0001 WATCH (first evaluable bar ~early Aug 2026) — plus exact continuation steps (manual weekly grading once the Friday cron dies at program close, the owner-gated new-data decision, the RESEARCH-ONLY rail). True up docs/current-state.md and record the closing ORDER.
 
