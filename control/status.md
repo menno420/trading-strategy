@@ -22,5 +22,5 @@ trigger_old_failsafe: trig_01YBaVeKAW2fSD83S9F37s2d · auto_disabled_env_deleted
 trigger_superseded_note: trig_01UsNU4JRps4b7jiAMdEfXNi (2026-07-13 cutover grading cron) and trig_015aNMg5ncoSE2Roe4MKjQnr (pre-cutover) are superseded historical records — current grading record is the trig_01BsYsMABu2vfH4d2MzuSLs6 line above
 pacemakers: all run_once_fired; none pending; nothing deleted (carried verbatim)
 routines: no trigger created/modified/fired by this session (RESEARCH-ONLY rails; ORDER 016 hold on re-arming until owner per-seat go)
-kit: v1.17.0
+kit: v1.20.2
 fresh_seat_pointer: a new seat picks up from control/inbox.md (ORDERs 001–017), docs/current-state.md, CONSTITUTION.md, planning/2026-07-17-overnight-menu.md — repo alone is sufficient
