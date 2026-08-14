@@ -386,8 +386,10 @@ records are retired and are not worth carrying forward.)
 ## Review rhythm
 
 Owner-live model (post-EAP): the owner directs and reviews; work lands on
-`claude/*` feature branches as **ready PRs the owner merges on green CI** — no
-self-armed auto-merge, no "silence = consent" landing (see `CONSTITUTION.md`).
+`claude/*` feature branches as **ready PRs merged on green CI — by the owner
+on his review pass, or by a session he directs** (merging green PRs is normal
+agent work; what this repo forgoes is self-armed auto-merge and any
+"silence = consent" landing — see `CONSTITUTION.md`).
 Forward-only git (no force push, no amending pushed commits); PRs gated by
 GitHub Actions (substrate gate `check --strict` plus pytest). Releases are
 informal — `main` is the source of truth for research results. The EAP
