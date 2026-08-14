@@ -163,5 +163,5 @@ none of them is negotiable within a session:
   results are first-class deliverables.
 - **No self-armed routines or persistence.** Grading runs **in-session**
   (`python3 scripts/grade_paper.py`) or via a **host-owned GitHub Actions cron**
-  — agents do not arm recurring triggers or wake-chains here (see
-  `docs/ROUTINES.md`).
+  — those two venues are the only schedulers this repo uses; recurring
+  triggers and wake-chains stay out by repo policy (see `docs/ROUTINES.md`).
