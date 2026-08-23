@@ -1,5 +1,14 @@
 # trading-lab (menno420/trading-strategy)
 
+> **📦 ARCHIVED 2026-08-23 — the research concluded; unmaintained, read-only.**
+> 11 rounds, 5,940 configurations, **0 promoted**, holdout SPENT. The null
+> result *is* the deliverable, and archiving preserves it readable while ending
+> the impression that a session might pick this up.
+> Archiving blocks **writes**, never reads — this repository stays public and
+> clonable, every existing link and read path keeps working, and the archive is
+> **reversible**. Disposition and the reason for this row:
+> [`fleet-manager` § 2 of the 2026-08-22 repo dispositions](https://github.com/menno420/fleet-manager/blob/main/docs/planning/2026-08-22-repo-dispositions.md).
+
 An autonomous research lab that systematically discovers and validates trading strategies
 across timeframes — daily and hourly first — on tech stocks and gold/silver. The lab runs
 extensive parallel backtesting of known indicators, indicator combinations, and novel
